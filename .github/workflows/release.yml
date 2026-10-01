@@ -3,15 +3,31 @@ name: Release
 on:
   push:
     tags: [ 'v*' ]
+  # publishing a draft release does not always fire the tag push event
+  release:
+    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to build, e.g. v0.8.0'
+        required: true
 
 permissions:
   contents: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.event.release.tag_name || github.ref_name }}
+
+env:
+  TAG: ${{ inputs.tag || github.event.release.tag_name || github.ref_name }}
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
 
       - uses: actions/setup-java@v4
         with:
@@ -41,9 +57,10 @@ jobs:
       - name: Rename APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/release/app-release.apk "dist/yacb-next-${GITHUB_REF_NAME}.apk"
+          cp app/build/outputs/apk/release/app-release.apk "dist/yacb-next-${TAG}.apk"
 
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.TAG }}
           files: dist/*.apk
           generate_release_notes: true
