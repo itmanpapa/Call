@@ -310,4 +310,33 @@
     <!-- Data sources (not translatable formats) -->
     <string name="info_source_with_category" translatable="false">%1$s: %2$s</string>
     <string name="info_description_with_source" translatable="false">%1$s · %2$s</string>
+
+    <!-- Data sources: lists imported from a URL -->
+    <string name="sources_add_url">Add list by URL</string>
+    <string name="sources_add_url_enter">Enter URL…</string>
+    <string name="sources_add_url_preset_summary">License: %1$s · last changed: %2$s</string>
+    <string name="sources_add_url_url">List URL</string>
+    <string name="sources_add_url_name">Name (optional)</string>
+    <string name="sources_add_url_auto_update">Update automatically (daily)</string>
+    <string name="sources_add_url_hint">Supported formats: Fritz!Box phone book (XML), vCard, CSV or one number per line. The list is downloaded directly from this address; for GitHub, use the link to the raw file.</string>
+    <string name="sources_add_url_preset_info">Project: %1$s
+License: %2$s
+The list is maintained by third parties. It is downloaded only when you add it.</string>
+    <string name="sources_add_url_button">Add</string>
+    <string name="sources_add_url_invalid">Enter a valid http or https address.</string>
+    <string name="sources_url_html_error">The address points to a web page, not to a list file. For GitHub, use the “Raw” link of the file.</string>
+    <string name="sources_url_unsupported_format">Unsupported file format.</string>
+    <string name="sources_url_download_failed">Download failed: %s</string>
+    <string name="source_kind_url">List from URL</string>
+    <string name="source_url_auto_update_on">Updated automatically</string>
+    <string name="source_url_auto_update_off">Manual updates</string>
+    <string name="source_url_checked">Checked %s</string>
+    <string name="source_url_last_error">Last update failed (%1$s): %2$s</string>
+    <string name="source_url_actions">List actions</string>
+    <string name="source_url_update_now">Update now</string>
+    <string name="source_url_enable_auto_update">Turn on automatic updates</string>
+    <string name="source_url_disable_auto_update">Turn off automatic updates</string>
+    <string name="source_url_updated">The list was updated. Numbers: %d</string>
+    <string name="source_url_not_modified">The list has not changed.</string>
+    <string name="source_url_update_failed">Update failed: %s</string>
 </resources>

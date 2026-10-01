@@ -25,6 +25,7 @@ public class YacbHolder {
     private static BlacklistService blacklistService;
 
     private static SourcesManager sourcesManager;
+    private static RemoteListManager remoteListManager;
 
     private static NumberInfoService numberInfoService;
 
@@ -68,6 +69,10 @@ public class YacbHolder {
 
     static void setSourcesManager(SourcesManager sourcesManager) {
         YacbHolder.sourcesManager = sourcesManager;
+    }
+
+    static void setRemoteListManager(RemoteListManager remoteListManager) {
+        YacbHolder.remoteListManager = remoteListManager;
     }
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
@@ -116,6 +121,10 @@ public class YacbHolder {
 
     public static SourcesManager getSourcesManager() {
         return sourcesManager;
+    }
+
+    public static RemoteListManager getRemoteListManager() {
+        return remoteListManager;
     }
 
     public static NumberInfoService getNumberInfoService() {

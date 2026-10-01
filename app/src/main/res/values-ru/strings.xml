@@ -281,4 +281,33 @@
         <item quantity="many">%d номеров</item>
         <item quantity="other">%d номера</item>
     </plurals>
+
+    <!-- Data sources: lists imported from a URL -->
+    <string name="sources_add_url">Добавить список по ссылке</string>
+    <string name="sources_add_url_enter">Ввести адрес…</string>
+    <string name="sources_add_url_preset_summary">Лицензия: %1$s · последнее изменение: %2$s</string>
+    <string name="sources_add_url_url">Адрес списка</string>
+    <string name="sources_add_url_name">Название (необязательно)</string>
+    <string name="sources_add_url_auto_update">Обновлять автоматически (раз в день)</string>
+    <string name="sources_add_url_hint">Поддерживаемые форматы: телефонная книга Fritz!Box (XML), vCard, CSV или по одному номеру в строке. Список скачивается напрямую по этому адресу; для GitHub укажите ссылку на исходный файл (Raw).</string>
+    <string name="sources_add_url_preset_info">Проект: %1$s
+Лицензия: %2$s
+Список ведут сторонние авторы. Он скачивается, только когда вы его добавите.</string>
+    <string name="sources_add_url_button">Добавить</string>
+    <string name="sources_add_url_invalid">Введите корректный адрес http или https.</string>
+    <string name="sources_url_html_error">Адрес ведёт на веб-страницу, а не на файл списка. Для GitHub используйте ссылку «Raw» на файл.</string>
+    <string name="sources_url_unsupported_format">Неподдерживаемый формат файла.</string>
+    <string name="sources_url_download_failed">Не удалось скачать: %s</string>
+    <string name="source_kind_url">Список по ссылке</string>
+    <string name="source_url_auto_update_on">Обновляется автоматически</string>
+    <string name="source_url_auto_update_off">Обновление вручную</string>
+    <string name="source_url_checked">Проверен %s</string>
+    <string name="source_url_last_error">Последнее обновление не удалось (%1$s): %2$s</string>
+    <string name="source_url_actions">Действия со списком</string>
+    <string name="source_url_update_now">Обновить сейчас</string>
+    <string name="source_url_enable_auto_update">Включить автообновление</string>
+    <string name="source_url_disable_auto_update">Выключить автообновление</string>
+    <string name="source_url_updated">Список обновлён. Номеров: %d</string>
+    <string name="source_url_not_modified">Список не изменился.</string>
+    <string name="source_url_update_failed">Не удалось обновить: %s</string>
 </resources>

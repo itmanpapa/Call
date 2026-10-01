@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phonebooks>
+<phonebook owner="1" name="Rufsperren"><contact><category>0</category><person><realName>1</realName></person><telephony
+nid="3"><number type="home" prio="1" id="0">015112345678</number><number
+type="home" id="1">0049 30 1234567</number><number type="home" id="2">00375291234567</number></telephony><services /><setup /><features
+doorphone="0" /><mod_time>1515239176</mod_time><uniqueid>16</uniqueid></contact><contact><category>0</category><person><realName>Gewinnspiel &amp; Co. KG</realName></person><telephony
+nid="2"><number type="work" prio="1" id="0">0900123*</number><number
+type="work" id="1">0011129</number></telephony><services /><setup /><features
+doorphone="0" /><mod_time>1543020169</mod_time><uniqueid>28</uniqueid></contact><contact><category>0</category><person><realName>Leer</realName></person><telephony
+nid="1"><number type="work" prio="1" id="0"></number></telephony><services /><setup /><features
+doorphone="0" /><mod_time>1543020169</mod_time><uniqueid>29</uniqueid></contact><contact><category>1</category><person><realName>Energie-Abzocke</realName><imageURL>x</imageURL></person><telephony
+nid="1"><number type="work" prio="1" id="0" vanity="">+49 (0)221 98765432</number></telephony><services /><setup /><features
+doorphone="0" /><mod_time>1543020169</mod_time><uniqueid>30</uniqueid></contact></phonebook>
+</phonebooks>

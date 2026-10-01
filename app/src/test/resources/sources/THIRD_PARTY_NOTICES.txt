@@ -1,0 +1,34 @@
+Test fixtures in this directory
+==============================
+
+spamcalllist_fritzbox_excerpt.xml, spamcalllist_nextcloud_excerpt.vcf
+    Excerpts of export/fritzbox_export.xml and export/nextcloud_export.vcf from
+    https://github.com/dontobi/SpamCalllist (commit of 2024-03-31), shortened.
+
+    MIT License
+
+    Copyright (c) 2021-2023 [Tobias 'dontobi' Schug]
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+fritzbox_phonebook_synthetic.xml, name_number_synthetic.csv, vcard_synthetic.vcf
+    Synthetic data written for these tests. They imitate the formats of
+    https://github.com/hvoigt/telefon-spam (no license, so nothing is copied) and
+    https://github.com/andreaspreuss/fritzbox_blacklists (GPL-2.0, not copied to
+    keep the test data under the project license).

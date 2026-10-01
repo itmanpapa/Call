@@ -15,6 +15,7 @@ import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
 import dummydomain.yetanothercallblocker.data.db.YacbDaoSessionFactory;
 import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
+import dummydomain.yetanothercallblocker.data.sources.OkHttpListDownloader;
 import dummydomain.yetanothercallblocker.sia.Settings;
 import dummydomain.yetanothercallblocker.sia.SettingsImpl;
 import dummydomain.yetanothercallblocker.sia.Storage;
@@ -161,6 +162,12 @@ public class Config {
                 Collections.singletonList(
                         new YacbDatabaseProvider(communityDatabase, featuredDatabase)));
         YacbHolder.setSourcesManager(sourcesManager);
+
+        YacbHolder.setRemoteListManager(new RemoteListManager(sourcesManager,
+                new OkHttpListDownloader(() -> {
+                    DeferredInit.initNetwork();
+                    return new OkHttpClient();
+                })));
 
         // the lists are small, but don't read them on the main thread;
         // a lookup before the loading has finished waits for it

@@ -12,4 +12,9 @@
         android:title="@string/sources_import_bnetza"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_add_url"
+        android:title="@string/sources_add_url"
+        app:showAsAction="never" />
+
 </menu>

@@ -245,4 +245,33 @@
         <item quantity="one">%d Nummer</item>
         <item quantity="other">%d Nummern</item>
     </plurals>
+
+    <!-- Data sources: lists imported from a URL -->
+    <string name="sources_add_url">Liste per URL hinzufügen</string>
+    <string name="sources_add_url_enter">URL eingeben…</string>
+    <string name="sources_add_url_preset_summary">Lizenz: %1$s · zuletzt geändert: %2$s</string>
+    <string name="sources_add_url_url">URL der Liste</string>
+    <string name="sources_add_url_name">Name (optional)</string>
+    <string name="sources_add_url_auto_update">Automatisch aktualisieren (täglich)</string>
+    <string name="sources_add_url_hint">Unterstützte Formate: Fritz!Box-Telefonbuch (XML), vCard, CSV oder eine Nummer pro Zeile. Die Liste wird direkt von dieser Adresse geladen; bei GitHub den Link auf die Rohdatei (Raw) verwenden.</string>
+    <string name="sources_add_url_preset_info">Projekt: %1$s
+Lizenz: %2$s
+Die Liste wird von Dritten gepflegt und erst heruntergeladen, wenn Sie sie hinzufügen.</string>
+    <string name="sources_add_url_button">Hinzufügen</string>
+    <string name="sources_add_url_invalid">Bitte eine gültige http- oder https-Adresse eingeben.</string>
+    <string name="sources_url_html_error">Die Adresse führt zu einer Webseite, nicht zu einer Listendatei. Bei GitHub den „Raw“-Link der Datei verwenden.</string>
+    <string name="sources_url_unsupported_format">Nicht unterstütztes Dateiformat.</string>
+    <string name="sources_url_download_failed">Download fehlgeschlagen: %s</string>
+    <string name="source_kind_url">Liste aus URL</string>
+    <string name="source_url_auto_update_on">Wird automatisch aktualisiert</string>
+    <string name="source_url_auto_update_off">Manuelle Aktualisierung</string>
+    <string name="source_url_checked">Geprüft %s</string>
+    <string name="source_url_last_error">Letzte Aktualisierung fehlgeschlagen (%1$s): %2$s</string>
+    <string name="source_url_actions">Aktionen für die Liste</string>
+    <string name="source_url_update_now">Jetzt aktualisieren</string>
+    <string name="source_url_enable_auto_update">Automatische Aktualisierung einschalten</string>
+    <string name="source_url_disable_auto_update">Automatische Aktualisierung ausschalten</string>
+    <string name="source_url_updated">Die Liste wurde aktualisiert. Nummern: %d</string>
+    <string name="source_url_not_modified">Die Liste hat sich nicht geändert.</string>
+    <string name="source_url_update_failed">Aktualisierung fehlgeschlagen: %s</string>
 </resources>
