@@ -11,6 +11,9 @@ on:
       tag:
         description: 'Release tag to build, e.g. v0.8.0'
         required: true
+      ref:
+        description: 'Optional branch/commit to build instead of the tag'
+        required: false
 
 permissions:
   contents: write
@@ -27,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ env.TAG }}
+          ref: ${{ inputs.ref || env.TAG }}
 
       - uses: actions/setup-java@v4
         with:
