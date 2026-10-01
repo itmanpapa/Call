@@ -25,12 +25,13 @@ add_call() { # number type(1 in, 2 out, 3 missed, 5 rejected) minutes_ago durati
         --bind number:s:"$1" --bind type:i:"$2" \
         --bind date:l:$(( now - $3 * 60000 )) --bind duration:i:"$4" --bind new:i:0
 }
-# oldest first: the app pages the call log by _ID, so ids must grow with the date
-add_call "+441632960001" 3 1500 0
-add_call "+4940555000" 2 300 61
-add_call "+4917612345678" 5 90 0
-add_call "+4989123456" 1 42 125
+# newest first on purpose: ids do not follow the date order (like after a restore),
+# the call log must still show each call once
 add_call "+4930901820" 3 5 0
+add_call "+4989123456" 1 42 125
+add_call "+4917612345678" 5 90 0
+add_call "+4940555000" 2 300 61
+add_call "+441632960001" 3 1500 0
 echo "call log rows: $(adb shell content query --uri content://call_log/calls --projection number | grep -c Row)"
 
 shot() {

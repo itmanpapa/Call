@@ -21,6 +21,7 @@ import java.util.Map;
 import dummydomain.yetanothercallblocker.App;
 
 import static dummydomain.yetanothercallblocker.data.CallLogHelper.loadCalls;
+import static dummydomain.yetanothercallblocker.data.CallLogHelper.loadLatestCalls;
 
 public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.GroupId, CallLogItemGroup> {
 
@@ -56,19 +57,26 @@ public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.Gro
     public static class GroupId {
         private static final String KEY_FIRST = "CallLogDataSource.ComplexId.first";
         private static final String KEY_LAST = "CallLogDataSource.ComplexId.last";
+        private static final String KEY_FIRST_DATE = "CallLogDataSource.ComplexId.firstDate";
+        private static final String KEY_LAST_DATE = "CallLogDataSource.ComplexId.lastDate";
 
         final long firstId, lastId;
+        final long firstDate, lastDate;
 
-        GroupId(long firstId, long lastId) {
+        GroupId(long firstId, long firstDate, long lastId, long lastDate) {
             this.firstId = firstId;
+            this.firstDate = firstDate;
             this.lastId = lastId;
+            this.lastDate = lastDate;
         }
 
         public static GroupId fromParcelable(@Nullable Parcelable parcelable) {
             if (parcelable instanceof Bundle) {
                 Bundle bundle = (Bundle) parcelable;
-                if (bundle.containsKey(KEY_FIRST) && bundle.containsKey(KEY_LAST)) {
-                    return new GroupId(bundle.getLong(KEY_FIRST), bundle.getLong(KEY_LAST));
+                if (bundle.containsKey(KEY_FIRST) && bundle.containsKey(KEY_LAST)
+                        && bundle.containsKey(KEY_FIRST_DATE) && bundle.containsKey(KEY_LAST_DATE)) {
+                    return new GroupId(bundle.getLong(KEY_FIRST), bundle.getLong(KEY_FIRST_DATE),
+                            bundle.getLong(KEY_LAST), bundle.getLong(KEY_LAST_DATE));
                 }
             }
             return null;
@@ -78,6 +86,8 @@ public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.Gro
             Bundle bundle = new Bundle();
             bundle.putLong(KEY_FIRST, firstId);
             bundle.putLong(KEY_LAST, lastId);
+            bundle.putLong(KEY_FIRST_DATE, firstDate);
+            bundle.putLong(KEY_LAST_DATE, lastDate);
             return bundle;
         }
 
@@ -103,7 +113,8 @@ public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.Gro
     @Override
     public GroupId getKey(@NonNull CallLogItemGroup group) {
         List<CallLogItem> items = group.getItems();
-        return new GroupId(items.get(0).id, items.get(items.size() - 1).id);
+        CallLogItem first = items.get(0), last = items.get(items.size() - 1);
+        return new GroupId(first.id, first.timestamp, last.id, last.timestamp);
     }
 
     @Override
@@ -119,10 +130,11 @@ public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.Gro
             // load something or the list will be empty
 
             items = new ArrayList<>(size);
-            items.addAll(loadCalls(getContext(), params.requestedInitialKey.firstId, true, size / 2));
-            items.addAll(loadCalls(getContext(), params.requestedInitialKey.firstId + 1, false, size / 2));
+            GroupId key = params.requestedInitialKey;
+            items.addAll(loadCalls(getContext(), key.firstId, key.firstDate, true, false, size / 2));
+            items.addAll(loadCalls(getContext(), key.firstId, key.firstDate, false, true, size / 2));
         } else {
-            items = loadCalls(getContext(), null, false, size);
+            items = loadLatestCalls(getContext(), size);
         }
 
         callback.onResult(groupConverter.apply(loadInfo(items)));
@@ -135,7 +147,8 @@ public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.Gro
 
         int size = params.requestedLoadSize * 3 / 2; // compensate for grouping
 
-        List<CallLogItem> items = loadCalls(getContext(), params.key.firstId, true, size);
+        List<CallLogItem> items = loadCalls(getContext(),
+                params.key.firstId, params.key.firstDate, true, false, size);
 
         callback.onResult(groupConverter.apply(loadInfo(items)));
     }
@@ -147,7 +160,8 @@ public class CallLogDataSource extends ItemKeyedDataSource<CallLogDataSource.Gro
 
         int size = params.requestedLoadSize * 3 / 2; // compensate for grouping
 
-        List<CallLogItem> items = loadCalls(getContext(), params.key.lastId, false, size);
+        List<CallLogItem> items = loadCalls(getContext(),
+                params.key.lastId, params.key.lastDate, false, false, size);
 
         callback.onResult(groupConverter.apply(loadInfo(items)));
     }

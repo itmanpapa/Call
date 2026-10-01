@@ -19,8 +19,20 @@ public class CallLogHelper {
             CallLog.Calls.DATE, CallLog.Calls.DURATION
     };
 
-    public static List<CallLogItem> loadCalls(Context context, Long anchorId, boolean before,
-                                              int limit) {
+    /**
+     * Loads calls ordered from the newest to the oldest.
+     *
+     * @param anchorId   id of the anchor call or null to load from the newest call
+     * @param anchorDate date of the anchor call (ignored if {@code anchorId} is null)
+     * @param before     load calls newer than the anchor (otherwise older)
+     * @param inclusive  include the anchor call itself (only when loading older calls)
+     */
+    public static List<CallLogItem> loadLatestCalls(Context context, int limit) {
+        return loadCalls(context, null, 0, false, false, limit);
+    }
+
+    public static List<CallLogItem> loadCalls(Context context, Long anchorId, long anchorDate,
+                                              boolean before, boolean inclusive, int limit) {
         if (!PermissionHelper.hasCallLogPermission(context)) {
             return new ArrayList<>();
         }
@@ -30,13 +42,18 @@ public class CallLogHelper {
         String selection;
         String[] selectionArgs;
         if (anchorId != null) {
+            // the anchor is (date, id): ids alone don't follow the date order
+            // (e.g. after a call log restore)
+            String date = CallLog.Calls.DATE, id = CallLog.Calls._ID;
             if (before) {
-                selection = CallLog.Calls._ID + " > ?";
+                selection = date + " > ? OR (" + date + " = ? AND " + id + " > ?)";
                 reverseOrder = true;
             } else {
-                selection = CallLog.Calls._ID + " < ?";
+                selection = date + " < ? OR (" + date + " = ? AND " + id
+                        + (inclusive ? " <= ?)" : " < ?)");
             }
-            selectionArgs = new String[]{String.valueOf(anchorId)};
+            String dateArg = String.valueOf(anchorDate);
+            selectionArgs = new String[]{dateArg, dateArg, String.valueOf(anchorId)};
         } else {
             selection = null;
             selectionArgs = null;
@@ -44,7 +61,8 @@ public class CallLogHelper {
 
         Uri uri = CallLog.Calls.CONTENT_URI;
 
-        String sortOrder = CallLog.Calls.DATE + " " + (reverseOrder ? "ASC" : "DESC");
+        String direction = reverseOrder ? " ASC" : " DESC";
+        String sortOrder = CallLog.Calls.DATE + direction + ", " + CallLog.Calls._ID + direction;
 
         // should probably work since JELLY_BEAN_MR1
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {

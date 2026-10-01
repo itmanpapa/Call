@@ -57,7 +57,7 @@ public class DbFilteringUtils {
     public static List<String> detectPrefixes(Context context, String countryCode) {
         Set<String> prefixes = new HashSet<>();
 
-        List<CallLogItem> callLogItems = CallLogHelper.loadCalls(context, null, false, 100);
+        List<CallLogItem> callLogItems = CallLogHelper.loadLatestCalls(context, 100);
 
         for (CallLogItem callLogItem : callLogItems) {
             String number = NumberUtils.normalizeNumber(callLogItem.number, countryCode);
