@@ -60,7 +60,7 @@ jobs:
       - name: Rename APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/release/app-release.apk "dist/yacb-next-${TAG}.apk"
+          cp app/build/outputs/apk/release/app-release.apk "dist/callguard-${TAG}.apk"
 
       - uses: softprops/action-gh-release@v2
         with:

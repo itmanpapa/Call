@@ -1,4 +1,4 @@
-# YACB Next — форк Yet Another Call Blocker
+# CallGuard — форк Yet Another Call Blocker
 
 Это форк [Yet Another Call Blocker](https://gitlab.com/xynngh/YetAnotherCallBlocker) от **xynngh**.
 Последняя версия оригинала, 0.5.17, вышла в 2021 году. Форк собирается под современный Android SDK,

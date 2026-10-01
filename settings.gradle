@@ -15,5 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'YACB-Next'
+rootProject.name = 'CallGuard'
 include ':app'
