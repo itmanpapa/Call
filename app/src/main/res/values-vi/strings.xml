@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="license">Ứng dụng này được cấp phép dưới chỉ AGPL-3.0.</string>
-    <string name="issues">Tìm sự hỗ trợ / báo cáo vấn đề</string>
-    <string name="translate">Phiên dịch ứng dụng này trên Weblate</string>
-    <string name="faq">Những câu hỏi thường gặp</string>
-    <string name="homepage">Trang chủ của dự án</string>
     <string name="logo_description">Logo</string>
-    <string name="motto">Dễ dàng chặn các cuộc gọi không mong muốn</string>
-    <string name="db_last_update_check_checking">đang kiểm tra…</string>
     <string name="db_last_update_check_never">không bao giờ</string>
-    <string name="db_last_update_check">Kiểm tra cập nhật lần cuối: %s</string>
     <string name="db_version_not_available">không có sẵn</string>
-    <string name="db_version">Phiên bản cơ sở dữ liệu: %s</string>
     <string name="version_string">v%s</string>
     <string name="about_activity">Giới thiệu</string>
     <string name="open_about_activity">Giới thiệu</string>
@@ -31,18 +23,11 @@
     <string name="lookup_error_not_a_number">Số điện thoại được mong đợi</string>
     <string name="lookup_hint_input_number">Số điện thoại</string>
     <string name="title_lookup_number">Tra cứu số điện thoại</string>
-    <string name="db_management_update_result">Cập nhật hoàn tất; Cơ sở dữ liệu phiên bản: %d</string>
-    <string name="db_management_update_db">Cập nhật cơ sở dữ liệu</string>
-    <string name="db_management_reset_secondary">Đặt lại các bản cập nhật</string>
-    <string name="db_management_reset_base">Đặt lại cơ sở dữ liệu</string>
     <string name="notification_incoming_call_negative">Cuộc gọi tiêu cực</string>
     <string name="notification_channel_name_negative">Cuộc gọi tiêu cực</string>
     <string name="notification_incoming_call_text_description">Tiêu cực: %1$d, tích cực: %2$d, trung tính: %3$d</string>
     <string name="notification_incoming_call_positive">Cuộc gọi tích cực</string>
     <string name="notification_channel_name_positive">Cuộc gọi tích cực</string>
-    <string name="db_management_db_info">Thông tin cơ sở dữ liệu</string>
-    <string name="db_management_activity_label">Quản lý cơ sở dữ liệu</string>
-    <string name="open_db_management_activity">Quản lý cơ sở dữ liệu</string>
     <string name="add_to_blacklist">Thêm vào danh sách đen</string>
     <string name="info_in_blacklist_contact">Trong danh sách đen (danh bạ không bị chặn)</string>
     <string name="info_in_blacklist">Trong danh sách đen</string>

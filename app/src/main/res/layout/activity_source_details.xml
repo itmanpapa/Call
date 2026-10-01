@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SourceDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/item_padding">
+
+        <TextView
+            android:id="@+id/details_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="Community spam list for Germany, updated daily" />
+
+        <!-- status: the same for all sources -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/item_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/source_details_status"
+                    android:textAppearance="?attr/textAppearanceLabelLarge" />
+
+                <TextView
+                    android:id="@+id/details_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textIsSelectable="true"
+                    tools:text="Updated Oct 1, 2026 · 512 numbers" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/details_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/details_extra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textIsSelectable="true"
+                    android:visibility="gone"
+                    tools:text="Last check: Oct 1, 2026"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/details_update"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/source_update_now"
+                    app:icon="@drawable/ic_file_download_24dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- YACB database -->
+        <LinearLayout
+            android:id="@+id/yacb_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/yacb_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textIsSelectable="true"
+                tools:text="Base version: 1800" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/yacb_reset_updates"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/yacb_reset_updates" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/yacb_reset_base"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yacb_reset_base" />
+
+        </LinearLayout>
+
+        <!-- PhoneBlock -->
+        <LinearLayout
+            android:id="@+id/phoneblock_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phoneblock_dialog_message"
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/phoneblock_get_token"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/phoneblock_get_token" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneblock_token_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/phoneblock_token_hint"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneblock_token"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword|textNoSuggestions"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/phoneblock_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/phoneblock_save" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/phoneblock_min_votes"
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/phoneblock_min_votes_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/phoneblock_votes_10"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/phoneblock_votes_20"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/phoneblock_votes_50"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/phoneblock_votes_100"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/phoneblock_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="48dp"
+                android:text="@string/phoneblock_online_check"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phoneblock_online_details"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/phoneblock_terms"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+        </LinearLayout>
+
+        <!-- Bundesnetzagentur -->
+        <LinearLayout
+            android:id="@+id/bnetza_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bnetza_details_message"
+                android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bnetza_open_page"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/bnetza_open_page" />
+
+        </LinearLayout>
+
+        <!-- lists added by the user -->
+        <LinearLayout
+            android:id="@+id/list_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/list_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textIsSelectable="true"
+                tools:text="https://example.org/list.csv" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/list_auto_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="@string/sources_add_url_auto_update"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/list_delete"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/source_delete"
+                app:icon="@drawable/ic_delete_24dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

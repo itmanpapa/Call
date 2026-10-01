@@ -94,11 +94,6 @@
     <string name="title_edit_blacklist_item_activity">எண்ணைத் திருத்து</string>
     <string name="edit_blacklist_item_name">பெயர்</string>
     <string name="add_to_blacklist">கரும்பட்டியலில் சேர்</string>
-    <string name="open_db_management_activity">தரவுத்தளத்தை நிர்வகி</string>
-    <string name="db_management_activity_label">தரவுத்தள நிர்வகிப்பு</string>
-    <string name="db_management_db_info">தரவுத்தள தகவல்</string>
-    <string name="db_management_reset_base">தரவுத்தளத்தை அகரமாக்கு</string>
-    <string name="db_management_reset_secondary">புதுப்பிப்புகளை அகரமாக்கு</string>
     <string name="lookup_hint_input_number">தொலைபேசி எண்</string>
     <string name="lookup_clear_number">எண்ணைத் துடை</string>
     <string name="lookup_paste_number">எண்ணை ஒட்டு</string>
@@ -107,8 +102,6 @@
     <string name="monitoring_service_notification_title">கண்காணிப்பு சேவை</string>
     <string name="open_about_activity">இதுபற்றி</string>
     <string name="about_activity">இதுபற்றி</string>
-    <string name="db_version">தரவுத்தள பதிப்பு: %s</string>
-    <string name="translate">Weblate இல் செயலியை மொழிபெயர்</string>
     <string name="notification_channel_group_name_incoming_calls">உள்வரு அழைப்புகள்</string>
     <string name="notification_channel_name_known">அறிந்த அழைப்புகள்</string>
     <string name="notification_channel_name_blocked_info">தடுக்கப்பட்ட தகவல்</string>
@@ -142,9 +135,6 @@
     <string name="save">சேமி</string>
     <string name="blacklist_delete">அழி</string>
     <string name="blacklist_export">ஏற்றுமதிசெய்</string>
-    <string name="db_management_update_result">புதுப்பிப்பு முடிந்தது; தரவுத்தள பதிப்பு: %d</string>
-    <string name="issues">ஆதரவு பெறு / சிக்கலைப் புகாரளி</string>
     <string name="title_add_blacklist_item_activity">எண்ணைச் சேர்</string>
-    <string name="db_management_update_db">தரவுத்தளத்தைப் புதுப்பி</string>
     <string name="lookup_load_reviews">விமர்சனங்களை ஏற்று (எழிவரி)</string>
 </resources>

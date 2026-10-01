@@ -34,10 +34,10 @@
 
     <PreferenceCategory app:title="@string/settings_category_call_blocking">
         <Preference
-            app:key="dataSources"
+            app:key="databases"
             app:persistent="false"
-            app:summary="@string/sources_preference_summary"
-            app:title="@string/sources_activity_title" />
+            app:summary="@string/databases_preference_summary"
+            app:title="@string/databases_title" />
         <SwitchPreferenceCompat
             app:key="blockNegativeSiaNumbers"
             app:summary="@string/block_negative_sia_numbers_summary"

@@ -6,90 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".SourcesActivity">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sources_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/sources_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/phoneblock_card"
-            style="@style/Widget.Material3.CardView.Filled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/item_padding"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/item_padding"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/item_padding">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/phoneblock_title"
-                        android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                    <TextView
-                        android:id="@+id/phoneblock_card_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        tools:text="@string/phoneblock_card_not_configured" />
-
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/phoneblock_card_button"
-                    style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    tools:text="@string/phoneblock_card_enter_key" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sources_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="88dp"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/source_item" />
-
-    </LinearLayout>
+        android:clipToPadding="false"
+        android:paddingTop="4dp"
+        android:paddingBottom="88dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/source_item" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/sources_import_fab"
+        android:id="@+id/sources_add_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:text="@string/sources_import"
+        android:text="@string/sources_add_list"
         app:icon="@drawable/ic_plus_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

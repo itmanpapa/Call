@@ -1,7 +1,6 @@
 package dummydomain.yetanothercallblocker;
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,15 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,86 +20,68 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import dummydomain.yetanothercallblocker.data.RemoteListManager;
-import dummydomain.yetanothercallblocker.data.RemoteListPresets;
 import dummydomain.yetanothercallblocker.data.SourcesManager;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.data.provider.PhoneBlockOnlineProvider;
-import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
-import dummydomain.yetanothercallblocker.data.sources.BnetzaMeasuresParser;
 import dummydomain.yetanothercallblocker.data.sources.NumberListFormatDetector;
-import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.ParseResult;
-import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
-import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
-import dummydomain.yetanothercallblocker.work.PhoneBlockSyncWorker;
 import dummydomain.yetanothercallblocker.data.sources.RemoteListDownloader;
-import dummydomain.yetanothercallblocker.data.sources.RemoteListInfo;
+import dummydomain.yetanothercallblocker.event.MainDbDownloadFinishedEvent;
+import dummydomain.yetanothercallblocker.event.MainDbDownloadingEvent;
+import dummydomain.yetanothercallblocker.event.SecondaryDbUpdateFinished;
+import dummydomain.yetanothercallblocker.event.SecondaryDbUpdatingEvent;
 import dummydomain.yetanothercallblocker.work.ListsUpdateScheduler;
 
 /**
- * "Data sources" screen: the list of number information sources with their
- * state, enable switches, ordering, deletion and import of offline lists,
- * and the PhoneBlock settings (API key, threshold, manual sync).
+ * "Databases" screen: one card per number source (the YACB database, PhoneBlock,
+ * the Bundesnetzagentur list, then the lists added by the user) with its status and
+ * an enable switch. A tap opens {@link SourceDetailsActivity}; the only other action
+ * is adding a list (from a file or a URL).
  */
-public class SourcesActivity extends BaseActivity {
+public class SourcesActivity extends BaseActivity implements SourceTasks.Listener {
 
-    private static final String[] CSV_MIME_TYPES = {
-            "text/*", "text/csv", "text/comma-separated-values"};
-    private static final String[] BNETZA_MIME_TYPES = {
-            "text/*", "text/html", "text/plain", "application/xhtml+xml"};
+    private static final String[] FILE_MIME_TYPES = {
+            "text/*", "text/csv", "text/comma-separated-values", "text/xml",
+            "application/xml", "text/vcard", "text/x-vcard"};
 
     /** Larger files are certainly not number lists (and could exhaust the memory). */
     private static final int MAX_IMPORT_FILE_SIZE = 20 * 1024 * 1024;
 
     private static final int MAX_SKIPPED_EXAMPLES = 5;
 
-    /** Long error messages of URL lists are cut in the list row. */
-    private static final int MAX_ERROR_LENGTH = 120;
-
-    private static final String SEPARATOR = " · ";
-
     private static final Logger LOG = LoggerFactory.getLogger(SourcesActivity.class);
 
     private final SourcesManager sourcesManager = YacbHolder.getSourcesManager();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    private final ActivityResultLauncher<String[]> csvPicker = registerForActivityResult(
-            new ActivityResultContracts.OpenDocument(), this::onCsvFilePicked);
-    private final ActivityResultLauncher<String[]> bnetzaPicker = registerForActivityResult(
-            new ActivityResultContracts.OpenDocument(), this::onBnetzaFilePicked);
+    private final ActivityResultLauncher<String[]> filePicker = registerForActivityResult(
+            new ActivityResultContracts.OpenDocument(), this::onFilePicked);
 
     private SourcesAdapter adapter;
-    private LinearProgressIndicator progress;
-    private ExtendedFloatingActionButton importFab;
-
-    private int busyTasks;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, SourcesActivity.class);
@@ -117,33 +92,28 @@ public class SourcesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sources);
 
-        progress = findViewById(R.id.sources_progress);
-        importFab = findViewById(R.id.sources_import_fab);
-        importFab.setOnClickListener(v -> showImportChooser());
-
-        findViewById(R.id.phoneblock_card).setOnClickListener(v -> showPhoneBlockDialog());
-        findViewById(R.id.phoneblock_card_button).setOnClickListener(v -> showPhoneBlockDialog());
+        findViewById(R.id.sources_add_fab).setOnClickListener(v -> showAddChooser());
 
         adapter = new SourcesAdapter();
         RecyclerView recyclerView = findViewById(R.id.sources_list);
         recyclerView.setAdapter(adapter);
 
-        runInBackground(this::ensureListsUpdateScheduled);
+        executor.execute(this::ensureListsUpdateScheduled);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        updatePhoneBlockCard();
+    protected void onStart() {
+        super.onStart();
+        EventUtils.register(this);
+        SourceTasks.addListener(this);
+        reload();
     }
 
-    /** Keeps PhoneBlock discoverable: shows whether the API key is set. */
-    private void updatePhoneBlockCard() {
-        boolean configured = !TextUtils.isEmpty(App.getSettings().getPhoneBlockToken());
-        ((TextView) findViewById(R.id.phoneblock_card_status)).setText(configured
-                ? R.string.phoneblock_card_configured : R.string.phoneblock_card_not_configured);
-        ((Button) findViewById(R.id.phoneblock_card_button)).setText(configured
-                ? R.string.phoneblock_card_settings : R.string.phoneblock_card_enter_key);
+    @Override
+    protected void onStop() {
+        SourceTasks.removeListener(this);
+        EventUtils.unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -160,32 +130,35 @@ public class SourcesActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_sources, menu);
-        return true;
-    }
+    // state updates
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_import_csv) {
-            pickCsvFile();
-            return true;
-        } else if (id == R.id.menu_import_bnetza) {
-            showBnetzaImportInfo();
-            return true;
-        } else if (id == R.id.menu_phoneblock) {
-            showPhoneBlockDialog();
-            return true;
-        } else if (id == R.id.menu_add_url) {
-            showAddUrlChooser();
-            return true;
+    public void onSourceTaskChanged(String sourceId, SourceTasks.Outcome outcome) {
+        if (outcome != null && outcome.getNotice() != null) {
+            Toast.makeText(this, outcome.getNotice(), Toast.LENGTH_SHORT).show();
         }
-        return super.onOptionsItemSelected(item);
+        reload();
     }
 
-    // background work
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onSecondaryDbUpdating(SecondaryDbUpdatingEvent event) {
+        reload();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onSecondaryDbUpdateFinished(SecondaryDbUpdateFinished event) {
+        reload();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onMainDbDownloading(MainDbDownloadingEvent event) {
+        reload();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onMainDbDownloadFinished(MainDbDownloadFinishedEvent event) {
+        reload();
+    }
 
     private interface BackgroundAction {
         void run() throws Exception;
@@ -195,7 +168,6 @@ public class SourcesActivity extends BaseActivity {
      * Runs the action (may be null) on the background thread, then reloads the list.
      */
     private void runInBackground(BackgroundAction action) {
-        setBusy(true);
         executor.execute(() -> {
             try {
                 if (action != null) action.run();
@@ -203,308 +175,71 @@ public class SourcesActivity extends BaseActivity {
                 LOG.warn("runInBackground() action failed", e);
             }
 
-            List<SourcesManager.SourceInfo> sources;
+            List<SourceItem> items;
             try {
-                sources = sourcesManager.getSources();
+                items = SourceItem.loadAll(this);
             } catch (Exception e) {
-                LOG.error("runInBackground() failed to get sources", e);
-                sources = Collections.emptyList();
+                LOG.error("runInBackground() failed to load sources", e);
+                items = Collections.emptyList();
             }
 
-            List<SourcesManager.SourceInfo> result = sources;
+            List<SourceItem> result = items;
             runOnUiThread(() -> {
                 if (isFinishing() || isDestroyed()) return;
-                setBusy(false);
                 adapter.setItems(result);
             });
         });
     }
 
-    private void setBusy(boolean busy) {
-        busyTasks += busy ? 1 : -1;
-        boolean show = busyTasks > 0;
-        progress.setVisibility(show ? View.VISIBLE : View.GONE);
-        importFab.setEnabled(!show);
+    private void reload() {
+        if (!executor.isShutdown()) runInBackground(null);
     }
 
     // actions
 
-    private void onEnabledChanged(SourcesManager.SourceInfo source, boolean enabled) {
-        runInBackground(() -> sourcesManager.setEnabled(source.getId(), enabled));
+    private void onEnabledChanged(SourceItem item, boolean enabled) {
+        runInBackground(() -> {
+            sourcesManager.setEnabled(item.id, enabled);
+            // the online check is a part of PhoneBlock
+            if (item.kind == SourceItem.Kind.PHONEBLOCK && !enabled) {
+                sourcesManager.setEnabled(PhoneBlockOnlineProvider.ID, false);
+            }
+        });
 
-        if (enabled && PhoneBlockOnlineProvider.ID.equals(source.getId())
+        if (enabled && item.kind == SourceItem.Kind.PHONEBLOCK
                 && TextUtils.isEmpty(App.getSettings().getPhoneBlockToken())) {
-            showPhoneBlockDialog();
+            // nothing to use without a key
+            openDetails(item);
         }
     }
 
-    private static boolean isPhoneBlockSource(SourcesManager.SourceInfo source) {
-        return PhoneBlockSync.SOURCE_ID.equals(source.getId())
-                || PhoneBlockOnlineProvider.ID.equals(source.getId());
+    private void openDetails(SourceItem item) {
+        startActivity(SourceDetailsActivity.getIntent(this, item.id));
     }
 
-    private void onMoveUp(SourcesManager.SourceInfo source) {
-        runInBackground(() -> sourcesManager.moveUp(source.getId()));
-    }
-
-    private void onMoveDown(SourcesManager.SourceInfo source) {
-        runInBackground(() -> sourcesManager.moveDown(source.getId()));
-    }
-
-    private void onDelete(SourcesManager.SourceInfo source) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.source_delete)
-                .setMessage(getString(R.string.source_delete_confirmation,
-                        getSourceName(source)))
-                .setPositiveButton(R.string.source_delete_button, (d, w) ->
-                        runInBackground(() -> {
-                            sourcesManager.deleteList(source.getId());
-                            if (PhoneBlockSync.SOURCE_ID.equals(source.getId())) {
-                                // the next sync downloads the full list again
-                                PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
-                                if (sync != null) sync.reset();
-                            }
-                        }))
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
-    }
-
-    private void showImportChooser() {
+    private void showAddChooser() {
         CharSequence[] items = {
-                getString(R.string.sources_import_csv),
-                getString(R.string.sources_import_bnetza),
-                getString(R.string.sources_add_url),
-                getString(R.string.phoneblock_menu)
+                getString(R.string.sources_add_file),
+                getString(R.string.sources_add_link)
         };
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.sources_import)
+                .setTitle(R.string.sources_add_list)
                 .setItems(items, (d, which) -> {
                     if (which == 0) {
-                        pickCsvFile();
-                    } else if (which == 1) {
-                        showBnetzaImportInfo();
-                    } else if (which == 2) {
-                        showAddUrlChooser();
+                        pickFile();
                     } else {
-                        showPhoneBlockDialog();
+                        showAddUrlDialog();
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
-    private void showBnetzaImportInfo() {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.sources_import_bnetza)
-                .setMessage(getString(R.string.sources_import_bnetza_message,
-                        BnetzaMeasuresParser.SOURCE_URL))
-                .setPositiveButton(R.string.sources_choose_file, (d, w) -> pickBnetzaFile())
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
-    }
-
-    private void pickCsvFile() {
-        try {
-            csvPicker.launch(CSV_MIME_TYPES);
-        } catch (Exception e) { // ActivityNotFoundException
-            LOG.warn("pickCsvFile()", e);
-            showError(getString(R.string.sources_no_file_picker));
-        }
-    }
-
-    private void pickBnetzaFile() {
-        try {
-            bnetzaPicker.launch(BNETZA_MIME_TYPES);
-        } catch (Exception e) { // ActivityNotFoundException
-            LOG.warn("pickBnetzaFile()", e);
-            showError(getString(R.string.sources_no_file_picker));
-        }
-    }
-
-    // PhoneBlock
-
-    private static final class PhoneBlockOutcome {
-        PhoneBlockSync.SyncResult result;
-        int minVotes;
-        String error;
-        boolean authError;
-        boolean rateLimited;
-    }
-
-    private void showPhoneBlockDialog() {
-        PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
-        if (sync == null) return;
-
-        Settings settings = App.getSettings();
-
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_phoneblock, null);
-        TextInputEditText tokenInput = view.findViewById(R.id.phoneblock_token);
-        Spinner minVotesSpinner = view.findViewById(R.id.phoneblock_min_votes);
-        TextView status = view.findViewById(R.id.phoneblock_status);
-
-        tokenInput.setText(settings.getPhoneBlockToken());
-
-        int[] options = PhoneBlockSync.MIN_VOTES_OPTIONS;
-        List<String> labels = new ArrayList<>();
-        int selected = 0;
-        for (int i = 0; i < options.length; i++) {
-            labels.add(String.valueOf(options[i]));
-            if (options[i] == settings.getPhoneBlockMinVotes()) selected = i;
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, labels);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        minVotesSpinner.setAdapter(adapter);
-        minVotesSpinner.setSelection(selected);
-
-        view.findViewById(R.id.phoneblock_get_token).setOnClickListener(v ->
-                openUrl(PhoneBlockClient.TOKEN_PAGE_URL));
-
-        status.setText(R.string.phoneblock_status_never);
-        executor.execute(() -> {
-            PhoneBlockSync.Status s = sync.getStatus();
-            runOnUiThread(() -> {
-                if (isFinishing() || isDestroyed()) return;
-                status.setText(s.getLastSync() > 0
-                        ? getString(R.string.phoneblock_status, formatDate(s.getLastSync()),
-                        s.getTotalNumbers())
-                        : getString(R.string.phoneblock_status_never));
-            });
-        });
-
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.phoneblock_title)
-                .setView(view)
-                .setPositiveButton(R.string.phoneblock_save, (d, w) -> {
-                    savePhoneBlockSettings(tokenInput, minVotesSpinner, false);
-                })
-                .setNeutralButton(R.string.phoneblock_sync_now, (d, w) -> {
-                    savePhoneBlockSettings(tokenInput, minVotesSpinner, true);
-                })
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
-    }
-
-    private void savePhoneBlockSettings(TextInputEditText tokenInput, Spinner minVotesSpinner,
-                                        boolean syncNow) {
-        Settings settings = App.getSettings();
-
-        CharSequence text = tokenInput.getText();
-        String token = text != null ? text.toString().trim() : "";
-        int position = minVotesSpinner.getSelectedItemPosition();
-        int minVotes = position >= 0 && position < PhoneBlockSync.MIN_VOTES_OPTIONS.length
-                ? PhoneBlockSync.MIN_VOTES_OPTIONS[position] : PhoneBlockSync.DEFAULT_MIN_VOTES;
-
-        boolean tokenChanged = !token.equals(settings.getPhoneBlockToken());
-        boolean minVotesChanged = minVotes != settings.getPhoneBlockMinVotes();
-
-        settings.setPhoneBlockToken(token);
-        settings.setPhoneBlockMinVotes(minVotes);
-        updatePhoneBlockCard();
-
-        if (tokenChanged) {
-            try {
-                PhoneBlockSyncWorker.updateSchedule(this, true);
-            } catch (Exception e) {
-                LOG.warn("savePhoneBlockSettings() failed to schedule the sync", e);
-            }
-        }
-
-        if (syncNow) {
-            if (token.isEmpty()) {
-                showError(R.string.phoneblock_sync_failed_title,
-                        getString(R.string.phoneblock_token_required));
-            } else {
-                syncPhoneBlock(token, minVotes);
-            }
-        } else if (minVotesChanged) {
-            PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
-            if (sync != null) runInBackground(() -> sync.rebuildList(minVotes));
-        }
-    }
-
-    private void syncPhoneBlock(String token, int minVotes) {
-        PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
-        if (sync == null) return;
-
-        PhoneBlockOutcome outcome = new PhoneBlockOutcome();
-        outcome.minVotes = minVotes;
-        runInBackground(() -> {
-            try {
-                outcome.result = sync.sync(token, minVotes, true);
-                // a skipped sync still applies a changed threshold
-                if (outcome.result.isSkipped()) sync.rebuildList(minVotes);
-            } catch (PhoneBlockClient.ApiException e) {
-                LOG.warn("syncPhoneBlock() API error", e);
-                outcome.authError = e.isAuthError();
-                outcome.rateLimited = e.isRateLimited();
-                outcome.error = e.getMessage();
-            } catch (Exception e) {
-                LOG.warn("syncPhoneBlock() failed", e);
-                outcome.error = e.getMessage() != null ? e.getMessage() : e.toString();
-            } finally {
-                runOnUiThread(() -> {
-                    if (!isFinishing() && !isDestroyed()) showPhoneBlockResult(outcome);
-                });
-            }
-        });
-    }
-
-    private void showPhoneBlockResult(PhoneBlockOutcome outcome) {
-        if (outcome.result == null) {
-            String message;
-            if (outcome.authError) {
-                message = getString(R.string.phoneblock_sync_auth_error);
-            } else if (outcome.rateLimited) {
-                message = getString(R.string.phoneblock_sync_rate_limited);
-            } else {
-                message = getString(R.string.phoneblock_sync_error,
-                        outcome.error != null ? outcome.error : "");
-            }
-            showError(R.string.phoneblock_sync_failed_title, message);
-            return;
-        }
-
-        PhoneBlockSync.SyncResult result = outcome.result;
-        String message;
-        if (result.isSkipped()) {
-            message = getString(R.string.phoneblock_sync_skipped,
-                    TimeUnit.MILLISECONDS.toMinutes(PhoneBlockSync.MIN_MANUAL_SYNC_INTERVAL_MILLIS));
-        } else if (result.isFull()) {
-            message = getString(R.string.phoneblock_sync_result_full,
-                    result.getTotalNumbers(), outcome.minVotes, result.getListedNumbers());
-        } else {
-            message = getString(R.string.phoneblock_sync_result_incremental,
-                    result.getReceived(), result.getRemoved(), outcome.minVotes,
-                    result.getListedNumbers(), result.getTotalNumbers());
-        }
-
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.phoneblock_sync_result_title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
-    }
-
-    private void openUrl(String url) {
-        try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        } catch (ActivityNotFoundException e) {
-            LOG.warn("openUrl() no browser", e);
-            showError(R.string.phoneblock_title, getString(R.string.phoneblock_no_browser, url));
-        }
-    }
-
-    // import
-
-    private interface Parser {
-        ParseResult parse(String content) throws IOException;
-    }
+    // import from a file
 
     private static final class ImportOutcome {
         ParseResult parseResult;
         String error;
-        boolean tooLarge;
     }
 
     private static final class FileTooLargeException extends IOException {
@@ -513,44 +248,29 @@ public class SourcesActivity extends BaseActivity {
         }
     }
 
-    private void onCsvFilePicked(Uri uri) {
+    private void pickFile() {
+        try {
+            filePicker.launch(FILE_MIME_TYPES);
+        } catch (Exception e) { // ActivityNotFoundException
+            LOG.warn("pickFile()", e);
+            showError(getString(R.string.sources_no_file_picker));
+        }
+    }
+
+    private void onFilePicked(Uri uri) {
         if (uri == null) return;
 
-        String displayName = SourcesManager.fileNameToDisplayName(getFileName(uri));
-        if (TextUtils.isEmpty(displayName)) displayName = getString(R.string.sources_csv_default_name);
-
-        // CSV / plain text, but also Fritz!Box phone books and vCards
-        importFile(uri, SourcesManager.csvSourceId(displayName), displayName,
-                NumberListFormatDetector::parse);
-    }
-
-    private void onBnetzaFilePicked(Uri uri) {
-        if (uri == null) return;
-
-        importFile(uri, SourcesManager.BNETZA_SOURCE_ID, SourcesManager.BNETZA_DISPLAY_NAME,
-                content -> {
-                    BnetzaMeasuresParser parser = new BnetzaMeasuresParser();
-                    return looksLikeHtml(content)
-                            ? parser.parseHtml(content)
-                            : parser.parseText(new StringReader(content));
-                });
-    }
-
-    static boolean looksLikeHtml(String content) {
-        String s = content.length() > 65536 ? content.substring(0, 65536) : content;
-        s = s.toLowerCase(Locale.ROOT);
-        return s.contains("<tr") || s.contains("<table") || s.contains("<html")
-                || s.contains("<!doctype html");
-    }
-
-    private void importFile(Uri uri, String sourceId, String displayName, Parser parser) {
-        LOG.debug("importFile() uri={}, sourceId={}", uri, sourceId);
+        String name = SourcesManager.fileNameToDisplayName(getFileName(uri));
+        String displayName = !TextUtils.isEmpty(name)
+                ? name : getString(R.string.sources_csv_default_name);
+        String sourceId = SourcesManager.csvSourceId(displayName);
+        LOG.debug("onFilePicked() uri={}, sourceId={}", uri, sourceId);
 
         ImportOutcome outcome = new ImportOutcome();
         runInBackground(() -> {
             try {
-                String content = readText(uri);
-                ParseResult result = parser.parse(content);
+                // CSV / plain text, Fritz!Box phone books and vCards
+                ParseResult result = NumberListFormatDetector.parse(readText(uri));
                 outcome.parseResult = result;
 
                 if (!result.getEntries().isEmpty()) {
@@ -558,10 +278,10 @@ public class SourcesActivity extends BaseActivity {
                             System.currentTimeMillis());
                 }
             } catch (FileTooLargeException e) {
-                outcome.tooLarge = true;
+                outcome.error = getString(R.string.sources_import_file_too_large);
             } catch (Exception e) {
-                LOG.warn("importFile() failed", e);
-                outcome.error = e.getMessage() != null ? e.getMessage() : e.toString();
+                LOG.warn("onFilePicked() import failed", e);
+                outcome.error = describeImportError(e);
             } finally {
                 runOnUiThread(() -> {
                     if (!isFinishing() && !isDestroyed()) showImportResult(outcome);
@@ -604,59 +324,6 @@ public class SourcesActivity extends BaseActivity {
         return uri.getLastPathSegment();
     }
 
-    private void showImportResult(ImportOutcome outcome) {
-        if (outcome.tooLarge) {
-            showError(getString(R.string.sources_import_file_too_large));
-            return;
-        }
-        if (outcome.error != null || outcome.parseResult == null) {
-            showError(getString(R.string.sources_import_failed,
-                    outcome.error != null ? outcome.error : ""));
-            return;
-        }
-
-        ParseResult result = outcome.parseResult;
-        int imported = result.getEntries().size();
-        int skipped = result.getSkipped().size();
-
-        StringBuilder message = new StringBuilder();
-        if (imported == 0) {
-            message.append(getString(R.string.sources_import_nothing_found));
-            message.append("\n\n");
-        }
-        message.append(getString(R.string.sources_import_result, imported, skipped));
-
-        if (skipped > 0) {
-            message.append("\n\n").append(getString(R.string.sources_import_skipped_examples));
-            List<ParseResult.SkippedLine> lines = result.getSkipped();
-            for (int i = 0; i < Math.min(MAX_SKIPPED_EXAMPLES, lines.size()); i++) {
-                ParseResult.SkippedLine line = lines.get(i);
-                message.append('\n').append(getString(R.string.sources_import_skipped_line,
-                        line.getLineNumber(), line.getReason()));
-            }
-            if (skipped > MAX_SKIPPED_EXAMPLES) message.append("\n…");
-        }
-
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(imported > 0 ? R.string.sources_import_result_title
-                        : R.string.sources_import_failed_title)
-                .setMessage(message.toString())
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
-    }
-
-    private void showError(String message) {
-        showError(R.string.sources_import_failed_title, message);
-    }
-
-    private void showError(int titleId, String message) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(titleId)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
-    }
-
     // lists from URL
 
     /**
@@ -664,58 +331,28 @@ public class SourcesActivity extends BaseActivity {
      * the app data from a backup; re-schedule it if a list needs it (a no-op otherwise).
      */
     private void ensureListsUpdateScheduled() {
-        RemoteListManager manager = YacbHolder.getRemoteListManager();
-        if (manager != null && manager.hasAutoUpdateLists()) {
-            ListsUpdateScheduler.get(this).schedule();
+        try {
+            RemoteListManager manager = YacbHolder.getRemoteListManager();
+            if (manager != null && manager.hasAutoUpdateLists()) {
+                ListsUpdateScheduler.get(this).schedule();
+            }
+        } catch (Exception e) {
+            LOG.warn("ensureListsUpdateScheduled()", e);
         }
-    }
-
-    private void showAddUrlChooser() {
-        List<RemoteListPresets.Preset> presets = RemoteListPresets.getPresets();
-        if (presets.isEmpty()) {
-            showAddUrlDialog(null);
-            return;
-        }
-
-        CharSequence[] items = new CharSequence[presets.size() + 1];
-        for (int i = 0; i < presets.size(); i++) {
-            RemoteListPresets.Preset preset = presets.get(i);
-            items[i] = preset.getName() + "\n" + getString(R.string.sources_add_url_preset_summary,
-                    preset.getLicense(), preset.getLastUpdated());
-        }
-        items[presets.size()] = getString(R.string.sources_add_url_enter);
-
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.sources_add_url)
-                .setItems(items, (d, which) ->
-                        showAddUrlDialog(which < presets.size() ? presets.get(which) : null))
-                .setNegativeButton(android.R.string.cancel, null)
-                .show();
     }
 
     /**
-     * Shows the "add list by URL" dialog, pre-filled from the preset (may be null).
-     * Nothing is downloaded before the user confirms.
+     * Shows the "add list by URL" dialog. Nothing is downloaded before the user confirms.
      */
-    private void showAddUrlDialog(RemoteListPresets.Preset preset) {
+    private void showAddUrlDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_url_list, null);
-        TextView info = view.findViewById(R.id.add_url_info);
         TextInputLayout urlLayout = view.findViewById(R.id.add_url_url_layout);
         EditText urlEdit = view.findViewById(R.id.add_url_url);
         EditText nameEdit = view.findViewById(R.id.add_url_name);
         CheckBox autoUpdate = view.findViewById(R.id.add_url_auto_update);
 
-        if (preset != null) {
-            info.setText(getString(R.string.sources_add_url_preset_info,
-                    preset.getHomepage(), preset.getLicense()));
-            urlEdit.setText(preset.getUrl());
-            nameEdit.setText(preset.getName());
-        } else {
-            info.setText(R.string.sources_add_url_hint);
-        }
-
         AlertDialog dialog = new MaterialAlertDialogBuilder(this)
-                .setTitle(preset != null ? preset.getName() : getString(R.string.sources_add_url))
+                .setTitle(R.string.sources_add_url)
                 .setView(view)
                 .setPositiveButton(R.string.sources_add_url_button, null)
                 .setNegativeButton(android.R.string.cancel, null)
@@ -753,7 +390,7 @@ public class SourcesActivity extends BaseActivity {
                 outcome.error = getString(R.string.sources_import_nothing_found);
             } catch (Exception e) {
                 LOG.warn("addUrlList() failed", e);
-                outcome.error = describeDownloadError(e);
+                outcome.error = describeImportError(e);
             } finally {
                 runOnUiThread(() -> {
                     if (!isFinishing() && !isDestroyed()) showImportResult(outcome);
@@ -762,166 +399,90 @@ public class SourcesActivity extends BaseActivity {
         });
     }
 
-    private String describeDownloadError(Exception e) {
+    /**
+     * @return a user-facing description of a failed file import or list download
+     */
+    static String describeImportError(Context context, Exception e) {
         if (e instanceof RemoteListDownloader.TooLargeException) {
-            return getString(R.string.sources_import_file_too_large);
+            return context.getString(R.string.sources_import_file_too_large);
         }
         if (e instanceof NumberListFormatDetector.UnsupportedFormatException) {
-            return getString(((NumberListFormatDetector.UnsupportedFormatException) e).getFormat()
-                    == NumberListFormatDetector.Format.HTML
+            return context.getString(((NumberListFormatDetector.UnsupportedFormatException) e)
+                    .getFormat() == NumberListFormatDetector.Format.HTML
                     ? R.string.sources_url_html_error : R.string.sources_url_unsupported_format);
         }
         String message = e.getMessage() != null ? e.getMessage() : e.toString();
-        return getString(R.string.sources_url_download_failed, message);
+        return context.getString(R.string.sources_url_download_failed, message);
     }
 
-    private void showUrlListActions(SourcesManager.SourceInfo source) {
-        RemoteListInfo remote = RemoteListManager.getRemote(source);
-        if (remote == null) return;
+    private String describeImportError(Exception e) {
+        return describeImportError(this, e);
+    }
 
-        CharSequence[] items = {
-                getString(R.string.source_url_update_now),
-                getString(remote.isAutoUpdate() ? R.string.source_url_disable_auto_update
-                        : R.string.source_url_enable_auto_update)
-        };
+    // results
+
+    private void showImportResult(ImportOutcome outcome) {
+        if (outcome.error != null || outcome.parseResult == null) {
+            showError(outcome.error != null ? outcome.error : "");
+            return;
+        }
+
+        ParseResult result = outcome.parseResult;
+        int imported = result.getEntries().size();
+        int skipped = result.getSkipped().size();
+
+        StringBuilder message = new StringBuilder();
+        if (imported == 0) {
+            message.append(getString(R.string.sources_import_nothing_found));
+            message.append("\n\n");
+        }
+        message.append(getString(R.string.sources_import_result, imported, skipped));
+
+        if (skipped > 0) {
+            message.append("\n\n").append(getString(R.string.sources_import_skipped_examples));
+            List<ParseResult.SkippedLine> lines = result.getSkipped();
+            for (int i = 0; i < Math.min(MAX_SKIPPED_EXAMPLES, lines.size()); i++) {
+                ParseResult.SkippedLine line = lines.get(i);
+                message.append('\n').append(getString(R.string.sources_import_skipped_line,
+                        line.getLineNumber(), line.getReason()));
+            }
+            if (skipped > MAX_SKIPPED_EXAMPLES) message.append("\n…");
+        }
+
         new MaterialAlertDialogBuilder(this)
-                .setTitle(getSourceName(source))
-                .setItems(items, (d, which) -> {
-                    if (which == 0) {
-                        updateUrlList(source);
-                    } else {
-                        setUrlListAutoUpdate(source, !remote.isAutoUpdate());
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null)
+                .setTitle(imported > 0 ? R.string.sources_import_result_title
+                        : R.string.sources_import_failed_title)
+                .setMessage(message.toString())
+                .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
 
-    private void updateUrlList(SourcesManager.SourceInfo source) {
-        RemoteListManager manager = YacbHolder.getRemoteListManager();
-        RemoteListManager.UpdateResult[] result = new RemoteListManager.UpdateResult[1];
-        runInBackground(() -> {
-            try {
-                result[0] = manager.update(source.getId());
-            } finally {
-                runOnUiThread(() -> {
-                    if (!isFinishing() && !isDestroyed()) showUpdateResult(result[0]);
-                });
-            }
-        });
+    private void showError(String message) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.sources_import_failed_title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
-    private void showUpdateResult(RemoteListManager.UpdateResult result) {
-        if (result == null) return; // deleted meanwhile
+    // list
 
-        switch (result.getStatus()) {
-            case UPDATED:
-                Toast.makeText(this, getString(R.string.source_url_updated,
-                        result.getParseResult().getEntries().size()), Toast.LENGTH_LONG).show();
-                break;
-            case NOT_MODIFIED:
-                Toast.makeText(this, R.string.source_url_not_modified, Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                new MaterialAlertDialogBuilder(this)
-                        .setTitle(R.string.sources_import_failed_title)
-                        .setMessage(getString(R.string.source_url_update_failed, result.getError()))
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show();
-                break;
-        }
-    }
-
-    private void setUrlListAutoUpdate(SourcesManager.SourceInfo source, boolean autoUpdate) {
-        RemoteListManager manager = YacbHolder.getRemoteListManager();
-        runInBackground(() -> {
-            manager.setAutoUpdate(source.getId(), autoUpdate);
-            ListsUpdateScheduler.get(this).update(manager.hasAutoUpdateLists());
-        });
-    }
-
-    private void addRemoteDetails(List<String> parts, NumberListStore.ListMetadata metadata) {
-        RemoteListInfo remote = metadata.getRemote();
-
-        String host = Uri.parse(remote.getUrl()).getHost();
-        if (!TextUtils.isEmpty(host)) parts.add(host);
-
-        parts.add(getString(remote.isAutoUpdate() ? R.string.source_url_auto_update_on
-                : R.string.source_url_auto_update_off));
-
-        if (remote.getLastError() != null) {
-            String error = remote.getLastError();
-            if (error.length() > MAX_ERROR_LENGTH) error = error.substring(0, MAX_ERROR_LENGTH) + "…";
-            parts.add(getString(R.string.source_url_last_error,
-                    formatDate(remote.getLastCheckAt()), error));
-        } else if (remote.getLastCheckAt() > metadata.getImportedAt()) {
-            parts.add(getString(R.string.source_url_checked, formatDate(remote.getLastCheckAt())));
-        }
-    }
-
-    // presentation
-
-    private String getSourceName(SourcesManager.SourceInfo source) {
-        if (YacbDatabaseProvider.ID.equals(source.getId())) {
-            return getString(R.string.source_yacb_name);
-        }
-        if (PhoneBlockOnlineProvider.ID.equals(source.getId())) {
-            return getString(R.string.source_phoneblock_online_name);
-        }
-        String name = source.getDisplayName();
-        return !TextUtils.isEmpty(name) ? name : source.getId();
-    }
-
-    private String getSourceType(SourcesManager.SourceInfo source) {
-        return getString(source.isOffline() ? R.string.source_type_offline
-                : R.string.source_type_online)
-                + SEPARATOR
-                + getString(PhoneBlockSync.SOURCE_ID.equals(source.getId())
-                ? R.string.source_kind_synchronized
-                : !source.isImported() ? R.string.source_kind_built_in
-                : RemoteListManager.getRemote(source) != null ? R.string.source_kind_url
-                : R.string.source_kind_imported);
-    }
-
-    private String getSourceDetails(SourcesManager.SourceInfo source) {
-        List<String> parts = new ArrayList<>();
-
-        if (source.isLoadFailed()) parts.add(getString(R.string.source_load_error));
-
-        NumberListStore.ListMetadata metadata = source.getMetadata();
-        if (metadata != null) {
-            if (!source.isLoadFailed()) {
-                parts.add(getResources().getQuantityString(R.plurals.source_entry_count,
-                        metadata.getEntryCount(), metadata.getEntryCount()));
-            }
-            if (metadata.getImportedAt() > 0) {
-                parts.add(getString(R.string.source_updated, formatDate(metadata.getImportedAt())));
-            }
-            if (metadata.getRemote() != null) addRemoteDetails(parts, metadata);
-        } else if (YacbDatabaseProvider.ID.equals(source.getId())) {
-            long lastUpdate = App.getSettings().getLastUpdateTime();
-            parts.add(lastUpdate > 0
-                    ? getString(R.string.source_updated, formatDate(lastUpdate))
-                    : getString(R.string.source_never_updated));
-        } else if (PhoneBlockOnlineProvider.ID.equals(source.getId())) {
-            parts.add(getString(TextUtils.isEmpty(App.getSettings().getPhoneBlockToken())
-                    ? R.string.phoneblock_no_token : R.string.phoneblock_online_details));
-        }
-
-        return TextUtils.join(SEPARATOR, parts);
-    }
-
-    private String formatDate(long timestamp) {
-        return DateUtils.formatDateTime(this, timestamp, DateUtils.FORMAT_SHOW_DATE
-                | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_TIME);
+    /**
+     * Shows the status line of a source in the error color or the secondary text color.
+     */
+    static void bindStatus(TextView view, SourceItem item) {
+        view.setText(item.status);
+        view.setTextColor(MaterialColors.getColor(view, item.statusError
+                ? com.google.android.material.R.attr.colorError
+                : com.google.android.material.R.attr.colorOnSurfaceVariant));
     }
 
     private class SourcesAdapter extends RecyclerView.Adapter<SourcesAdapter.ViewHolder> {
 
-        private List<SourcesManager.SourceInfo> items = Collections.emptyList();
+        private List<SourceItem> items = Collections.emptyList();
 
         @SuppressLint("NotifyDataSetChanged") // the list is tiny
-        void setItems(List<SourcesManager.SourceInfo> items) {
+        void setItems(List<SourceItem> items) {
             this.items = new ArrayList<>(items);
             notifyDataSetChanged();
         }
@@ -936,7 +497,7 @@ public class SourcesActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.bind(items.get(position), position, items.size());
+            holder.bind(items.get(position));
         }
 
         @Override
@@ -947,60 +508,32 @@ public class SourcesActivity extends BaseActivity {
         class ViewHolder extends RecyclerView.ViewHolder {
 
             final TextView name;
-            final TextView type;
-            final TextView details;
-            final AppCompatImageButton urlActions;
-            final AppCompatImageButton moveUp;
-            final AppCompatImageButton moveDown;
-            final AppCompatImageButton delete;
+            final TextView description;
+            final TextView status;
+            final LinearProgressIndicator progress;
             final MaterialSwitch enabled;
 
             ViewHolder(View view) {
                 super(view);
                 name = view.findViewById(R.id.source_name);
-                type = view.findViewById(R.id.source_type);
-                details = view.findViewById(R.id.source_details);
-                urlActions = view.findViewById(R.id.source_url_actions);
-                moveUp = view.findViewById(R.id.source_move_up);
-                moveDown = view.findViewById(R.id.source_move_down);
-                delete = view.findViewById(R.id.source_delete);
+                description = view.findViewById(R.id.source_description);
+                status = view.findViewById(R.id.source_status);
+                progress = view.findViewById(R.id.source_progress);
                 enabled = view.findViewById(R.id.source_enabled);
             }
 
-            void bind(SourcesManager.SourceInfo source, int position, int count) {
-                if (isPhoneBlockSource(source)) {
-                    itemView.setOnClickListener(v -> showPhoneBlockDialog());
-                } else {
-                    itemView.setOnClickListener(null);
-                    itemView.setClickable(false);
-                }
+            void bind(SourceItem item) {
+                itemView.setOnClickListener(v -> openDetails(item));
 
-                name.setText(getSourceName(source));
-                type.setText(getSourceType(source));
-
-                String detailsText = getSourceDetails(source);
-                details.setText(detailsText);
-                details.setVisibility(TextUtils.isEmpty(detailsText) ? View.GONE : View.VISIBLE);
-
-                boolean urlList = RemoteListManager.getRemote(source) != null;
-                urlActions.setVisibility(urlList ? View.VISIBLE : View.GONE);
-                urlActions.setOnClickListener(v -> showUrlListActions(source));
-
-                moveUp.setEnabled(position > 0);
-                moveUp.setAlpha(position > 0 ? 1f : 0.38f);
-                moveUp.setOnClickListener(v -> onMoveUp(source));
-
-                moveDown.setEnabled(position < count - 1);
-                moveDown.setAlpha(position < count - 1 ? 1f : 0.38f);
-                moveDown.setOnClickListener(v -> onMoveDown(source));
-
-                delete.setVisibility(source.isImported() ? View.VISIBLE : View.INVISIBLE);
-                delete.setOnClickListener(v -> onDelete(source));
+                name.setText(item.name);
+                description.setText(item.description);
+                bindStatus(status, item);
+                progress.setVisibility(item.running ? View.VISIBLE : View.GONE);
 
                 enabled.setOnCheckedChangeListener(null);
-                enabled.setChecked(source.isEnabled());
+                enabled.setChecked(item.enabled);
                 enabled.setOnCheckedChangeListener((buttonView, isChecked) ->
-                        onEnabledChanged(source, isChecked));
+                        onEnabledChanged(item, isChecked));
             }
         }
     }

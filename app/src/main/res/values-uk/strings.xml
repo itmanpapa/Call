@@ -31,11 +31,6 @@
     <string name="use_call_screening_service_summary">Дозволяє блокувати виклики до того, як телефон задзвонить. Це вимагає призначити додаток \"додатком для дзвінків \" (на Android 7–9) або \"додатком для АВН і захисту від спаму\" (на Android 10 +)</string>
     <string name="auto_updates">Авто-оновл. бази номерів</string>
     <string name="auto_updates_summary">Автоматично отримувати щоденні оновлення бази даних номерів (завантажуються тільки зміни, тому витрата трафіку невелика)</string>
-    <string name="db_management_db_info">Інфо про встановлену базу</string>
-    <string name="db_management_reset_base">Скинути базу</string>
-    <string name="db_management_reset_secondary">Скинути оновлення</string>
-    <string name="db_management_update_db">Оновити базу</string>
-    <string name="db_management_update_result">Оновлення завершено. Версія: %d</string>
     <string name="incoming_call_notifications">Відображення вхідних дзвінків</string>
     <string name="incoming_call_notifications_summary">Показувати повідомлення з короткою інформацією про номер (рейтинг, кількість відгуків, категорія) при вхідних дзвінках</string>
     <string name="title_activity_reviews">Відгуки</string>
@@ -140,7 +135,6 @@
     <string name="lookup_paste_number">Вставити номер</string>
     <string name="lookup_error_not_a_number">Необхідно вказати номер телефону</string>
     <string name="title_lookup_number">Пошук номеру</string>
-    <string name="open_db_management_activity">Керування базою</string>
     <string name="sia_category_safe_nonprofit">Безпечна не комерційна організація</string>
     <string name="sia_category_safe_company">Безпечна компанія</string>
     <string name="sia_category_safe_personal">Безпечний особистий</string>
@@ -148,7 +142,6 @@
     <string name="lookup_res_category">Категорія: %d</string>
     <string name="lookup_clear_number">Очистити номер</string>
     <string name="lookup_hint_input_number">Номер телефону</string>
-    <string name="db_management_activity_label">Керування базою</string>
     <string name="notification_channel_name_tasks">Завдання</string>
     <string name="default_phone_app_unset">Оберіть інший додаток як \"Телефон\" у розділі \"Додатки за замовченням\" в налаштуваннях системи</string>
     <string name="default_caller_id_app_unset">Виберіть іншу програму як \"Ідентифікатора абонента\" в \"Додатки за замовчуванням\" у системних налаштуваннях</string>
@@ -183,17 +176,9 @@
         <item quantity="other">%1$d обраних</item>
     </plurals>
     <string name="license">Цей застосунок ліцензований згідно AGPL-3.0-only.</string>
-    <string name="issues">Отримати підтримку / повідомити про проблему</string>
-    <string name="translate">Перекласти додаток на Weblate</string>
-    <string name="faq">Часті Питання</string>
-    <string name="homepage">Домашня сторінка проекту</string>
     <string name="logo_description">Лого</string>
-    <string name="motto">Блокуйте небажані дзвінки без зусиль</string>
-    <string name="db_last_update_check_checking">перевірка…</string>
     <string name="db_last_update_check_never">ніколи</string>
-    <string name="db_last_update_check">Остання перевірка оновлення: %s</string>
     <string name="db_version_not_available">н/д</string>
-    <string name="db_version">Версія бази даних: %s</string>
     <string name="version_string">v%s</string>
     <string name="about_activity">Про застосунок</string>
     <string name="open_about_activity">Про застосунок</string>

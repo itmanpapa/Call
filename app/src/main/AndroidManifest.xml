@@ -81,15 +81,19 @@
         </activity>
         <activity
             android:name=".SourcesActivity"
-            android:label="@string/sources_activity_title"
+            android:label="@string/databases_title"
             android:parentActivityName=".SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SettingsActivity" />
         </activity>
         <activity
-            android:name=".DbManagementActivity"
-            android:label="@string/db_management_activity_label" />
+            android:name=".SourceDetailsActivity"
+            android:parentActivityName=".SourcesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SourcesActivity" />
+        </activity>
         <activity
             android:name=".ReviewsActivity"
             android:label="@string/title_activity_reviews"
