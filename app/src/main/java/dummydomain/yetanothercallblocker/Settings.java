@@ -15,9 +15,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import dummydomain.yetanothercallblocker.data.CountryHelper;
+import dummydomain.yetanothercallblocker.data.SourcesManager;
 import dummydomain.yetanothercallblocker.sia.model.database.DbManager;
 
-public class Settings extends GenericSettings {
+public class Settings extends GenericSettings implements SourcesManager.Preferences {
 
     public static final String PREF_INCOMING_CALL_NOTIFICATIONS = "incomingCallNotifications";
     public static final String PREF_BLOCK_NEGATIVE_SIA_NUMBERS = "blockNegativeSiaNumbers";
@@ -45,6 +46,8 @@ public class Settings extends GenericSettings {
     public static final String PREF_DATABASE_DOWNLOAD_URL = "databaseDownloadUrl";
     public static final String PREF_SAVE_CRASHES_TO_EXTERNAL_STORAGE = "saveCrashesToExternalStorage";
     public static final String PREF_SAVE_LOGCAT_ON_CRASH = "saveLogcatOnCrash";
+    public static final String PREF_SOURCES_ORDER = "sourcesOrder";
+    public static final String PREF_SOURCES_DISABLED = "sourcesDisabled";
 
     public static final String PREF_CALL_LOG_GROUPING_NONE = "none";
     public static final String PREF_CALL_LOG_GROUPING_CONSECUTIVE = "consecutive";
@@ -360,6 +363,26 @@ public class Settings extends GenericSettings {
 
     public void setSaveLogcatOnCrash(boolean flag) {
         setBoolean(PREF_SAVE_LOGCAT_ON_CRASH, flag);
+    }
+
+    @Override
+    public String getSourcesOrder() {
+        return getString(PREF_SOURCES_ORDER);
+    }
+
+    @Override
+    public void setSourcesOrder(String order) {
+        setString(PREF_SOURCES_ORDER, order);
+    }
+
+    @Override
+    public String getDisabledSources() {
+        return getString(PREF_SOURCES_DISABLED);
+    }
+
+    @Override
+    public void setDisabledSources(String ids) {
+        setString(PREF_SOURCES_DISABLED, ids);
     }
 
 }

@@ -28,6 +28,12 @@ public class NumberInfo {
     // computed rating
     public Rating rating = Rating.UNKNOWN;
 
+    // set if the NEGATIVE rating comes from an imported list (see SourcesManager),
+    // null otherwise
+    public String sourceId;
+    public String sourceName;
+    public String sourceCategory;
+
     // precomputed for convenience
     public boolean noNumber;
     public String name;

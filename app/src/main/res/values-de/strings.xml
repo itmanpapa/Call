@@ -203,4 +203,46 @@
     <string name="call_log_empty">Noch keine Anrufe</string>
     <string name="swipe_to_block">Sperren</string>
     <string name="call_log_blocked_label">Gesperrt</string>
+
+    <!-- Data sources -->
+    <string name="sources_activity_title">Datenquellen</string>
+    <string name="sources_preference_summary">Rufnummerndatenbanken und importierte Listen</string>
+    <string name="source_yacb_name">YACB-Datenbank</string>
+    <string name="source_type_offline">Offline</string>
+    <string name="source_type_online">Online</string>
+    <string name="source_kind_imported">Importierte Liste</string>
+    <string name="source_kind_built_in">Integriert</string>
+    <string name="source_updated">Aktualisiert: %s</string>
+    <string name="source_never_updated">Noch nie aktualisiert</string>
+    <string name="source_load_error">Liste konnte nicht geladen werden</string>
+    <string name="source_enabled">Aktiviert</string>
+    <string name="source_move_up">Nach oben</string>
+    <string name="source_move_down">Nach unten</string>
+    <string name="source_delete">Liste löschen</string>
+    <string name="source_delete_confirmation">Liste „%s“ löschen?</string>
+    <string name="source_delete_button">Löschen</string>
+    <string name="sources_import">Importieren</string>
+    <string name="sources_import_csv">CSV importieren</string>
+    <string name="sources_import_bnetza">Liste der Bundesnetzagentur importieren</string>
+    <string name="sources_import_bnetza_message">Öffnen Sie %s im Browser, speichern Sie die Seite (HTML) oder ihren Text als Datei und wählen Sie diese Datei aus. Ein neuer Import ersetzt die bisherige Liste.</string>
+    <string name="sources_choose_file">Datei auswählen</string>
+    <string name="sources_no_file_picker">Keine App zur Dateiauswahl gefunden.</string>
+    <string name="sources_csv_default_name">CSV-Liste</string>
+    <string name="sources_import_file_too_large">Die Datei ist zu groß.</string>
+    <string name="sources_import_failed">Import fehlgeschlagen: %s</string>
+    <string name="sources_import_failed_title">Import fehlgeschlagen</string>
+    <string name="sources_import_nothing_found">In der Datei wurden keine Rufnummern gefunden.</string>
+    <string name="sources_import_result">Importierte Nummern: %1$d\nÜbersprungene Zeilen: %2$d</string>
+    <string name="sources_import_result_title">Import abgeschlossen</string>
+    <string name="sources_import_skipped_examples">Übersprungene Zeilen:</string>
+    <string name="sources_import_skipped_line">Zeile %1$d: %2$s</string>
+    <string name="info_source">Quelle: %s</string>
+    <string name="measure_disconnection">Rufnummer abgeschaltet</string>
+    <string name="measure_billing_prohibition">Rechnungslegungs- und Inkassierungsverbot</string>
+    <string name="measure_other_prohibition">Verbot der Bundesnetzagentur</string>
+    <string name="measure_unknown">Maßnahme der Bundesnetzagentur</string>
+    <plurals name="source_entry_count">
+        <item quantity="one">%d Nummer</item>
+        <item quantity="other">%d Nummern</item>
+    </plurals>
 </resources>

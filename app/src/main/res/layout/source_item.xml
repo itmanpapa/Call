@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="72dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/item_padding"
+    android:paddingTop="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/source_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            tools:text="Bundesnetzagentur" />
+
+        <TextView
+            android:id="@+id/source_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="Offline · Imported list" />
+
+        <TextView
+            android:id="@+id/source_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="512 numbers · Updated Oct 1, 2026" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/source_move_up"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/source_move_up"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_upward_24dp"
+        app:tint="?attr/colorOnSurfaceVariant" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/source_move_down"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/source_move_down"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_downward_24dp"
+        app:tint="?attr/colorOnSurfaceVariant" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/source_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/source_delete"
+        android:padding="8dp"
+        android:src="@drawable/ic_delete_24dp"
+        app:tint="?attr/colorOnSurfaceVariant" />
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/source_enabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@string/source_enabled" />
+
+</LinearLayout>

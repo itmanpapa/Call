@@ -80,6 +80,14 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".SourcesActivity"
+            android:label="@string/sources_activity_title"
+            android:parentActivityName=".SettingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SettingsActivity" />
+        </activity>
+        <activity
             android:name=".DbManagementActivity"
             android:label="@string/db_management_activity_label" />
         <activity

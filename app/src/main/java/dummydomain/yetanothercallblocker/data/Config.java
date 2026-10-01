@@ -2,12 +2,19 @@ package dummydomain.yetanothercallblocker.data;
 
 import android.content.Context;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import dummydomain.yetanothercallblocker.NotificationService;
 import dummydomain.yetanothercallblocker.PhoneStateHandler;
 import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
 import dummydomain.yetanothercallblocker.data.db.YacbDaoSessionFactory;
+import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
+import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.sia.Settings;
 import dummydomain.yetanothercallblocker.sia.SettingsImpl;
 import dummydomain.yetanothercallblocker.sia.Storage;
@@ -32,6 +39,11 @@ import static dummydomain.yetanothercallblocker.data.SiaConstants.SIA_PROPERTIES
 import static dummydomain.yetanothercallblocker.data.SiaConstants.SIA_SECONDARY_PATH_PREFIX;
 
 public class Config {
+
+    /** Subdirectory of the files dir with the imported number lists. */
+    static final String NUMBER_LISTS_DIR = "lists";
+
+    private static final Logger LOG = LoggerFactory.getLogger(Config.class);
 
     private static class WSParameterProvider extends WebService.DefaultWSParameterProvider {
         final dummydomain.yetanothercallblocker.Settings settings;
@@ -143,9 +155,29 @@ public class Config {
             }
         };
 
+        NumberListStore numberListStore = new NumberListStore(
+                new File(context.getFilesDir(), NUMBER_LISTS_DIR));
+        SourcesManager sourcesManager = new SourcesManager(numberListStore, settings,
+                Collections.singletonList(
+                        new YacbDatabaseProvider(communityDatabase, featuredDatabase)));
+        YacbHolder.setSourcesManager(sourcesManager);
+
+        // the lists are small, but don't read them on the main thread;
+        // a lookup before the loading has finished waits for it
+        Thread listLoader = new Thread(() -> {
+            try {
+                sourcesManager.loadLists();
+            } catch (Exception e) {
+                LOG.warn("init() failed to load number lists", e);
+            }
+        }, "number-lists-loader");
+        listLoader.setDaemon(true);
+        listLoader.start();
+
         NumberInfoService numberInfoService = new NumberInfoService(
                 settings, NumberUtils::isHiddenNumber, NumberUtils::normalizeNumber,
-                communityDatabase, featuredDatabase, contactsProvider, blacklistService);
+                communityDatabase, featuredDatabase, contactsProvider, blacklistService,
+                sourcesManager);
         YacbHolder.setNumberInfoService(numberInfoService);
 
         NotificationService notificationService = new NotificationService(context);

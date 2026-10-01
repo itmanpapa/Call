@@ -264,4 +264,50 @@
     <string name="call_log_empty">No calls yet</string>
     <string name="swipe_to_block">Block</string>
     <string name="call_log_blocked_label">Blocked</string>
+
+    <!-- Data sources -->
+    <string name="sources_activity_title">Data sources</string>
+    <string name="sources_preference_summary">Number databases and imported lists</string>
+    <string name="source_yacb_name">YACB database</string>
+    <string name="source_type_offline">Offline</string>
+    <string name="source_type_online">Online</string>
+    <string name="source_kind_imported">Imported list</string>
+    <string name="source_kind_built_in">Built-in</string>
+    <string name="source_updated">Updated %s</string>
+    <string name="source_never_updated">Never updated</string>
+    <string name="source_load_error">Failed to load the list</string>
+    <string name="source_enabled">Enabled</string>
+    <string name="source_move_up">Move up</string>
+    <string name="source_move_down">Move down</string>
+    <string name="source_delete">Delete list</string>
+    <string name="source_delete_confirmation">Delete the list “%s”?</string>
+    <string name="source_delete_button">Delete</string>
+    <string name="sources_import">Import</string>
+    <string name="sources_import_csv">Import CSV</string>
+    <string name="sources_import_bnetza">Import Bundesnetzagentur list</string>
+    <string name="sources_import_bnetza_message">Open %s in a browser, save the page (HTML) or its text to a file and choose that file. A new import replaces the previous list.</string>
+    <string name="sources_choose_file">Choose file</string>
+    <string name="sources_no_file_picker">No app for choosing files was found.</string>
+    <string name="sources_csv_default_name">CSV list</string>
+    <string name="sources_import_file_too_large">The file is too large.</string>
+    <string name="sources_import_failed">Import failed: %s</string>
+    <string name="sources_import_failed_title">Import failed</string>
+    <string name="sources_import_nothing_found">No phone numbers were found in the file.</string>
+    <string name="sources_import_result">Imported numbers: %1$d\nSkipped lines: %2$d</string>
+    <string name="sources_import_result_title">Import finished</string>
+    <string name="sources_import_skipped_examples">Skipped lines:</string>
+    <string name="sources_import_skipped_line">Line %1$d: %2$s</string>
+    <string name="info_source">Source: %s</string>
+    <string name="measure_disconnection">Number disconnected</string>
+    <string name="measure_billing_prohibition">Billing prohibited</string>
+    <string name="measure_other_prohibition">Prohibited by the regulator</string>
+    <string name="measure_unknown">Regulatory measure</string>
+    <plurals name="source_entry_count">
+        <item quantity="one">%d number</item>
+        <item quantity="other">%d numbers</item>
+    </plurals>
+
+    <!-- Data sources (not translatable formats) -->
+    <string name="info_source_with_category" translatable="false">%1$s: %2$s</string>
+    <string name="info_description_with_source" translatable="false">%1$s · %2$s</string>
 </resources>

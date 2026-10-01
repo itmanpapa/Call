@@ -24,6 +24,7 @@ public class RootSettingsFragment extends BaseSettingsFragment {
     private static final String PREF_CATEGORY_NOTIFICATIONS = "categoryNotifications";
     private static final String PREF_CATEGORY_NOTIFICATIONS_LEGACY = "categoryNotificationsLegacy";
     private static final String PREF_NOTIFICATIONS_BLOCKED_NON_PERSISTENT = "showNotificationsForBlockedCallsNonPersistent";
+    private static final String PREF_DATA_SOURCES = "dataSources";
 
     private static final String STATE_REQUEST_TOKEN = "STATE_REQUEST_TOKEN";
 
@@ -113,6 +114,11 @@ public class RootSettingsFragment extends BaseSettingsFragment {
         setPrefChangeListener(Settings.PREF_BLOCK_NEGATIVE_SIA_NUMBERS, callBlockingListener);
         setPrefChangeListener(Settings.PREF_BLOCK_HIDDEN_NUMBERS, callBlockingListener);
         setPrefChangeListener(Settings.PREF_BLOCK_BLACKLISTED, callBlockingListener);
+
+        requirePreference(PREF_DATA_SOURCES).setOnPreferenceClickListener(preference -> {
+            startActivity(SourcesActivity.getIntent(requireContext()));
+            return true;
+        });
 
         SwitchPreferenceCompat callScreeningPref =
                 requirePreference(PREF_USE_CALL_SCREENING_SERVICE);

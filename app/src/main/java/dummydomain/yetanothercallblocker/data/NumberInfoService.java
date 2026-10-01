@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 
 import dummydomain.yetanothercallblocker.Settings;
+import dummydomain.yetanothercallblocker.data.provider.ProviderResult;
+import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabase;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabaseItem;
 import dummydomain.yetanothercallblocker.sia.model.database.FeaturedDatabase;
@@ -33,11 +35,23 @@ public class NumberInfoService {
     protected final FeaturedDatabase featuredDatabase;
     protected final ContactsProvider contactsProvider;
     protected final BlacklistService blacklistService;
+    protected final SourcesManager sourcesManager;
 
     public NumberInfoService(Settings settings, HiddenNumberDetector hiddenNumberDetector,
                              NumberNormalizer numberNormalizer, CommunityDatabase communityDatabase,
                              FeaturedDatabase featuredDatabase, ContactsProvider contactsProvider,
                              BlacklistService blacklistService) {
+        this(settings, hiddenNumberDetector, numberNormalizer, communityDatabase,
+                featuredDatabase, contactsProvider, blacklistService, null);
+    }
+
+    /**
+     * @param sourcesManager additional number sources (imported lists), may be null
+     */
+    public NumberInfoService(Settings settings, HiddenNumberDetector hiddenNumberDetector,
+                             NumberNormalizer numberNormalizer, CommunityDatabase communityDatabase,
+                             FeaturedDatabase featuredDatabase, ContactsProvider contactsProvider,
+                             BlacklistService blacklistService, SourcesManager sourcesManager) {
         this.settings = settings;
         this.hiddenNumberDetector = hiddenNumberDetector;
         this.numberNormalizer = numberNormalizer;
@@ -45,6 +59,7 @@ public class NumberInfoService {
         this.featuredDatabase = featuredDatabase;
         this.contactsProvider = contactsProvider;
         this.blacklistService = blacklistService;
+        this.sourcesManager = sourcesManager;
     }
 
     public NumberInfo getNumberInfo(String number, String countryCode, boolean full) {
@@ -80,12 +95,17 @@ public class NumberInfoService {
                 = numberNormalizer.normalizeNumber(number, countryCode);
         LOG.trace("getNumberInfo() normalizedNumber={}", numberInfo.normalizedNumber);
 
-        if (communityDatabase != null) {
+        // the YACB database can be disabled on the "Data sources" screen (enabled by default)
+        boolean useYacbDatabase = sourcesManager == null
+                || sourcesManager.isEnabled(YacbDatabaseProvider.ID);
+        LOG.trace("getNumberInfo() useYacbDatabase={}", useYacbDatabase);
+
+        if (communityDatabase != null && useYacbDatabase) {
             numberInfo.communityDatabaseItem = communityDatabase.getDbItemByNumber(normalizedNumber);
         }
         LOG.trace("getNumberInfo() communityItem={}", numberInfo.communityDatabaseItem);
 
-        if (featuredDatabase != null) {
+        if (featuredDatabase != null && useYacbDatabase) {
             numberInfo.featuredDatabaseItem = featuredDatabase.getDbItemByNumber(normalizedNumber);
         }
         LOG.trace("getNumberInfo() featuredItem={}", numberInfo.featuredDatabaseItem);
@@ -113,6 +133,10 @@ public class NumberInfoService {
         }
         LOG.trace("getNumberInfo() rating={}", numberInfo.rating);
 
+        if (numberInfo.rating != NumberInfo.Rating.NEGATIVE) {
+            applyListedNumbers(numberInfo, normalizedNumber);
+        }
+
         if (blacklistService != null && settings.getBlacklistIsNotEmpty()) {
             // avoid loading blacklist if blocking for other reason
             if (full || getBlockingReason(numberInfo) == null) {
@@ -126,6 +150,36 @@ public class NumberInfoService {
 
         LOG.debug("getNumberInfo() finished");
         return numberInfo;
+    }
+
+    /**
+     * Consults the enabled imported lists (offline, synchronous). A listed number gets
+     * the NEGATIVE rating, so the "block negative" setting applies to it as well.
+     */
+    protected void applyListedNumbers(NumberInfo numberInfo, String normalizedNumber) {
+        if (sourcesManager == null || TextUtils.isEmpty(normalizedNumber)) return;
+
+        ProviderResult result;
+        try {
+            result = sourcesManager.lookupListedNumbers(normalizedNumber);
+        } catch (Exception e) {
+            LOG.warn("applyListedNumbers() lookup failed", e);
+            return;
+        }
+        if (result == null || result.getRating() != ProviderResult.Rating.NEGATIVE) return;
+
+        numberInfo.rating = NumberInfo.Rating.NEGATIVE;
+        numberInfo.sourceId = result.getSourceId();
+        numberInfo.sourceName = sourcesManager.getDisplayName(result.getSourceId());
+        if (numberInfo.sourceName == null) numberInfo.sourceName = result.getSourceId();
+        numberInfo.sourceCategory = result.getCategory();
+
+        if (numberInfo.name == null && !TextUtils.isEmpty(result.getName())) {
+            numberInfo.name = result.getName();
+        }
+
+        LOG.trace("applyListedNumbers() source={}, category={}",
+                numberInfo.sourceId, numberInfo.sourceCategory);
     }
 
     protected NumberInfo.BlockingReason getBlockingReason(NumberInfo numberInfo) {

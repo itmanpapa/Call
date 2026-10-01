@@ -237,4 +237,48 @@
     <string name="call_log_empty">Звонков пока нет</string>
     <string name="swipe_to_block">Заблокировать</string>
     <string name="call_log_blocked_label">Заблокирован</string>
+
+    <!-- Data sources -->
+    <string name="sources_activity_title">Источники данных</string>
+    <string name="sources_preference_summary">Базы номеров и импортированные списки</string>
+    <string name="source_yacb_name">База YACB</string>
+    <string name="source_type_offline">Офлайн</string>
+    <string name="source_type_online">Онлайн</string>
+    <string name="source_kind_imported">Импортированный список</string>
+    <string name="source_kind_built_in">Встроенный</string>
+    <string name="source_updated">Обновлено %s</string>
+    <string name="source_never_updated">Ещё не обновлялась</string>
+    <string name="source_load_error">Не удалось загрузить список</string>
+    <string name="source_enabled">Включён</string>
+    <string name="source_move_up">Переместить вверх</string>
+    <string name="source_move_down">Переместить вниз</string>
+    <string name="source_delete">Удалить список</string>
+    <string name="source_delete_confirmation">Удалить список «%s»?</string>
+    <string name="source_delete_button">Удалить</string>
+    <string name="sources_import">Импорт</string>
+    <string name="sources_import_csv">Импорт CSV</string>
+    <string name="sources_import_bnetza">Импорт списка Bundesnetzagentur</string>
+    <string name="sources_import_bnetza_message">Откройте %s в браузере, сохраните страницу (HTML) или её текст в файл и выберите этот файл. Новый импорт заменяет предыдущий список.</string>
+    <string name="sources_choose_file">Выбрать файл</string>
+    <string name="sources_no_file_picker">Не найдено приложение для выбора файлов.</string>
+    <string name="sources_csv_default_name">Список CSV</string>
+    <string name="sources_import_file_too_large">Файл слишком большой.</string>
+    <string name="sources_import_failed">Ошибка импорта: %s</string>
+    <string name="sources_import_failed_title">Импорт не удался</string>
+    <string name="sources_import_nothing_found">В файле не найдено телефонных номеров.</string>
+    <string name="sources_import_result">Импортировано номеров: %1$d\nПропущено строк: %2$d</string>
+    <string name="sources_import_result_title">Импорт завершён</string>
+    <string name="sources_import_skipped_examples">Пропущенные строки:</string>
+    <string name="sources_import_skipped_line">Строка %1$d: %2$s</string>
+    <string name="info_source">Источник: %s</string>
+    <string name="measure_disconnection">Номер отключён</string>
+    <string name="measure_billing_prohibition">Запрет выставления счетов</string>
+    <string name="measure_other_prohibition">Запрет регулятора</string>
+    <string name="measure_unknown">Мера регулятора</string>
+    <plurals name="source_entry_count">
+        <item quantity="one">%d номер</item>
+        <item quantity="few">%d номера</item>
+        <item quantity="many">%d номеров</item>
+        <item quantity="other">%d номера</item>
+    </plurals>
 </resources>

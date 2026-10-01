@@ -84,6 +84,14 @@ public class InfoDialogHelper {
             blacklistNameView.setVisibility(View.GONE);
         }
 
+        TextView sourceView = view.findViewById(R.id.source);
+        String sourceDescription = NumberInfoUtils.getSourceDescription(context, numberInfo);
+        if (!TextUtils.isEmpty(sourceDescription)) {
+            sourceView.setText(context.getString(R.string.info_source, sourceDescription));
+        } else {
+            sourceView.setVisibility(View.GONE);
+        }
+
         ReviewsSummaryHelper.populateSummary(view.findViewById(R.id.reviews_summary),
                 numberInfo.communityDatabaseItem);
 

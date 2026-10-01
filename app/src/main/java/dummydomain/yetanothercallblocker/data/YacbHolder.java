@@ -24,6 +24,8 @@ public class YacbHolder {
     private static BlacklistDao blacklistDao;
     private static BlacklistService blacklistService;
 
+    private static SourcesManager sourcesManager;
+
     private static NumberInfoService numberInfoService;
 
     @SuppressLint("StaticFieldLeak")
@@ -62,6 +64,10 @@ public class YacbHolder {
 
     static void setBlacklistService(BlacklistService blacklistService) {
         YacbHolder.blacklistService = blacklistService;
+    }
+
+    static void setSourcesManager(SourcesManager sourcesManager) {
+        YacbHolder.sourcesManager = sourcesManager;
     }
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
@@ -106,6 +112,10 @@ public class YacbHolder {
 
     public static BlacklistService getBlacklistService() {
         return blacklistService;
+    }
+
+    public static SourcesManager getSourcesManager() {
+        return sourcesManager;
     }
 
     public static NumberInfoService getNumberInfoService() {
