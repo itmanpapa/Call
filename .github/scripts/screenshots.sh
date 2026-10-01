@@ -30,6 +30,7 @@ add_call "+4989123456" 1 42 125
 add_call "+4917612345678" 5 90 0
 add_call "+4940555000" 2 300 61
 add_call "+441632960001" 3 1500 0
+echo "call log rows: $(adb shell content query --uri content://call_log/calls --projection number | grep -c Row)"
 
 shot() {
     sleep 3
