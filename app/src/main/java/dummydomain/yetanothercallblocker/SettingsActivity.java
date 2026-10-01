@@ -3,16 +3,20 @@ package dummydomain.yetanothercallblocker;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Predicate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
-public class SettingsActivity extends AppCompatActivity
+public class SettingsActivity extends BaseActivity
         implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback,
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+
+    @Override
+    protected int getNavigationItemId() {
+        return R.id.nav_settings;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,15 @@ public class SettingsActivity extends AppCompatActivity
                     .commit();
         }
 
+        getSupportFragmentManager().addOnBackStackChangedListener(this::updateUpButton);
+        updateUpButton();
+    }
+
+    private void updateUpButton() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(
+                    getSupportFragmentManager().getBackStackEntryCount() > 0);
         }
     }
 

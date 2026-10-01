@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
 import dummydomain.yetanothercallblocker.data.SiaNumberCategoryUtils;
@@ -24,7 +23,7 @@ import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabaseItem;
 import dummydomain.yetanothercallblocker.sia.model.database.FeaturedDatabaseItem;
 
-public class LookupNumberActivity extends AppCompatActivity {
+public class LookupNumberActivity extends BaseActivity {
 
     private static final String[] MIME_TYPES = new String[]{
             ClipDescription.MIMETYPE_TEXT_PLAIN,
@@ -40,6 +39,11 @@ public class LookupNumberActivity extends AppCompatActivity {
     private TextView reviewsPhoneNumber, reviewsDetails;
 
     private AsyncTask<String, Void, Pair<CommunityDatabaseItem, FeaturedDatabaseItem>> queryTask;
+
+    @Override
+    protected int getNavigationItemId() {
+        return R.id.nav_lookup;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

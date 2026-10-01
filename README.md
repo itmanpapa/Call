@@ -9,7 +9,7 @@
 * Лицензия: [AGPL-3.0-only](LICENSE), как у оригинала. Исходники форка открыты под той же лицензией.
 * `applicationId`: `de.itmanpapa.callblocker` (debug-сборка: `de.itmanpapa.callblocker.debug`),
   поэтому форк ставится рядом с оригинальным YACB
-* Минимальная версия Android: 8.0 (API 26), targetSdk 35
+* Минимальная версия Android: 8.0 (API 26), targetSdk 36
 
 ### Сборка
 
@@ -17,7 +17,7 @@
 ./gradlew assembleDebug
 ```
 
-Нужны JDK 17+ и Android SDK (platform 35). CI собирает debug-APK на каждый push
+Нужны JDK 17+ и Android SDK (platform 36). CI собирает debug-APK на каждый push
 (`.github/workflows/build.yml`).
 
 ### Релиз

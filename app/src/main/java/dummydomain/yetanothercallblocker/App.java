@@ -7,6 +7,8 @@ import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.material.color.DynamicColors;
+
 import dummydomain.yetanothercallblocker.data.Config;
 import dummydomain.yetanothercallblocker.utils.DebuggingUtils;
 
@@ -36,6 +38,8 @@ public class App extends Application {
         instance = this;
 
         DebuggingUtils.setUpCrashHandler();
+
+        DynamicColors.applyToActivitiesIfAvailable(this);
 
         new DeviceProtectedStorageMigrator().migrate(this);
 

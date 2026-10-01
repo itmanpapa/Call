@@ -12,6 +12,7 @@ import java.util.List;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.utils.DbFilteringUtils;
 import dummydomain.yetanothercallblocker.work.TaskService;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import static dummydomain.yetanothercallblocker.Settings.PREF_DB_FILTERING_PREFIXES_TO_KEEP;
 
@@ -46,7 +47,7 @@ public class DbFilteringSettingsFragment extends BaseSettingsFragment {
         }
 
         requirePreference(PREF_INFO).setOnPreferenceClickListener(pref -> {
-            new AlertDialog.Builder(requireActivity())
+            new MaterialAlertDialogBuilder(requireActivity())
                     .setTitle(R.string.settings_screen_db_filtering)
                     .setMessage(pref.getSummary())
                     .setNegativeButton(R.string.back, null)

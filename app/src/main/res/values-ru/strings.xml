@@ -230,4 +230,11 @@
     <string name="db_filtering_filter_db">Отфильтровать базу</string>
     <string name="db_filtering_filter_db_summary">Запустить фильтрацию базы сейчас (чтобы отфильтровать существующие данные)</string>
     <string name="filtering_db">Фильтрация базы номеров…</string>
+    <string name="nav_call_log">Журнал</string>
+    <string name="nav_lookup">Проверка</string>
+    <string name="nav_blacklist">Чёрный список</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="call_log_empty">Звонков пока нет</string>
+    <string name="swipe_to_block">Заблокировать</string>
+    <string name="call_log_blocked_label">Заблокирован</string>
 </resources>

@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -42,8 +41,9 @@ import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
 import dummydomain.yetanothercallblocker.data.db.BlacklistItem;
 import dummydomain.yetanothercallblocker.event.BlacklistChangedEvent;
 import dummydomain.yetanothercallblocker.utils.FileUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class BlacklistActivity extends AppCompatActivity {
+public class BlacklistActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_IMPORT = 1;
 
@@ -70,6 +70,11 @@ public class BlacklistActivity extends AppCompatActivity {
 
     public static Intent getIntent(Context context) {
         return new Intent(context, BlacklistActivity.class);
+    }
+
+    @Override
+    protected int getNavigationItemId() {
+        return R.id.nav_blacklist;
     }
 
     @Override
@@ -110,7 +115,7 @@ public class BlacklistActivity extends AppCompatActivity {
                             .getCurrentDataSource().getAllIds(), true);
                     return true;
                 } else if (item.getItemId() == R.id.menu_delete) {
-                    new AlertDialog.Builder(BlacklistActivity.this)
+                    new MaterialAlertDialogBuilder(BlacklistActivity.this)
                             .setTitle(R.string.are_you_sure)
                             .setMessage(R.string.blacklist_delete_confirmation)
                             .setPositiveButton(R.string.yes, (dialog, which) -> {

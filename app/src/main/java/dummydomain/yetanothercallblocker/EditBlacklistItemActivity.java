@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,7 +34,7 @@ import dummydomain.yetanothercallblocker.data.db.BlacklistItem;
 import static dummydomain.yetanothercallblocker.data.BlacklistUtils.cleanPattern;
 import static dummydomain.yetanothercallblocker.data.BlacklistUtils.patternFromHumanReadable;
 
-public class EditBlacklistItemActivity extends AppCompatActivity {
+public class EditBlacklistItemActivity extends BaseActivity {
 
     private static final String PARAM_ITEM_ID = "itemId";
     private static final String PARAM_NAME = "itemName";

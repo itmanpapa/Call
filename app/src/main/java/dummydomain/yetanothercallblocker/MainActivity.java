@@ -12,12 +12,14 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -28,6 +30,7 @@ import java.util.Objects;
 import dummydomain.yetanothercallblocker.data.CallLogDataSource;
 import dummydomain.yetanothercallblocker.data.CallLogItem;
 import dummydomain.yetanothercallblocker.data.CallLogItemGroup;
+import dummydomain.yetanothercallblocker.data.NumberInfo;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.event.CallEndedEvent;
 import dummydomain.yetanothercallblocker.event.MainDbDownloadFinishedEvent;
@@ -36,7 +39,7 @@ import dummydomain.yetanothercallblocker.event.SecondaryDbUpdateFinished;
 import dummydomain.yetanothercallblocker.work.TaskService;
 import dummydomain.yetanothercallblocker.work.UpdateScheduler;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String STATE_CALL_LOG_DATA_LAST_KEY = "call_log_data_last_key";
     private static final String STATE_CALL_LOG_LAYOUT_MANAGER = "call_log_layout_manager";
@@ -56,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean activityFirstStart = true;
 
     @Override
+    protected int getNavigationItemId() {
+        return R.id.nav_call_log;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -63,7 +71,19 @@ public class MainActivity extends AppCompatActivity {
         callLogAdapter = new CallLogItemRecyclerViewAdapter(this::onCallLogItemClicked);
         recyclerView = findViewById(R.id.callLogList);
         recyclerView.setAdapter(callLogAdapter);
-        recyclerView.addItemDecoration(new CustomVerticalDivider(this));
+        new ItemTouchHelper(new SwipeToBlockCallback(this, new SwipeToBlockCallback.Listener() {
+            @Override
+            public boolean canBlock(int position) {
+                CallLogItemGroup group = callLogAdapter.getGroup(position);
+                return group != null && !group.getItems().get(0).numberInfo.noNumber;
+            }
+
+            @Override
+            public void onBlock(int position) {
+                CallLogItemGroup group = callLogAdapter.getGroup(position);
+                if (group != null) blockNumber(group.getItems().get(0).numberInfo);
+            }
+        })).attachToRecyclerView(recyclerView);
 
         callLogDsFactory = new CallLogDataSource.Factory(getCallLogGroupConverter());
 
@@ -234,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showNoMainDbDialog() {
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.no_main_db_title)
                 .setMessage(R.string.no_main_db_text)
                 .setPositiveButton(R.string.download_main_db,
@@ -245,10 +265,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void downloadMainDb() {
         TaskService.start(this, TaskService.TASK_DOWNLOAD_MAIN_DB);
-    }
-
-    public void onLookupNumberClicked(MenuItem item) {
-        startActivity(new Intent(this, LookupNumberActivity.class));
     }
 
     public void onShowNotificationsChanged(MenuItem item) {
@@ -272,16 +288,14 @@ public class MainActivity extends AppCompatActivity {
         reloadCallLog();
     }
 
-    public void onOpenBlacklist(MenuItem item) {
-        startActivity(BlacklistActivity.getIntent(this));
-    }
-
-    public void onOpenSettings(MenuItem item) {
-        startActivity(new Intent(this, SettingsActivity.class));
-    }
-
     public void onOpenAbout(MenuItem item) {
         startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    private void blockNumber(NumberInfo numberInfo) {
+        String name = numberInfo.featuredDatabaseItem != null
+                ? numberInfo.featuredDatabaseItem.getName() : null;
+        startActivity(EditBlacklistItemActivity.getIntent(this, name, numberInfo.number));
     }
 
     private void onCallLogItemClicked(CallLogItemGroup item) {

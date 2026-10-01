@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -24,7 +23,7 @@ import dummydomain.yetanothercallblocker.event.SecondaryDbUpdatingEvent;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabase;
 import dummydomain.yetanothercallblocker.work.TaskService;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
 
     private final Settings settings = App.getSettings();
     private final CommunityDatabase communityDatabase = YacbHolder.getCommunityDatabase();

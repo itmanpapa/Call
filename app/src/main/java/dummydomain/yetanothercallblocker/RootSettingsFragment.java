@@ -13,6 +13,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import dummydomain.yetanothercallblocker.utils.PackageManagerUtils;
 import dummydomain.yetanothercallblocker.work.UpdateScheduler;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class RootSettingsFragment extends BaseSettingsFragment {
 
@@ -194,7 +195,7 @@ public class RootSettingsFragment extends BaseSettingsFragment {
                 if (Boolean.TRUE.equals(newValue)) {
                     App.getSettings().setNotificationsForBlockedCalls(true);
                 } else {
-                    new AlertDialog.Builder(requireActivity())
+                    new MaterialAlertDialogBuilder(requireActivity())
                             .setTitle(R.string.are_you_sure)
                             .setMessage(R.string.blocked_call_notifications_disable_message)
                             .setPositiveButton(R.string.blocked_call_notifications_disable_confirmation,

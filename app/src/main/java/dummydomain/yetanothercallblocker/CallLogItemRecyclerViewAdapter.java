@@ -1,6 +1,7 @@
 package dummydomain.yetanothercallblocker;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.graphics.ColorUtils;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.Iterator;
@@ -25,6 +28,11 @@ public class CallLogItemRecyclerViewAdapter extends GenericRecyclerViewAdapter
 
     public CallLogItemRecyclerViewAdapter(@Nullable ListInteractionListener<CallLogItemGroup> listener) {
         super(new DiffUtilCallback(), listener);
+    }
+
+    @Nullable
+    public CallLogItemGroup getGroup(int position) {
+        return getItem(position);
     }
 
     @Override
@@ -89,11 +97,10 @@ public class CallLogItemRecyclerViewAdapter extends GenericRecyclerViewAdapter
             IconAndColor iconAndColor = IconAndColor.forNumberRating(
                     numberInfo.rating, numberInfo.contactItem != null);
 
-            if (!iconAndColor.noInfo) {
-                iconAndColor.applyToImageView(numberInfoIcon);
-            } else {
-                numberInfoIcon.setImageDrawable(null);
-            }
+            iconAndColor.applyToImageView(numberInfoIcon);
+            int color = iconAndColor.getColorInt(context);
+            ViewCompat.setBackgroundTintList(numberInfoIcon, ColorStateList.valueOf(
+                    ColorUtils.setAlphaComponent(color, iconAndColor.noInfo ? 0x26 : 0x33)));
 
             if (item.duration == 0 && item.type == CallLogItem.Type.MISSED
                     || item.type == CallLogItem.Type.REJECTED) {

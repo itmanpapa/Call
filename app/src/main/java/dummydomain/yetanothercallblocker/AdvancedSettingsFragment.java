@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 import dummydomain.yetanothercallblocker.utils.DebuggingUtils;
 import dummydomain.yetanothercallblocker.utils.FileUtils;
 import dummydomain.yetanothercallblocker.utils.SystemUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class AdvancedSettingsFragment extends BaseSettingsFragment {
 
@@ -57,7 +58,7 @@ public class AdvancedSettingsFragment extends BaseSettingsFragment {
         Preference countryCodesInfoPreference = requirePreference(PREF_COUNTRY_CODES_INFO);
         countryCodesInfoPreference.setSummary(countryCodesExplanationSummary);
         countryCodesInfoPreference.setOnPreferenceClickListener(preference -> {
-            new AlertDialog.Builder(requireActivity())
+            new MaterialAlertDialogBuilder(requireActivity())
                     .setTitle(R.string.settings_category_country_codes)
                     .setMessage(countryCodesExplanationSummary)
                     .setNegativeButton(R.string.back, null)

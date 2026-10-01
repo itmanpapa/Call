@@ -257,4 +257,11 @@
     <string name="url_faq" translatable="false">https://gitlab.com/xynngh/YetAnotherCallBlocker/-/blob/master/FAQ.md</string>
     <string name="url_translate" translatable="false">https://hosted.weblate.org/engage/yet-another-call-blocker/</string>
     <string name="url_issues" translatable="false">https://gitlab.com/xynngh/YetAnotherCallBlocker/-/issues</string>
+    <string name="nav_call_log">Call log</string>
+    <string name="nav_lookup">Lookup</string>
+    <string name="nav_blacklist">Blacklist</string>
+    <string name="nav_settings">Settings</string>
+    <string name="call_log_empty">No calls yet</string>
+    <string name="swipe_to_block">Block</string>
+    <string name="call_log_blocked_label">Blocked</string>
 </resources>

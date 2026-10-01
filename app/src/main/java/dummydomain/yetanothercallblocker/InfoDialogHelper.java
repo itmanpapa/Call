@@ -17,12 +17,13 @@ import dummydomain.yetanothercallblocker.data.SiaNumberCategoryUtils;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
 import dummydomain.yetanothercallblocker.sia.model.database.FeaturedDatabaseItem;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class InfoDialogHelper {
 
     public static void showDialog(Context context, NumberInfo numberInfo,
                                   DialogInterface.OnDismissListener onDismissListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(context)
                 .setTitle(!numberInfo.noNumber
                         ? numberInfo.number : context.getString(R.string.no_number));
 
@@ -120,7 +121,7 @@ public class InfoDialogHelper {
         dialog.setOnShowListener(x -> {
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(v -> {
                 if (numberInfo.contactItem != null) {
-                    new AlertDialog.Builder(context)
+                    new MaterialAlertDialogBuilder(context)
                             .setTitle(R.string.are_you_sure)
                             .setMessage(R.string.load_reviews_confirmation_message)
                             .setPositiveButton(R.string.yes, (d1, w) -> {
@@ -137,7 +138,7 @@ public class InfoDialogHelper {
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
                 if (numberInfo.contactItem != null) {
-                    new AlertDialog.Builder(context)
+                    new MaterialAlertDialogBuilder(context)
                             .setTitle(R.string.are_you_sure)
                             .setMessage(R.string.load_reviews_confirmation_message)
                             .setPositiveButton(R.string.yes, (d1, w) -> {

@@ -2,7 +2,6 @@ package dummydomain.yetanothercallblocker;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import static dummydomain.yetanothercallblocker.IntentHelper.startActivity;
 import static java.util.Objects.requireNonNull;
@@ -215,7 +215,7 @@ public class PermissionHelper {
     public static void disableCallScreening(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (RoleManagerHelper.hasCallScreeningRole(activity)) {
-                new AlertDialog.Builder(activity)
+                new MaterialAlertDialogBuilder(activity)
                         .setTitle(R.string.default_caller_id_app)
                         .setMessage(R.string.default_caller_id_app_unset)
                         .setPositiveButton(R.string.open_system_settings,
@@ -290,7 +290,7 @@ public class PermissionHelper {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private static void showDefaultDialerDialog(Activity activity, boolean set) {
-        new AlertDialog.Builder(activity)
+        new MaterialAlertDialogBuilder(activity)
                 .setTitle(R.string.default_phone_app)
                 .setMessage(set ? R.string.default_phone_app_set : R.string.default_phone_app_unset)
                 .setPositiveButton(R.string.open_system_settings,
