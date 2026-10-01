@@ -28,9 +28,9 @@ public class InMemoryResultCache implements ResultCache {
 
         this.ttlMillis = ttlMillis;
         this.clock = Objects.requireNonNull(clock, "clock");
-        this.entries = new LinkedHashMap<String, Entry>(16, 0.75f, true) {
+        this.entries = new LinkedHashMap<String, ResultCache.Entry>(16, 0.75f, true) {
             @Override
-            protected boolean removeEldestEntry(Map.Entry<String, Entry> eldest) {
+            protected boolean removeEldestEntry(Map.Entry<String, ResultCache.Entry> eldest) {
                 return size() > maxEntries;
             }
         };
