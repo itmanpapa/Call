@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:paddingStart="@dimen/item_padding"
     android:paddingTop="8dp"
-    android:paddingEnd="8dp"
+    android:paddingEnd="@dimen/item_padding"
     android:paddingBottom="8dp">
 
     <LinearLayout

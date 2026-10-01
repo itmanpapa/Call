@@ -28,13 +28,21 @@
         <item name="colorSurfaceContainerHigh">@color/md_surface_container_high</item>
         <item name="colorSurfaceContainerHighest">@color/md_surface_container_highest</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/AppPreferenceThemeOverlay</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
         <item name="actionModeBackground">?attr/colorSurfaceContainerHigh</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar" />
+
+    <style name="AppPreferenceThemeOverlay" parent="PreferenceThemeOverlay">
+        <item name="switchPreferenceCompatStyle">@style/AppPreference.SwitchPreferenceCompat</item>
+    </style>
+
+    <style name="AppPreference.SwitchPreferenceCompat" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/preference_material_switch</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar" />
 
