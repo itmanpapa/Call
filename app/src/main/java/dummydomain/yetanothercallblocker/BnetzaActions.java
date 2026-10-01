@@ -1,6 +1,8 @@
 package dummydomain.yetanothercallblocker;
 
 import dummydomain.yetanothercallblocker.data.SourcesManager;
+import dummydomain.yetanothercallblocker.data.YacbHolder;
+import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
 
 /**
  * The only place where the "Databases" screens talk to the automatic download of the
@@ -54,7 +56,7 @@ final class BnetzaActions {
      * @return true if this build can download the list automatically
      */
     static boolean isAvailable() {
-        return false;
+        return YacbHolder.getBnetzaAutoUpdater() != null;
     }
 
     /**
@@ -63,14 +65,25 @@ final class BnetzaActions {
      * @param force true to download even if the list was updated recently
      */
     static Result update(boolean force) {
-        return Result.failure(App.getInstance().getString(R.string.bnetza_status_not_available));
+        BnetzaAutoUpdater updater = YacbHolder.getBnetzaAutoUpdater();
+        if (updater == null) {
+            return Result.failure(App.getInstance().getString(R.string.bnetza_status_not_available));
+        }
+        BnetzaAutoUpdater.Result result = updater.update(force);
+        return result.isSuccess() ? Result.success() : Result.failure(result.getError());
     }
 
     /**
      * @return the persisted error of the last automatic update, or null
      */
     static String getLastError() {
-        return null;
+        BnetzaAutoUpdater updater = YacbHolder.getBnetzaAutoUpdater();
+        if (updater == null) return null;
+        try {
+            return updater.getStatus().getLastError();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }
