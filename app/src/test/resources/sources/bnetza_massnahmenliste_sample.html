@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+  SYNTHETIC SAMPLE - NOT REAL DATA.
+  Mimics the structure of the Bundesnetzagentur "Maßnahmenliste"
+  (https://www.bundesnetzagentur.de/massnahmenliste) as determined on 2026-10-01:
+  columns "Bescheid vom | Rufnummer | Kategorie | Maßnahme", several numbers per
+  cell separated by commas or <br>, numbers written without spaces with a leading 0.
+  The site itself was not reachable from the build container, so the markup
+  around the table is an approximation. All phone numbers are made up.
+-->
+<html lang="de">
+<head><meta charset="UTF-8"><title>Bundesnetzagentur - Ma&szlig;nahmenliste</title></head>
+<body>
+<h1>Ma&szlig;nahmenliste</h1>
+<p>Ma&szlig;nahmen der letzten sechs Monate.</p>
+<table class="textualData links">
+  <caption>Ma&szlig;nahmen gegen Rufnummernmissbrauch</caption>
+  <thead>
+    <tr>
+      <th scope="col">Bescheid vom</th>
+      <th scope="col">Rufnummer</th>
+      <th scope="col">Kategorie</th>
+      <th scope="col">Ma&szlig;nahme</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>16.09.2025</td>
+      <td>071100000001</td>
+      <td>Spam-SMS</td>
+      <td>Abschaltung der Rufnummer</td>
+    </tr>
+    <tr>
+      <td>09.09.2025</td>
+      <td>042100000002</td>
+      <td>Spam-SMS</td>
+      <td>Abschaltung der Rufnummer</td>
+    </tr>
+    <tr>
+      <td>22.07.2025</td>
+      <td>06900000003</td>
+      <td>Sonstiges</td>
+      <td>Abschaltung der Rufnummer</td>
+    </tr>
+    <tr>
+      <td>24.04.2025</td>
+      <td>015100000004, 016000000005</td>
+      <td>Spam-Messenger</td>
+      <td>Abschaltung der Rufnummern</td>
+    </tr>
+    <tr>
+      <td>02.04.2025</td>
+      <td><p>017600000006<br/>017600000007<br />017600000008</p></td>
+      <td>SMS/Messenger mit Zahlungsaufforderung</td>
+      <td>Abschaltung der Rufnummern</td>
+    </tr>
+    <tr>
+      <td>13.03.2025</td>
+      <td>+37500000009</td>
+      <td>Ping-Anrufe</td>
+      <td>Rechnungslegungs- und Inkassierungsverbot</td>
+    </tr>
+    <tr>
+      <td>05.03.2025</td>
+      <td>0900 1000 10x</td>
+      <td>Telefonie-Dialer</td>
+      <td>Rechnungslegungs- und Inkassierungsverbot sowie Auszahlungsverbot</td>
+    </tr>
+    <tr>
+      <td>28.02.2025</td>
+      <td>09001000020&#8211;09001000039</td>
+      <td>Internet PopUp</td>
+      <td>Abschaltung der Rufnummern</td>
+    </tr>
+    <tr>
+      <td>14.02.2025</td>
+      <td>0152 00000010</td>
+      <td>Spam&nbsp;Fax</td>
+      <td>Abschaltung der Rufnummer</td>
+    </tr>
+    <tr>
+      <td>01.02.2025</td>
+      <td>unbekannt</td>
+      <td>Hacking</td>
+      <td>Abschaltung der Rufnummer</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

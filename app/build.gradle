@@ -89,4 +89,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.3.0'
     implementation "org.greenrobot:eventbus:$eventbus_version"
     annotationProcessor "org.greenrobot:eventbus-annotation-processor:$eventbus_version"
+
+    testImplementation 'junit:junit:4.13.2'
 }

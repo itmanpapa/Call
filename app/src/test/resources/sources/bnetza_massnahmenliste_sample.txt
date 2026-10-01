@@ -1,0 +1,20 @@
+# SYNTHETIC SAMPLE - NOT REAL DATA.
+# Mimics `pdftotext -layout Maßnahmenliste2025.pdf` output of the Bundesnetzagentur
+# yearly PDF (columns "Bescheid vom | Rufnummer | Kategorie | Maßnahme").
+# All phone numbers are made up.
+Maßnahmenliste 2025
+
+Bescheid vom   Rufnummer                    Kategorie              Maßnahme
+29.12.2025     015200000101                 Spam Fax               Abschaltung der Rufnummer
+16.12.2025     071100000102,                Spam-SMS               Abschaltung der Rufnummern
+               071100000103,
+               071100000104
+01.12.2025     0900 1000 20x                Telefonie-Dialer       Rechnungslegungs- und
+                                                                   Inkassierungsverbot
+20.11.2025     06900000105                  SMS/Messenger mit      Abschaltung der Rufnummer
+                                            Zahlungsaufforderung
+                                                                                     Seite 1 von 2
+Bescheid vom   Rufnummer                    Kategorie              Maßnahme
+03.11.2025     0037500000106                Ping-Anrufe            Rechnungslegungs- und
+                                                                   Inkassierungsverbot
+31.02.2025     015100000107                 Spam-SMS               Abschaltung der Rufnummer
