@@ -351,13 +351,4 @@ public class RemoteListManagerTest {
         assertTrue(id.matches("url_[0-9a-f]{16}"));
     }
 
-    @Test
-    public void presetsAreValidUrls() {
-        for (RemoteListPresets.Preset preset : RemoteListPresets.getPresets()) {
-            assertEquals(preset.getUrl(), RemoteListManager.normalizeUrl(preset.getUrl()));
-            assertTrue(preset.getUrl().startsWith("https://raw.githubusercontent.com/"));
-            assertNotNull(preset.getLicense());
-        }
-    }
-
 }

@@ -83,11 +83,6 @@
     <string name="info_in_blacklist">Na czarnej liście</string>
     <string name="info_in_blacklist_contact">Na czarnej liście (kontakty nie są blokowane)</string>
     <string name="add_to_blacklist">Dodaj do czarnej listy</string>
-    <string name="open_db_management_activity">Zarządzaj bazą danych</string>
-    <string name="db_management_activity_label">Zarządzanie bazą danych</string>
-    <string name="db_management_db_info">Informacje o bazie danych</string>
-    <string name="db_management_reset_base">Resetuj bazę danych</string>
-    <string name="db_management_reset_secondary">Resetuj aktualizacje</string>
     <string name="feature_info">powiadomienia</string>
     <string name="reviews_loading_error">Błąd wczytywania opinii</string>
     <string name="reviews_loading">Wczytywanie opinii…</string>
@@ -97,8 +92,6 @@
     <string name="sia_category_financial_service">Usługi finansowe</string>
     <string name="sia_category_prank">Żart</string>
     <string name="sia_category_scam">Oszustwo</string>
-    <string name="db_management_update_db">Aktualizuj bazę danych</string>
-    <string name="db_management_update_result">Aktualizacja zakończona – wersja bazy danych: %d</string>
     <string name="lookup_error_not_a_number">Oczekiwano numeru telefonu</string>
     <string name="lookup_hint_input_number">Numer telefonu</string>
     <string name="lookup_clear_number">Wyczyść numer</string>
@@ -181,7 +174,6 @@
     <string name="license">Ta aplikacja rozpowszechniana jest w ramach licencji AGPL-3.0-only.</string>
     <string name="db_version_not_available">niedostępna</string>
     <string name="logo_description">Logo</string>
-    <string name="db_last_update_check">Ostatnie sprawdzenie aktualizacji: %s</string>
     <string name="default_phone_app_unset">Wybierz inną aplikację jako „Aplikacja do obsługi telefonu” w ustawieniach systemowych „Aplikacje domyślne”</string>
     <string name="default_phone_app_set">Wybierz „Yet Another Call Blocker” jako „Aplikacja do obsługi telefonu” w ustawieniach systemowych „Aplikacje domyślne”</string>
     <string name="default_caller_id_app_unset">Wybierz inną aplikację jako „Aplikacja do identyfikacji rozmówcy i spamu” w ustawieniach systemowych „Aplikacje domyślne”</string>
@@ -190,14 +182,7 @@
     <string name="open_system_settings">Otwórz ustawienia</string>
     <string name="default_phone_app">Domyślna „Aplikacja do obsługi telefonu”</string>
     <string name="default_caller_id_app">Domyślna „Aplikacja do identyfikacji rozmówcy i spamu”</string>
-    <string name="issues">Uzyskaj wsparcie / zgłoś problem</string>
-    <string name="translate">Przetłumacz tę aplikację na Weblate</string>
-    <string name="faq">Często zadawane pytania</string>
-    <string name="homepage">Strona główna projektu</string>
-    <string name="motto">Bez wysiłku blokuj niechciane połączenia</string>
-    <string name="db_last_update_check_checking">sprawdzanie…</string>
     <string name="db_last_update_check_never">nigdy</string>
-    <string name="db_version">Wersja bazy danych: %s</string>
     <string name="version_string">v%s</string>
     <string name="blacklist_select_all">Zaznacz wszystko</string>
     <string name="block_in_limited_mode_summary">Dozwolone rodzaje blokowania w trybie bezpośredniego rozruchu (w tym trybie kontakty nie mogą być używane jako biała lista)</string>

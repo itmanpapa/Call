@@ -158,25 +158,15 @@
     <string name="duration_s">%d Sek.</string>
     <string name="duration_m_s">%1$d Min. %2$d Sek.</string>
     <string name="duration_h_m_s">%1$d St. %2$d Min. %3$d Sek.</string>
-    <string name="db_version">Datenbank-Version: %s</string>
-    <string name="db_last_update_check_checking">Überprüfung …</string>
     <string name="db_last_update_check_never">nie</string>
-    <string name="db_last_update_check">Letzte Aktualisierungsprüfung: %s</string>
-    <string name="motto">Blockieren Sie unerwünschte Anrufe mühelos</string>
-    <string name="translate">Anwendung auf Weblate übersetzen</string>
-    <string name="faq">Häufig gestellte Fragen</string>
-    <string name="homepage">Projekt-Website</string>
     <string name="logo_description">Logo</string>
-    <string name="issues">Hilfe anfordern / Problem melden</string>
     <string name="contacts_are_not_blocked_no_permission">Anrufe von Kontakten können blockiert werden, weil die Berechtigung „Kontakte“ nicht erteilt ist!</string>
     <string name="block_hidden_number_summary">Anrufe von versteckten Nummern blockieren. Kann im „Erweiterten Anrufblockierungsmodus“ anders (besser oder schlechter) funktionieren</string>
-    <string name="license">Diese Anwendung ist unter AGPL-3.0 lizenziert.</string>
+    <string name="license">Diese Anwendung ist unter AGPL-3.0-only lizenziert.</string>
     <string name="number_pattern_incorrect">Falsches Muster</string>
     <string name="db_filtering_info">Erklärung</string>
     <string name="filtering_db">DB wird gefiltert…</string>
     <string name="info_in_blacklist_contact">In der schwarzen Liste (Kontakte werden nicht blockiert)</string>
-    <string name="open_db_management_activity">Datenbank verwalten</string>
-    <string name="db_management_reset_base">DB zurücksetzen</string>
     <string name="lookup_number_not_found">Nicht gefunden</string>
     <string name="lookup_res_category">Kategorie: %d</string>
     <string name="monitoring_service_label">Anrufüberwachungsdienst</string>
@@ -205,31 +195,15 @@
     <string name="call_log_blocked_label">Gesperrt</string>
 
     <!-- Data sources -->
-    <string name="sources_activity_title">Datenquellen</string>
-    <string name="sources_preference_summary">Rufnummerndatenbanken und importierte Listen</string>
     <string name="source_yacb_name">YACB-Datenbank</string>
-    <string name="source_type_offline">Offline</string>
-    <string name="source_type_online">Online</string>
-    <string name="source_kind_imported">Importierte Liste</string>
-    <string name="source_kind_built_in">Integriert</string>
-    <string name="source_updated">Aktualisiert: %s</string>
-    <string name="source_never_updated">Noch nie aktualisiert</string>
     <string name="source_load_error">Liste konnte nicht geladen werden</string>
     <string name="source_enabled">Aktiviert</string>
-    <string name="source_move_up">Nach oben</string>
-    <string name="source_move_down">Nach unten</string>
     <string name="source_delete">Liste löschen</string>
     <string name="source_delete_confirmation">Liste „%s“ löschen?</string>
     <string name="source_delete_button">Löschen</string>
-    <string name="sources_import">Importieren</string>
-    <string name="sources_import_csv">CSV importieren</string>
-    <string name="sources_import_bnetza">Liste der Bundesnetzagentur importieren</string>
-    <string name="sources_import_bnetza_message">Öffnen Sie %s im Browser, speichern Sie die Seite (HTML) oder ihren Text als Datei und wählen Sie diese Datei aus. Ein neuer Import ersetzt die bisherige Liste.</string>
-    <string name="sources_choose_file">Datei auswählen</string>
     <string name="sources_no_file_picker">Keine App zur Dateiauswahl gefunden.</string>
     <string name="sources_csv_default_name">CSV-Liste</string>
     <string name="sources_import_file_too_large">Die Datei ist zu groß.</string>
-    <string name="sources_import_failed">Import fehlgeschlagen: %s</string>
     <string name="sources_import_failed_title">Import fehlgeschlagen</string>
     <string name="sources_import_nothing_found">In der Datei wurden keine Rufnummern gefunden.</string>
     <string name="sources_import_result">Importierte Nummern: %1$d\nÜbersprungene Zeilen: %2$d</string>
@@ -246,31 +220,18 @@
         <item quantity="other">%d Nummern</item>
     </plurals>
     <!-- PhoneBlock -->
-    <string name="phoneblock_menu">PhoneBlock</string>
     <string name="phoneblock_title">PhoneBlock</string>
     <string name="phoneblock_dialog_message">PhoneBlock ist eine kostenlose, von der Community gepflegte Spam-Liste aus Deutschland (phoneblock.net). Registriere dich kostenlos, erstelle in den PhoneBlock-Einstellungen einen API-Schlüssel und gib ihn hier ein. Die Liste wird einmal heruntergeladen und danach täglich aktualisiert; eingehende Nummern werden offline geprüft.</string>
     <string name="phoneblock_get_token">API-Schlüssel holen</string>
     <string name="phoneblock_token_hint">API-Schlüssel</string>
     <string name="phoneblock_min_votes">Nummern ab dieser Anzahl Stimmen blockieren:</string>
     <string name="phoneblock_terms">Daten: PhoneBlock-Community, kostenlos. Nutzung auf eigenes Risiko; siehe Nutzungsbedingungen auf phoneblock.net.</string>
-    <string name="phoneblock_save">Speichern</string>
-    <string name="phoneblock_sync_now">Jetzt synchronisieren</string>
-    <string name="phoneblock_status_never">Noch nicht synchronisiert</string>
-    <string name="phoneblock_status">Letzte Synchronisierung: %1$s · %2$d Nummern</string>
-    <string name="phoneblock_token_required">Bitte zuerst einen API-Schlüssel eingeben.</string>
-    <string name="phoneblock_sync_result_title">PhoneBlock synchronisiert</string>
-    <string name="phoneblock_sync_result_full">Vollständige Liste geladen: %1$d Nummern.\nBlockiert (mindestens %2$d Stimmen): %3$d</string>
-    <string name="phoneblock_sync_result_incremental">Hinzugefügt oder geändert: %1$d, entfernt: %2$d.\nBlockiert (mindestens %3$d Stimmen): %4$d von %5$d</string>
+    <string name="phoneblock_save">Speichern und prüfen</string>
     <string name="phoneblock_sync_skipped">Die Liste wurde vor weniger als %d Minuten synchronisiert. Bitte später erneut versuchen.</string>
-    <string name="phoneblock_sync_failed_title">PhoneBlock-Synchronisierung fehlgeschlagen</string>
     <string name="phoneblock_sync_auth_error">Der API-Schlüssel wurde abgelehnt. Prüfe den Schlüssel oder erstelle einen neuen auf phoneblock.net.</string>
     <string name="phoneblock_sync_rate_limited">Der Server ist ausgelastet oder bittet um weniger Anfragen. Bitte später erneut versuchen.</string>
-    <string name="phoneblock_sync_error">Fehler: %s</string>
-    <string name="phoneblock_no_browser">Kein Browser gefunden. Öffne %s manuell.</string>
-    <string name="phoneblock_no_token">Kein API-Schlüssel</string>
+    <string name="no_browser">Kein Browser gefunden. Öffne %s manuell.</string>
     <string name="phoneblock_online_details">Prüft unbekannte Anrufer online; es wird nur ein Hash der Nummer gesendet</string>
-    <string name="source_phoneblock_online_name">PhoneBlock (Online-Prüfung)</string>
-    <string name="source_kind_synchronized">Synchronisiert</string>
     <string name="phoneblock_rating_b_missed">Unerwünschter Anruf</string>
     <string name="phoneblock_rating_c_ping">Ping-Anruf</string>
     <string name="phoneblock_rating_d_poll">Umfrage</string>
@@ -280,34 +241,56 @@
 
     <!-- Data sources: lists imported from a URL -->
     <string name="sources_add_url">Liste per URL hinzufügen</string>
-    <string name="sources_add_url_enter">URL eingeben…</string>
-    <string name="sources_add_url_preset_summary">Lizenz: %1$s · zuletzt geändert: %2$s</string>
     <string name="sources_add_url_url">URL der Liste</string>
     <string name="sources_add_url_name">Name (optional)</string>
     <string name="sources_add_url_auto_update">Automatisch aktualisieren (täglich)</string>
     <string name="sources_add_url_hint">Unterstützte Formate: Fritz!Box-Telefonbuch (XML), vCard, CSV oder eine Nummer pro Zeile. Die Liste wird direkt von dieser Adresse geladen; bei GitHub den Link auf die Rohdatei (Raw) verwenden.</string>
-    <string name="sources_add_url_preset_info">Projekt: %1$s
-Lizenz: %2$s
-Die Liste wird von Dritten gepflegt und erst heruntergeladen, wenn Sie sie hinzufügen.</string>
     <string name="sources_add_url_button">Hinzufügen</string>
     <string name="sources_add_url_invalid">Bitte eine gültige http- oder https-Adresse eingeben.</string>
     <string name="sources_url_html_error">Die Adresse führt zu einer Webseite, nicht zu einer Listendatei. Bei GitHub den „Raw“-Link der Datei verwenden.</string>
     <string name="sources_url_unsupported_format">Nicht unterstütztes Dateiformat.</string>
     <string name="sources_url_download_failed">Download fehlgeschlagen: %s</string>
-    <string name="source_kind_url">Liste aus URL</string>
     <string name="source_url_auto_update_on">Wird automatisch aktualisiert</string>
     <string name="source_url_auto_update_off">Manuelle Aktualisierung</string>
     <string name="source_url_checked">Geprüft %s</string>
-    <string name="source_url_last_error">Letzte Aktualisierung fehlgeschlagen (%1$s): %2$s</string>
-    <string name="source_url_actions">Aktionen für die Liste</string>
-    <string name="source_url_update_now">Jetzt aktualisieren</string>
-    <string name="source_url_enable_auto_update">Automatische Aktualisierung einschalten</string>
-    <string name="source_url_disable_auto_update">Automatische Aktualisierung ausschalten</string>
+    <string name="source_update_now">Jetzt aktualisieren</string>
     <string name="source_url_updated">Die Liste wurde aktualisiert. Nummern: %d</string>
     <string name="source_url_not_modified">Die Liste hat sich nicht geändert.</string>
-    <string name="source_url_update_failed">Aktualisierung fehlgeschlagen: %s</string>
-    <string name="phoneblock_card_not_configured">Kostenlose Community-Spamliste für Deutschland. Tippen, um den kostenlosen API-Schlüssel einzugeben.</string>
-    <string name="phoneblock_card_configured">API-Schlüssel gesetzt · tägliche Aktualisierung</string>
-    <string name="phoneblock_card_enter_key">Schlüssel eingeben</string>
-    <string name="phoneblock_card_settings">Einstellungen</string>
+
+    <!-- Databases screen -->
+    <string name="databases_title">Datenbanken</string>
+    <string name="databases_preference_summary">YACB, PhoneBlock, Bundesnetzagentur und eigene Listen</string>
+    <string name="source_yacb_description">Internationale Community-Datenbank, funktioniert offline</string>
+    <string name="source_phoneblock_description">Community-Spamliste für Deutschland, täglich aktualisiert</string>
+    <string name="source_bnetza_description">Offizielle Liste der Rufnummern mit Maßnahmen, wöchentlicher Download</string>
+    <string name="source_file_description">Importierte Datei</string>
+    <string name="source_status_updated">Aktualisiert: %1$s · %2$s</string>
+    <string name="source_status_updating">Wird aktualisiert…</string>
+    <string name="source_status_never">Noch nicht heruntergeladen</string>
+    <string name="source_status_error">Fehler: %s</string>
+    <string name="source_last_success">Letzte erfolgreiche Aktualisierung: %s</string>
+    <string name="source_details_status">Status</string>
+    <string name="yacb_status_version">Datenbankversion %s</string>
+    <string name="yacb_status_not_downloaded">Datenbank nicht heruntergeladen</string>
+    <string name="yacb_download">Datenbank herunterladen</string>
+    <string name="yacb_info">Datenbankversion: %1$s\nBasisversion: %2$s (SIA %3$s)\nLetzte Aktualisierung: %4$s\nLetzte Prüfung: %5$s\nFeatured-Datenbank: %6$s</string>
+    <string name="yacb_reset_updates">Updates zurücksetzen</string>
+    <string name="yacb_reset_updates_message">Die heruntergeladenen Updates werden entfernt, die Basisdatenbank bleibt erhalten. Die nächste Aktualisierung lädt sie erneut.</string>
+    <string name="yacb_reset_base">Datenbank löschen</string>
+    <string name="yacb_reset_base_message">Die heruntergeladene Datenbank und ihre Updates werden gelöscht. Mit „Datenbank herunterladen“ kann sie erneut geladen werden.</string>
+    <string name="phoneblock_status_no_key">Kostenloser API-Schlüssel erforderlich</string>
+    <string name="phoneblock_key_checking">Schlüssel wird geprüft…</string>
+    <string name="phoneblock_key_accepted">Schlüssel akzeptiert</string>
+    <string name="phoneblock_key_removed">Schlüssel entfernt</string>
+    <string name="phoneblock_online_check">Online-Prüfung</string>
+    <string name="bnetza_status_not_available">Automatischer Download noch nicht verfügbar</string>
+    <string name="bnetza_details_message">Die Bundesnetzagentur veröffentlicht Rufnummern, gegen die sie Maßnahmen ergriffen hat, z. B. eine Abschaltung. Die Liste wird einmal pro Woche automatisch heruntergeladen.</string>
+    <string name="bnetza_open_page">Liste auf der Website öffnen</string>
+    <string name="sources_add_list">Liste hinzufügen</string>
+    <string name="sources_add_file">Datei (CSV, Fritz!Box XML, vCard)</string>
+    <string name="sources_add_link">Link (URL)</string>
+    <string name="about_description">Blockiert unerwünschte Anrufe anhand von Offline-Spamnummern-Datenbanken.</string>
+    <string name="about_based_on">Basiert auf %s von xynngh</string>
+    <string name="about_fork_link">Quellcode auf GitHub</string>
+
 </resources>

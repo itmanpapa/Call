@@ -9,15 +9,6 @@
         app:title="@string/settings_category_database">
 
         <Preference
-            app:key="dbManagement"
-            app:persistent="false"
-            app:title="@string/open_db_management_activity">
-            <intent
-                android:targetClass="dummydomain.yetanothercallblocker.DbManagementActivity"
-                android:targetPackage="@string/app_id" />
-        </Preference>
-
-        <Preference
             app:fragment="dummydomain.yetanothercallblocker.DbFilteringSettingsFragment"
             app:key="dbFiltering"
             app:title="@string/settings_screen_db_filtering" />

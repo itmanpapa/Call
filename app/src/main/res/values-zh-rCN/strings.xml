@@ -66,11 +66,7 @@
     <string name="filtering_db">数据过滤</string>
     <string name="info_in_blacklist">在黑名单上</string>
     <string name="lookup_hint_input_number">手机号码</string>
-    <string name="db_management_update_db">升级数据库</string>
-    <string name="open_db_management_activity">管理数据库</string>
-    <string name="db_management_reset_base">重设数据库</string>
     <string name="lookup_paste_number">黏贴号码</string>
-    <string name="issues">获得帮助/反馈问题</string>
     <string name="lookup_number_not_found">没有发现</string>
     <string name="edit_blacklist_item_name">姓名</string>
     <string name="lookup_query_db">离线搜索</string>
@@ -80,8 +76,6 @@
     <string name="about_activity">关于</string>
     <string name="monitoring_service_label">电话监控服务</string>
     <string name="title_lookup_number">查询号码</string>
-    <string name="translate">在Weblate上翻译该应用</string>
-    <string name="homepage">项目主页</string>
     <string name="blacklist_delete_confirmation">删除所选项目？</string>
     <string name="db_filtering_info_summary">" "</string>
     <string name="title_add_blacklist_item_activity">添加号码</string>
@@ -97,7 +91,6 @@
     <string name="use_call_screening_service">高级来电拦截模式</string>
     <string name="country_code_override">国家代码</string>
     <string name="settings_category_country_codes">国家代码</string>
-    <string name="db_management_db_info">数据库信息</string>
     <string name="title_edit_blacklist_item_activity">编辑号码</string>
     <string name="title_blacklist_activity">黑名单</string>
     <string name="open_blacklist_activity">黑名单</string>
@@ -107,6 +100,5 @@
     <string name="info_icon_description">信息</string>
     <string name="blacklist_item_date_no_info">无信息</string>
     <string name="save">保存</string>
-    <string name="faq">常见问题</string>
     <string name="lookup_load_reviews">加载（网络上的）评论</string>
 </resources>

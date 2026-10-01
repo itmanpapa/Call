@@ -20,6 +20,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import dummydomain.yetanothercallblocker.App;
+import dummydomain.yetanothercallblocker.PhoneBlockHelper;
 import dummydomain.yetanothercallblocker.Settings;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
@@ -81,17 +82,16 @@ public class PhoneBlockSyncWorker extends Worker {
     public Result doWork() {
         LOG.info("doWork() started");
 
-        Settings settings = App.getSettings();
-        String token = settings.getPhoneBlockToken();
-        PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
-        if (TextUtils.isEmpty(token) || sync == null) {
+        if (TextUtils.isEmpty(App.getSettings().getPhoneBlockToken())
+                || YacbHolder.getPhoneBlockSync() == null) {
             LOG.info("doWork() no token");
             return Result.success();
         }
 
         try {
-            PhoneBlockSync.SyncResult result = sync.sync(token,
-                    settings.getPhoneBlockMinVotes(), false);
+            // also stores the outcome for the "Databases" screen
+            PhoneBlockSync.SyncResult result =
+                    PhoneBlockHelper.sync(getApplicationContext(), false);
             LOG.info("doWork() finished: {}", result);
             return Result.success();
         } catch (PhoneBlockClient.ApiException e) {

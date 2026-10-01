@@ -71,10 +71,7 @@
     <string name="use_contacts_summary">Los números presentes en los Contactos nunca se bloquean y el nombre del contacto aparece junto a/en lugar de un número en toda la aplicación</string>
     <string name="lookup_query_db">Buscar (sin conexión)</string>
     <string name="lookup_load_reviews">Cargar reseñas (online)</string>
-    <string name="db_management_db_info">Información de DB</string>
-    <string name="db_management_update_db">Actualizar DB</string>
     <string name="lookup_number_not_found">No encontrado</string>
-    <string name="db_management_update_result">Actualización terminada; DB ver: %d</string>
     <string name="notification_channel_group_name_services">Servicios</string>
     <string name="use_call_screening_service_summary">Permite bloquear llamadas antes de que el teléfono empiece a sonar. Requiere que la aplicación sea la «Aplicación de teléfono» (Android 7–9) o la «Aplicación de identificación de llamadas» (Android 10+)</string>
     <string name="notification_settings">Configuración de las notificaciones</string>
@@ -97,15 +94,7 @@
     <string name="use_monitoring_service">Utiliza un servicio de vigilancia</string>
     <string name="notification_channel_name_monitoring_service">Servicio de monitoreo</string>
     <string name="license">Esta aplicación está licenciada bajo AGPL-3.0-only.</string>
-    <string name="issues">Obtén soporte / informa de un problema</string>
-    <string name="translate">Traducir la aplicación en Weblate</string>
-    <string name="faq">Preguntas Más Frecuentes</string>
-    <string name="homepage">Página del proyecto</string>
-    <string name="motto">Bloquea llamadas no deseadas sin esfuerzo</string>
-    <string name="db_last_update_check_checking">Comprobando…</string>
     <string name="db_last_update_check_never">nunca</string>
-    <string name="db_last_update_check">Última comprobación de actualizaciones: %s</string>
-    <string name="db_version">Versión de base de datos: %s</string>
     <string name="about_activity">Acerca de</string>
     <string name="open_about_activity">Acerca de</string>
     <string name="duration_h_m_s">%1$dh %2$dm %3$ds</string>
@@ -118,10 +107,6 @@
     <string name="lookup_error_not_a_number">Se esperaba un número de teléfono</string>
     <string name="lookup_hint_input_number">Número de teléfono</string>
     <string name="title_lookup_number">Buscar número</string>
-    <string name="db_management_reset_secondary">Restablecer actualizaciones</string>
-    <string name="db_management_reset_base">Restablecer BD</string>
-    <string name="db_management_activity_label">Gestión de BD</string>
-    <string name="open_db_management_activity">Gestionar base de datos</string>
     <string name="add_to_blacklist">Añadir a la lista negra</string>
     <string name="info_in_blacklist_contact">En la lista negra (no se bloquean los contactos)</string>
     <string name="info_in_blacklist">En la lista negra</string>

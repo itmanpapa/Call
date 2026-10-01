@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="license">Este aplicação é licenciada apenas sob AGPL-3.0.</string>
-    <string name="issues">Obter suporte / reportar um problema</string>
-    <string name="translate">Traduzir a aplicação no Weblate</string>
-    <string name="faq">Perguntas mais frequentes</string>
-    <string name="homepage">Página inicial do projeto</string>
     <string name="logo_description">Logo</string>
-    <string name="motto">Bloqueia chamadas indesejadas sem esforço</string>
-    <string name="db_last_update_check_checking">a verificar…</string>
     <string name="db_last_update_check_never">nunca</string>
-    <string name="db_last_update_check">Verificação da última actualização: %s</string>
     <string name="db_version_not_available">n/d</string>
-    <string name="db_version">Versão de base de dados: %s</string>
     <string name="version_string">v%s</string>
     <string name="about_activity">Sobre</string>
     <string name="open_about_activity">Sobre</string>
@@ -30,14 +22,7 @@
     <string name="lookup_clear_number">Limpar número</string>
     <string name="lookup_error_not_a_number">Espera-se um número de telefone</string>
     <string name="lookup_hint_input_number">Número de telefone</string>
-    <string name="db_management_update_db">Atualizar a BD</string>
     <string name="title_lookup_number">Pesquisar número</string>
-    <string name="db_management_update_result">Atualização terminada; BD ver: %d</string>
-    <string name="db_management_reset_secondary">Repor atualizações</string>
-    <string name="db_management_reset_base">Reiniciar a BD</string>
-    <string name="db_management_db_info">Informações da BD</string>
-    <string name="db_management_activity_label">Gestão da BD</string>
-    <string name="open_db_management_activity">Gerir base de dados</string>
     <string name="add_to_blacklist">Adicionar à lista negra</string>
     <string name="info_in_blacklist_contact">Na lista negra (os Contactos não são bloqueados)</string>
     <string name="info_in_blacklist">Na lista negra</string>

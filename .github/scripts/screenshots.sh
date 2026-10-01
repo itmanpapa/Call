@@ -59,8 +59,8 @@ capture_all() { # suffix
     adb shell input keyevent KEYCODE_BACK  # hide the keyboard to bring back the navigation bar
     tap_text "Blacklist" && shot "04_blacklist_$1"
     tap_text "Settings" && shot "05_settings_$1"
-    tap_text "Data sources" && shot "07_sources_$1"
-    tap_text "Enter key" && shot "08_phoneblock_$1" && adb shell input keyevent KEYCODE_BACK
+    tap_text "Databases" && sleep 1 && shot "07_sources_$1"
+    tap_text "PhoneBlock" && sleep 1 && shot "08_phoneblock_$1" && adb shell input keyevent KEYCODE_BACK
     adb shell input keyevent KEYCODE_BACK
     tap_text "Call log" && sleep 2 && tap_text "+4930901820" && shot "06_info_dialog_$1"
 }

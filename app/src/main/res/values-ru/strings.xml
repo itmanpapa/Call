@@ -31,13 +31,6 @@
     <string name="use_call_screening_service_summary">Позволяет блокировать вызовы до того, как телефон начнёт звонить. Это требует назначить приложение \"приложением для звонков\" (на Android 7–9) или \"приложением для АОН и защиты от спама\" (на Android 10+)</string>
     <string name="auto_updates">Автообновление базы номеров</string>
     <string name="auto_updates_summary">Автоматическое получение ежедневных обновлений базы номеров (это инкрементальные/дельта-обновления, поэтому они потребляют очень мало трафика)</string>
-    <string name="open_db_management_activity">Управление базой данных</string>
-    <string name="db_management_activity_label">Управление базой данных</string>
-    <string name="db_management_db_info">Информация о базе данных</string>
-    <string name="db_management_reset_base">Сбросить базу данных</string>
-    <string name="db_management_reset_secondary">Сбросить обновления</string>
-    <string name="db_management_update_db">Обновить базу данных</string>
-    <string name="db_management_update_result">Обновление завершено. Версия базы данных: %d</string>
     <string name="incoming_call_notifications">Уведомления при входящих вызовах</string>
     <string name="incoming_call_notifications_summary">Отображать уведомление с краткой информацией о номере телефона (рейтинг, количество отзывов, категория) во время входящих вызовов</string>
     <string name="title_activity_reviews">Отзывы</string>
@@ -201,17 +194,9 @@
     <string name="open_about_activity">О приложении</string>
     <string name="about_activity">О приложении</string>
     <string name="version_string">v%s</string>
-    <string name="db_version">Версия базы номеров: %s</string>
     <string name="db_version_not_available">н/д</string>
-    <string name="db_last_update_check">Последняя проверка: %s</string>
     <string name="db_last_update_check_never">никогда</string>
-    <string name="db_last_update_check_checking">проверяем…</string>
-    <string name="motto">Без труда блокируйте нежелательные вызовы</string>
     <string name="logo_description">Логотип</string>
-    <string name="homepage">Домашняя страница проекта</string>
-    <string name="faq">Часто задаваемые вопросы</string>
-    <string name="translate">Перевести приложение на Weblate</string>
-    <string name="issues">Получить поддержку / сообщить о проблеме</string>
     <string name="license">Это приложение распространяется под лицензией AGPL-3.0-only.</string>
     <string name="settings_category_database">База данных</string>
     <string name="settings_screen_db_filtering">Фильтрация базы данных</string>
@@ -239,31 +224,15 @@
     <string name="call_log_blocked_label">Заблокирован</string>
 
     <!-- Data sources -->
-    <string name="sources_activity_title">Источники данных</string>
-    <string name="sources_preference_summary">Базы номеров и импортированные списки</string>
     <string name="source_yacb_name">База YACB</string>
-    <string name="source_type_offline">Офлайн</string>
-    <string name="source_type_online">Онлайн</string>
-    <string name="source_kind_imported">Импортированный список</string>
-    <string name="source_kind_built_in">Встроенный</string>
-    <string name="source_updated">Обновлено %s</string>
-    <string name="source_never_updated">Ещё не обновлялась</string>
     <string name="source_load_error">Не удалось загрузить список</string>
     <string name="source_enabled">Включён</string>
-    <string name="source_move_up">Переместить вверх</string>
-    <string name="source_move_down">Переместить вниз</string>
     <string name="source_delete">Удалить список</string>
     <string name="source_delete_confirmation">Удалить список «%s»?</string>
     <string name="source_delete_button">Удалить</string>
-    <string name="sources_import">Импорт</string>
-    <string name="sources_import_csv">Импорт CSV</string>
-    <string name="sources_import_bnetza">Импорт списка Bundesnetzagentur</string>
-    <string name="sources_import_bnetza_message">Откройте %s в браузере, сохраните страницу (HTML) или её текст в файл и выберите этот файл. Новый импорт заменяет предыдущий список.</string>
-    <string name="sources_choose_file">Выбрать файл</string>
     <string name="sources_no_file_picker">Не найдено приложение для выбора файлов.</string>
     <string name="sources_csv_default_name">Список CSV</string>
     <string name="sources_import_file_too_large">Файл слишком большой.</string>
-    <string name="sources_import_failed">Ошибка импорта: %s</string>
     <string name="sources_import_failed_title">Импорт не удался</string>
     <string name="sources_import_nothing_found">В файле не найдено телефонных номеров.</string>
     <string name="sources_import_result">Импортировано номеров: %1$d\nПропущено строк: %2$d</string>
@@ -282,31 +251,18 @@
         <item quantity="other">%d номера</item>
     </plurals>
     <!-- PhoneBlock -->
-    <string name="phoneblock_menu">PhoneBlock</string>
     <string name="phoneblock_title">PhoneBlock</string>
     <string name="phoneblock_dialog_message">PhoneBlock — бесплатный немецкий список спам-номеров, который ведёт сообщество (phoneblock.net). Зарегистрируйтесь бесплатно, создайте API-ключ на странице настроек PhoneBlock и введите его здесь. Список загружается один раз и затем обновляется ежедневно; входящие номера проверяются офлайн.</string>
     <string name="phoneblock_get_token">Получить API-ключ</string>
     <string name="phoneblock_token_hint">API-ключ</string>
     <string name="phoneblock_min_votes">Блокировать номера, набравшие не меньше голосов:</string>
     <string name="phoneblock_terms">Данные: сообщество PhoneBlock, бесплатно. Используйте на свой риск; условия использования — на phoneblock.net.</string>
-    <string name="phoneblock_save">Сохранить</string>
-    <string name="phoneblock_sync_now">Обновить сейчас</string>
-    <string name="phoneblock_status_never">Ещё не синхронизирован</string>
-    <string name="phoneblock_status">Последнее обновление: %1$s · номеров: %2$d</string>
-    <string name="phoneblock_token_required">Сначала введите API-ключ.</string>
-    <string name="phoneblock_sync_result_title">PhoneBlock обновлён</string>
-    <string name="phoneblock_sync_result_full">Загружен полный список: %1$d номеров.\nБлокируются (не меньше %2$d голосов): %3$d</string>
-    <string name="phoneblock_sync_result_incremental">Добавлено или изменено: %1$d, удалено: %2$d.\nБлокируются (не меньше %3$d голосов): %4$d из %5$d</string>
+    <string name="phoneblock_save">Сохранить и проверить</string>
     <string name="phoneblock_sync_skipped">Список обновлялся менее %d минут назад. Повторите позже.</string>
-    <string name="phoneblock_sync_failed_title">Не удалось обновить PhoneBlock</string>
     <string name="phoneblock_sync_auth_error">API-ключ отклонён. Проверьте ключ или создайте новый на phoneblock.net.</string>
     <string name="phoneblock_sync_rate_limited">Сервер перегружен или просит снизить частоту запросов. Повторите позже.</string>
-    <string name="phoneblock_sync_error">Ошибка: %s</string>
-    <string name="phoneblock_no_browser">Браузер не найден. Откройте %s вручную.</string>
-    <string name="phoneblock_no_token">API-ключ не задан</string>
+    <string name="no_browser">Браузер не найден. Откройте %s вручную.</string>
     <string name="phoneblock_online_details">Проверяет неизвестные номера онлайн; отправляется только хеш номера</string>
-    <string name="source_phoneblock_online_name">PhoneBlock (онлайн-проверка)</string>
-    <string name="source_kind_synchronized">Синхронизируется</string>
     <string name="phoneblock_rating_b_missed">Нежелательный звонок</string>
     <string name="phoneblock_rating_c_ping">Сброшенный звонок</string>
     <string name="phoneblock_rating_d_poll">Опрос</string>
@@ -316,34 +272,56 @@
 
     <!-- Data sources: lists imported from a URL -->
     <string name="sources_add_url">Добавить список по ссылке</string>
-    <string name="sources_add_url_enter">Ввести адрес…</string>
-    <string name="sources_add_url_preset_summary">Лицензия: %1$s · последнее изменение: %2$s</string>
     <string name="sources_add_url_url">Адрес списка</string>
     <string name="sources_add_url_name">Название (необязательно)</string>
     <string name="sources_add_url_auto_update">Обновлять автоматически (раз в день)</string>
     <string name="sources_add_url_hint">Поддерживаемые форматы: телефонная книга Fritz!Box (XML), vCard, CSV или по одному номеру в строке. Список скачивается напрямую по этому адресу; для GitHub укажите ссылку на исходный файл (Raw).</string>
-    <string name="sources_add_url_preset_info">Проект: %1$s
-Лицензия: %2$s
-Список ведут сторонние авторы. Он скачивается, только когда вы его добавите.</string>
     <string name="sources_add_url_button">Добавить</string>
     <string name="sources_add_url_invalid">Введите корректный адрес http или https.</string>
     <string name="sources_url_html_error">Адрес ведёт на веб-страницу, а не на файл списка. Для GitHub используйте ссылку «Raw» на файл.</string>
     <string name="sources_url_unsupported_format">Неподдерживаемый формат файла.</string>
     <string name="sources_url_download_failed">Не удалось скачать: %s</string>
-    <string name="source_kind_url">Список по ссылке</string>
     <string name="source_url_auto_update_on">Обновляется автоматически</string>
     <string name="source_url_auto_update_off">Обновление вручную</string>
     <string name="source_url_checked">Проверен %s</string>
-    <string name="source_url_last_error">Последнее обновление не удалось (%1$s): %2$s</string>
-    <string name="source_url_actions">Действия со списком</string>
-    <string name="source_url_update_now">Обновить сейчас</string>
-    <string name="source_url_enable_auto_update">Включить автообновление</string>
-    <string name="source_url_disable_auto_update">Выключить автообновление</string>
+    <string name="source_update_now">Обновить сейчас</string>
     <string name="source_url_updated">Список обновлён. Номеров: %d</string>
     <string name="source_url_not_modified">Список не изменился.</string>
-    <string name="source_url_update_failed">Не удалось обновить: %s</string>
-    <string name="phoneblock_card_not_configured">Бесплатная база спам-номеров для Германии. Нажмите, чтобы ввести бесплатный API-ключ.</string>
-    <string name="phoneblock_card_configured">API-ключ введён · обновляется ежедневно</string>
-    <string name="phoneblock_card_enter_key">Ввести ключ</string>
-    <string name="phoneblock_card_settings">Настройки</string>
+
+    <!-- Databases screen -->
+    <string name="databases_title">Базы данных</string>
+    <string name="databases_preference_summary">YACB, PhoneBlock, Bundesnetzagentur и свои списки</string>
+    <string name="source_yacb_description">Международная база сообщества, работает офлайн</string>
+    <string name="source_phoneblock_description">Спам-список сообщества для Германии, обновляется ежедневно</string>
+    <string name="source_bnetza_description">Официальный список номеров с мерами, загружается еженедельно</string>
+    <string name="source_file_description">Импортированный файл</string>
+    <string name="source_status_updated">Обновлено: %1$s · %2$s</string>
+    <string name="source_status_updating">Обновляется…</string>
+    <string name="source_status_never">Ещё не загружено</string>
+    <string name="source_status_error">Ошибка: %s</string>
+    <string name="source_last_success">Последнее успешное обновление: %s</string>
+    <string name="source_details_status">Статус</string>
+    <string name="yacb_status_version">Версия базы %s</string>
+    <string name="yacb_status_not_downloaded">База не загружена</string>
+    <string name="yacb_download">Загрузить базу</string>
+    <string name="yacb_info">Версия базы: %1$s\nБазовая версия: %2$s (SIA %3$s)\nПоследнее обновление: %4$s\nПоследняя проверка: %5$s\nДополнительная база (featured): %6$s</string>
+    <string name="yacb_reset_updates">Сбросить обновления</string>
+    <string name="yacb_reset_updates_message">Загруженные обновления будут удалены, основная база останется. Следующее обновление загрузит их снова.</string>
+    <string name="yacb_reset_base">Удалить базу</string>
+    <string name="yacb_reset_base_message">Загруженная база и её обновления будут удалены. Её можно загрузить снова кнопкой «Загрузить базу».</string>
+    <string name="phoneblock_status_no_key">Нужен бесплатный API-ключ</string>
+    <string name="phoneblock_key_checking">Проверяем ключ…</string>
+    <string name="phoneblock_key_accepted">Ключ принят</string>
+    <string name="phoneblock_key_removed">Ключ удалён</string>
+    <string name="phoneblock_online_check">Онлайн-проверка</string>
+    <string name="bnetza_status_not_available">Автоматическая загрузка пока недоступна</string>
+    <string name="bnetza_details_message">Федеральное сетевое агентство Германии (Bundesnetzagentur) публикует номера, против которых приняты меры, например отключение. Список загружается автоматически раз в неделю.</string>
+    <string name="bnetza_open_page">Открыть список на сайте</string>
+    <string name="sources_add_list">Добавить список</string>
+    <string name="sources_add_file">Файл (CSV, Fritz!Box XML, vCard)</string>
+    <string name="sources_add_link">Ссылка (URL)</string>
+    <string name="about_description">Блокирует нежелательные звонки по офлайн-базам спам-номеров.</string>
+    <string name="about_based_on">Основано на %s (автор xynngh)</string>
+    <string name="about_fork_link">Исходный код на GitHub</string>
+
 </resources>

@@ -209,14 +209,6 @@
     <string name="info_in_blacklist_contact">In blacklist (contacts are not blocked)</string>
     <string name="add_to_blacklist">Add to blacklist</string>
 
-    <string name="open_db_management_activity">Manage database</string>
-    <string name="db_management_activity_label">DB management</string>
-    <string name="db_management_db_info">DB info</string>
-    <string name="db_management_reset_base">Reset DB</string>
-    <string name="db_management_reset_secondary">Reset updates</string>
-    <string name="db_management_update_db">Update DB</string>
-    <string name="db_management_update_result">Update finished; DB ver: %d</string>
-
     <string name="title_lookup_number">Lookup number</string>
     <string name="lookup_default_test_number" translatable="false">+74995861192</string>
     <string name="lookup_hint_input_number">Phone number</string>
@@ -240,23 +232,12 @@
     <string name="open_about_activity">About</string>
     <string name="about_activity">About</string>
     <string name="version_string">v%s</string>
-    <string name="db_version">Database version: %s</string>
     <string name="db_version_not_available">n/a</string>
-    <string name="db_last_update_check">Last update check: %s</string>
     <string name="db_last_update_check_never">never</string>
-    <string name="db_last_update_check_checking">checking…</string>
 
-    <string name="motto">Block unwanted calls effortlessly</string>
     <string name="logo_description">Logo</string>
-    <string name="homepage">Project homepage</string>
-    <string name="faq">Frequently Asked Questions</string>
-    <string name="translate">Translate the app on Weblate</string>
-    <string name="issues">Get support / report a problem</string>
     <string name="license">This application is licensed under AGPL-3.0-only.</string>
     <string name="url_repo" translatable="false">https://gitlab.com/xynngh/YetAnotherCallBlocker</string>
-    <string name="url_faq" translatable="false">https://gitlab.com/xynngh/YetAnotherCallBlocker/-/blob/master/FAQ.md</string>
-    <string name="url_translate" translatable="false">https://hosted.weblate.org/engage/yet-another-call-blocker/</string>
-    <string name="url_issues" translatable="false">https://gitlab.com/xynngh/YetAnotherCallBlocker/-/issues</string>
     <string name="nav_call_log">Call log</string>
     <string name="nav_lookup">Lookup</string>
     <string name="nav_blacklist">Blacklist</string>
@@ -266,31 +247,15 @@
     <string name="call_log_blocked_label">Blocked</string>
 
     <!-- Data sources -->
-    <string name="sources_activity_title">Data sources</string>
-    <string name="sources_preference_summary">Number databases and imported lists</string>
     <string name="source_yacb_name">YACB database</string>
-    <string name="source_type_offline">Offline</string>
-    <string name="source_type_online">Online</string>
-    <string name="source_kind_imported">Imported list</string>
-    <string name="source_kind_built_in">Built-in</string>
-    <string name="source_updated">Updated %s</string>
-    <string name="source_never_updated">Never updated</string>
     <string name="source_load_error">Failed to load the list</string>
     <string name="source_enabled">Enabled</string>
-    <string name="source_move_up">Move up</string>
-    <string name="source_move_down">Move down</string>
     <string name="source_delete">Delete list</string>
     <string name="source_delete_confirmation">Delete the list “%s”?</string>
     <string name="source_delete_button">Delete</string>
-    <string name="sources_import">Import</string>
-    <string name="sources_import_csv">Import CSV</string>
-    <string name="sources_import_bnetza">Import Bundesnetzagentur list</string>
-    <string name="sources_import_bnetza_message">Open %s in a browser, save the page (HTML) or its text to a file and choose that file. A new import replaces the previous list.</string>
-    <string name="sources_choose_file">Choose file</string>
     <string name="sources_no_file_picker">No app for choosing files was found.</string>
     <string name="sources_csv_default_name">CSV list</string>
     <string name="sources_import_file_too_large">The file is too large.</string>
-    <string name="sources_import_failed">Import failed: %s</string>
     <string name="sources_import_failed_title">Import failed</string>
     <string name="sources_import_nothing_found">No phone numbers were found in the file.</string>
     <string name="sources_import_result">Imported numbers: %1$d\nSkipped lines: %2$d</string>
@@ -308,31 +273,18 @@
     </plurals>
 
     <!-- PhoneBlock -->
-    <string name="phoneblock_menu">PhoneBlock</string>
     <string name="phoneblock_title">PhoneBlock</string>
     <string name="phoneblock_dialog_message">PhoneBlock is a free community spam list from Germany (phoneblock.net). Register for free, create an API key on the PhoneBlock settings page and enter it here. The list is downloaded once and then updated daily; incoming numbers are checked offline.</string>
     <string name="phoneblock_get_token">Get API key</string>
     <string name="phoneblock_token_hint">API key</string>
     <string name="phoneblock_min_votes">Block numbers with at least this many votes:</string>
     <string name="phoneblock_terms">Data: PhoneBlock community, free of charge. Use at your own risk; see the terms of use on phoneblock.net.</string>
-    <string name="phoneblock_save">Save</string>
-    <string name="phoneblock_sync_now">Sync now</string>
-    <string name="phoneblock_status_never">Not synchronized yet</string>
-    <string name="phoneblock_status">Last sync: %1$s · %2$d numbers</string>
-    <string name="phoneblock_token_required">Enter an API key first.</string>
-    <string name="phoneblock_sync_result_title">PhoneBlock sync finished</string>
-    <string name="phoneblock_sync_result_full">Full list downloaded: %1$d numbers.\nBlocked (at least %2$d votes): %3$d</string>
-    <string name="phoneblock_sync_result_incremental">Added or changed: %1$d, removed: %2$d.\nBlocked (at least %3$d votes): %4$d of %5$d</string>
+    <string name="phoneblock_save">Save and check</string>
     <string name="phoneblock_sync_skipped">The list was synchronized less than %d minutes ago. Please try again later.</string>
-    <string name="phoneblock_sync_failed_title">PhoneBlock sync failed</string>
     <string name="phoneblock_sync_auth_error">The API key was rejected. Check the key or create a new one on phoneblock.net.</string>
     <string name="phoneblock_sync_rate_limited">The server is busy or asks to slow down. Please try again later.</string>
-    <string name="phoneblock_sync_error">Error: %s</string>
-    <string name="phoneblock_no_browser">No browser was found. Open %s manually.</string>
-    <string name="phoneblock_no_token">API key not set</string>
+    <string name="no_browser">No browser was found. Open %s manually.</string>
     <string name="phoneblock_online_details">Checks unknown callers online; only a hash of the number is sent</string>
-    <string name="source_phoneblock_online_name">PhoneBlock (online check)</string>
-    <string name="source_kind_synchronized">Synchronized</string>
     <string name="phoneblock_rating_b_missed">Unwanted call</string>
     <string name="phoneblock_rating_c_ping">Ping call</string>
     <string name="phoneblock_rating_d_poll">Poll</string>
@@ -345,34 +297,59 @@
 
     <!-- Data sources: lists imported from a URL -->
     <string name="sources_add_url">Add list by URL</string>
-    <string name="sources_add_url_enter">Enter URL…</string>
-    <string name="sources_add_url_preset_summary">License: %1$s · last changed: %2$s</string>
     <string name="sources_add_url_url">List URL</string>
     <string name="sources_add_url_name">Name (optional)</string>
     <string name="sources_add_url_auto_update">Update automatically (daily)</string>
     <string name="sources_add_url_hint">Supported formats: Fritz!Box phone book (XML), vCard, CSV or one number per line. The list is downloaded directly from this address; for GitHub, use the link to the raw file.</string>
-    <string name="sources_add_url_preset_info">Project: %1$s
-License: %2$s
-The list is maintained by third parties. It is downloaded only when you add it.</string>
     <string name="sources_add_url_button">Add</string>
     <string name="sources_add_url_invalid">Enter a valid http or https address.</string>
     <string name="sources_url_html_error">The address points to a web page, not to a list file. For GitHub, use the “Raw” link of the file.</string>
     <string name="sources_url_unsupported_format">Unsupported file format.</string>
     <string name="sources_url_download_failed">Download failed: %s</string>
-    <string name="source_kind_url">List from URL</string>
     <string name="source_url_auto_update_on">Updated automatically</string>
     <string name="source_url_auto_update_off">Manual updates</string>
     <string name="source_url_checked">Checked %s</string>
-    <string name="source_url_last_error">Last update failed (%1$s): %2$s</string>
-    <string name="source_url_actions">List actions</string>
-    <string name="source_url_update_now">Update now</string>
-    <string name="source_url_enable_auto_update">Turn on automatic updates</string>
-    <string name="source_url_disable_auto_update">Turn off automatic updates</string>
+    <string name="source_update_now">Update now</string>
     <string name="source_url_updated">The list was updated. Numbers: %d</string>
     <string name="source_url_not_modified">The list has not changed.</string>
-    <string name="source_url_update_failed">Update failed: %s</string>
-    <string name="phoneblock_card_not_configured">Free community spam list for Germany. Tap to enter your free API key.</string>
-    <string name="phoneblock_card_configured">API key is set · updated daily</string>
-    <string name="phoneblock_card_enter_key">Enter key</string>
-    <string name="phoneblock_card_settings">Settings</string>
+
+    <!-- Databases screen -->
+    <string name="source_bnetza_name" translatable="false">Bundesnetzagentur</string>
+    <string name="about_original_name" translatable="false">Yet Another Call Blocker</string>
+    <string name="url_fork_repo" translatable="false">https://github.com/itmanpapa/Call</string>
+    <string name="databases_title">Databases</string>
+    <string name="databases_preference_summary">YACB, PhoneBlock, Bundesnetzagentur and your own lists</string>
+    <string name="source_yacb_description">International community database, works offline</string>
+    <string name="source_phoneblock_description">Community spam list for Germany, updated daily</string>
+    <string name="source_bnetza_description">Official list of numbers with measures, downloaded weekly</string>
+    <string name="source_file_description">Imported file</string>
+    <string name="source_status_updated">Updated %1$s · %2$s</string>
+    <string name="source_status_updating">Updating…</string>
+    <string name="source_status_never">Not downloaded yet</string>
+    <string name="source_status_error">Error: %s</string>
+    <string name="source_last_success">Last successful update: %s</string>
+    <string name="source_details_status">Status</string>
+    <string name="yacb_status_version">Database version %s</string>
+    <string name="yacb_status_not_downloaded">Database not downloaded</string>
+    <string name="yacb_download">Download database</string>
+    <string name="yacb_info">Database version: %1$s\nBase version: %2$s (SIA %3$s)\nLast update: %4$s\nLast check: %5$s\nFeatured database: %6$s</string>
+    <string name="yacb_reset_updates">Reset updates</string>
+    <string name="yacb_reset_updates_message">The downloaded updates will be removed, the base database is kept. The next update downloads them again.</string>
+    <string name="yacb_reset_base">Delete database</string>
+    <string name="yacb_reset_base_message">The downloaded database and its updates will be deleted. You can download it again with “Download database”.</string>
+    <string name="phoneblock_status_no_key">Free API key required</string>
+    <string name="phoneblock_key_checking">Checking the key…</string>
+    <string name="phoneblock_key_accepted">Key accepted</string>
+    <string name="phoneblock_key_removed">Key removed</string>
+    <string name="phoneblock_online_check">Online check</string>
+    <string name="bnetza_status_not_available">Automatic download is not available yet</string>
+    <string name="bnetza_details_message">The Federal Network Agency (Bundesnetzagentur) publishes numbers against which it has taken measures, e.g. disconnection. The list is downloaded automatically once a week.</string>
+    <string name="bnetza_open_page">Open the list on the website</string>
+    <string name="sources_add_list">Add list</string>
+    <string name="sources_add_file">File (CSV, Fritz!Box XML, vCard)</string>
+    <string name="sources_add_link">Link (URL)</string>
+    <string name="about_description">Blocks unwanted calls using offline spam number databases.</string>
+    <string name="about_based_on">Based on %s by xynngh</string>
+    <string name="about_fork_link">Source code on GitHub</string>
+
 </resources>

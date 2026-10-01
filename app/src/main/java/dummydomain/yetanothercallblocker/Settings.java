@@ -52,6 +52,8 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public static final String PREF_SOURCES_ENABLED = "sourcesEnabled";
     public static final String PREF_PHONEBLOCK_TOKEN = "phoneBlockToken";
     public static final String PREF_PHONEBLOCK_MIN_VOTES = "phoneBlockMinVotes";
+    public static final String PREF_PHONEBLOCK_LAST_ERROR = "phoneBlockLastError";
+    public static final String PREF_PHONEBLOCK_LAST_ERROR_TIME = "phoneBlockLastErrorTime";
 
     public static final String PREF_CALL_LOG_GROUPING_NONE = "none";
     public static final String PREF_CALL_LOG_GROUPING_CONSECUTIVE = "consecutive";
@@ -417,6 +419,26 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
 
     public void setPhoneBlockMinVotes(int minVotes) {
         setInt(PREF_PHONEBLOCK_MIN_VOTES, PhoneBlockSync.normalizeMinVotes(minVotes));
+    }
+
+    /** @return the user-facing message of the last failed PhoneBlock sync, or null */
+    public String getPhoneBlockLastError() {
+        return getString(PREF_PHONEBLOCK_LAST_ERROR);
+    }
+
+    /** @return the time of the last failed PhoneBlock sync, 0 if none */
+    public long getPhoneBlockLastErrorTime() {
+        return getLong(PREF_PHONEBLOCK_LAST_ERROR_TIME, 0);
+    }
+
+    /**
+     * Stores the outcome of a PhoneBlock sync for the UI.
+     *
+     * @param error user-facing error message, or null after a successful sync
+     */
+    public void setPhoneBlockLastError(String error, long time) {
+        setString(PREF_PHONEBLOCK_LAST_ERROR, error);
+        setLong(PREF_PHONEBLOCK_LAST_ERROR_TIME, error != null ? time : 0);
     }
 
 }
