@@ -3,7 +3,7 @@
 ## Clone the project repo
 
 ```
-git clone https://gitlab.com/xynngh/YetAnotherCallBlocker.git
+git clone https://github.com/itmanpapa/Call.git YetAnotherCallBlocker
 ```
 
 ### Clone the assets repo (optional step: allows to avoid the initial DB downloading after installation)

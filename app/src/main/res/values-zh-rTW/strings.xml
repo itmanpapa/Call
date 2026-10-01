@@ -27,7 +27,6 @@
     <string name="block_blacklisted_short">封鎖已被列入黑名單的通話</string>
     <string name="block_blacklisted">封鎖已被列入黑名單的號碼</string>
     <string name="block_blacklisted_summary">封鎖來自黑名單號碼的通話</string>
-    <string name="app_name">Yet Another Call Blocker</string>
     <string name="notification_channel_group_name_services">服務</string>
     <string name="notification_channel_name_known">已知通話</string>
     <string name="notification_channel_name_unknown">未知通話</string>

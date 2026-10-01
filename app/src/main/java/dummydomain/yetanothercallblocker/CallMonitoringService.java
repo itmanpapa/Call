@@ -96,7 +96,8 @@ public class CallMonitoringService extends Service {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(TelephonyManager.EXTRA_STATE_RINGING); // TODO: check
             intentFilter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-            registerReceiver(phoneStateBroadcastReceiver, intentFilter);
+            ContextCompat.registerReceiver(this, phoneStateBroadcastReceiver, intentFilter,
+                    ContextCompat.RECEIVER_EXPORTED);
         } catch (Exception e) {
             LOG.error("startMonitoring()", e);
         }

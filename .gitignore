@@ -8,3 +8,7 @@
 .externalNativeBuild
 
 /app/src/main/assets/sia
+/app/build
+/app/release
+*.jks
+*.keystore

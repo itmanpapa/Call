@@ -3,7 +3,6 @@
     <string name="notification_channel_group_name_incoming_calls">Chamadas entrantes</string>
     <string name="notification_channel_group_name_blocked_calls">Chamadas bloqueadas</string>
     <string name="notification_channel_name_known">Chamadas coñecidas</string>
-    <string name="app_name">Outro Bloqueador de Chamadas</string>
     <string name="notification_channel_name_positive">Valoracións positivas</string>
     <string name="notification_channel_name_unknown">Chamadas de descoñecidos</string>
     <string name="notification_channel_name_negative">Valoracións negativas</string>

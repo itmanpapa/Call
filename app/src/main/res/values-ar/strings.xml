@@ -29,7 +29,6 @@
     <string name="denied_call_screening_role_message">لن يعمل الحظر المتقدم للمكالمات بسبب عدم تعيين التطبيق على أنه \"تطبيق معرف المتصل\"</string>
     <string name="default_caller_id_app">الافتراضي \"تطبيق معرف المتصل\"</string>
     <string name="back">خلف</string>
-    <string name="app_name">مانع مكالمات آخر</string>
     <string name="notification_channel_group_name_incoming_calls">المكالمات الواردة</string>
     <string name="sia_category_fax">فاكس</string>
     <string name="notification_blocked_call">مكالمة محظورة</string>

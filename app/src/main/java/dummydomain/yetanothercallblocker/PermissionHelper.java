@@ -49,6 +49,7 @@ public class PermissionHelper {
     private static final Set<String> INFO_PERMISSIONS = new HashSet<>();
     private static final Set<String> BLOCKING_PERMISSIONS = new HashSet<>();
     private static final Set<String> CONTACTS_PERMISSIONS = new HashSet<>();
+    private static final Set<String> NOTIFICATION_PERMISSIONS = new HashSet<>();
 
     static {
         INFO_PERMISSIONS.add(Manifest.permission.READ_PHONE_STATE);
@@ -64,6 +65,10 @@ public class PermissionHelper {
         }
 
         CONTACTS_PERMISSIONS.add(Manifest.permission.READ_CONTACTS);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            NOTIFICATION_PERMISSIONS.add(Manifest.permission.POST_NOTIFICATIONS);
+        }
     }
 
     public static List<String> getMissingPermissions(Context context, boolean info,
@@ -73,6 +78,8 @@ public class PermissionHelper {
         if (info) requiredPermissions.addAll(INFO_PERMISSIONS);
         if (block) requiredPermissions.addAll(BLOCKING_PERMISSIONS);
         if (contacts) requiredPermissions.addAll(CONTACTS_PERMISSIONS);
+        // notifications are needed to show caller info and blocked calls, but are not mandatory
+        if (info || block) requiredPermissions.addAll(NOTIFICATION_PERMISSIONS);
 
         List<String> missingPermissions = new ArrayList<>();
 

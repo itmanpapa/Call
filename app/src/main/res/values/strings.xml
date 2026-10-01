@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Yet Another Call Blocker</string>
+    <string name="app_name" translatable="false">YACB Next</string>
 
     <string name="notification_channel_group_name_incoming_calls">Incoming calls</string>
     <string name="notification_channel_group_name_blocked_calls">Blocked calls</string>

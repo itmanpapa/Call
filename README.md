@@ -1,3 +1,41 @@
+# YACB Next — форк Yet Another Call Blocker
+
+Это форк [Yet Another Call Blocker](https://gitlab.com/xynngh/YetAnotherCallBlocker) от **xynngh**.
+Последняя версия оригинала, 0.5.17, вышла в 2021 году. Форк собирается под современный Android SDK,
+а дальше по плану получит интерфейс на Material 3 и дополнительные источники данных о спам-номерах
+(в первую очередь для Германии).
+
+* Исходный проект: https://gitlab.com/xynngh/YetAnotherCallBlocker (история коммитов и авторство сохранены)
+* Лицензия: [AGPL-3.0-only](LICENSE), как у оригинала. Исходники форка открыты под той же лицензией.
+* `applicationId`: `de.itmanpapa.callblocker` (debug-сборка: `de.itmanpapa.callblocker.debug`),
+  поэтому форк ставится рядом с оригинальным YACB
+* Минимальная версия Android: 8.0 (API 26), targetSdk 35
+
+### Сборка
+
+```
+./gradlew assembleDebug
+```
+
+Нужны JDK 17+ и Android SDK (platform 35). CI собирает debug-APK на каждый push
+(`.github/workflows/build.yml`).
+
+### Релиз
+
+При push тега `v*` запускается `.github/workflows/release.yml`: он собирает подписанный APK
+и публикует его в GitHub Releases. Ключ подписи задаётся в Secrets репозитория:
+
+| Secret | Значение |
+| --- | --- |
+| `SIGNING_KEYSTORE_BASE64` | keystore в base64 (`base64 -w0 release.jks`) |
+| `SIGNING_KEYSTORE_PASSWORD` | пароль keystore |
+| `SIGNING_KEY_ALIAS` | alias ключа |
+| `SIGNING_KEY_PASSWORD` | пароль ключа |
+
+---
+
+*Ниже — оригинальный README проекта.*
+
 **Disclaimer:** This is a free and open source project, but it relies on third-party web-services for some functions to work. This project is not affiliated with any third-party entities in any other sense.
 
 
