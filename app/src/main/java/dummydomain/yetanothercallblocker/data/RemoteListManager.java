@@ -255,10 +255,12 @@ public class RemoteListManager {
     }
 
     /**
-     * @return the remote info of the source, or null if it is not a URL list
+     * @return the remote info of the source, or null if it is not a URL list added by
+     * the user (the automatically updated Bundesnetzagentur list also has remote info,
+     * but is managed by {@link dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater})
      */
     public static RemoteListInfo getRemote(SourcesManager.SourceInfo source) {
-        if (source == null) return null;
+        if (source == null || !source.getId().startsWith(SOURCE_ID_PREFIX)) return null;
         NumberListStore.ListMetadata metadata = source.getMetadata();
         return metadata != null ? metadata.getRemote() : null;
     }

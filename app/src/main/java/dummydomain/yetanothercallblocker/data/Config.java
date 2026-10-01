@@ -21,6 +21,7 @@ import dummydomain.yetanothercallblocker.data.provider.InMemoryResultCache;
 import dummydomain.yetanothercallblocker.data.provider.PhoneBlockOnlineProvider;
 import dummydomain.yetanothercallblocker.data.provider.ProviderAggregator;
 import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
+import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.OkHttpTransport;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
@@ -231,6 +232,13 @@ public class Config {
                     DeferredInit.initNetwork();
                     return new OkHttpClient();
                 })));
+        // the Bundesnetzagentur site may reject unknown clients: use a browser user agent;
+        // OkHttp follows the redirect of the short link by default
+        YacbHolder.setBnetzaAutoUpdater(new BnetzaAutoUpdater(sourcesManager,
+                new OkHttpListDownloader(() -> {
+                    DeferredInit.initNetwork();
+                    return new OkHttpClient();
+                }, BnetzaAutoUpdater.MAX_PAGE_SIZE, OkHttpListDownloader.BROWSER_USER_AGENT)));
 
         // the lists are small, but don't read them on the main thread;
         // a lookup before the loading has finished waits for it

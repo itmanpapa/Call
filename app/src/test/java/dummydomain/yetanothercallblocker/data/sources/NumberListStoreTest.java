@@ -225,6 +225,47 @@ public class NumberListStoreTest {
     }
 
     @Test
+    public void remoteInfoWithPartsAndLastSuccessRoundTrip() throws IOException {
+        NumberListStore store = new NumberListStore(folder.getRoot());
+        RemoteListInfo remote = new RemoteListInfo("https://example.org/main", true,
+                "\"m\"", null, 2000, "HTTP 503", 1000, Arrays.asList(
+                new RemoteListInfo.Part("https://example.org/main", "\"m\"", null),
+                new RemoteListInfo.Part("https://example.org/a,b.html", null,
+                        "Tue, 01 Oct 2026 10:00:00 GMT")));
+
+        store.save("bnetza", "Bundesnetzagentur", 5, sampleEntries(), remote);
+        RemoteListInfo loaded = new NumberListStore(folder.getRoot())
+                .loadMetadata("bnetza").getRemote();
+
+        assertEquals(remote, loaded);
+        assertEquals(1000, loaded.getLastSuccessAt());
+        assertEquals(2, loaded.getParts().size());
+        assertEquals("Tue, 01 Oct 2026 10:00:00 GMT",
+                loaded.getPart("https://example.org/a,b.html").getLastModified());
+        assertNull(loaded.getPart("https://example.org/a,b.html").getEtag());
+        assertNull(loaded.getPart("https://example.org/other"));
+    }
+
+    @Test
+    public void remoteInfoOfOlderVersionsDerivesLastSuccess() throws IOException {
+        NumberListStore store = new NumberListStore(folder.getRoot());
+        String file = "format,yacb-number-list,1\n"
+                + "meta,sourceId,url_old\n"
+                + "meta,displayName,Old\n"
+                + "meta,importedAt,10\n"
+                + "meta,entryCount,0\n"
+                + "meta,remoteUrl,https://example.org/list.xml\n"
+                + "meta,remoteAutoUpdate,true\n"
+                + "meta,remoteLastCheckAt,500\n";
+        java.nio.file.Files.write(store.getFile("url_old").toPath(),
+                file.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+
+        RemoteListInfo remote = store.loadMetadata("url_old").getRemote();
+        assertEquals(500, remote.getLastSuccessAt());
+        assertTrue(remote.getParts().isEmpty());
+    }
+
+    @Test
     public void remoteInfoWithNullFields() throws IOException {
         NumberListStore store = new NumberListStore(folder.getRoot());
         RemoteListInfo remote = new RemoteListInfo("http://example.org/list.csv", false);

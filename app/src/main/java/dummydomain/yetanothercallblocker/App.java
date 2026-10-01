@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import dummydomain.yetanothercallblocker.data.Config;
 import dummydomain.yetanothercallblocker.utils.DebuggingUtils;
 import dummydomain.yetanothercallblocker.utils.SystemUtils;
+import dummydomain.yetanothercallblocker.work.BnetzaUpdateWorker;
 import dummydomain.yetanothercallblocker.work.PhoneBlockSyncWorker;
 
 public class App extends Application {
@@ -62,6 +63,15 @@ public class App extends Application {
             }
         } catch (Exception e) {
             LOG.warn("onCreate() failed to schedule the PhoneBlock sync", e);
+        }
+
+        try {
+            // the official list is enabled by default and kept up to date automatically
+            if (SystemUtils.isUserUnlocked(this)) {
+                BnetzaUpdateWorker.updateSchedule(this);
+            }
+        } catch (Exception e) {
+            LOG.warn("onCreate() failed to schedule the Bundesnetzagentur list update", e);
         }
 
         setUiMode(settings.getUiMode());

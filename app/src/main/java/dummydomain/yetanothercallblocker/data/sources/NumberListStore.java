@@ -57,7 +57,9 @@ import java.util.regex.Pattern;
  * <p>Lists downloaded from a URL additionally store a {@link RemoteListInfo} as
  * optional {@code meta} records ({@code remoteUrl}, {@code remoteAutoUpdate},
  * {@code remoteEtag}, {@code remoteLastModified}, {@code remoteLastCheckAt},
- * {@code remoteLastError}); older versions of the app ignore them.</p>
+ * {@code remoteLastError}, {@code remoteLastSuccessAt}) and, for lists assembled from
+ * several downloads, one {@code meta,remotePart,<url>,<etag>,<lastModified>} record per
+ * downloaded URL; older versions of the app ignore them.</p>
  *
  * <p>Writes are atomic: the list is written to a temporary file, synced and then
  * renamed over the old file, so a crash never leaves a half-written list behind.
@@ -89,6 +91,8 @@ public class NumberListStore {
     static final String META_REMOTE_LAST_MODIFIED = "remoteLastModified";
     static final String META_REMOTE_LAST_CHECK_AT = "remoteLastCheckAt";
     static final String META_REMOTE_LAST_ERROR = "remoteLastError";
+    static final String META_REMOTE_LAST_SUCCESS_AT = "remoteLastSuccessAt";
+    static final String META_REMOTE_PART = "remotePart";
 
     static final String KIND_NUMBER = "N";
     static final String KIND_PREFIX = "P";
@@ -309,7 +313,9 @@ public class NumberListStore {
         return save(sourceId, old.getDisplayName(), old.getImportedAt(), list.getEntries(), remote);
     }
 
-    public synchronized boolean exists(String sourceId) {
+    // not synchronized: a single file check (saves replace the file atomically), so it
+    // doesn't wait for a long load or save, e.g. when called on the main thread
+    public boolean exists(String sourceId) {
         checkSourceId(sourceId);
         return getFile(sourceId).isFile();
     }
@@ -394,6 +400,12 @@ public class NumberListStore {
             printer.printRecord(TYPE_META, META_REMOTE_LAST_CHECK_AT,
                     String.valueOf(remote.getLastCheckAt()));
             printer.printRecord(TYPE_META, META_REMOTE_LAST_ERROR, remote.getLastError());
+            printer.printRecord(TYPE_META, META_REMOTE_LAST_SUCCESS_AT,
+                    String.valueOf(remote.getLastSuccessAt()));
+            for (RemoteListInfo.Part part : remote.getParts()) {
+                printer.printRecord(TYPE_META, META_REMOTE_PART, part.getUrl(),
+                        part.getEtag(), part.getLastModified());
+            }
         }
 
         for (ListedNumber e : entries) {
@@ -429,6 +441,8 @@ public class NumberListStore {
         String remoteLastModified = null;
         long remoteLastCheckAt = 0;
         String remoteLastError = null;
+        long remoteLastSuccessAt = -1;
+        List<RemoteListInfo.Part> remoteParts = new ArrayList<>();
         boolean formatSeen = false;
         List<ListedNumber> entries = new ArrayList<>();
 
@@ -474,6 +488,14 @@ public class NumberListStore {
                         remoteLastCheckAt = value != null ? parseLong(value, "remoteLastCheckAt") : 0;
                     } else if (META_REMOTE_LAST_ERROR.equals(key)) {
                         remoteLastError = value;
+                    } else if (META_REMOTE_LAST_SUCCESS_AT.equals(key)) {
+                        remoteLastSuccessAt = value != null
+                                ? parseLong(value, "remoteLastSuccessAt") : 0;
+                    } else if (META_REMOTE_PART.equals(key)) {
+                        if (value != null) {
+                            remoteParts.add(new RemoteListInfo.Part(value,
+                                    get(record, 3), get(record, 4)));
+                        }
                     }
                 } else if (TYPE_ENTRY.equals(type)) {
                     if (metadataOnly) break;
@@ -498,7 +520,11 @@ public class NumberListStore {
 
         RemoteListInfo remote = remoteUrl != null
                 ? new RemoteListInfo(remoteUrl, remoteAutoUpdate, remoteEtag, remoteLastModified,
-                        remoteLastCheckAt, remoteLastError)
+                        remoteLastCheckAt, remoteLastError,
+                        // files of older versions: a check without an error was a success
+                        remoteLastSuccessAt >= 0 ? remoteLastSuccessAt
+                                : remoteLastError == null ? remoteLastCheckAt : 0,
+                        remoteParts)
                 : null;
         ListMetadata metadata = new ListMetadata(sourceId, displayName, importedAt, entryCount,
                 remote);

@@ -325,6 +325,31 @@ public class SourcesManager {
     }
 
     /**
+     * Checks whether a list with the given id is stored, without loading the lists
+     * (a cheap file check, usable on the main thread at startup).
+     */
+    public boolean hasStoredList(String sourceId) {
+        try {
+            return store.exists(sourceId);
+        } catch (RuntimeException e) {
+            LOG.debug("hasStoredList() failed for {}", sourceId, e);
+            return false;
+        }
+    }
+
+    /**
+     * Reads the entries of a stored list from the storage (the lookup index doesn't
+     * keep them). Blocks on file I/O.
+     *
+     * @return the entries, or an empty list if there is no such list
+     * @throws IOException if the list can't be read
+     */
+    public List<ListedNumber> loadListEntries(String sourceId) throws IOException {
+        NumberListStore.StoredList list = store.load(sourceId);
+        return list != null ? list.getEntries() : Collections.emptyList();
+    }
+
+    /**
      * Doesn't require the lists to be loaded.
      *
      * @return whether the source is enabled (unknown sources are enabled by default)

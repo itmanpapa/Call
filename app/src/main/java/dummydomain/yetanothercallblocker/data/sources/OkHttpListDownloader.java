@@ -32,10 +32,18 @@ public class OkHttpListDownloader implements RemoteListDownloader {
     static final long TIMEOUT_SECONDS = 30;
     static final String USER_AGENT = "YetAnotherCallBlocker (number list update)";
 
+    /**
+     * A user agent of a common desktop browser, for sites that reject unknown clients
+     * (used for the Bundesnetzagentur pages).
+     */
+    public static final String BROWSER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            + " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
+
     private static final Logger LOG = LoggerFactory.getLogger(OkHttpListDownloader.class);
 
     private final ClientFactory clientFactory;
     private final long maxSize;
+    private final String userAgent;
 
     private volatile OkHttpClient client;
 
@@ -44,8 +52,16 @@ public class OkHttpListDownloader implements RemoteListDownloader {
     }
 
     public OkHttpListDownloader(ClientFactory clientFactory, long maxSize) {
+        this(clientFactory, maxSize, USER_AGENT);
+    }
+
+    /**
+     * @param userAgent value of the {@code User-Agent} header
+     */
+    public OkHttpListDownloader(ClientFactory clientFactory, long maxSize, String userAgent) {
         this.clientFactory = clientFactory;
         this.maxSize = maxSize;
+        this.userAgent = userAgent != null ? userAgent : USER_AGENT;
     }
 
     private OkHttpClient getClient() {
@@ -73,7 +89,7 @@ public class OkHttpListDownloader implements RemoteListDownloader {
 
         Request.Builder request = new Request.Builder()
                 .url(httpUrl)
-                .header("User-Agent", USER_AGENT);
+                .header("User-Agent", userAgent);
         if (etag != null) request.header("If-None-Match", etag);
         if (lastModified != null) request.header("If-Modified-Since", lastModified);
 

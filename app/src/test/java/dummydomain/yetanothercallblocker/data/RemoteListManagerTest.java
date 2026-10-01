@@ -272,6 +272,20 @@ public class RemoteListManagerTest {
     }
 
     @Test
+    public void bnetzaListIsNotAUrlList() throws IOException {
+        // the automatically updated official list has remote info, but its own updater
+        sourcesManager.importList(SourcesManager.BNETZA_SOURCE_ID, "Bundesnetzagentur",
+                Collections.emptyList(), 0,
+                new RemoteListInfo("https://www.bundesnetzagentur.de/massnahmenliste", true));
+
+        assertNull(RemoteListManager.getRemote(sourcesManager.getSource("bnetza")));
+        assertFalse(manager.hasAutoUpdateLists());
+        assertTrue(manager.updateAutoUpdateLists().isEmpty());
+        assertNull(manager.update("bnetza"));
+        assertTrue(downloader.requests.isEmpty());
+    }
+
+    @Test
     public void updateOfUnknownOrLocalListReturnsNull() throws IOException {
         assertNull(manager.update("url_missing"));
         sourcesManager.importList("csv_local", "Local", Collections.emptyList(), 0);

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import dummydomain.yetanothercallblocker.NotificationService;
 import dummydomain.yetanothercallblocker.PhoneStateHandler;
 import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
+import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
 import dummydomain.yetanothercallblocker.sia.model.CommunityReviewsLoader;
 import dummydomain.yetanothercallblocker.sia.model.SiaMetadata;
@@ -28,6 +29,7 @@ public class YacbHolder {
     private static SourcesManager sourcesManager;
     private static PhoneBlockSync phoneBlockSync;
     private static RemoteListManager remoteListManager;
+    private static BnetzaAutoUpdater bnetzaAutoUpdater;
 
     private static NumberInfoService numberInfoService;
 
@@ -79,6 +81,10 @@ public class YacbHolder {
 
     static void setRemoteListManager(RemoteListManager remoteListManager) {
         YacbHolder.remoteListManager = remoteListManager;
+    }
+
+    static void setBnetzaAutoUpdater(BnetzaAutoUpdater bnetzaAutoUpdater) {
+        YacbHolder.bnetzaAutoUpdater = bnetzaAutoUpdater;
     }
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
@@ -135,6 +141,14 @@ public class YacbHolder {
 
     public static RemoteListManager getRemoteListManager() {
         return remoteListManager;
+    }
+
+    /**
+     * Automatic updates of the Bundesnetzagentur list; {@code update(force)} blocks,
+     * call it from a background thread (or use {@code BnetzaUpdateWorker.runNow}).
+     */
+    public static BnetzaAutoUpdater getBnetzaAutoUpdater() {
+        return bnetzaAutoUpdater;
     }
 
     public static NumberInfoService getNumberInfoService() {
