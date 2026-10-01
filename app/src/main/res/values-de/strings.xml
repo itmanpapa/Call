@@ -306,4 +306,8 @@ Die Liste wird von Dritten gepflegt und erst heruntergeladen, wenn Sie sie hinzu
     <string name="source_url_updated">Die Liste wurde aktualisiert. Nummern: %d</string>
     <string name="source_url_not_modified">Die Liste hat sich nicht geändert.</string>
     <string name="source_url_update_failed">Aktualisierung fehlgeschlagen: %s</string>
+    <string name="phoneblock_card_not_configured">Kostenlose Community-Spamliste für Deutschland. Tippen, um den kostenlosen API-Schlüssel einzugeben.</string>
+    <string name="phoneblock_card_configured">API-Schlüssel gesetzt · tägliche Aktualisierung</string>
+    <string name="phoneblock_card_enter_key">Schlüssel eingeben</string>
+    <string name="phoneblock_card_settings">Einstellungen</string>
 </resources>

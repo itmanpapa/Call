@@ -371,4 +371,8 @@ The list is maintained by third parties. It is downloaded only when you add it.<
     <string name="source_url_updated">The list was updated. Numbers: %d</string>
     <string name="source_url_not_modified">The list has not changed.</string>
     <string name="source_url_update_failed">Update failed: %s</string>
+    <string name="phoneblock_card_not_configured">Free community spam list for Germany. Tap to enter your free API key.</string>
+    <string name="phoneblock_card_configured">API key is set · updated daily</string>
+    <string name="phoneblock_card_enter_key">Enter key</string>
+    <string name="phoneblock_card_settings">Settings</string>
 </resources>

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -120,11 +121,29 @@ public class SourcesActivity extends BaseActivity {
         importFab = findViewById(R.id.sources_import_fab);
         importFab.setOnClickListener(v -> showImportChooser());
 
+        findViewById(R.id.phoneblock_card).setOnClickListener(v -> showPhoneBlockDialog());
+        findViewById(R.id.phoneblock_card_button).setOnClickListener(v -> showPhoneBlockDialog());
+
         adapter = new SourcesAdapter();
         RecyclerView recyclerView = findViewById(R.id.sources_list);
         recyclerView.setAdapter(adapter);
 
         runInBackground(this::ensureListsUpdateScheduled);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updatePhoneBlockCard();
+    }
+
+    /** Keeps PhoneBlock discoverable: shows whether the API key is set. */
+    private void updatePhoneBlockCard() {
+        boolean configured = !TextUtils.isEmpty(App.getSettings().getPhoneBlockToken());
+        ((TextView) findViewById(R.id.phoneblock_card_status)).setText(configured
+                ? R.string.phoneblock_card_configured : R.string.phoneblock_card_not_configured);
+        ((Button) findViewById(R.id.phoneblock_card_button)).setText(configured
+                ? R.string.phoneblock_card_settings : R.string.phoneblock_card_enter_key);
     }
 
     @Override
@@ -381,6 +400,7 @@ public class SourcesActivity extends BaseActivity {
 
         settings.setPhoneBlockToken(token);
         settings.setPhoneBlockMinVotes(minVotes);
+        updatePhoneBlockCard();
 
         if (tokenChanged) {
             try {

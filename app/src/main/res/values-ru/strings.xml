@@ -342,4 +342,8 @@
     <string name="source_url_updated">Список обновлён. Номеров: %d</string>
     <string name="source_url_not_modified">Список не изменился.</string>
     <string name="source_url_update_failed">Не удалось обновить: %s</string>
+    <string name="phoneblock_card_not_configured">Бесплатная база спам-номеров для Германии. Нажмите, чтобы ввести бесплатный API-ключ.</string>
+    <string name="phoneblock_card_configured">API-ключ введён · обновляется ежедневно</string>
+    <string name="phoneblock_card_enter_key">Ввести ключ</string>
+    <string name="phoneblock_card_settings">Настройки</string>
 </resources>
