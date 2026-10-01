@@ -1,0 +1,29 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Muster;Max;;Dr.;
+item1.TEL;type=WORK:+49 151 1234
+ 5678
+item1.X-ABLabel:Spam
+NOTE:Ruft täglich an\, angeblich Gewinnspiel\nzweite Zeile
+CATEGORIES:Werbung,Gewinnspiel
+END:VCARD
+BEGIN:VCARD
+VERSION:4.0
+FN:Inkasso\; Fake
+TEL;VALUE=uri;TYPE=work:tel:+49-30-1234567;ext=12
+TEL:keine Nummer
+END:VCARD
+BEGIN:VCARD
+VERSION:2.1
+FN;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:Gewinnspiel M=C3=BCnchen=
+ GmbH
+TEL;WORK:0900 1234 5x
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:Ohne Nummer
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+ORG:Nur Firma AG
+TEL:0221/98765432

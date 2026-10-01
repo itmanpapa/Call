@@ -27,6 +27,7 @@ import dummydomain.yetanothercallblocker.data.provider.ResultCache;
 import dummydomain.yetanothercallblocker.data.sources.ListedNumber;
 import dummydomain.yetanothercallblocker.data.sources.NumberListIndex;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
+import dummydomain.yetanothercallblocker.data.sources.RemoteListInfo;
 
 /**
  * Owns all number information sources: the built-in providers (the YACB database)
@@ -392,6 +393,18 @@ public class SourcesManager {
     public NumberListStore.ListMetadata importList(String sourceId, String displayName,
                                                   List<ListedNumber> entries,
                                                   long importedAt) throws IOException {
+        return importList(sourceId, displayName, entries, importedAt, null);
+    }
+
+    /**
+     * Same as {@link #importList(String, String, List, long)} for a list downloaded
+     * from a URL.
+     *
+     * @param remote download state stored with the list, or null for a local file
+     */
+    public NumberListStore.ListMetadata importList(String sourceId, String displayName,
+                                                  List<ListedNumber> entries, long importedAt,
+                                                  RemoteListInfo remote) throws IOException {
         Objects.requireNonNull(sourceId, "sourceId");
         if (isBuiltIn(sourceId)) {
             throw new IllegalArgumentException("Reserved source id: " + sourceId);
@@ -401,7 +414,7 @@ public class SourcesManager {
         synchronized (this) {
             NumberListIndex index = new NumberListIndex(entries);
             NumberListStore.ListMetadata metadata
-                    = store.save(sourceId, displayName, importedAt, entries);
+                    = store.save(sourceId, displayName, importedAt, entries, remote);
 
             boolean isNew = !listProviders.containsKey(sourceId);
             // LinkedHashMap keeps the original position for an existing key
@@ -417,6 +430,33 @@ public class SourcesManager {
             snapshot = buildSnapshot();
 
             LOG.info("importList() imported {} entries into {}", entries.size(), sourceId);
+            return metadata;
+        }
+    }
+
+    /**
+     * Replaces the download state of a list imported from a URL (after a check that
+     * found no changes, a failed update or a changed auto-update flag), keeping its entries.
+     *
+     * @return the new metadata, or null if there is no such list
+     * @throws IOException if the stored list can't be read or written
+     */
+    public NumberListStore.ListMetadata updateRemoteInfo(String sourceId,
+                                                        RemoteListInfo remote) throws IOException {
+        Objects.requireNonNull(remote, "remote");
+        if (isBuiltIn(sourceId)) {
+            throw new IllegalArgumentException("Built-in source: " + sourceId);
+        }
+
+        loadLists();
+        synchronized (this) {
+            if (!listProviders.containsKey(sourceId)) return null;
+
+            NumberListStore.ListMetadata metadata = store.updateRemote(sourceId, remote);
+            if (metadata == null) return null;
+
+            listMetadata.put(sourceId, metadata);
+            snapshot = buildSnapshot();
             return metadata;
         }
     }

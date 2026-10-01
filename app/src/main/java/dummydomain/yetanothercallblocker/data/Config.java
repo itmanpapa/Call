@@ -25,6 +25,7 @@ import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.OkHttpTransport;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
+import dummydomain.yetanothercallblocker.data.sources.OkHttpListDownloader;
 import dummydomain.yetanothercallblocker.sia.Settings;
 import dummydomain.yetanothercallblocker.sia.SettingsImpl;
 import dummydomain.yetanothercallblocker.sia.Storage;
@@ -225,6 +226,11 @@ public class Config {
         YacbHolder.setPhoneBlockSync(new PhoneBlockSync(phoneBlockClient,
                 new File(new File(context.getFilesDir(), PHONEBLOCK_DIR), PHONEBLOCK_STATE_FILE),
                 sourcesManager::importList, System::currentTimeMillis));
+        YacbHolder.setRemoteListManager(new RemoteListManager(sourcesManager,
+                new OkHttpListDownloader(() -> {
+                    DeferredInit.initNetwork();
+                    return new OkHttpClient();
+                })));
 
         // the lists are small, but don't read them on the main thread;
         // a lookup before the loading has finished waits for it

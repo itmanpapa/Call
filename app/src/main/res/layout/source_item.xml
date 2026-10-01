@@ -46,6 +46,18 @@
 
     </LinearLayout>
 
+    <!-- only for lists imported from a URL -->
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/source_url_actions"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/source_url_actions"
+        android:padding="8dp"
+        android:src="@drawable/ic_file_download_24dp"
+        android:visibility="gone"
+        app:tint="?attr/colorOnSurfaceVariant" />
+
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/source_move_up"
         android:layout_width="40dp"

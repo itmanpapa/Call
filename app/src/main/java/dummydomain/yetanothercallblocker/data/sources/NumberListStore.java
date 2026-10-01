@@ -42,6 +42,8 @@ import java.util.regex.Pattern;
  * meta,displayName,Bundesnetzagentur
  * meta,importedAt,1727777777000
  * meta,entryCount,2
+ * meta,remoteUrl,https://example.org/list.xml
+ * meta,remoteAutoUpdate,true
  * entry,N,+4915112345678,name,category,comment,DISCONNECTION,measure text,2024-01-15,raw text
  * entry,P,+4990012345,,,,NONE,,,
  * </pre>
@@ -51,6 +53,11 @@ import java.util.regex.Pattern;
  * never empty anyway). Unknown
  * {@code meta} keys and unknown record types are ignored, so the format can be
  * extended without bumping the version; a higher version is rejected.</p>
+ *
+ * <p>Lists downloaded from a URL additionally store a {@link RemoteListInfo} as
+ * optional {@code meta} records ({@code remoteUrl}, {@code remoteAutoUpdate},
+ * {@code remoteEtag}, {@code remoteLastModified}, {@code remoteLastCheckAt},
+ * {@code remoteLastError}); older versions of the app ignore them.</p>
  *
  * <p>Writes are atomic: the list is written to a temporary file, synced and then
  * renamed over the old file, so a crash never leaves a half-written list behind.
@@ -76,6 +83,12 @@ public class NumberListStore {
     static final String META_DISPLAY_NAME = "displayName";
     static final String META_IMPORTED_AT = "importedAt";
     static final String META_ENTRY_COUNT = "entryCount";
+    static final String META_REMOTE_URL = "remoteUrl";
+    static final String META_REMOTE_AUTO_UPDATE = "remoteAutoUpdate";
+    static final String META_REMOTE_ETAG = "remoteEtag";
+    static final String META_REMOTE_LAST_MODIFIED = "remoteLastModified";
+    static final String META_REMOTE_LAST_CHECK_AT = "remoteLastCheckAt";
+    static final String META_REMOTE_LAST_ERROR = "remoteLastError";
 
     static final String KIND_NUMBER = "N";
     static final String KIND_PREFIX = "P";
@@ -98,12 +111,19 @@ public class NumberListStore {
         private final String displayName;
         private final long importedAt;
         private final int entryCount;
+        private final RemoteListInfo remote;
 
         public ListMetadata(String sourceId, String displayName, long importedAt, int entryCount) {
+            this(sourceId, displayName, importedAt, entryCount, null);
+        }
+
+        public ListMetadata(String sourceId, String displayName, long importedAt, int entryCount,
+                            RemoteListInfo remote) {
             this.sourceId = Objects.requireNonNull(sourceId, "sourceId");
             this.displayName = displayName;
             this.importedAt = importedAt;
             this.entryCount = entryCount;
+            this.remote = remote;
         }
 
         public String getSourceId() {
@@ -124,6 +144,11 @@ public class NumberListStore {
             return entryCount;
         }
 
+        /** Download state of a list imported from a URL, null for lists imported from a file. */
+        public RemoteListInfo getRemote() {
+            return remote;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -132,12 +157,13 @@ public class NumberListStore {
             return importedAt == that.importedAt
                     && entryCount == that.entryCount
                     && sourceId.equals(that.sourceId)
-                    && Objects.equals(displayName, that.displayName);
+                    && Objects.equals(displayName, that.displayName)
+                    && Objects.equals(remote, that.remote);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(sourceId, displayName, importedAt, entryCount);
+            return Objects.hash(sourceId, displayName, importedAt, entryCount, remote);
         }
 
         @Override
@@ -147,6 +173,7 @@ public class NumberListStore {
                     ", displayName='" + displayName + '\'' +
                     ", importedAt=" + importedAt +
                     ", entryCount=" + entryCount +
+                    (remote != null ? ", remote=" + remote : "") +
                     '}';
         }
     }
@@ -195,6 +222,18 @@ public class NumberListStore {
      */
     public synchronized ListMetadata save(String sourceId, String displayName, long importedAt,
                                           List<ListedNumber> entries) throws IOException {
+        return save(sourceId, displayName, importedAt, entries, null);
+    }
+
+    /**
+     * Atomically replaces the stored list of the given source.
+     *
+     * @param remote download state of a list imported from a URL, or null
+     * @see #save(String, String, long, List)
+     */
+    public synchronized ListMetadata save(String sourceId, String displayName, long importedAt,
+                                          List<ListedNumber> entries,
+                                          RemoteListInfo remote) throws IOException {
         checkSourceId(sourceId);
         Objects.requireNonNull(entries, "entries");
 
@@ -202,7 +241,8 @@ public class NumberListStore {
             throw new IOException("Can't create directory " + directory);
         }
 
-        ListMetadata metadata = new ListMetadata(sourceId, displayName, importedAt, entries.size());
+        ListMetadata metadata = new ListMetadata(sourceId, displayName, importedAt,
+                entries.size(), remote);
 
         File target = getFile(sourceId);
         File tmp = new File(directory, target.getName() + TMP_SUFFIX);
@@ -253,6 +293,20 @@ public class NumberListStore {
             if (reader == null) return null;
             return read(reader, sourceId, true).getMetadata();
         }
+    }
+
+    /**
+     * Replaces the remote info of a stored list, keeping its entries, name and import time.
+     *
+     * @return the new metadata, or {@code null} if nothing is stored for this source
+     * @throws IOException if the list can't be read or written
+     */
+    public synchronized ListMetadata updateRemote(String sourceId,
+                                                  RemoteListInfo remote) throws IOException {
+        StoredList list = load(sourceId);
+        if (list == null) return null;
+        ListMetadata old = list.getMetadata();
+        return save(sourceId, old.getDisplayName(), old.getImportedAt(), list.getEntries(), remote);
     }
 
     public synchronized boolean exists(String sourceId) {
@@ -330,6 +384,18 @@ public class NumberListStore {
         printer.printRecord(TYPE_META, META_IMPORTED_AT, String.valueOf(metadata.getImportedAt()));
         printer.printRecord(TYPE_META, META_ENTRY_COUNT, String.valueOf(metadata.getEntryCount()));
 
+        RemoteListInfo remote = metadata.getRemote();
+        if (remote != null) {
+            printer.printRecord(TYPE_META, META_REMOTE_URL, remote.getUrl());
+            printer.printRecord(TYPE_META, META_REMOTE_AUTO_UPDATE,
+                    String.valueOf(remote.isAutoUpdate()));
+            printer.printRecord(TYPE_META, META_REMOTE_ETAG, remote.getEtag());
+            printer.printRecord(TYPE_META, META_REMOTE_LAST_MODIFIED, remote.getLastModified());
+            printer.printRecord(TYPE_META, META_REMOTE_LAST_CHECK_AT,
+                    String.valueOf(remote.getLastCheckAt()));
+            printer.printRecord(TYPE_META, META_REMOTE_LAST_ERROR, remote.getLastError());
+        }
+
         for (ListedNumber e : entries) {
             printer.printRecord(TYPE_ENTRY,
                     e.isPrefix() ? KIND_PREFIX : KIND_NUMBER,
@@ -357,6 +423,12 @@ public class NumberListStore {
         String displayName = null;
         long importedAt = 0;
         int entryCount = -1;
+        String remoteUrl = null;
+        boolean remoteAutoUpdate = false;
+        String remoteEtag = null;
+        String remoteLastModified = null;
+        long remoteLastCheckAt = 0;
+        String remoteLastError = null;
         boolean formatSeen = false;
         List<ListedNumber> entries = new ArrayList<>();
 
@@ -390,6 +462,18 @@ public class NumberListStore {
                         importedAt = parseLong(value, "importedAt");
                     } else if (META_ENTRY_COUNT.equals(key)) {
                         entryCount = parseInt(value, "entryCount");
+                    } else if (META_REMOTE_URL.equals(key)) {
+                        remoteUrl = value;
+                    } else if (META_REMOTE_AUTO_UPDATE.equals(key)) {
+                        remoteAutoUpdate = Boolean.parseBoolean(value);
+                    } else if (META_REMOTE_ETAG.equals(key)) {
+                        remoteEtag = value;
+                    } else if (META_REMOTE_LAST_MODIFIED.equals(key)) {
+                        remoteLastModified = value;
+                    } else if (META_REMOTE_LAST_CHECK_AT.equals(key)) {
+                        remoteLastCheckAt = value != null ? parseLong(value, "remoteLastCheckAt") : 0;
+                    } else if (META_REMOTE_LAST_ERROR.equals(key)) {
+                        remoteLastError = value;
                     }
                 } else if (TYPE_ENTRY.equals(type)) {
                     if (metadataOnly) break;
@@ -412,7 +496,12 @@ public class NumberListStore {
                     + " entries, found " + entries.size());
         }
 
-        ListMetadata metadata = new ListMetadata(sourceId, displayName, importedAt, entryCount);
+        RemoteListInfo remote = remoteUrl != null
+                ? new RemoteListInfo(remoteUrl, remoteAutoUpdate, remoteEtag, remoteLastModified,
+                        remoteLastCheckAt, remoteLastError)
+                : null;
+        ListMetadata metadata = new ListMetadata(sourceId, displayName, importedAt, entryCount,
+                remote);
         return new StoredList(metadata, metadataOnly ? Collections.emptyList() : entries);
     }
 

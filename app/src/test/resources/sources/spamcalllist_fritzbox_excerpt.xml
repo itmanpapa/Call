@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Excerpt of export/fritzbox_export.xml from https://github.com/dontobi/SpamCalllist
+  Copyright (c) 2021-2023 Tobias 'dontobi' Schug, MIT License (see THIRD_PARTY_NOTICES.txt)
+-->
+<phonebooks>
+    <phonebook name="Rufsperren">
+        <contact>
+            <category>0</category>
+            <person>
+                <realName>Ausland - +1...</realName>
+            </person>
+            <telephony nid="1">
+                <number type="work" id="0" vanity="" prio="1">+12603404548</number>
+                <number type="work" id="0" vanity="" prio="1">+16465535819</number>
+            </telephony>
+            <services /><setup><ringTone /></setup><mod_time>1461756227</mod_time>
+            <uniqueid>11</uniqueid>
+        </contact>
+        <contact>
+            <category>0</category>
+            <person>
+                <realName>Inland - 03...</realName>
+            </person>
+            <telephony nid="1">
+                <number type="work" id="0" vanity="" prio="1">030138839942</number>
+                <number type="work" id="0" vanity="" prio="1">03020181800</number>
+                <number type="work" id="0" vanity="" prio="1">0304070744*</number>
+                <number type="work" id="0" vanity="" prio="1">0304669001*</number>
+                <number type="work" id="0" vanity="" prio="1">030499189782</number>
+            </telephony>
+            <services /><setup><ringTone /></setup><mod_time>1461756227</mod_time>
+            <uniqueid>21</uniqueid>
+        </contact>
+    </phonebook>
+</phonebooks>

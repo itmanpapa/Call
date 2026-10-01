@@ -203,6 +203,71 @@ public class NumberListStoreTest {
         assertEquals(MeasureType.UNKNOWN, loaded.getEntries().get(0).getMeasureType());
     }
 
+    @Test
+    public void remoteInfoRoundTrip() throws IOException {
+        NumberListStore store = new NumberListStore(folder.getRoot());
+        RemoteListInfo remote = new RemoteListInfo("https://example.org/a,b.xml", true,
+                "\"abc\"", "Tue, 01 Oct 2026 10:00:00 GMT", 1727777777000L,
+                "HTTP 404\nNot Found");
+
+        NumberListStore.ListMetadata saved = store.save("url_1", "List", 5, sampleEntries(), remote);
+        assertEquals(remote, saved.getRemote());
+
+        NumberListStore.ListMetadata loaded = new NumberListStore(folder.getRoot())
+                .loadMetadata("url_1");
+        assertEquals(saved, loaded);
+        assertEquals(remote, loaded.getRemote());
+        assertEquals(sampleEntries(), store.load("url_1").getEntries());
+
+        // a list without remote info has none after loading
+        store.save("csv_x", "x", 0, sampleEntries());
+        assertNull(store.loadMetadata("csv_x").getRemote());
+    }
+
+    @Test
+    public void remoteInfoWithNullFields() throws IOException {
+        NumberListStore store = new NumberListStore(folder.getRoot());
+        RemoteListInfo remote = new RemoteListInfo("http://example.org/list.csv", false);
+        store.save("url_2", null, 0, Collections.emptyList(), remote);
+        assertEquals(remote, store.loadMetadata("url_2").getRemote());
+        assertNull(store.loadMetadata("url_2").getRemote().getEtag());
+        assertNull(store.loadMetadata("url_2").getRemote().getLastError());
+    }
+
+    @Test
+    public void updateRemoteKeepsEntries() throws IOException {
+        NumberListStore store = new NumberListStore(folder.getRoot());
+        RemoteListInfo remote = new RemoteListInfo("https://example.org/list.xml", true);
+        store.save("url_3", "Name", 42, sampleEntries(), remote);
+
+        RemoteListInfo failed = remote.withError("timeout", 100);
+        NumberListStore.ListMetadata updated = store.updateRemote("url_3", failed);
+        assertEquals(failed, updated.getRemote());
+        assertEquals(42, updated.getImportedAt());
+        assertEquals("Name", updated.getDisplayName());
+
+        NumberListStore.StoredList loaded = store.load("url_3");
+        assertEquals(sampleEntries(), loaded.getEntries());
+        assertEquals("timeout", loaded.getMetadata().getRemote().getLastError());
+        assertEquals(100, loaded.getMetadata().getRemote().getLastCheckAt());
+
+        assertNull(store.updateRemote("missing", failed));
+    }
+
+    @Test
+    public void remoteMetaRecordsAreReadFromHandWrittenFile() throws IOException {
+        NumberListStore store = new NumberListStore(folder.getRoot());
+        write(store.getFile("x"), "format,yacb-number-list,1\n"
+                + "meta,sourceId,x\nmeta,entryCount,0\n"
+                + "meta,remoteUrl,https://example.org/l.vcf\nmeta,remoteAutoUpdate,true\n"
+                + "meta,remoteEtag,\nmeta,remoteLastCheckAt,\n");
+        RemoteListInfo remote = store.loadMetadata("x").getRemote();
+        assertEquals("https://example.org/l.vcf", remote.getUrl());
+        assertTrue(remote.isAutoUpdate());
+        assertNull(remote.getEtag());
+        assertEquals(0, remote.getLastCheckAt());
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void invalidSourceIdIsRejected() throws IOException {
         new NumberListStore(folder.getRoot()).save("../evil", null, 0, Collections.emptyList());

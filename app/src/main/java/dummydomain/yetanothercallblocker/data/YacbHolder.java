@@ -27,6 +27,7 @@ public class YacbHolder {
 
     private static SourcesManager sourcesManager;
     private static PhoneBlockSync phoneBlockSync;
+    private static RemoteListManager remoteListManager;
 
     private static NumberInfoService numberInfoService;
 
@@ -74,6 +75,10 @@ public class YacbHolder {
 
     static void setPhoneBlockSync(PhoneBlockSync phoneBlockSync) {
         YacbHolder.phoneBlockSync = phoneBlockSync;
+    }
+
+    static void setRemoteListManager(RemoteListManager remoteListManager) {
+        YacbHolder.remoteListManager = remoteListManager;
     }
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
@@ -126,6 +131,10 @@ public class YacbHolder {
 
     public static PhoneBlockSync getPhoneBlockSync() {
         return phoneBlockSync;
+    }
+
+    public static RemoteListManager getRemoteListManager() {
+        return remoteListManager;
     }
 
     public static NumberInfoService getNumberInfoService() {
