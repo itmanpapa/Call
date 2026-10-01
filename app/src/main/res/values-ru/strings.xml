@@ -281,4 +281,36 @@
         <item quantity="many">%d номеров</item>
         <item quantity="other">%d номера</item>
     </plurals>
+    <!-- PhoneBlock -->
+    <string name="phoneblock_menu">PhoneBlock</string>
+    <string name="phoneblock_title">PhoneBlock</string>
+    <string name="phoneblock_dialog_message">PhoneBlock — бесплатный немецкий список спам-номеров, который ведёт сообщество (phoneblock.net). Зарегистрируйтесь бесплатно, создайте API-ключ на странице настроек PhoneBlock и введите его здесь. Список загружается один раз и затем обновляется ежедневно; входящие номера проверяются офлайн.</string>
+    <string name="phoneblock_get_token">Получить API-ключ</string>
+    <string name="phoneblock_token_hint">API-ключ</string>
+    <string name="phoneblock_min_votes">Блокировать номера, набравшие не меньше голосов:</string>
+    <string name="phoneblock_terms">Данные: сообщество PhoneBlock, бесплатно. Используйте на свой риск; условия использования — на phoneblock.net.</string>
+    <string name="phoneblock_save">Сохранить</string>
+    <string name="phoneblock_sync_now">Обновить сейчас</string>
+    <string name="phoneblock_status_never">Ещё не синхронизирован</string>
+    <string name="phoneblock_status">Последнее обновление: %1$s · номеров: %2$d</string>
+    <string name="phoneblock_token_required">Сначала введите API-ключ.</string>
+    <string name="phoneblock_sync_result_title">PhoneBlock обновлён</string>
+    <string name="phoneblock_sync_result_full">Загружен полный список: %1$d номеров.\nБлокируются (не меньше %2$d голосов): %3$d</string>
+    <string name="phoneblock_sync_result_incremental">Добавлено или изменено: %1$d, удалено: %2$d.\nБлокируются (не меньше %3$d голосов): %4$d из %5$d</string>
+    <string name="phoneblock_sync_skipped">Список обновлялся менее %d минут назад. Повторите позже.</string>
+    <string name="phoneblock_sync_failed_title">Не удалось обновить PhoneBlock</string>
+    <string name="phoneblock_sync_auth_error">API-ключ отклонён. Проверьте ключ или создайте новый на phoneblock.net.</string>
+    <string name="phoneblock_sync_rate_limited">Сервер перегружен или просит снизить частоту запросов. Повторите позже.</string>
+    <string name="phoneblock_sync_error">Ошибка: %s</string>
+    <string name="phoneblock_no_browser">Браузер не найден. Откройте %s вручную.</string>
+    <string name="phoneblock_no_token">API-ключ не задан</string>
+    <string name="phoneblock_online_details">Проверяет неизвестные номера онлайн; отправляется только хеш номера</string>
+    <string name="source_phoneblock_online_name">PhoneBlock (онлайн-проверка)</string>
+    <string name="source_kind_synchronized">Синхронизируется</string>
+    <string name="phoneblock_rating_b_missed">Нежелательный звонок</string>
+    <string name="phoneblock_rating_c_ping">Сброшенный звонок</string>
+    <string name="phoneblock_rating_d_poll">Опрос</string>
+    <string name="phoneblock_rating_e_advertising">Реклама</string>
+    <string name="phoneblock_rating_f_gamble">Азартные игры или «выигрыш»</string>
+    <string name="phoneblock_rating_g_fraud">Мошенничество</string>
 </resources>

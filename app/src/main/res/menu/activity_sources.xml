@@ -12,4 +12,9 @@
         android:title="@string/sources_import_bnetza"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_phoneblock"
+        android:title="@string/phoneblock_menu"
+        app:showAsAction="never" />
+
 </menu>

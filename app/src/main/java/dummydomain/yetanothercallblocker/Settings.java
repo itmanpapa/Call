@@ -16,6 +16,7 @@ import java.util.Set;
 
 import dummydomain.yetanothercallblocker.data.CountryHelper;
 import dummydomain.yetanothercallblocker.data.SourcesManager;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
 import dummydomain.yetanothercallblocker.sia.model.database.DbManager;
 
 public class Settings extends GenericSettings implements SourcesManager.Preferences {
@@ -48,6 +49,9 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public static final String PREF_SAVE_LOGCAT_ON_CRASH = "saveLogcatOnCrash";
     public static final String PREF_SOURCES_ORDER = "sourcesOrder";
     public static final String PREF_SOURCES_DISABLED = "sourcesDisabled";
+    public static final String PREF_SOURCES_ENABLED = "sourcesEnabled";
+    public static final String PREF_PHONEBLOCK_TOKEN = "phoneBlockToken";
+    public static final String PREF_PHONEBLOCK_MIN_VOTES = "phoneBlockMinVotes";
 
     public static final String PREF_CALL_LOG_GROUPING_NONE = "none";
     public static final String PREF_CALL_LOG_GROUPING_CONSECUTIVE = "consecutive";
@@ -383,6 +387,36 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     @Override
     public void setDisabledSources(String ids) {
         setString(PREF_SOURCES_DISABLED, ids);
+    }
+
+    @Override
+    public String getEnabledSources() {
+        return getString(PREF_SOURCES_ENABLED);
+    }
+
+    @Override
+    public void setEnabledSources(String ids) {
+        setString(PREF_SOURCES_ENABLED, ids);
+    }
+
+    /** @return the PhoneBlock API key, or an empty string */
+    public String getPhoneBlockToken() {
+        String token = getString(PREF_PHONEBLOCK_TOKEN);
+        return token != null ? token.trim() : "";
+    }
+
+    public void setPhoneBlockToken(String token) {
+        setString(PREF_PHONEBLOCK_TOKEN, token != null ? token.trim() : null);
+    }
+
+    /** @return the vote threshold for PhoneBlock numbers */
+    public int getPhoneBlockMinVotes() {
+        return PhoneBlockSync.normalizeMinVotes(
+                getInt(PREF_PHONEBLOCK_MIN_VOTES, PhoneBlockSync.DEFAULT_MIN_VOTES));
+    }
+
+    public void setPhoneBlockMinVotes(int minVotes) {
+        setInt(PREF_PHONEBLOCK_MIN_VOTES, PhoneBlockSync.normalizeMinVotes(minVotes));
     }
 
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import dummydomain.yetanothercallblocker.data.NumberInfo;
 import dummydomain.yetanothercallblocker.data.SiaNumberCategoryUtils;
 import dummydomain.yetanothercallblocker.data.sources.MeasureType;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
 import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
 
 public class NumberInfoUtils {
@@ -58,6 +59,11 @@ public class NumberInfoUtils {
     public static String getSourceCategoryName(Context context, String category) {
         if (TextUtils.isEmpty(category)) return null;
 
+        PhoneBlockClient.Rating phoneBlockRating = PhoneBlockClient.Rating.fromCode(category);
+        if (phoneBlockRating != null && category.equals(phoneBlockRating.name())) {
+            return getPhoneBlockRatingName(context, phoneBlockRating);
+        }
+
         MeasureType measureType;
         try {
             measureType = MeasureType.valueOf(category);
@@ -74,6 +80,28 @@ public class NumberInfoUtils {
                 return context.getString(R.string.measure_other_prohibition);
             case UNKNOWN:
                 return context.getString(R.string.measure_unknown);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @return a localized name of a PhoneBlock rating (the category of PhoneBlock numbers)
+     */
+    public static String getPhoneBlockRatingName(Context context, PhoneBlockClient.Rating rating) {
+        switch (rating) {
+            case B_MISSED:
+                return context.getString(R.string.phoneblock_rating_b_missed);
+            case C_PING:
+                return context.getString(R.string.phoneblock_rating_c_ping);
+            case D_POLL:
+                return context.getString(R.string.phoneblock_rating_d_poll);
+            case E_ADVERTISING:
+                return context.getString(R.string.phoneblock_rating_e_advertising);
+            case F_GAMBLE:
+                return context.getString(R.string.phoneblock_rating_f_gamble);
+            case G_FRAUD:
+                return context.getString(R.string.phoneblock_rating_g_fraud);
             default:
                 return null;
         }

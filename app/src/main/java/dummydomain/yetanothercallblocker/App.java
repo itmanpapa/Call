@@ -9,10 +9,17 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.color.DynamicColors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dummydomain.yetanothercallblocker.data.Config;
 import dummydomain.yetanothercallblocker.utils.DebuggingUtils;
+import dummydomain.yetanothercallblocker.utils.SystemUtils;
+import dummydomain.yetanothercallblocker.work.PhoneBlockSyncWorker;
 
 public class App extends Application {
+
+    private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
     private static App instance;
 
@@ -47,6 +54,15 @@ public class App extends Application {
         settings.init();
 
         Config.init(getDeviceProtectedStorageContext(), settings);
+
+        try {
+            // WorkManager keeps its database in the credential-protected storage
+            if (SystemUtils.isUserUnlocked(this)) {
+                PhoneBlockSyncWorker.updateSchedule(this, false);
+            }
+        } catch (Exception e) {
+            LOG.warn("onCreate() failed to schedule the PhoneBlock sync", e);
+        }
 
         setUiMode(settings.getUiMode());
 

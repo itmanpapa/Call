@@ -16,11 +16,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutorService;
 
+import dummydomain.yetanothercallblocker.data.provider.AggregatedResult;
 import dummydomain.yetanothercallblocker.data.provider.ListedNumbersProvider;
 import dummydomain.yetanothercallblocker.data.provider.NumberInfoProvider;
 import dummydomain.yetanothercallblocker.data.provider.ProviderAggregator;
 import dummydomain.yetanothercallblocker.data.provider.ProviderResult;
+import dummydomain.yetanothercallblocker.data.provider.ResultCache;
 import dummydomain.yetanothercallblocker.data.sources.ListedNumber;
 import dummydomain.yetanothercallblocker.data.sources.NumberListIndex;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
@@ -41,7 +44,12 @@ import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
  *
  * <p>The default order is: built-in providers first, then imported lists in the
  * order of their ids. Sources are enabled by default; only the ids of disabled
- * sources are stored, so newly added sources start enabled.</p>
+ * sources are stored, so newly added sources start enabled. Built-in providers whose
+ * {@link NumberInfoProvider#isEnabledByDefault()} is false (online services) start
+ * disabled; for them the ids of the sources enabled by the user are stored.</p>
+ *
+ * <p>Online providers are queried only with an executor, see
+ * {@link #lookupOnline(String)}.</p>
  *
  * <p>Plain Java, no Android dependencies. Thread-safe: modifications are synchronized,
  * lookups read an immutable snapshot without locking.</p>
@@ -63,6 +71,19 @@ public class SourcesManager {
         String getDisabledSources();
 
         void setDisabledSources(String ids);
+
+        /**
+         * @return comma-separated ids of sources that are disabled by default
+         * ({@link NumberInfoProvider#isEnabledByDefault()}) but were enabled by the user,
+         * or null
+         */
+        default String getEnabledSources() {
+            return null;
+        }
+
+        default void setEnabledSources(String ids) {
+            throw new UnsupportedOperationException("setEnabledSources");
+        }
 
     }
 
@@ -133,12 +154,15 @@ public class SourcesManager {
         final List<SourceInfo> sources;
         final List<ListedNumbersProvider> enabledLists;
         final ProviderAggregator aggregator;
+        /** Aggregator over the enabled online providers only, null if there are none. */
+        final ProviderAggregator onlineAggregator;
 
         Snapshot(List<SourceInfo> sources, List<ListedNumbersProvider> enabledLists,
-                 ProviderAggregator aggregator) {
+                 ProviderAggregator aggregator, ProviderAggregator onlineAggregator) {
             this.sources = Collections.unmodifiableList(sources);
             this.enabledLists = Collections.unmodifiableList(enabledLists);
             this.aggregator = aggregator;
+            this.onlineAggregator = onlineAggregator;
         }
     }
 
@@ -159,12 +183,17 @@ public class SourcesManager {
     private final NumberListStore store;
     private final Preferences preferences;
     private final List<NumberInfoProvider> builtInProviders;
+    private final ExecutorService onlineExecutor;
+    private final ResultCache onlineCache;
+    private final long onlineTimeoutMillis;
 
     // guarded by this
     private final Map<String, ListedNumbersProvider> listProviders = new LinkedHashMap<>();
     private final Map<String, NumberListStore.ListMetadata> listMetadata = new HashMap<>();
     private final Set<String> failedLists = new HashSet<>();
     private final Set<String> disabled = new TreeSet<>();
+    /** Default-disabled sources enabled by the user. */
+    private final Set<String> enabledOverrides = new TreeSet<>();
 
     private volatile boolean loaded;
     private volatile Snapshot snapshot;
@@ -177,6 +206,27 @@ public class SourcesManager {
      */
     public SourcesManager(NumberListStore store, Preferences preferences,
                           List<? extends NumberInfoProvider> builtInProviders) {
+        this(store, preferences, builtInProviders, null, null,
+                ProviderAggregator.DEFAULT_ONLINE_TIMEOUT_MILLIS);
+    }
+
+    /**
+     * @param store               storage of the imported lists
+     * @param preferences         storage of the order and the enabled flags
+     * @param builtInProviders    built-in providers in default order (offline and online);
+     *                            they are always listed before imported lists by default
+     * @param onlineExecutor      executor for online lookups; without it (null) online
+     *                            providers are listed but never queried
+     * @param onlineCache         cache of online results, may be null
+     * @param onlineTimeoutMillis how long to wait for online providers
+     */
+    public SourcesManager(NumberListStore store, Preferences preferences,
+                          List<? extends NumberInfoProvider> builtInProviders,
+                          ExecutorService onlineExecutor, ResultCache onlineCache,
+                          long onlineTimeoutMillis) {
+        this.onlineExecutor = onlineExecutor;
+        this.onlineCache = onlineCache;
+        this.onlineTimeoutMillis = onlineTimeoutMillis;
         this.store = Objects.requireNonNull(store, "store");
         this.preferences = Objects.requireNonNull(preferences, "preferences");
         this.builtInProviders = Collections.unmodifiableList(new ArrayList<>(builtInProviders));
@@ -189,6 +239,7 @@ public class SourcesManager {
         }
 
         disabled.addAll(parseIds(preferences.getDisabledSources()));
+        enabledOverrides.addAll(parseIds(preferences.getEnabledSources()));
         // a usable (list-less) snapshot until the lists are loaded
         snapshot = buildSnapshot();
     }
@@ -278,16 +329,21 @@ public class SourcesManager {
      * @return whether the source is enabled (unknown sources are enabled by default)
      */
     public synchronized boolean isEnabled(String id) {
-        return !disabled.contains(id);
+        return isEnabledLocked(id);
     }
 
     public void setEnabled(String id, boolean enabled) {
         loadLists();
         synchronized (this) {
-            boolean changed = enabled ? disabled.remove(id) : disabled.add(id);
-            if (!changed) return;
-
-            preferences.setDisabledSources(joinIds(disabled));
+            if (isDisabledByDefault(id)) {
+                boolean changed = enabled ? enabledOverrides.add(id) : enabledOverrides.remove(id);
+                if (!changed) return;
+                preferences.setEnabledSources(joinIds(enabledOverrides));
+            } else {
+                boolean changed = enabled ? disabled.remove(id) : disabled.add(id);
+                if (!changed) return;
+                preferences.setDisabledSources(joinIds(disabled));
+            }
             snapshot = buildSnapshot();
         }
     }
@@ -432,6 +488,41 @@ public class SourcesManager {
     }
 
     /**
+     * @return true if at least one online source is enabled (and can be queried)
+     */
+    public boolean hasEnabledOnlineSources() {
+        loadLists();
+        return snapshot.onlineAggregator != null;
+    }
+
+    /**
+     * Looks up the number in the enabled online sources (waiting at most the online
+     * timeout; answers are cached). Blocks the calling thread, but never longer than
+     * the timeout.
+     *
+     * @param number the normalized number
+     * @return the result of the source that rated the number NEGATIVE, or null
+     */
+    public ProviderResult lookupOnline(String number) {
+        if (number == null || number.isEmpty()) return null;
+
+        loadLists();
+        ProviderAggregator aggregator = snapshot.onlineAggregator;
+        if (aggregator == null) return null;
+
+        AggregatedResult result = aggregator.lookup(number);
+        if (result.getRating() != ProviderResult.Rating.NEGATIVE) return null;
+
+        for (ProviderResult r : result.getResults()) {
+            if (r.getSourceId().equals(result.getRatingSourceId())) {
+                LOG.debug("lookupOnline() found in {}: {}", r.getSourceId(), r);
+                return r;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Creates a source id for a CSV list from its display name (usually the file name),
      * so that re-importing a file with the same name replaces the old list.
      */
@@ -490,6 +581,18 @@ public class SourcesManager {
         return new ListedNumbersProvider(id, displayName, true, index);
     }
 
+    /** Must be called with the lock held. */
+    private boolean isEnabledLocked(String id) {
+        return isDisabledByDefault(id) ? enabledOverrides.contains(id) : !disabled.contains(id);
+    }
+
+    private boolean isDisabledByDefault(String id) {
+        for (NumberInfoProvider provider : builtInProviders) {
+            if (provider.getId().equals(id)) return !provider.isEnabledByDefault();
+        }
+        return false;
+    }
+
     private boolean isBuiltIn(String id) {
         for (NumberInfoProvider provider : builtInProviders) {
             if (provider.getId().equals(id)) return true;
@@ -517,6 +620,7 @@ public class SourcesManager {
         List<SourceInfo> sources = new ArrayList<>();
         List<ListedNumbersProvider> enabledLists = new ArrayList<>();
         List<NumberInfoProvider> enabledProviders = new ArrayList<>();
+        List<NumberInfoProvider> enabledOnline = new ArrayList<>();
 
         for (String id : computeOrder()) {
             NumberInfoProvider provider = null;
@@ -529,22 +633,29 @@ public class SourcesManager {
             if (imported) provider = listProvider;
             if (provider == null) continue;
 
-            boolean enabled = !disabled.contains(id);
+            boolean enabled = isEnabledLocked(id);
             sources.add(new SourceInfo(provider, imported, enabled,
                     listMetadata.get(id), failedLists.contains(id)));
 
-            if (enabled) {
-                enabledProviders.add(provider);
-                if (listProvider != null) enabledLists.add(listProvider);
+            if (!enabled) continue;
+            if (!provider.isOffline()) {
+                if (onlineExecutor == null) {
+                    LOG.debug("buildSnapshot() no executor for online source {}", id);
+                    continue;
+                }
+                enabledOnline.add(provider);
             }
+            enabledProviders.add(provider);
+            if (listProvider != null) enabledLists.add(listProvider);
         }
 
-        // all current providers are offline, so no executor and no cache are needed;
-        // an online provider will need them here
-        ProviderAggregator aggregator = new ProviderAggregator(enabledProviders, null, null,
-                ProviderAggregator.DEFAULT_ONLINE_TIMEOUT_MILLIS);
+        ProviderAggregator aggregator = new ProviderAggregator(enabledProviders,
+                onlineExecutor, onlineCache, onlineTimeoutMillis);
+        ProviderAggregator onlineAggregator = enabledOnline.isEmpty() ? null
+                : new ProviderAggregator(enabledOnline, onlineExecutor, onlineCache,
+                onlineTimeoutMillis);
 
-        return new Snapshot(sources, enabledLists, aggregator);
+        return new Snapshot(sources, enabledLists, aggregator, onlineAggregator);
     }
 
     static List<String> parseIds(String s) {

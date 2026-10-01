@@ -1,6 +1,7 @@
 package dummydomain.yetanothercallblocker;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,20 +43,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import dummydomain.yetanothercallblocker.data.SourcesManager;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
+import dummydomain.yetanothercallblocker.data.provider.PhoneBlockOnlineProvider;
 import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
 import dummydomain.yetanothercallblocker.data.sources.BnetzaMeasuresParser;
 import dummydomain.yetanothercallblocker.data.sources.CsvNumberListParser;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.ParseResult;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
+import dummydomain.yetanothercallblocker.work.PhoneBlockSyncWorker;
 
 /**
  * "Data sources" screen: the list of number information sources with their
- * state, enable switches, ordering, deletion and import of offline lists.
+ * state, enable switches, ordering, deletion and import of offline lists,
+ * and the PhoneBlock settings (API key, threshold, manual sync).
  */
 public class SourcesActivity extends BaseActivity {
 
@@ -133,6 +143,9 @@ public class SourcesActivity extends BaseActivity {
         } else if (id == R.id.menu_import_bnetza) {
             showBnetzaImportInfo();
             return true;
+        } else if (id == R.id.menu_phoneblock) {
+            showPhoneBlockDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -183,6 +196,16 @@ public class SourcesActivity extends BaseActivity {
 
     private void onEnabledChanged(SourcesManager.SourceInfo source, boolean enabled) {
         runInBackground(() -> sourcesManager.setEnabled(source.getId(), enabled));
+
+        if (enabled && PhoneBlockOnlineProvider.ID.equals(source.getId())
+                && TextUtils.isEmpty(App.getSettings().getPhoneBlockToken())) {
+            showPhoneBlockDialog();
+        }
+    }
+
+    private static boolean isPhoneBlockSource(SourcesManager.SourceInfo source) {
+        return PhoneBlockSync.SOURCE_ID.equals(source.getId())
+                || PhoneBlockOnlineProvider.ID.equals(source.getId());
     }
 
     private void onMoveUp(SourcesManager.SourceInfo source) {
@@ -199,7 +222,14 @@ public class SourcesActivity extends BaseActivity {
                 .setMessage(getString(R.string.source_delete_confirmation,
                         getSourceName(source)))
                 .setPositiveButton(R.string.source_delete_button, (d, w) ->
-                        runInBackground(() -> sourcesManager.deleteList(source.getId())))
+                        runInBackground(() -> {
+                            sourcesManager.deleteList(source.getId());
+                            if (PhoneBlockSync.SOURCE_ID.equals(source.getId())) {
+                                // the next sync downloads the full list again
+                                PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
+                                if (sync != null) sync.reset();
+                            }
+                        }))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
@@ -207,15 +237,18 @@ public class SourcesActivity extends BaseActivity {
     private void showImportChooser() {
         CharSequence[] items = {
                 getString(R.string.sources_import_csv),
-                getString(R.string.sources_import_bnetza)
+                getString(R.string.sources_import_bnetza),
+                getString(R.string.phoneblock_menu)
         };
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.sources_import)
                 .setItems(items, (d, which) -> {
                     if (which == 0) {
                         pickCsvFile();
-                    } else {
+                    } else if (which == 1) {
                         showBnetzaImportInfo();
+                    } else {
+                        showPhoneBlockDialog();
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
@@ -247,6 +280,179 @@ public class SourcesActivity extends BaseActivity {
         } catch (Exception e) { // ActivityNotFoundException
             LOG.warn("pickBnetzaFile()", e);
             showError(getString(R.string.sources_no_file_picker));
+        }
+    }
+
+    // PhoneBlock
+
+    private static final class PhoneBlockOutcome {
+        PhoneBlockSync.SyncResult result;
+        int minVotes;
+        String error;
+        boolean authError;
+        boolean rateLimited;
+    }
+
+    private void showPhoneBlockDialog() {
+        PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
+        if (sync == null) return;
+
+        Settings settings = App.getSettings();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_phoneblock, null);
+        TextInputEditText tokenInput = view.findViewById(R.id.phoneblock_token);
+        Spinner minVotesSpinner = view.findViewById(R.id.phoneblock_min_votes);
+        TextView status = view.findViewById(R.id.phoneblock_status);
+
+        tokenInput.setText(settings.getPhoneBlockToken());
+
+        int[] options = PhoneBlockSync.MIN_VOTES_OPTIONS;
+        List<String> labels = new ArrayList<>();
+        int selected = 0;
+        for (int i = 0; i < options.length; i++) {
+            labels.add(String.valueOf(options[i]));
+            if (options[i] == settings.getPhoneBlockMinVotes()) selected = i;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, labels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        minVotesSpinner.setAdapter(adapter);
+        minVotesSpinner.setSelection(selected);
+
+        view.findViewById(R.id.phoneblock_get_token).setOnClickListener(v ->
+                openUrl(PhoneBlockClient.TOKEN_PAGE_URL));
+
+        status.setText(R.string.phoneblock_status_never);
+        executor.execute(() -> {
+            PhoneBlockSync.Status s = sync.getStatus();
+            runOnUiThread(() -> {
+                if (isFinishing() || isDestroyed()) return;
+                status.setText(s.getLastSync() > 0
+                        ? getString(R.string.phoneblock_status, formatDate(s.getLastSync()),
+                        s.getTotalNumbers())
+                        : getString(R.string.phoneblock_status_never));
+            });
+        });
+
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.phoneblock_title)
+                .setView(view)
+                .setPositiveButton(R.string.phoneblock_save, (d, w) -> {
+                    savePhoneBlockSettings(tokenInput, minVotesSpinner, false);
+                })
+                .setNeutralButton(R.string.phoneblock_sync_now, (d, w) -> {
+                    savePhoneBlockSettings(tokenInput, minVotesSpinner, true);
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void savePhoneBlockSettings(TextInputEditText tokenInput, Spinner minVotesSpinner,
+                                        boolean syncNow) {
+        Settings settings = App.getSettings();
+
+        CharSequence text = tokenInput.getText();
+        String token = text != null ? text.toString().trim() : "";
+        int position = minVotesSpinner.getSelectedItemPosition();
+        int minVotes = position >= 0 && position < PhoneBlockSync.MIN_VOTES_OPTIONS.length
+                ? PhoneBlockSync.MIN_VOTES_OPTIONS[position] : PhoneBlockSync.DEFAULT_MIN_VOTES;
+
+        boolean tokenChanged = !token.equals(settings.getPhoneBlockToken());
+        boolean minVotesChanged = minVotes != settings.getPhoneBlockMinVotes();
+
+        settings.setPhoneBlockToken(token);
+        settings.setPhoneBlockMinVotes(minVotes);
+
+        if (tokenChanged) {
+            try {
+                PhoneBlockSyncWorker.updateSchedule(this, true);
+            } catch (Exception e) {
+                LOG.warn("savePhoneBlockSettings() failed to schedule the sync", e);
+            }
+        }
+
+        if (syncNow) {
+            if (token.isEmpty()) {
+                showError(R.string.phoneblock_sync_failed_title,
+                        getString(R.string.phoneblock_token_required));
+            } else {
+                syncPhoneBlock(token, minVotes);
+            }
+        } else if (minVotesChanged) {
+            PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
+            if (sync != null) runInBackground(() -> sync.rebuildList(minVotes));
+        }
+    }
+
+    private void syncPhoneBlock(String token, int minVotes) {
+        PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
+        if (sync == null) return;
+
+        PhoneBlockOutcome outcome = new PhoneBlockOutcome();
+        outcome.minVotes = minVotes;
+        runInBackground(() -> {
+            try {
+                outcome.result = sync.sync(token, minVotes, true);
+                // a skipped sync still applies a changed threshold
+                if (outcome.result.isSkipped()) sync.rebuildList(minVotes);
+            } catch (PhoneBlockClient.ApiException e) {
+                LOG.warn("syncPhoneBlock() API error", e);
+                outcome.authError = e.isAuthError();
+                outcome.rateLimited = e.isRateLimited();
+                outcome.error = e.getMessage();
+            } catch (Exception e) {
+                LOG.warn("syncPhoneBlock() failed", e);
+                outcome.error = e.getMessage() != null ? e.getMessage() : e.toString();
+            } finally {
+                runOnUiThread(() -> {
+                    if (!isFinishing() && !isDestroyed()) showPhoneBlockResult(outcome);
+                });
+            }
+        });
+    }
+
+    private void showPhoneBlockResult(PhoneBlockOutcome outcome) {
+        if (outcome.result == null) {
+            String message;
+            if (outcome.authError) {
+                message = getString(R.string.phoneblock_sync_auth_error);
+            } else if (outcome.rateLimited) {
+                message = getString(R.string.phoneblock_sync_rate_limited);
+            } else {
+                message = getString(R.string.phoneblock_sync_error,
+                        outcome.error != null ? outcome.error : "");
+            }
+            showError(R.string.phoneblock_sync_failed_title, message);
+            return;
+        }
+
+        PhoneBlockSync.SyncResult result = outcome.result;
+        String message;
+        if (result.isSkipped()) {
+            message = getString(R.string.phoneblock_sync_skipped,
+                    TimeUnit.MILLISECONDS.toMinutes(PhoneBlockSync.MIN_MANUAL_SYNC_INTERVAL_MILLIS));
+        } else if (result.isFull()) {
+            message = getString(R.string.phoneblock_sync_result_full,
+                    result.getTotalNumbers(), outcome.minVotes, result.getListedNumbers());
+        } else {
+            message = getString(R.string.phoneblock_sync_result_incremental,
+                    result.getReceived(), result.getRemoved(), outcome.minVotes,
+                    result.getListedNumbers(), result.getTotalNumbers());
+        }
+
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.phoneblock_sync_result_title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
+
+    private void openUrl(String url) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (ActivityNotFoundException e) {
+            LOG.warn("openUrl() no browser", e);
+            showError(R.string.phoneblock_title, getString(R.string.phoneblock_no_browser, url));
         }
     }
 
@@ -400,8 +606,12 @@ public class SourcesActivity extends BaseActivity {
     }
 
     private void showError(String message) {
+        showError(R.string.sources_import_failed_title, message);
+    }
+
+    private void showError(int titleId, String message) {
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.sources_import_failed_title)
+                .setTitle(titleId)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
@@ -413,6 +623,9 @@ public class SourcesActivity extends BaseActivity {
         if (YacbDatabaseProvider.ID.equals(source.getId())) {
             return getString(R.string.source_yacb_name);
         }
+        if (PhoneBlockOnlineProvider.ID.equals(source.getId())) {
+            return getString(R.string.source_phoneblock_online_name);
+        }
         String name = source.getDisplayName();
         return !TextUtils.isEmpty(name) ? name : source.getId();
     }
@@ -421,7 +634,9 @@ public class SourcesActivity extends BaseActivity {
         return getString(source.isOffline() ? R.string.source_type_offline
                 : R.string.source_type_online)
                 + SEPARATOR
-                + getString(source.isImported() ? R.string.source_kind_imported
+                + getString(PhoneBlockSync.SOURCE_ID.equals(source.getId())
+                ? R.string.source_kind_synchronized
+                : source.isImported() ? R.string.source_kind_imported
                 : R.string.source_kind_built_in);
     }
 
@@ -444,6 +659,9 @@ public class SourcesActivity extends BaseActivity {
             parts.add(lastUpdate > 0
                     ? getString(R.string.source_updated, formatDate(lastUpdate))
                     : getString(R.string.source_never_updated));
+        } else if (PhoneBlockOnlineProvider.ID.equals(source.getId())) {
+            parts.add(getString(TextUtils.isEmpty(App.getSettings().getPhoneBlockToken())
+                    ? R.string.phoneblock_no_token : R.string.phoneblock_online_details));
         }
 
         return TextUtils.join(SEPARATOR, parts);
@@ -504,6 +722,13 @@ public class SourcesActivity extends BaseActivity {
             }
 
             void bind(SourcesManager.SourceInfo source, int position, int count) {
+                if (isPhoneBlockSource(source)) {
+                    itemView.setOnClickListener(v -> showPhoneBlockDialog());
+                } else {
+                    itemView.setOnClickListener(null);
+                    itemView.setClickable(false);
+                }
+
                 name.setText(getSourceName(source));
                 type.setText(getSourceType(source));
 

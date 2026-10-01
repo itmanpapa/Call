@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import dummydomain.yetanothercallblocker.data.provider.AggregatedResult;
+import dummydomain.yetanothercallblocker.data.provider.InMemoryResultCache;
 import dummydomain.yetanothercallblocker.data.provider.NumberInfoProvider;
 import dummydomain.yetanothercallblocker.data.provider.ProviderResult;
 import dummydomain.yetanothercallblocker.data.sources.ListedNumber;
@@ -36,6 +40,7 @@ public class SourcesManagerTest {
     static class MemoryPreferences implements SourcesManager.Preferences {
         String order;
         String disabled;
+        String enabled;
         int writes;
 
         @Override
@@ -57,6 +62,17 @@ public class SourcesManagerTest {
         @Override
         public void setDisabledSources(String ids) {
             this.disabled = ids;
+            writes++;
+        }
+
+        @Override
+        public String getEnabledSources() {
+            return enabled;
+        }
+
+        @Override
+        public void setEnabledSources(String ids) {
+            this.enabled = ids;
             writes++;
         }
     }
@@ -392,6 +408,104 @@ public class SourcesManagerTest {
         assertEquals(".csv", SourcesManager.fileNameToDisplayName(".csv"));
         assertNull(SourcesManager.fileNameToDisplayName("  "));
         assertNull(SourcesManager.fileNameToDisplayName(null));
+    }
+
+    /** Online provider, disabled by default, rating one number as negative. */
+    static class OnlineProvider implements NumberInfoProvider {
+        final AtomicInteger lookups = new AtomicInteger();
+
+        @Override
+        public String getId() {
+            return "online";
+        }
+
+        @Override
+        public String getDisplayName() {
+            return "Online";
+        }
+
+        @Override
+        public boolean isOffline() {
+            return false;
+        }
+
+        @Override
+        public boolean isEnabledByDefault() {
+            return false;
+        }
+
+        @Override
+        public ProviderResult lookup(String number) {
+            lookups.incrementAndGet();
+            return NUMBER.equals(number) ? new ProviderResult("online",
+                    ProviderResult.Rating.NEGATIVE, "G_FRAUD", null, 42) : null;
+        }
+    }
+
+    private SourcesManager newManagerWithOnline(OnlineProvider online, ExecutorService executor) {
+        return new SourcesManager(store, prefs, Arrays.asList(new BuiltInProvider(), online),
+                executor, new InMemoryResultCache(60_000), 2_000);
+    }
+
+    @Test
+    public void onlineProviderIsDisabledByDefault() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        try {
+            OnlineProvider online = new OnlineProvider();
+            SourcesManager manager = newManagerWithOnline(online, executor);
+
+            assertEquals(Arrays.asList("yacb", "online"), ids(manager.getSources()));
+            assertFalse(manager.isEnabled("online"));
+            assertFalse(manager.getSource("online").isEnabled());
+            assertTrue(manager.isEnabled("yacb"));
+            assertFalse(manager.hasEnabledOnlineSources());
+            assertNull(manager.lookupOnline(NUMBER));
+            assertEquals(0, online.lookups.get());
+            assertEquals(0, prefs.writes);
+
+            manager.setEnabled("online", true);
+            assertEquals("online", prefs.enabled);
+            assertNull(prefs.disabled);
+            assertTrue(manager.hasEnabledOnlineSources());
+
+            ProviderResult result = manager.lookupOnline(NUMBER);
+            assertNotNull(result);
+            assertEquals("online", result.getSourceId());
+            assertEquals("G_FRAUD", result.getCategory());
+            assertNull(manager.lookupOnline(OTHER_NUMBER));
+            assertEquals(2, online.lookups.get());
+
+            // cached
+            assertNotNull(manager.lookupOnline(NUMBER));
+            assertEquals(2, online.lookups.get());
+
+            // online sources are not used by the synchronous list lookup
+            assertNull(manager.lookupListedNumbers(NUMBER));
+
+            // persisted
+            SourcesManager reloaded = newManagerWithOnline(new OnlineProvider(), executor);
+            assertTrue(reloaded.isEnabled("online"));
+
+            reloaded.setEnabled("online", false);
+            assertEquals("", prefs.enabled);
+            assertFalse(newManagerWithOnline(new OnlineProvider(), executor).isEnabled("online"));
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    @Test
+    public void onlineProviderWithoutExecutorIsNotQueried() {
+        prefs.enabled = "online";
+        OnlineProvider online = new OnlineProvider();
+        SourcesManager manager = new SourcesManager(store, prefs,
+                Arrays.asList(new BuiltInProvider(), online));
+
+        assertTrue(manager.getSource("online").isEnabled());
+        assertFalse(manager.hasEnabledOnlineSources());
+        assertNull(manager.lookupOnline(NUMBER));
+        assertFalse(manager.getAggregator().lookup(NUMBER).hasInfo());
+        assertEquals(0, online.lookups.get());
     }
 
     @Test

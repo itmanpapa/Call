@@ -40,6 +40,16 @@ public interface NumberInfoProvider {
     }
 
     /**
+     * Whether the source is enabled until the user changes it. Sources that send
+     * numbers to third-party servers or need an account should return false.
+     *
+     * @return true by default
+     */
+    default boolean isEnabledByDefault() {
+        return true;
+    }
+
+    /**
      * Looks up information about the number.
      *
      * @param number the number to look up, already normalized by the caller

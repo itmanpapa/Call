@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import dummydomain.yetanothercallblocker.NotificationService;
 import dummydomain.yetanothercallblocker.PhoneStateHandler;
 import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
 import dummydomain.yetanothercallblocker.sia.model.CommunityReviewsLoader;
 import dummydomain.yetanothercallblocker.sia.model.SiaMetadata;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabase;
@@ -25,6 +26,7 @@ public class YacbHolder {
     private static BlacklistService blacklistService;
 
     private static SourcesManager sourcesManager;
+    private static PhoneBlockSync phoneBlockSync;
 
     private static NumberInfoService numberInfoService;
 
@@ -68,6 +70,10 @@ public class YacbHolder {
 
     static void setSourcesManager(SourcesManager sourcesManager) {
         YacbHolder.sourcesManager = sourcesManager;
+    }
+
+    static void setPhoneBlockSync(PhoneBlockSync phoneBlockSync) {
+        YacbHolder.phoneBlockSync = phoneBlockSync;
     }
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
@@ -116,6 +122,10 @@ public class YacbHolder {
 
     public static SourcesManager getSourcesManager() {
         return sourcesManager;
+    }
+
+    public static PhoneBlockSync getPhoneBlockSync() {
+        return phoneBlockSync;
     }
 
     public static NumberInfoService getNumberInfoService() {

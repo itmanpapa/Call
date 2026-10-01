@@ -97,7 +97,7 @@ public class PhoneStateHandler {
         }
 
         NumberInfo numberInfo = numberInfoService.getNumberInfo(phoneNumber,
-                settings.getCachedAutoDetectedCountryCode(), false);
+                settings.getCachedAutoDetectedCountryCode(), false, true);
 
         boolean blocked = false;
         if (blockingEnabled && numberInfoService.shouldBlock(numberInfo)) {

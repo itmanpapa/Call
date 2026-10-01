@@ -6,15 +6,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import dummydomain.yetanothercallblocker.BuildConfig;
 import dummydomain.yetanothercallblocker.NotificationService;
 import dummydomain.yetanothercallblocker.PhoneStateHandler;
 import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
 import dummydomain.yetanothercallblocker.data.db.YacbDaoSessionFactory;
+import dummydomain.yetanothercallblocker.data.provider.InMemoryResultCache;
+import dummydomain.yetanothercallblocker.data.provider.PhoneBlockOnlineProvider;
+import dummydomain.yetanothercallblocker.data.provider.ProviderAggregator;
 import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
+import dummydomain.yetanothercallblocker.data.sources.OkHttpTransport;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
+import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
 import dummydomain.yetanothercallblocker.sia.Settings;
 import dummydomain.yetanothercallblocker.sia.SettingsImpl;
 import dummydomain.yetanothercallblocker.sia.Storage;
@@ -43,7 +53,47 @@ public class Config {
     /** Subdirectory of the files dir with the imported number lists. */
     static final String NUMBER_LISTS_DIR = "lists";
 
+    /** Subdirectory of the files dir with the PhoneBlock sync state. */
+    static final String PHONEBLOCK_DIR = "phoneblock";
+    static final String PHONEBLOCK_STATE_FILE = "state.txt";
+
+    static final String PHONEBLOCK_USER_AGENT_PREFIX = "YetAnotherCallBlocker/";
+
+    /** How long answers of online sources are reused. */
+    static final long ONLINE_CACHE_TTL_MILLIS = TimeUnit.DAYS.toMillis(1);
+
     private static final Logger LOG = LoggerFactory.getLogger(Config.class);
+
+    private static volatile OkHttpClient phoneBlockHttpClient;
+
+    /** Threads for online lookups: daemon, so they never keep the process alive. */
+    private static class OnlineLookupThreadFactory implements ThreadFactory {
+        private final AtomicInteger counter = new AtomicInteger();
+
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r, "online-lookup-" + counter.incrementAndGet());
+            thread.setDaemon(true);
+            return thread;
+        }
+    }
+
+    private static OkHttpClient getPhoneBlockHttpClient() {
+        OkHttpClient client = phoneBlockHttpClient;
+        if (client == null) {
+            synchronized (Config.class) {
+                client = phoneBlockHttpClient;
+                if (client == null) {
+                    DeferredInit.initNetwork();
+                    phoneBlockHttpClient = client = new OkHttpClient.Builder()
+                            .connectTimeout(15, TimeUnit.SECONDS)
+                            .readTimeout(60, TimeUnit.SECONDS)
+                            .build();
+                }
+            }
+        }
+        return client;
+    }
 
     private static class WSParameterProvider extends WebService.DefaultWSParameterProvider {
         final dummydomain.yetanothercallblocker.Settings settings;
@@ -155,12 +205,26 @@ public class Config {
             }
         };
 
+        PhoneBlockClient phoneBlockClient = new PhoneBlockClient(
+                new OkHttpTransport(Config::getPhoneBlockHttpClient), null,
+                PHONEBLOCK_USER_AGENT_PREFIX + BuildConfig.VERSION_NAME);
+        PhoneBlockOnlineProvider phoneBlockOnlineProvider = new PhoneBlockOnlineProvider(
+                phoneBlockClient, settings::getPhoneBlockToken, settings::getPhoneBlockMinVotes);
+
         NumberListStore numberListStore = new NumberListStore(
                 new File(context.getFilesDir(), NUMBER_LISTS_DIR));
         SourcesManager sourcesManager = new SourcesManager(numberListStore, settings,
-                Collections.singletonList(
-                        new YacbDatabaseProvider(communityDatabase, featuredDatabase)));
+                Arrays.asList(
+                        new YacbDatabaseProvider(communityDatabase, featuredDatabase),
+                        phoneBlockOnlineProvider),
+                Executors.newCachedThreadPool(new OnlineLookupThreadFactory()),
+                new InMemoryResultCache(ONLINE_CACHE_TTL_MILLIS),
+                ProviderAggregator.DEFAULT_ONLINE_TIMEOUT_MILLIS);
         YacbHolder.setSourcesManager(sourcesManager);
+
+        YacbHolder.setPhoneBlockSync(new PhoneBlockSync(phoneBlockClient,
+                new File(new File(context.getFilesDir(), PHONEBLOCK_DIR), PHONEBLOCK_STATE_FILE),
+                sourcesManager::importList, System::currentTimeMillis));
 
         // the lists are small, but don't read them on the main thread;
         // a lookup before the loading has finished waits for it

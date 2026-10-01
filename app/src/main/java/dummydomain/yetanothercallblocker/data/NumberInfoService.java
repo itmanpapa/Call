@@ -63,7 +63,16 @@ public class NumberInfoService {
     }
 
     public NumberInfo getNumberInfo(String number, String countryCode, boolean full) {
-        LOG.debug("getNumberInfo({}, {}, {}) started", number, countryCode, full);
+        return getNumberInfo(number, countryCode, full, false);
+    }
+
+    /**
+     * @param allowOnline whether enabled online sources may be queried (blocks for up to
+     *                    the online timeout); only for the incoming call path, not for lists
+     */
+    public NumberInfo getNumberInfo(String number, String countryCode, boolean full,
+                                    boolean allowOnline) {
+        LOG.debug("getNumberInfo({}, {}, {}, {}) started", number, countryCode, full, allowOnline);
 
         NumberInfo numberInfo = new NumberInfo();
         numberInfo.number = number;
@@ -137,6 +146,11 @@ public class NumberInfoService {
             applyListedNumbers(numberInfo, normalizedNumber);
         }
 
+        if (allowOnline && numberInfo.rating != NumberInfo.Rating.NEGATIVE
+                && numberInfo.contactItem == null) {
+            applyOnlineSources(numberInfo, normalizedNumber);
+        }
+
         if (blacklistService != null && settings.getBlacklistIsNotEmpty()) {
             // avoid loading blacklist if blocking for other reason
             if (full || getBlockingReason(numberInfo) == null) {
@@ -166,6 +180,27 @@ public class NumberInfoService {
             LOG.warn("applyListedNumbers() lookup failed", e);
             return;
         }
+        applySourceResult(numberInfo, result);
+    }
+
+    /**
+     * Consults the enabled online sources (PhoneBlock); waits at most the online timeout.
+     */
+    protected void applyOnlineSources(NumberInfo numberInfo, String normalizedNumber) {
+        if (sourcesManager == null || TextUtils.isEmpty(normalizedNumber)) return;
+
+        ProviderResult result;
+        try {
+            if (!sourcesManager.hasEnabledOnlineSources()) return;
+            result = sourcesManager.lookupOnline(normalizedNumber);
+        } catch (Exception e) {
+            LOG.warn("applyOnlineSources() lookup failed", e);
+            return;
+        }
+        applySourceResult(numberInfo, result);
+    }
+
+    private void applySourceResult(NumberInfo numberInfo, ProviderResult result) {
         if (result == null || result.getRating() != ProviderResult.Rating.NEGATIVE) return;
 
         numberInfo.rating = NumberInfo.Rating.NEGATIVE;
@@ -178,7 +213,7 @@ public class NumberInfoService {
             numberInfo.name = result.getName();
         }
 
-        LOG.trace("applyListedNumbers() source={}, category={}",
+        LOG.trace("applySourceResult() source={}, category={}",
                 numberInfo.sourceId, numberInfo.sourceCategory);
     }
 

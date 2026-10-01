@@ -307,6 +307,38 @@
         <item quantity="other">%d numbers</item>
     </plurals>
 
+    <!-- PhoneBlock -->
+    <string name="phoneblock_menu">PhoneBlock</string>
+    <string name="phoneblock_title">PhoneBlock</string>
+    <string name="phoneblock_dialog_message">PhoneBlock is a free community spam list from Germany (phoneblock.net). Register for free, create an API key on the PhoneBlock settings page and enter it here. The list is downloaded once and then updated daily; incoming numbers are checked offline.</string>
+    <string name="phoneblock_get_token">Get API key</string>
+    <string name="phoneblock_token_hint">API key</string>
+    <string name="phoneblock_min_votes">Block numbers with at least this many votes:</string>
+    <string name="phoneblock_terms">Data: PhoneBlock community, free of charge. Use at your own risk; see the terms of use on phoneblock.net.</string>
+    <string name="phoneblock_save">Save</string>
+    <string name="phoneblock_sync_now">Sync now</string>
+    <string name="phoneblock_status_never">Not synchronized yet</string>
+    <string name="phoneblock_status">Last sync: %1$s · %2$d numbers</string>
+    <string name="phoneblock_token_required">Enter an API key first.</string>
+    <string name="phoneblock_sync_result_title">PhoneBlock sync finished</string>
+    <string name="phoneblock_sync_result_full">Full list downloaded: %1$d numbers.\nBlocked (at least %2$d votes): %3$d</string>
+    <string name="phoneblock_sync_result_incremental">Added or changed: %1$d, removed: %2$d.\nBlocked (at least %3$d votes): %4$d of %5$d</string>
+    <string name="phoneblock_sync_skipped">The list was synchronized less than %d minutes ago. Please try again later.</string>
+    <string name="phoneblock_sync_failed_title">PhoneBlock sync failed</string>
+    <string name="phoneblock_sync_auth_error">The API key was rejected. Check the key or create a new one on phoneblock.net.</string>
+    <string name="phoneblock_sync_rate_limited">The server is busy or asks to slow down. Please try again later.</string>
+    <string name="phoneblock_sync_error">Error: %s</string>
+    <string name="phoneblock_no_browser">No browser was found. Open %s manually.</string>
+    <string name="phoneblock_no_token">API key not set</string>
+    <string name="phoneblock_online_details">Checks unknown callers online; only a hash of the number is sent</string>
+    <string name="source_phoneblock_online_name">PhoneBlock (online check)</string>
+    <string name="source_kind_synchronized">Synchronized</string>
+    <string name="phoneblock_rating_b_missed">Unwanted call</string>
+    <string name="phoneblock_rating_c_ping">Ping call</string>
+    <string name="phoneblock_rating_d_poll">Poll</string>
+    <string name="phoneblock_rating_e_advertising">Advertising</string>
+    <string name="phoneblock_rating_f_gamble">Gambling or prize notification</string>
+    <string name="phoneblock_rating_g_fraud">Fraud</string>
     <!-- Data sources (not translatable formats) -->
     <string name="info_source_with_category" translatable="false">%1$s: %2$s</string>
     <string name="info_description_with_source" translatable="false">%1$s · %2$s</string>
