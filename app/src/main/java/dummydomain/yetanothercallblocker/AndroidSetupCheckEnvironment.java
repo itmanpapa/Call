@@ -72,6 +72,7 @@ class AndroidSetupCheckEnvironment implements SetupCheckEnvironment {
 
     @Override
     public String getAvailableAppUpdate() {
+        if (!AppUpdateManager.isSelfUpdateEnabled()) return null;
         try {
             return AppUpdateManager.get(context).getKnownUpdate();
         } catch (Exception e) {

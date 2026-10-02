@@ -1,33 +1,31 @@
-A simple call blocking application that will help you avoid answering unwanted calls
-using a crowdsourced phone number database.
+CallGuard blocks spam and scam calls and tells you who is calling before you answer. It is a modernized fork of <a href="https://gitlab.com/xynngh/YetAnotherCallBlocker">Yet Another Call Blocker</a> by xynngh, with a new Material 3 interface and additional data sources, especially for Germany.
 
-<b>Features:</b>
+<b>Features</b>
 
-* Uses offline database.
-* Blocks calls with negative rating automatically (option).
-* Local blacklist with wildcard support.
-* Displays a notification with phone number summary (rating, reviews count, category) during incoming calls (option).
-* Automatic incremental/delta database updates (option).
-* You can view online reviews for caller's number (provided by 3rd party service).
-* "Advanced call blocking mode" for blocking calls on Android 7+ before the phone starts ringing (needs to be manually enabled in app Settings).
+* <b>Call screening:</b> unwanted calls are rejected before the phone rings (as the "Caller ID app" on Android 10+, as the default phone app on Android 8–9).
+* <b>Offline number database:</b> the crowdsourced database of Yet Another Call Blocker with ratings and categories, updated automatically with small delta updates.
+* <b>PhoneBlock:</b> the community blocklist of phoneblock.net (needs your own free PhoneBlock account key); you can also report spam numbers to it.
+* <b>Bundesnetzagentur:</b> the official list of numbers the German Federal Network Agency took action against, downloaded and updated automatically.
+* <b>Blocking rules:</b> number prefixes, hidden and foreign numbers, premium-rate numbers (0900/0137/0180), letting repeated calls through, time schedules. Ready-made rules in one tap.
+* <b>Caller-ID card:</b> who is calling, with rating and category, right over the incoming call screen, with "Block" and "Not spam" buttons.
+* <b>Your own marks:</b> mark numbers as spam or not spam; your mark takes priority over ratings, lists and rules. Local blacklist with wildcards.
+* <b>Statistics:</b> blocked calls per day, reason and source.
+* <b>Setup check:</b> shows what keeps the protection from working fully and how to fix it.
+* <b>Backup:</b> export and import of settings, blacklist, rules and marks.
+* Number lookup, call log with ratings, light and dark theme, 27 languages.
 
-<b>How to use:</b>
+No ads, no trackers, no analytics.
 
-* Install and launch the app.
-* The option to show caller info notifications is enabled by default, so the app will ask for phone-related permissions.
-* At first start, the app will suggest to download main database which is required for most of the functions. Simply confirm the download.
-* Check the "Auto-update database" checkbox in the menu (recommended) to automatically receive daily DB updates (these are incremental/delta updates, so they consume very little traffic).
-* Check the "Block by rating" checkbox to block calls with negative rating automatically.
-* You can also check the "Use contacts" checkbox if you want your contacts not to be treated as unknown callers.
-* After these steps everything should just work (but you can always find more options in Settings). Enjoy!
+<b>Network services</b>
 
-See <a href="https://gitlab.com/xynngh/YetAnotherCallBlocker/-/blob/master/FAQ.md">frequently asked questions</a> to learn more.
+Some functions use third-party services that are not free software and are not run by this project (Anti-Feature "Non-Free Network Services"):
 
-The main phone number database is downloaded from <a href="https://gitlab.com/xynngh/YetAnotherCallBlocker_data">a gitlab repository</a>.
-<b>Database updates and detailed review queries are performed using 3rd-party servers.</b>
-No user-identifiable information is sent (except for the phone number
-the detailed reviews are loaded for).
+* updates of the YACB database and detailed online reviews come from the servers of the "Should I Answer?" service;
+* PhoneBlock (phoneblock.net) – only if you enable it and enter your account key;
+* the Bundesnetzagentur list is downloaded from the bundesnetzagentur.de website.
 
-Yet Another Call Blocker is still under development. Any help is welcome.
+Online reviews are loaded only when you ask for them (the number is sent); the PhoneBlock online check sends only a hash of the number. Contacts and the call history are never uploaded. Each source can be turned off in "Databases".
 
-''NonFreeNet:'' the 3rd-party service is not open source.
+<b>Credits</b>
+
+Based on Yet Another Call Blocker by xynngh and the LibPhoneNumberInfo library. License: AGPL-3.0-only. Source code: <a href="https://github.com/itmanpapa/Call">github.com/itmanpapa/Call</a>

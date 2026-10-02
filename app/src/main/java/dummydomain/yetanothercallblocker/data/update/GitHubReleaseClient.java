@@ -22,8 +22,10 @@ import dummydomain.yetanothercallblocker.data.sources.SimpleJsonReader;
  * ({@code GET /repos/{owner}/{repo}/releases/latest}, which returns the most recent
  * published release that is neither a draft nor a pre-release).
  *
- * <p>Each release has one asset {@code callguard-vX.Y.Z.apk}; if the name differs,
- * the first {@code .apk} asset is used. Unauthenticated requests are limited to
+ * <p>Each release has the asset {@code callguard-vX.Y.Z.apk}; if the name differs,
+ * the first {@code .apk} asset is used. The APK of the F-Droid flavor (without the
+ * self-updater, {@code callguard_fdroid-vX.Y.Z.apk}) is never used: installing it
+ * would end the updates. Unauthenticated requests are limited to
  * 60 per hour per IP address, which is plenty for a daily check.</p>
  *
  * <p>Plain Java; the transport is pluggable for tests. Thread-safe if the transport is.</p>
@@ -42,6 +44,8 @@ public class GitHubReleaseClient {
     /** Prefix and suffix of the APK asset name. */
     static final String APK_PREFIX = "callguard-";
     static final String APK_SUFFIX = ".apk";
+    /** Part of the name of the F-Droid flavor's APK asset, which is skipped. */
+    static final String FDROID_MARKER = "fdroid";
 
     private static final int MAX_ERROR_BODY = 200;
 
@@ -187,7 +191,7 @@ public class GitHubReleaseClient {
             if (state != null && !"uploaded".equals(state)) continue;
 
             String lower = name.toLowerCase(Locale.ROOT);
-            if (!lower.endsWith(APK_SUFFIX)) continue;
+            if (!lower.endsWith(APK_SUFFIX) || lower.contains(FDROID_MARKER)) continue;
             if (lower.startsWith(APK_PREFIX)) return asset;
             if (fallback == null) fallback = asset;
         }

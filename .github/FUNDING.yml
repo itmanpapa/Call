@@ -1,0 +1,18 @@
+# "Sponsor" button on GitHub and the donation link that F-Droid / IzzyOnDroid accept as
+# confirmed by the developer. Everything is commented out until there is an account.
+#
+# To enable donations:
+# 1. Create an account, e.g. https://buymeacoffee.com (or ko-fi.com, liberapay.com).
+# 2. Uncomment the matching line below and put in your user name.
+# 3. Put the same full URL into app/src/main/res/values/donation.xml (donation_url):
+#    the app then shows the "Buy me a coffee" button on the "About" screen.
+# 4. Add the URL to the F-Droid metadata (Donate:, or Liberapay:/OpenCollective:),
+#    see docs/fdroid/de.itmanpapa.callblocker.yml.
+#
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+
+# buy_me_a_coffee: your-name
+# ko_fi: your-name
+# liberapay: your-name
+# github: itmanpapa
+# custom: ["https://example.org/donate"]

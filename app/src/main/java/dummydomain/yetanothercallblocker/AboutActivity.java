@@ -1,19 +1,23 @@
 package dummydomain.yetanothercallblocker;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 
 import java.util.Date;
 
 /**
- * "About": app name, version, the update check, license and the links to the fork and
- * the original project. The status of the databases is shown on the "Databases" screen.
+ * "About": app name, version, the update check (not in the F-Droid build), license, the
+ * links to the fork and the original project and the optional donation button. The
+ * status of the databases is shown on the "Databases" screen.
  */
 public class AboutActivity extends BaseActivity {
 
@@ -30,8 +34,23 @@ public class AboutActivity extends BaseActivity {
         setLink(R.id.about_fork, link(getString(R.string.url_fork_repo),
                 getString(R.string.about_fork_link)));
 
-        findViewById(R.id.about_check_updates).setOnClickListener(v ->
-                startActivity(UpdateActivity.getIntent(this)));
+        View checkUpdates = findViewById(R.id.about_check_updates);
+        if (AppUpdateManager.isSelfUpdateEnabled()) {
+            checkUpdates.setOnClickListener(v -> startActivity(UpdateActivity.getIntent(this)));
+        } else {
+            // the F-Droid build is updated by its app store
+            checkUpdates.setVisibility(View.GONE);
+        }
+
+        // shown only when a donation link is configured (res/values/donation.xml)
+        String donationUrl = getString(R.string.donation_url).trim();
+        View donate = findViewById(R.id.about_donate);
+        if (donationUrl.isEmpty()) {
+            donate.setVisibility(View.GONE);
+        } else {
+            donate.setVisibility(View.VISIBLE);
+            donate.setOnClickListener(v -> openUrl(donationUrl));
+        }
     }
 
     @Override
@@ -43,6 +62,10 @@ public class AboutActivity extends BaseActivity {
     /** Shows the result of the last update check, if there was one. */
     private void updateUpdateStatus() {
         TextView status = findViewById(R.id.about_update_status);
+        if (!AppUpdateManager.isSelfUpdateEnabled()) {
+            status.setVisibility(View.GONE);
+            return;
+        }
         AppUpdateManager manager = AppUpdateManager.get(this);
 
         String update = manager.getKnownUpdate();
@@ -57,6 +80,12 @@ public class AboutActivity extends BaseActivity {
             return;
         }
         status.setVisibility(View.VISIBLE);
+    }
+
+    private void openUrl(String url) {
+        if (!IntentHelper.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(url)))) {
+            Toast.makeText(this, R.string.update_no_browser, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static String link(String url, String text) {

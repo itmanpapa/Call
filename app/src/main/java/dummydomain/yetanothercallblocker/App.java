@@ -78,7 +78,7 @@ public class App extends Application {
         }
 
         try {
-            // daily check for a new app release (never in debug builds)
+            // daily check for a new app release (never in debug builds and the F-Droid build)
             if (SystemUtils.isUserUnlocked(this)) {
                 UpdateCheckWorker.updateSchedule(this);
             }

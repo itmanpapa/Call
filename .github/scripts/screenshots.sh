@@ -12,7 +12,7 @@ adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 0
 
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r app/build/outputs/apk/github/debug/app-github-debug.apk
 
 for p in READ_PHONE_STATE READ_CALL_LOG WRITE_CALL_LOG CALL_PHONE ANSWER_PHONE_CALLS READ_CONTACTS POST_NOTIFICATIONS; do
     adb shell pm grant "$PKG" "android.permission.$p" 2>/dev/null || true

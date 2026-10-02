@@ -25,23 +25,25 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v5
 
-      - name: Build debug APK
-        run: ./gradlew --no-daemon assembleDebug
+      # both flavors: "github" (our releases, with the self-updater) and "fdroid"
+      # (F-Droid/IzzyOnDroid, without it)
+      - name: Build debug APKs
+        run: ./gradlew --no-daemon assembleGithubDebug assembleFdroidDebug
 
       - name: Unit tests
-        run: ./gradlew --no-daemon testDebugUnitTest
+        run: ./gradlew --no-daemon testGithubDebugUnitTest
 
       - name: Lint
-        run: ./gradlew --no-daemon lintDebug
+        run: ./gradlew --no-daemon lintGithubDebug lintFdroidDebug
 
       - uses: actions/upload-artifact@v5
         with:
           name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/*/debug/*.apk
 
       - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: lint-report
-          path: app/build/reports/lint-results-debug.html
+          path: app/build/reports/lint-results-*Debug.html
           if-no-files-found: ignore

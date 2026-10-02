@@ -74,6 +74,11 @@ public class UpdateActivity extends BaseActivity implements AppUpdateManager.Lis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!AppUpdateManager.isSelfUpdateEnabled()) {
+            // the F-Droid build has no self-updater; nothing links here
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_update);
         setTitle(R.string.update_screen_title);
 

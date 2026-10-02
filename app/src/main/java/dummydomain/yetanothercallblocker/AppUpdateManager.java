@@ -145,9 +145,20 @@ public final class AppUpdateManager {
         return isAutoCheckAllowed() && isCheckEnabled();
     }
 
-    /** @return false for debug builds: they are never checked automatically */
+    /**
+     * @return false for the "fdroid" flavor: it is updated by its app store and never
+     * checks for, downloads or installs updates itself (all update UI is hidden)
+     */
+    public static boolean isSelfUpdateEnabled() {
+        return BuildConfig.SELF_UPDATE;
+    }
+
+    /**
+     * @return false for debug builds (they are never checked automatically) and for
+     * builds without the self-updater
+     */
     public static boolean isAutoCheckAllowed() {
-        return !BuildConfig.DEBUG;
+        return isSelfUpdateEnabled() && !BuildConfig.DEBUG;
     }
 
     public long getLastCheckTime() {

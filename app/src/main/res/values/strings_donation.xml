@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the "Buy me a coffee" button on the "About" screen, shown only when
+         donation_url (values/donation.xml) is set -->
+    <string name="donation_button">☕ Buy me a coffee</string>
+</resources>
