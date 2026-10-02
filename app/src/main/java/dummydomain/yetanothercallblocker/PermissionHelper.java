@@ -43,6 +43,7 @@ public class PermissionHelper {
 
     private static final int REQUEST_CODE_PERMISSIONS = 128;
     private static final int REQUEST_CODE_DEFAULT_DIALER = 129;
+    private static final int REQUEST_CODE_SMS = 130;
 
     private static final Logger LOG = LoggerFactory.getLogger(PermissionHelper.class);
 
@@ -183,6 +184,44 @@ public class PermissionHelper {
 
     public static boolean hasContactsPermission(Context context) {
         return hasPermission(context, Manifest.permission.READ_CONTACTS);
+    }
+
+    /** @return whether the app may receive SMS (for the spam SMS warnings) */
+    public static boolean hasSmsPermission(Context context) {
+        return hasPermission(context, Manifest.permission.RECEIVE_SMS);
+    }
+
+    /** Asks for RECEIVE_SMS unless granted; the result goes to {@link #handleSmsPermissionResult}. */
+    public static void requestSmsPermission(Fragment fragment) {
+        if (hasSmsPermission(fragment.requireContext())) return;
+        fragment.requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS},
+                REQUEST_CODE_SMS);
+    }
+
+    /** Asks for RECEIVE_SMS unless granted; the result goes to {@link #handleSmsPermissionResult}. */
+    public static void requestSmsPermission(Activity activity) {
+        if (hasSmsPermission(activity)) return;
+        ActivityCompat.requestPermissions(activity,
+                new String[]{Manifest.permission.RECEIVE_SMS}, REQUEST_CODE_SMS);
+    }
+
+    /**
+     * Shows a hint if the SMS permission was denied.
+     *
+     * @return whether the result belongs to {@link #requestSmsPermission}
+     */
+    public static boolean handleSmsPermissionResult(@NonNull Context context, int requestCode,
+                                                    @NonNull String[] permissions,
+                                                    @NonNull int[] grantResults) {
+        if (requestCode != REQUEST_CODE_SMS) return false;
+
+        boolean granted = grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        LOG.debug("handleSmsPermissionResult() granted={}", granted);
+        if (!granted) {
+            Toast.makeText(context, R.string.sms_permission_denied, Toast.LENGTH_LONG).show();
+        }
+        return true;
     }
 
     public static boolean hasPermission(Context context, String permission) {

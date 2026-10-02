@@ -112,6 +112,22 @@
         app:title="@string/use_monitoring_service" />
 
     <PreferenceCategory
+        app:key="categorySms"
+        app:title="@string/sms_category">
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="smsWarnings"
+            app:summary="@string/sms_warnings_pref_summary"
+            app:title="@string/sms_warnings_pref" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:dependency="smsWarnings"
+            app:key="smsLinkWarnings"
+            app:summary="@string/sms_link_warnings_pref_summary"
+            app:title="@string/sms_link_warnings_pref" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:key="categoryNotifications"
         app:title="@string/notification_settings">
         <Preference

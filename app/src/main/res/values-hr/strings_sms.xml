@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Provjeravaj pošiljatelje SMS-a</string>
+    <string name="sms_warnings_pref_summary">Upozori na SMS-ove s brojeva poznatih kao neželjeni. Aplikacija samo prikazuje obavijest: ne može blokirati ni brisati poruke. Tekst poruka se nigdje ne sprema niti šalje.</string>
+    <string name="sms_link_warnings_pref">Upozori na sumnjive poveznice</string>
+    <string name="sms_link_warnings_pref_summary">Upozori i na poruke sa skraćenim poveznicama (bit.ly i slično) od nepoznatih pošiljatelja. Tekst se provjerava samo na uređaju.</string>
+    <string name="sms_permission_denied">Bez dopuštenja za SMS aplikacija ne može provjeravati pošiljatelje</string>
+    <string name="sms_warning_channel">Upozorenja za SMS</string>
+    <string name="sms_warning_channel_description">Poruke od pošiljatelja poznatih kao neželjeni</string>
+    <string name="sms_warning_title">Mogući neželjeni SMS od %s</string>
+    <string name="sms_warning_link_hint">Poruka sadrži poveznicu: ne otvarajte je</string>
+    <string name="sms_warning_source_community">Baza zajednice</string>
+    <string name="sms_warning_action_details">Pojedinosti</string>
+    <string name="sms_link_warning_title">Poruka s poveznicom od %s</string>
+    <string name="sms_link_warning_text">Nepoznat pošiljatelj: budite oprezni i ne otvarajte poveznicu</string>
+    <string name="sms_link_warning_shortener">Skraćena poveznica (%s) skriva pravu adresu</string>
+    <string name="setup_check_sms_active">Pošiljatelji SMS-a se provjeravaju</string>
+    <string name="setup_check_sms_active_text">Poruke s brojeva poznatih kao neželjeni prikazuju upozorenje. SMS se ne može blokirati: to može samo zadana aplikacija za SMS.</string>
+    <string name="setup_check_sms_permission">Provjera SMS-a nema dopuštenje</string>
+    <string name="setup_check_sms_permission_text">Dopustite aplikaciji primanje SMS-a, inače ne može upozoravati na neželjene poruke.</string>
+</resources>

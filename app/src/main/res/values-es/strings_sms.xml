@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Comprobar remitentes de SMS</string>
+    <string name="sms_warnings_pref_summary">Avisar de SMS de números conocidos como spam. La aplicación solo muestra una notificación: no puede bloquear ni borrar mensajes. El texto de los mensajes no se guarda ni se envía a ningún sitio.</string>
+    <string name="sms_link_warnings_pref">Avisar de enlaces sospechosos</string>
+    <string name="sms_link_warnings_pref_summary">Avisar también de mensajes con enlaces acortados (bit.ly y similares) de remitentes desconocidos. El texto solo se comprueba en el dispositivo.</string>
+    <string name="sms_permission_denied">Sin el permiso de SMS la aplicación no puede comprobar los remitentes</string>
+    <string name="sms_warning_channel">Avisos de SMS</string>
+    <string name="sms_warning_channel_description">Mensajes de remitentes conocidos como spam</string>
+    <string name="sms_warning_title">Posible SMS de spam de %s</string>
+    <string name="sms_warning_link_hint">El mensaje contiene un enlace: no lo abras</string>
+    <string name="sms_warning_source_community">Base de datos de la comunidad</string>
+    <string name="sms_warning_action_details">Detalles</string>
+    <string name="sms_link_warning_title">Mensaje con enlace de %s</string>
+    <string name="sms_link_warning_text">Remitente desconocido: ten cuidado y no abras el enlace</string>
+    <string name="sms_link_warning_shortener">El enlace acortado (%s) oculta la dirección real</string>
+    <string name="setup_check_sms_active">Se comprueban los remitentes de SMS</string>
+    <string name="setup_check_sms_active_text">Los mensajes de números conocidos como spam muestran un aviso. Los SMS no se pueden bloquear: solo puede hacerlo la aplicación de SMS predeterminada.</string>
+    <string name="setup_check_sms_permission">Comprobación de SMS sin permiso</string>
+    <string name="setup_check_sms_permission_text">Permite que la aplicación reciba SMS; de lo contrario no podrá avisar de mensajes de spam.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Controlla i mittenti degli SMS</string>
+    <string name="sms_warnings_pref_summary">Avvisa degli SMS da numeri noti come spam. L’app mostra solo una notifica: non può bloccare né eliminare i messaggi. Il testo dei messaggi non viene salvato né inviato.</string>
+    <string name="sms_link_warnings_pref">Avvisa dei link sospetti</string>
+    <string name="sms_link_warnings_pref_summary">Avvisa anche dei messaggi con link abbreviati (bit.ly e simili) da mittenti sconosciuti. Il testo viene controllato solo sul dispositivo.</string>
+    <string name="sms_permission_denied">Senza l’autorizzazione SMS l’app non può controllare i mittenti</string>
+    <string name="sms_warning_channel">Avvisi SMS</string>
+    <string name="sms_warning_channel_description">Messaggi da mittenti noti come spam</string>
+    <string name="sms_warning_title">Possibile SMS di spam da %s</string>
+    <string name="sms_warning_link_hint">Il messaggio contiene un link: non aprirlo</string>
+    <string name="sms_warning_source_community">Database della comunità</string>
+    <string name="sms_warning_action_details">Dettagli</string>
+    <string name="sms_link_warning_title">Messaggio con link da %s</string>
+    <string name="sms_link_warning_text">Mittente sconosciuto: fai attenzione e non aprire il link</string>
+    <string name="sms_link_warning_shortener">Il link abbreviato (%s) nasconde l’indirizzo reale</string>
+    <string name="setup_check_sms_active">I mittenti degli SMS vengono controllati</string>
+    <string name="setup_check_sms_active_text">I messaggi da numeri noti come spam mostrano un avviso. Gli SMS non possono essere bloccati: può farlo solo l’app SMS predefinita.</string>
+    <string name="setup_check_sms_permission">Controllo SMS senza autorizzazione</string>
+    <string name="setup_check_sms_permission_text">Consenti all’app di ricevere SMS, altrimenti non potrà avvisare dei messaggi di spam.</string>
+</resources>

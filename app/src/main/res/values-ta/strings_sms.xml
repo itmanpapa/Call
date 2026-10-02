@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">குறுஞ்செய்தி</string>
+    <string name="sms_warnings_pref">குறுஞ்செய்தி அனுப்புநர்களைச் சரிபார்</string>
+    <string name="sms_warnings_pref_summary">ஸ்பேம் என அறியப்பட்ட எண்களிலிருந்து வரும் குறுஞ்செய்திகள் பற்றி எச்சரி. செயலி அறிவிப்பை மட்டுமே காட்டும்: செய்திகளைத் தடுக்கவோ நீக்கவோ முடியாது. செய்தி உரைகள் எங்கும் சேமிக்கப்படுவதோ அனுப்பப்படுவதோ இல்லை.</string>
+    <string name="sms_link_warnings_pref">சந்தேகத்திற்குரிய இணைப்புகள் பற்றி எச்சரி</string>
+    <string name="sms_link_warnings_pref_summary">அறியாத அனுப்புநர்களிடமிருந்து சுருக்கிய இணைப்புகள் (bit.ly போன்றவை) உள்ள செய்திகள் பற்றியும் எச்சரி. உரை சாதனத்தில் மட்டுமே சரிபார்க்கப்படும்.</string>
+    <string name="sms_permission_denied">குறுஞ்செய்தி அனுமதி இல்லாமல் செயலியால் அனுப்புநர்களைச் சரிபார்க்க முடியாது</string>
+    <string name="sms_warning_channel">குறுஞ்செய்தி எச்சரிக்கைகள்</string>
+    <string name="sms_warning_channel_description">ஸ்பேம் என அறியப்பட்ட அனுப்புநர்களின் செய்திகள்</string>
+    <string name="sms_warning_title">%s இடமிருந்து ஸ்பேம் குறுஞ்செய்தியாக இருக்கலாம்</string>
+    <string name="sms_warning_link_hint">செய்தியில் இணைப்பு உள்ளது: அதைத் திறக்க வேண்டாம்</string>
+    <string name="sms_warning_source_community">சமூகத் தரவுத்தளம்</string>
+    <string name="sms_warning_action_details">விவரங்கள்</string>
+    <string name="sms_link_warning_title">%s இடமிருந்து இணைப்புடன் செய்தி</string>
+    <string name="sms_link_warning_text">அறியாத அனுப்புநர்: கவனமாக இருங்கள், இணைப்பைத் திறக்க வேண்டாம்</string>
+    <string name="sms_link_warning_shortener">சுருக்கிய இணைப்பு (%s) உண்மையான முகவரியை மறைக்கிறது</string>
+    <string name="setup_check_sms_active">குறுஞ்செய்தி அனுப்புநர்கள் சரிபார்க்கப்படுகின்றனர்</string>
+    <string name="setup_check_sms_active_text">ஸ்பேம் என அறியப்பட்ட எண்களின் செய்திகளுக்கு எச்சரிக்கை காட்டப்படும். குறுஞ்செய்திகளைத் தடுக்க முடியாது: இயல்புநிலை குறுஞ்செய்தி செயலியால் மட்டுமே முடியும்.</string>
+    <string name="setup_check_sms_permission">குறுஞ்செய்தி சரிபார்ப்புக்கு அனுமதி இல்லை</string>
+    <string name="setup_check_sms_permission_text">குறுஞ்செய்திகளைப் பெற செயலியை அனுமதியுங்கள், இல்லையெனில் ஸ்பேம் செய்திகள் பற்றி எச்சரிக்க முடியாது.</string>
+</resources>

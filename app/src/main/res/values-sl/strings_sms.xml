@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Preverjaj pošiljatelje SMS</string>
+    <string name="sms_warnings_pref_summary">Opozori na SMS-e s številk, znanih kot neželene. Aplikacija le prikaže obvestilo: sporočil ne more blokirati ali izbrisati. Besedilo sporočil se nikjer ne shrani in ne pošlje.</string>
+    <string name="sms_link_warnings_pref">Opozori na sumljive povezave</string>
+    <string name="sms_link_warnings_pref_summary">Opozori tudi na sporočila s skrajšanimi povezavami (bit.ly in podobno) neznanih pošiljateljev. Besedilo se preveri le v napravi.</string>
+    <string name="sms_permission_denied">Brez dovoljenja za SMS aplikacija ne more preverjati pošiljateljev</string>
+    <string name="sms_warning_channel">Opozorila za SMS</string>
+    <string name="sms_warning_channel_description">Sporočila pošiljateljev, znanih kot neželeni</string>
+    <string name="sms_warning_title">Morebitni neželeni SMS od %s</string>
+    <string name="sms_warning_link_hint">Sporočilo vsebuje povezavo: ne odpirajte je</string>
+    <string name="sms_warning_source_community">Zbirka skupnosti</string>
+    <string name="sms_warning_action_details">Podrobnosti</string>
+    <string name="sms_link_warning_title">Sporočilo s povezavo od %s</string>
+    <string name="sms_link_warning_text">Neznan pošiljatelj: bodite previdni in ne odpirajte povezave</string>
+    <string name="sms_link_warning_shortener">Skrajšana povezava (%s) skriva pravi naslov</string>
+    <string name="setup_check_sms_active">Pošiljatelji SMS se preverjajo</string>
+    <string name="setup_check_sms_active_text">Sporočila s številk, znanih kot neželene, prikažejo opozorilo. SMS-ov ni mogoče blokirati: to lahko stori le privzeta aplikacija za SMS.</string>
+    <string name="setup_check_sms_permission">Preverjanje SMS nima dovoljenja</string>
+    <string name="setup_check_sms_permission_text">Dovolite aplikaciji prejemanje SMS, sicer ne more opozarjati na neželena sporočila.</string>
+</resources>

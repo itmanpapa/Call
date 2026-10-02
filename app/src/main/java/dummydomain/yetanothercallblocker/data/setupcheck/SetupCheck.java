@@ -128,6 +128,9 @@ public final class SetupCheck {
                     Reason.CONTACTS_NEVER_BLOCKED, Action.OPEN_SETTINGS));
         }
 
+        CheckItem sms = checkSmsWarnings(env);
+        if (sms != null) items.add(sms);
+
         items.addAll(checkSources(env));
 
         CheckItem update = checkAppUpdate(env);
@@ -261,6 +264,20 @@ public final class SetupCheck {
         }
         return new CheckItem(Type.BATTERY, Status.INFO, Reason.BATTERY_OPTIMIZED,
                 Action.OPEN_BATTERY_SETTINGS);
+    }
+
+    /**
+     * @return the SMS warnings item, or null if the feature is off. Only a warning:
+     * SMS are never blocked, calls are protected regardless.
+     */
+    static CheckItem checkSmsWarnings(SetupCheckEnvironment env) {
+        if (!env.isSmsWarningsEnabled()) return null;
+        if (!env.hasSmsPermission()) {
+            return new CheckItem(Type.SMS_WARNINGS, Status.WARNING,
+                    Reason.SMS_PERMISSION_MISSING, Action.REQUEST_SMS_PERMISSION);
+        }
+        return new CheckItem(Type.SMS_WARNINGS, Status.INFO, Reason.SMS_WARNINGS_ACTIVE,
+                Action.NONE);
     }
 
     /** @return the "update available" hint, or null if no newer version is known */

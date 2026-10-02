@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">SMS-Absender prüfen</string>
+    <string name="sms_warnings_pref_summary">Vor SMS von Nummern warnen, die als Spam bekannt sind. Die App zeigt nur eine Benachrichtigung: Sie kann Nachrichten weder blockieren noch löschen. Nachrichtentexte werden nicht gespeichert oder weitergegeben.</string>
+    <string name="sms_link_warnings_pref">Vor verdächtigen Links warnen</string>
+    <string name="sms_link_warnings_pref_summary">Auch vor Nachrichten mit Kurzlinks (bit.ly und ähnliche) von unbekannten Absendern warnen. Der Text wird nur auf diesem Gerät geprüft.</string>
+    <string name="sms_permission_denied">Ohne SMS-Berechtigung kann die App die Absender nicht prüfen</string>
+    <string name="sms_warning_channel">SMS-Warnungen</string>
+    <string name="sms_warning_channel_description">Nachrichten von Absendern, die als Spam bekannt sind</string>
+    <string name="sms_warning_title">Mögliche Spam-SMS von %s</string>
+    <string name="sms_warning_link_hint">Die Nachricht enthält einen Link: Öffnen Sie ihn nicht</string>
+    <string name="sms_warning_source_community">Community-Datenbank</string>
+    <string name="sms_warning_action_details">Details</string>
+    <string name="sms_link_warning_title">Nachricht mit Link von %s</string>
+    <string name="sms_link_warning_text">Unbekannter Absender: Vorsicht, öffnen Sie den Link nicht</string>
+    <string name="sms_link_warning_shortener">Der Kurzlink (%s) verbirgt die echte Adresse</string>
+    <string name="setup_check_sms_active">SMS-Absender werden geprüft</string>
+    <string name="setup_check_sms_active_text">Bei Nachrichten von Nummern, die als Spam bekannt sind, erscheint eine Warnung. SMS können nicht blockiert werden: Das kann nur die Standard-SMS-App.</string>
+    <string name="setup_check_sms_permission">SMS-Prüfung ohne Berechtigung</string>
+    <string name="setup_check_sms_permission_text">Erlauben Sie der App, SMS zu empfangen, sonst kann sie nicht vor Spam-Nachrichten warnen.</string>
+</resources>

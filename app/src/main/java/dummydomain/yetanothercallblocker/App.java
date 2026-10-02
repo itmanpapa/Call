@@ -88,6 +88,9 @@ public class App extends Application {
 
         setUiMode(settings.getUiMode());
 
+        // the SMS receiver follows the setting (it may have been restored from a backup)
+        SmsWarnings.syncReceiverState(this, settings.getSmsWarnings());
+
         if (settings.getUseMonitoringService()) {
             CallMonitoringService.start(this);
         }

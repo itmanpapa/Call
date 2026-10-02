@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Проверять отправителей SMS</string>
+    <string name="sms_warnings_pref_summary">Предупреждать о SMS с номеров, известных как спам. Приложение только показывает уведомление: блокировать или удалять сообщения оно не может. Тексты сообщений никуда не сохраняются и не отправляются.</string>
+    <string name="sms_link_warnings_pref">Предупреждать о подозрительных ссылках</string>
+    <string name="sms_link_warnings_pref_summary">Также предупреждать о сообщениях с короткими ссылками (bit.ly и подобные) от неизвестных отправителей. Текст проверяется только на устройстве.</string>
+    <string name="sms_permission_denied">Без разрешения на SMS приложение не может проверять отправителей</string>
+    <string name="sms_warning_channel">Предупреждения о SMS</string>
+    <string name="sms_warning_channel_description">Сообщения от отправителей, известных как спам</string>
+    <string name="sms_warning_title">Возможный спам-SMS от %s</string>
+    <string name="sms_warning_link_hint">В сообщении есть ссылка: не открывайте её</string>
+    <string name="sms_warning_source_community">База сообщества</string>
+    <string name="sms_warning_action_details">Подробнее</string>
+    <string name="sms_link_warning_title">Сообщение со ссылкой от %s</string>
+    <string name="sms_link_warning_text">Неизвестный отправитель: будьте осторожны и не открывайте ссылку</string>
+    <string name="sms_link_warning_shortener">Короткая ссылка (%s) скрывает настоящий адрес</string>
+    <string name="setup_check_sms_active">Отправители SMS проверяются</string>
+    <string name="setup_check_sms_active_text">О сообщениях с номеров, известных как спам, появится предупреждение. Заблокировать SMS нельзя: это может только приложение для SMS по умолчанию.</string>
+    <string name="setup_check_sms_permission">Нет разрешения на проверку SMS</string>
+    <string name="setup_check_sms_permission_text">Разрешите приложению получать SMS, иначе оно не сможет предупреждать о спам-сообщениях.</string>
+</resources>

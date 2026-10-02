@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">短信</string>
+    <string name="sms_warnings_pref">检查短信发送者</string>
+    <string name="sms_warnings_pref_summary">收到来自已知骚扰号码的短信时发出警告。本应用只显示通知：无法拦截或删除短信。短信内容不会被保存或发送到任何地方。</string>
+    <string name="sms_link_warnings_pref">警告可疑链接</string>
+    <string name="sms_link_warnings_pref_summary">来自未知发送者的短信包含短链接（bit.ly 等）时也发出警告。内容仅在本设备上检查。</string>
+    <string name="sms_permission_denied">没有短信权限，应用无法检查发送者</string>
+    <string name="sms_warning_channel">短信警告</string>
+    <string name="sms_warning_channel_description">来自已知骚扰发送者的短信</string>
+    <string name="sms_warning_title">可能是来自 %s 的骚扰短信</string>
+    <string name="sms_warning_link_hint">短信包含链接：请勿打开</string>
+    <string name="sms_warning_source_community">社区数据库</string>
+    <string name="sms_warning_action_details">详情</string>
+    <string name="sms_link_warning_title">来自 %s 的含链接短信</string>
+    <string name="sms_link_warning_text">未知发送者：请小心，不要打开链接</string>
+    <string name="sms_link_warning_shortener">短链接（%s）隐藏了真实地址</string>
+    <string name="setup_check_sms_active">正在检查短信发送者</string>
+    <string name="setup_check_sms_active_text">来自已知骚扰号码的短信会显示警告。短信无法拦截：只有默认短信应用才能做到。</string>
+    <string name="setup_check_sms_permission">短信检查缺少权限</string>
+    <string name="setup_check_sms_permission_text">请允许应用接收短信，否则无法对骚扰短信发出警告。</string>
+</resources>

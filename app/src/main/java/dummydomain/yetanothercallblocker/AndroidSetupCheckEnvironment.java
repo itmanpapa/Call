@@ -82,6 +82,16 @@ class AndroidSetupCheckEnvironment implements SetupCheckEnvironment {
     }
 
     @Override
+    public boolean isSmsWarningsEnabled() {
+        return settings.getSmsWarnings();
+    }
+
+    @Override
+    public boolean hasSmsPermission() {
+        return PermissionHelper.hasSmsPermission(context);
+    }
+
+    @Override
     public boolean hasCallScreeningRole() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
                 && PermissionHelper.isCallScreeningHeld(context);

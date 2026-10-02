@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Kiểm tra người gửi SMS</string>
+    <string name="sms_warnings_pref_summary">Cảnh báo SMS từ các số được biết là rác. Ứng dụng chỉ hiển thị thông báo: không thể chặn hay xóa tin nhắn. Nội dung tin nhắn không được lưu hay gửi đi đâu cả.</string>
+    <string name="sms_link_warnings_pref">Cảnh báo liên kết đáng ngờ</string>
+    <string name="sms_link_warnings_pref_summary">Cảnh báo cả tin nhắn có liên kết rút gọn (bit.ly và tương tự) từ người gửi không xác định. Nội dung chỉ được kiểm tra trên thiết bị.</string>
+    <string name="sms_permission_denied">Không có quyền SMS, ứng dụng không thể kiểm tra người gửi</string>
+    <string name="sms_warning_channel">Cảnh báo SMS</string>
+    <string name="sms_warning_channel_description">Tin nhắn từ người gửi được biết là rác</string>
+    <string name="sms_warning_title">Có thể là SMS rác từ %s</string>
+    <string name="sms_warning_link_hint">Tin nhắn chứa liên kết: đừng mở nó</string>
+    <string name="sms_warning_source_community">Cơ sở dữ liệu cộng đồng</string>
+    <string name="sms_warning_action_details">Chi tiết</string>
+    <string name="sms_link_warning_title">Tin nhắn có liên kết từ %s</string>
+    <string name="sms_link_warning_text">Người gửi không xác định: hãy cẩn thận và đừng mở liên kết</string>
+    <string name="sms_link_warning_shortener">Liên kết rút gọn (%s) che giấu địa chỉ thật</string>
+    <string name="setup_check_sms_active">Người gửi SMS đang được kiểm tra</string>
+    <string name="setup_check_sms_active_text">Tin nhắn từ các số được biết là rác sẽ có cảnh báo. Không thể chặn SMS: chỉ ứng dụng SMS mặc định mới làm được.</string>
+    <string name="setup_check_sms_permission">Kiểm tra SMS chưa được cấp quyền</string>
+    <string name="setup_check_sms_permission_text">Hãy cho phép ứng dụng nhận SMS, nếu không ứng dụng không thể cảnh báo tin nhắn rác.</string>
+</resources>

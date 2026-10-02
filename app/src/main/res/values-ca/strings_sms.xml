@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Comprova els remitents dels SMS</string>
+    <string name="sms_warnings_pref_summary">Avisa dels SMS de números coneguts com a brossa. L’aplicació només mostra una notificació: no pot bloquejar ni esborrar missatges. El text dels missatges no es desa ni s’envia enlloc.</string>
+    <string name="sms_link_warnings_pref">Avisa d’enllaços sospitosos</string>
+    <string name="sms_link_warnings_pref_summary">Avisa també dels missatges amb enllaços escurçats (bit.ly i similars) de remitents desconeguts. El text només es comprova al dispositiu.</string>
+    <string name="sms_permission_denied">Sense el permís d’SMS l’aplicació no pot comprovar els remitents</string>
+    <string name="sms_warning_channel">Avisos d’SMS</string>
+    <string name="sms_warning_channel_description">Missatges de remitents coneguts com a brossa</string>
+    <string name="sms_warning_title">Possible SMS brossa de %s</string>
+    <string name="sms_warning_link_hint">El missatge conté un enllaç: no l’obris</string>
+    <string name="sms_warning_source_community">Base de dades de la comunitat</string>
+    <string name="sms_warning_action_details">Detalls</string>
+    <string name="sms_link_warning_title">Missatge amb enllaç de %s</string>
+    <string name="sms_link_warning_text">Remitent desconegut: vés amb compte i no obris l’enllaç</string>
+    <string name="sms_link_warning_shortener">L’enllaç escurçat (%s) amaga l’adreça real</string>
+    <string name="setup_check_sms_active">Es comproven els remitents dels SMS</string>
+    <string name="setup_check_sms_active_text">Els missatges de números coneguts com a brossa mostren un avís. Els SMS no es poden bloquejar: només ho pot fer l’aplicació d’SMS predeterminada.</string>
+    <string name="setup_check_sms_permission">Comprovació d’SMS sense permís</string>
+    <string name="setup_check_sms_permission_text">Permet que l’aplicació rebi SMS; altrament no podrà avisar dels missatges brossa.</string>
+</resources>

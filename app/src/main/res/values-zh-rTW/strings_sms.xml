@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">簡訊</string>
+    <string name="sms_warnings_pref">檢查簡訊寄件者</string>
+    <string name="sms_warnings_pref_summary">收到來自已知騷擾號碼的簡訊時發出警告。本應用程式只會顯示通知：無法封鎖或刪除簡訊。簡訊內容不會被儲存或傳送到任何地方。</string>
+    <string name="sms_link_warnings_pref">警告可疑連結</string>
+    <string name="sms_link_warnings_pref_summary">來自不明寄件者的簡訊含有短網址（bit.ly 等）時也發出警告。內容只會在本裝置上檢查。</string>
+    <string name="sms_permission_denied">沒有簡訊權限，應用程式無法檢查寄件者</string>
+    <string name="sms_warning_channel">簡訊警告</string>
+    <string name="sms_warning_channel_description">來自已知騷擾寄件者的簡訊</string>
+    <string name="sms_warning_title">可能是來自 %s 的騷擾簡訊</string>
+    <string name="sms_warning_link_hint">簡訊含有連結：請勿開啟</string>
+    <string name="sms_warning_source_community">社群資料庫</string>
+    <string name="sms_warning_action_details">詳細資料</string>
+    <string name="sms_link_warning_title">來自 %s 的含連結簡訊</string>
+    <string name="sms_link_warning_text">不明寄件者：請小心，不要開啟連結</string>
+    <string name="sms_link_warning_shortener">短網址（%s）隱藏了真正的網址</string>
+    <string name="setup_check_sms_active">正在檢查簡訊寄件者</string>
+    <string name="setup_check_sms_active_text">來自已知騷擾號碼的簡訊會顯示警告。簡訊無法封鎖：只有預設簡訊應用程式才能做到。</string>
+    <string name="setup_check_sms_permission">簡訊檢查缺少權限</string>
+    <string name="setup_check_sms_permission_text">請允許應用程式接收簡訊，否則無法對騷擾簡訊發出警告。</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Vérifier les expéditeurs de SMS</string>
+    <string name="sms_warnings_pref_summary">Avertir des SMS provenant de numéros connus comme spam. L’application affiche seulement une notification : elle ne peut ni bloquer ni supprimer les messages. Le texte des messages n’est ni enregistré ni envoyé.</string>
+    <string name="sms_link_warnings_pref">Avertir des liens suspects</string>
+    <string name="sms_link_warnings_pref_summary">Avertir aussi des messages contenant des liens raccourcis (bit.ly, etc.) envoyés par des expéditeurs inconnus. Le texte est vérifié uniquement sur l’appareil.</string>
+    <string name="sms_permission_denied">Sans l’autorisation SMS, l’application ne peut pas vérifier les expéditeurs</string>
+    <string name="sms_warning_channel">Alertes SMS</string>
+    <string name="sms_warning_channel_description">Messages d’expéditeurs connus comme spam</string>
+    <string name="sms_warning_title">SMS indésirable possible de %s</string>
+    <string name="sms_warning_link_hint">Le message contient un lien : ne l’ouvrez pas</string>
+    <string name="sms_warning_source_community">Base communautaire</string>
+    <string name="sms_warning_action_details">Détails</string>
+    <string name="sms_link_warning_title">Message avec un lien de %s</string>
+    <string name="sms_link_warning_text">Expéditeur inconnu : soyez prudent et n’ouvrez pas le lien</string>
+    <string name="sms_link_warning_shortener">Le lien raccourci (%s) masque la véritable adresse</string>
+    <string name="setup_check_sms_active">Les expéditeurs de SMS sont vérifiés</string>
+    <string name="setup_check_sms_active_text">Les messages de numéros connus comme spam déclenchent une alerte. Les SMS ne peuvent pas être bloqués : seule l’application SMS par défaut le peut.</string>
+    <string name="setup_check_sms_permission">Vérification des SMS sans autorisation</string>
+    <string name="setup_check_sms_permission_text">Autorisez l’application à recevoir les SMS, sinon elle ne peut pas avertir des messages indésirables.</string>
+</resources>

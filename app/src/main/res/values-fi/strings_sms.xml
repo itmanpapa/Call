@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">Tekstiviestit</string>
+    <string name="sms_warnings_pref">Tarkista tekstiviestien lähettäjät</string>
+    <string name="sms_warnings_pref_summary">Varoita tekstiviesteistä, jotka tulevat roskapostiksi tunnetuista numeroista. Sovellus näyttää vain ilmoituksen: se ei voi estää tai poistaa viestejä. Viestien tekstiä ei tallenneta eikä lähetetä minnekään.</string>
+    <string name="sms_link_warnings_pref">Varoita epäilyttävistä linkeistä</string>
+    <string name="sms_link_warnings_pref_summary">Varoita myös viesteistä, joissa on lyhennettyjä linkkejä (bit.ly ym.) tuntemattomilta lähettäjiltä. Teksti tarkistetaan vain laitteella.</string>
+    <string name="sms_permission_denied">Ilman tekstiviestilupaa sovellus ei voi tarkistaa lähettäjiä</string>
+    <string name="sms_warning_channel">Tekstiviestivaroitukset</string>
+    <string name="sms_warning_channel_description">Viestit roskapostiksi tunnetuilta lähettäjiltä</string>
+    <string name="sms_warning_title">Mahdollinen roskaviesti lähettäjältä %s</string>
+    <string name="sms_warning_link_hint">Viestissä on linkki: älä avaa sitä</string>
+    <string name="sms_warning_source_community">Yhteisön tietokanta</string>
+    <string name="sms_warning_action_details">Tiedot</string>
+    <string name="sms_link_warning_title">Linkin sisältävä viesti lähettäjältä %s</string>
+    <string name="sms_link_warning_text">Tuntematon lähettäjä: ole varovainen äläkä avaa linkkiä</string>
+    <string name="sms_link_warning_shortener">Lyhennetty linkki (%s) piilottaa todellisen osoitteen</string>
+    <string name="setup_check_sms_active">Tekstiviestien lähettäjät tarkistetaan</string>
+    <string name="setup_check_sms_active_text">Roskapostiksi tunnetuista numeroista tulevista viesteistä näytetään varoitus. Tekstiviestejä ei voi estää: sen voi tehdä vain oletustekstiviestisovellus.</string>
+    <string name="setup_check_sms_permission">Tekstiviestien tarkistukselta puuttuu lupa</string>
+    <string name="setup_check_sms_permission_text">Salli sovelluksen vastaanottaa tekstiviestejä, muuten se ei voi varoittaa roskaviesteistä.</string>
+</resources>

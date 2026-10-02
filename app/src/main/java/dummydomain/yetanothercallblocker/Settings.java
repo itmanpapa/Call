@@ -58,6 +58,8 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public static final String PREF_PHONEBLOCK_LAST_ERROR = "phoneBlockLastError";
     public static final String PREF_PHONEBLOCK_LAST_ERROR_TIME = "phoneBlockLastErrorTime";
     public static final String PREF_RULES_BLOCKING_ENABLED = "rulesBlockingEnabled";
+    public static final String PREF_SMS_WARNINGS = "smsWarnings";
+    public static final String PREF_SMS_LINK_WARNINGS = "smsLinkWarnings";
 
     public static final String PREF_CALL_LOG_GROUPING_NONE = "none";
     public static final String PREF_CALL_LOG_GROUPING_CONSECUTIVE = "consecutive";
@@ -488,6 +490,30 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public void setPhoneBlockLastError(String error, long time) {
         setString(PREF_PHONEBLOCK_LAST_ERROR, error);
         setLong(PREF_PHONEBLOCK_LAST_ERROR_TIME, error != null ? time : 0);
+    }
+
+    /**
+     * @return whether senders of incoming SMS are checked and spam is warned about
+     * (off by default: needs the SMS permission)
+     */
+    public boolean getSmsWarnings() {
+        return getBoolean(PREF_SMS_WARNINGS, false);
+    }
+
+    public void setSmsWarnings(boolean enabled) {
+        setBoolean(PREF_SMS_WARNINGS, enabled);
+    }
+
+    /**
+     * @return whether the text of an SMS is checked for links through URL shorteners
+     * (off by default; only effective with {@link #getSmsWarnings()})
+     */
+    public boolean getSmsLinkWarnings() {
+        return getBoolean(PREF_SMS_LINK_WARNINGS, false);
+    }
+
+    public void setSmsLinkWarnings(boolean enabled) {
+        setBoolean(PREF_SMS_LINK_WARNINGS, enabled);
     }
 
 }

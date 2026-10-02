@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">Sms</string>
+    <string name="sms_warnings_pref">Afzenders van sms controleren</string>
+    <string name="sms_warnings_pref_summary">Waarschuwen voor sms van nummers die als spam bekend zijn. De app toont alleen een melding: berichten blokkeren of verwijderen kan niet. Berichtteksten worden niet opgeslagen of verstuurd.</string>
+    <string name="sms_link_warnings_pref">Waarschuwen voor verdachte links</string>
+    <string name="sms_link_warnings_pref_summary">Ook waarschuwen voor berichten met verkorte links (bit.ly en dergelijke) van onbekende afzenders. De tekst wordt alleen op het apparaat gecontroleerd.</string>
+    <string name="sms_permission_denied">Zonder sms-toestemming kan de app de afzenders niet controleren</string>
+    <string name="sms_warning_channel">Sms-waarschuwingen</string>
+    <string name="sms_warning_channel_description">Berichten van afzenders die als spam bekend zijn</string>
+    <string name="sms_warning_title">Mogelijke spam-sms van %s</string>
+    <string name="sms_warning_link_hint">Het bericht bevat een link: open deze niet</string>
+    <string name="sms_warning_source_community">Gemeenschapsdatabase</string>
+    <string name="sms_warning_action_details">Details</string>
+    <string name="sms_link_warning_title">Bericht met link van %s</string>
+    <string name="sms_link_warning_text">Onbekende afzender: wees voorzichtig en open de link niet</string>
+    <string name="sms_link_warning_shortener">De verkorte link (%s) verbergt het echte adres</string>
+    <string name="setup_check_sms_active">Afzenders van sms worden gecontroleerd</string>
+    <string name="setup_check_sms_active_text">Berichten van nummers die als spam bekend zijn geven een waarschuwing. Sms kan niet worden geblokkeerd: alleen de standaard-sms-app kan dat.</string>
+    <string name="setup_check_sms_permission">Sms-controle zonder toestemming</string>
+    <string name="setup_check_sms_permission_text">Sta de app toe sms te ontvangen, anders kan hij niet waarschuwen voor spamberichten.</string>
+</resources>
