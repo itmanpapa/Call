@@ -41,12 +41,23 @@ shot() {
 }
 
 tap_text() { # taps the center of the first node with the given text
+    if [ "$1" != "Wait" ] && [ "$1" != "Close app" ]; then dismiss_system_dialogs; fi
     adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
     adb pull /sdcard/ui.xml /tmp/ui.xml >/dev/null 2>&1
     bounds=$(grep -o "text=\"$1\"[^>]*bounds=\"[^\"]*\"" /tmp/ui.xml | head -1 | sed 's/.*bounds="\([^"]*\)"/\1/')
     if [ -z "$bounds" ]; then echo "node '$1' not found"; return 1; fi
     read -r x1 y1 x2 y2 <<< "$(echo "$bounds" | tr -c '0-9' ' ')"
     adb shell input tap $(( (x1 + x2) / 2 )) $(( (y1 + y2) / 2 ))
+}
+
+dismiss_system_dialogs() { # e.g. "Pixel Launcher isn't responding" on a slow emulator
+    adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
+    adb pull /sdcard/ui.xml /tmp/ui.xml >/dev/null 2>&1
+    if grep -q "isn't responding\|keeps stopping" /tmp/ui.xml; then
+        echo "system dialog found, dismissing"
+        tap_text "Wait" || tap_text "Close app"
+        sleep 2
+    fi
 }
 
 tap_text_scroll() { # like tap_text, scrolls down (up to 4 times) to find the node
@@ -62,6 +73,8 @@ tap_text_scroll() { # like tap_text, scrolls down (up to 4 times) to find the no
 capture_all() { # suffix
     adb shell am force-stop "$PKG"
     adb shell am start -W -n "$PKG/dummydomain.yetanothercallblocker.MainActivity"
+    sleep 3
+    dismiss_system_dialogs
     shot "01_first_start_$1"
     adb shell input keyevent KEYCODE_BACK  # dismiss the "no database" dialog
     shot "02_call_log_$1"
