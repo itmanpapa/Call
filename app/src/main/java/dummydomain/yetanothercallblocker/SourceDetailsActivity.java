@@ -299,35 +299,36 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
     // update
 
     private void onUpdateClicked() {
-        if (details == null) return;
-        Context appContext = getApplicationContext();
+        if (details == null || details.item.kind == SourceItem.Kind.FILE) return;
 
-        switch (details.item.kind) {
-            case YACB:
-                TaskService.start(this, details.yacbOperational
-                        ? TaskService.TASK_UPDATE_SECONDARY_DB : TaskService.TASK_DOWNLOAD_MAIN_DB);
-                updateButton.setEnabled(false);
-                break;
+        startUpdate(this, sourceId, details.yacbOperational);
+        if (details.item.kind == SourceItem.Kind.YACB) updateButton.setEnabled(false);
+    }
 
-            case PHONEBLOCK:
-                startPhoneBlockSync(appContext);
-                break;
+    /**
+     * Starts the update of a source like the "Update now" button (also used by the
+     * setup check). Lists imported from a file can't be updated.
+     *
+     * @param yacbOperational for the YACB database: true to download updates,
+     *                        false to download the whole database
+     */
+    static void startUpdate(Context context, String sourceId, boolean yacbOperational) {
+        Context appContext = context.getApplicationContext();
 
-            case BNETZA:
-                SourceTasks.start(sourceId, () -> {
-                    BnetzaActions.Result result = BnetzaActions.update(true);
-                    if (!result.isSuccess()) throw new IOException(result.getError());
-                    return null;
-                });
-                break;
-
-            case URL:
-                String id = sourceId;
-                SourceTasks.start(id, () -> updateUrlList(appContext, id));
-                break;
-
-            default:
-                break;
+        if (YacbDatabaseProvider.ID.equals(sourceId)) {
+            TaskService.start(context, yacbOperational
+                    ? TaskService.TASK_UPDATE_SECONDARY_DB : TaskService.TASK_DOWNLOAD_MAIN_DB);
+        } else if (PhoneBlockSync.SOURCE_ID.equals(sourceId)) {
+            startPhoneBlockSync(appContext);
+        } else if (SourcesManager.BNETZA_SOURCE_ID.equals(sourceId)) {
+            SourceTasks.start(sourceId, () -> {
+                BnetzaActions.Result result = BnetzaActions.update(true);
+                if (!result.isSuccess()) throw new IOException(result.getError());
+                return null;
+            });
+        } else {
+            // a list without a URL is left alone by the manager
+            SourceTasks.start(sourceId, () -> updateUrlList(appContext, sourceId));
         }
     }
 
