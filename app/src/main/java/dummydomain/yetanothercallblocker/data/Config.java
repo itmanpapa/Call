@@ -21,6 +21,8 @@ import dummydomain.yetanothercallblocker.data.provider.InMemoryResultCache;
 import dummydomain.yetanothercallblocker.data.provider.PhoneBlockOnlineProvider;
 import dummydomain.yetanothercallblocker.data.provider.ProviderAggregator;
 import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
+import dummydomain.yetanothercallblocker.data.rules.RulesManager;
+import dummydomain.yetanothercallblocker.data.rules.RulesStore;
 import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.OkHttpTransport;
@@ -63,6 +65,9 @@ public class Config {
 
     /** File (in the files dir) with the user's own spam marks. */
     static final String USER_MARKS_FILE = "user_marks.csv";
+    /** Subdirectory of the files dir with the call rules. */
+    static final String RULES_DIR = "rules";
+    static final String RULES_FILE = "rules.txt";
 
     static final String PHONEBLOCK_USER_AGENT_PREFIX = "YetAnotherCallBlocker/";
 
@@ -268,6 +273,26 @@ public class Config {
         userMarksStore.setListener(() -> postEvent(new UserMarksChangedEvent()));
         YacbHolder.setUserMarksStore(userMarksStore);
         numberInfoService.setUserMarksStore(userMarksStore);
+        // call rules: cached in memory, loaded in the background (an evaluation before
+        // the loading has finished loads them itself); the device-protected files dir
+        // keeps them readable before the first unlock
+        RulesManager rulesManager = new RulesManager(
+                new RulesStore(new File(new File(context.getFilesDir(), RULES_DIR), RULES_FILE)),
+                RulesManager.SYSTEM_CLOCK, new CallLogRecentCalls(context, settings));
+        rulesManager.setListener(rules ->
+                settings.setRulesBlockingEnabled(RulesManager.hasBlockingRules(rules)));
+        YacbHolder.setRulesManager(rulesManager);
+        numberInfoService.setRulesManager(rulesManager);
+
+        Thread rulesLoader = new Thread(() -> {
+            try {
+                rulesManager.ensureLoaded();
+            } catch (Exception e) {
+                LOG.warn("init() failed to load call rules", e);
+            }
+        }, "rules-loader");
+        rulesLoader.setDaemon(true);
+        rulesLoader.start();
 
         NotificationService notificationService = new NotificationService(context);
         YacbHolder.setNotificationService(notificationService);

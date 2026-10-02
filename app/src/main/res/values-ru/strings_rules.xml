@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Call rules ("Rules" screen, RulesActivity) -->
+<resources>
+    <string name="rules_title">Правила блокировки</string>
+    <string name="rules_preference_summary">Префиксы, скрытые и иностранные номера, платные номера, повторные звонки, расписание</string>
+
+    <string name="rules_presets_title">Готовые правила</string>
+    <string name="rules_preset_hidden">Скрытые номера</string>
+    <string name="rules_preset_premium">Платные номера 0900/0137/0180</string>
+    <string name="rules_preset_repeated">Повторный звонок пропускать</string>
+    <string name="rules_preset_foreign">Иностранные номера</string>
+    <string name="rules_hint">Решает первое подходящее правило. Разрешающие правила сильнее рейтингов и списков, но не вашего чёрного списка. Удерживайте, чтобы перетащить, смахните, чтобы удалить.</string>
+    <string name="rules_empty">Правил пока нет. Нажмите на готовое правило выше или добавьте своё.</string>
+
+    <string name="rules_add">Добавить правило</string>
+    <string name="rules_edit">Изменить правило</string>
+    <string name="rules_save">Сохранить</string>
+    <string name="rules_enabled">Правило включено</string>
+    <string name="rules_undo">Отменить</string>
+    <string name="rules_deleted">Правило удалено: %1$s</string>
+    <string name="rules_save_failed">Не удалось сохранить правила</string>
+
+    <string name="rules_type_pattern">Номер или префикс</string>
+    <string name="rules_type_hidden">Скрытые номера</string>
+    <string name="rules_type_foreign">Иностранные номера</string>
+    <string name="rules_type_premium_de">Платные номера (Германия)</string>
+    <string name="rules_type_repeated">Повторный звонок</string>
+
+    <string name="rules_type_pattern_description">Номера, подходящие под один из шаблонов. Можно в национальном (0900*) или международном (+44*) виде.</string>
+    <string name="rules_type_hidden_description">Звонки без определения номера (скрытый, анонимный или неизвестный номер).</string>
+    <string name="rules_type_foreign_description">Номера с кодом страны, отличным от вашего (страна определяется автоматически или задаётся в расширенных настройках).</string>
+    <string name="rules_type_premium_de_description">Немецкие номера, перезвонить на которые стоит денег: 0900 — платные сервисы, 0137 — массовые звонки (звонки-приманки), 0180 — сервисные номера и бывший диапазон 0190.</string>
+    <string name="rules_type_repeated_description">Если неизвестный номер звонит снова в пределах заданного времени, звонок пропускается, даже если его заблокировали бы рейтинг или список номеров. Чёрный список продолжает действовать.</string>
+    <string name="rules_premium_de_numbers">0900, 0137, 0180, 0190</string>
+
+    <plurals name="rules_repeated_title">
+        <item quantity="one">Повторный звонок в течение %d минуты</item>
+        <item quantity="few">Повторный звонок в течение %d минут</item>
+        <item quantity="many">Повторный звонок в течение %d минут</item>
+        <item quantity="other">Повторный звонок в течение %d минуты</item>
+    </plurals>
+
+    <string name="rules_action">Действие</string>
+    <string name="rules_action_block">Блокировать</string>
+    <string name="rules_action_allow">Пропускать</string>
+    <string name="rules_except_contacts">Кроме контактов</string>
+    <string name="rules_except_contacts_short">кроме контактов</string>
+    <string name="rules_including_contacts">включая контакты</string>
+
+    <string name="rules_schedule_enabled">Только в определённое время</string>
+    <string name="rules_schedule_from">С %1$s</string>
+    <string name="rules_schedule_to">До %1$s</string>
+    <string name="rules_schedule_all_day">весь день</string>
+    <string name="rules_schedule_range">%1$s–%2$s</string>
+    <string name="rules_invalid">ошибка в шаблоне</string>
+
+    <string name="rules_patterns">Номера или префиксы</string>
+    <string name="rules_patterns_helper">Например: +44*, 0900*. * — любые цифры, # — одна цифра, через запятую</string>
+    <string name="rules_patterns_invalid">Введите цифры с * или #, через запятую</string>
+    <string name="rules_window">Интервал, минут</string>
+    <string name="rules_window_invalid">От %1$d до %2$d минут</string>
+    <string name="rules_label">Название (необязательно)</string>
+
+    <string name="rules_matched_rule">Правило: %1$s</string>
+    <string name="rules_description_with_details">%1$s · %2$s</string>
+</resources>

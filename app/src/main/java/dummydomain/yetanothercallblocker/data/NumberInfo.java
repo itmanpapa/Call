@@ -1,13 +1,16 @@
 package dummydomain.yetanothercallblocker.data;
 
 import dummydomain.yetanothercallblocker.data.db.BlacklistItem;
+import dummydomain.yetanothercallblocker.data.rules.CallRule;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabaseItem;
 import dummydomain.yetanothercallblocker.sia.model.database.FeaturedDatabaseItem;
 
 public class NumberInfo {
 
     public enum BlockingReason {
-        HIDDEN_NUMBER, SIA_RATING, BLACKLISTED
+        HIDDEN_NUMBER, SIA_RATING, BLACKLISTED,
+        // a BLOCK call rule, see matchedRule
+        RULE
     }
 
     public enum Rating {
@@ -37,6 +40,9 @@ public class NumberInfo {
     // the user's own mark ("My mark"), null if none; when set, it decides the rating
     // (see UserMarkPolicy) and sourceId is UserMarkPolicy.SOURCE_ID
     public UserMark userMark;
+    // the first matching call rule (see data/rules), null if none;
+    // a BLOCK rule blocks like the blacklist, an ALLOW rule beats ratings and lists
+    public CallRule matchedRule;
 
     // precomputed for convenience
     public boolean noNumber;

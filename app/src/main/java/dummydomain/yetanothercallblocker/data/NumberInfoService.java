@@ -10,6 +10,11 @@ import java.util.Date;
 import dummydomain.yetanothercallblocker.Settings;
 import dummydomain.yetanothercallblocker.data.provider.ProviderResult;
 import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
+import dummydomain.yetanothercallblocker.data.rules.CallFacts;
+import dummydomain.yetanothercallblocker.data.rules.CallRule;
+import dummydomain.yetanothercallblocker.data.rules.CountryCallingCodes;
+import dummydomain.yetanothercallblocker.data.rules.RuleAction;
+import dummydomain.yetanothercallblocker.data.rules.RulesManager;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabase;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabaseItem;
 import dummydomain.yetanothercallblocker.sia.model.database.FeaturedDatabase;
@@ -37,6 +42,9 @@ public class NumberInfoService {
     protected final BlacklistService blacklistService;
     protected final SourcesManager sourcesManager;
     protected volatile UserMarksStore userMarksStore;
+
+    // call rules, may be null (set after construction to keep the constructors stable)
+    protected volatile RulesManager rulesManager;
 
     public NumberInfoService(Settings settings, HiddenNumberDetector hiddenNumberDetector,
                              NumberNormalizer numberNormalizer, CommunityDatabase communityDatabase,
@@ -74,6 +82,11 @@ public class NumberInfoService {
         return userMarksStore;
     }
 
+    /** @param rulesManager the call rules to apply, or null to disable them */
+    public void setRulesManager(RulesManager rulesManager) {
+        this.rulesManager = rulesManager;
+    }
+
     public NumberInfo getNumberInfo(String number, String countryCode, boolean full) {
         return getNumberInfo(number, countryCode, full, false);
     }
@@ -101,6 +114,7 @@ public class NumberInfoService {
         LOG.trace("getNumberInfo() noNumber={}", numberInfo.noNumber);
 
         if (numberInfo.noNumber) {
+            applyRules(numberInfo, countryCode, allowOnline);
             numberInfo.blockingReason = getBlockingReason(numberInfo);
             LOG.trace("getNumberInfo() blockingReason={}", numberInfo.blockingReason);
             LOG.debug("getNumberInfo() finished early");
@@ -163,8 +177,11 @@ public class NumberInfoService {
             applyListedNumbers(numberInfo, normalizedNumber);
         }
 
+        CallFacts ruleFacts = applyRules(numberInfo, countryCode, allowOnline);
+
+        // a user mark or a matching rule already decides: don't wait for online sources
         if (queryOtherSources && allowOnline && numberInfo.rating != NumberInfo.Rating.NEGATIVE
-                && numberInfo.contactItem == null) {
+                && numberInfo.contactItem == null && numberInfo.matchedRule == null) {
             applyOnlineSources(numberInfo, normalizedNumber);
         }
 
@@ -172,7 +189,9 @@ public class NumberInfoService {
 
         if (blacklistService != null && settings.getBlacklistIsNotEmpty()) {
             // avoid loading blacklist if blocking for other reason
-            if (full || getBlockingReason(numberInfo) == null) {
+            // (the explicit blacklist beats ALLOW rules and is preferred over BLOCK rules)
+            if (full || numberInfo.matchedRule != null
+                    || getBlockingReason(numberInfo) == null) {
                 numberInfo.blacklistItem = blacklistService.getBlacklistItemForNumber(number);
             }
         }
@@ -181,8 +200,55 @@ public class NumberInfoService {
         numberInfo.blockingReason = getBlockingReason(numberInfo);
         LOG.trace("getNumberInfo() blockingReason={}", numberInfo.blockingReason);
 
+        // allowOnline is only set on the incoming call paths
+        // (CallScreeningServiceImpl, PhoneStateHandler)
+        if (allowOnline) recordIncomingCall(ruleFacts);
+
         LOG.debug("getNumberInfo() finished");
         return numberInfo;
+    }
+
+    /**
+     * Evaluates the call rules (in memory, no I/O once the rules are loaded) and sets
+     * {@link NumberInfo#matchedRule}.
+     *
+     * @param incomingCall whether the number is calling right now (enables the
+     *                     repeated-caller rules); the 'allowOnline' flag of the callers
+     * @return the facts the rules were evaluated with, or null if rules are off
+     */
+    protected CallFacts applyRules(NumberInfo numberInfo, String countryCode,
+                                   boolean incomingCall) {
+        RulesManager rulesManager = this.rulesManager;
+        if (rulesManager == null) return null;
+
+        try {
+            // the country setting (override or auto-detected) decides what is "foreign"
+            String homeCountry = settings.getCountryCode();
+            if (TextUtils.isEmpty(homeCountry)) homeCountry = countryCode;
+
+            CallFacts facts = new CallFacts(numberInfo.number, numberInfo.normalizedNumber,
+                    numberInfo.noNumber, numberInfo.contactItem != null,
+                    CountryCallingCodes.forRegion(homeCountry));
+            // the user's own mark of this exact number beats the generic rules
+            // (the facts are still returned so the call is remembered)
+            numberInfo.matchedRule = numberInfo.userMark != null
+                    ? null : rulesManager.evaluate(facts, incomingCall);
+            LOG.trace("applyRules() matchedRule={}", numberInfo.matchedRule);
+            return facts;
+        } catch (Exception e) {
+            LOG.warn("applyRules() failed", e);
+            return null;
+        }
+    }
+
+    private void recordIncomingCall(CallFacts facts) {
+        RulesManager rulesManager = this.rulesManager;
+        if (rulesManager == null || facts == null) return;
+        try {
+            rulesManager.recordIncomingCall(facts);
+        } catch (Exception e) {
+            LOG.warn("recordIncomingCall() failed", e);
+        }
     }
 
     /**
@@ -269,6 +335,27 @@ public class NumberInfoService {
     }
 
     protected NumberInfo.BlockingReason getBlockingReason(NumberInfo numberInfo) {
+        CallRule rule = numberInfo.matchedRule;
+        if (rule != null) {
+            boolean blacklisted = numberInfo.contactItem == null
+                    && numberInfo.blacklistItem != null && settings.getBlockBlacklisted()
+                    && canBlock(NumberInfo.BlockingReason.BLACKLISTED);
+
+            if (rule.getAction() == RuleAction.ALLOW) {
+                // an ALLOW rule beats ratings, lists and the hidden number setting,
+                // only the explicit blacklist beats it
+                return blacklisted ? NumberInfo.BlockingReason.BLACKLISTED : null;
+            }
+
+            // a BLOCK rule acts like the blacklist; it only matches a contact
+            // if the rule explicitly includes contacts (see RuleEngine)
+            if (canBlock(NumberInfo.BlockingReason.RULE)) {
+                return blacklisted ? NumberInfo.BlockingReason.BLACKLISTED
+                        : NumberInfo.BlockingReason.RULE;
+            }
+            // blocking by rules is not allowed right now (limited mode): the usual checks
+        }
+
         if (numberInfo.contactItem != null) return null;
 
         if (numberInfo.isHiddenNumber && settings.getBlockHiddenNumbers()) {
@@ -298,7 +385,9 @@ public class NumberInfoService {
             return true;
         }
 
-        if (reason == NumberInfo.BlockingReason.BLACKLISTED
+        // rules are explicit user lists, like the blacklist
+        if ((reason == NumberInfo.BlockingReason.BLACKLISTED
+                || reason == NumberInfo.BlockingReason.RULE)
                 && settings.isBlockingBlacklistedInLimitedModeAllowed()) {
             LOG.trace("canBlock() allowed: " + reason);
             return true;

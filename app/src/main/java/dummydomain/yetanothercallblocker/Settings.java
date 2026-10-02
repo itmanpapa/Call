@@ -55,6 +55,7 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public static final String PREF_PHONEBLOCK_MIN_VOTES = "phoneBlockMinVotes";
     public static final String PREF_PHONEBLOCK_LAST_ERROR = "phoneBlockLastError";
     public static final String PREF_PHONEBLOCK_LAST_ERROR_TIME = "phoneBlockLastErrorTime";
+    public static final String PREF_RULES_BLOCKING_ENABLED = "rulesBlockingEnabled";
 
     public static final String PREF_CALL_LOG_GROUPING_NONE = "none";
     public static final String PREF_CALL_LOG_GROUPING_CONSECUTIVE = "consecutive";
@@ -129,7 +130,19 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     }
 
     public boolean getCallBlockingEnabled() {
-        return getBlockNegativeSiaNumbers() || getBlockHiddenNumbers() || getBlacklistEnabled();
+        return getBlockNegativeSiaNumbers() || getBlockHiddenNumbers() || getBlacklistEnabled()
+                || getRulesBlockingEnabled();
+    }
+
+    /** Whether an enabled call rule can block calls (maintained by the rules manager). */
+    public boolean getRulesBlockingEnabled() {
+        return getBoolean(PREF_RULES_BLOCKING_ENABLED);
+    }
+
+    public void setRulesBlockingEnabled(boolean enabled) {
+        if (getRulesBlockingEnabled() != enabled) {
+            setBoolean(PREF_RULES_BLOCKING_ENABLED, enabled);
+        }
     }
 
     public boolean getBlockNegativeSiaNumbers() {

@@ -13,6 +13,25 @@ import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
 public class NumberInfoUtils {
 
     public static String getShortDescription(Context context, NumberInfo numberInfo) {
+        String description = getShortDescriptionWithoutRule(context, numberInfo);
+
+        String rule = getRuleDescription(context, numberInfo);
+        if (TextUtils.isEmpty(rule)) return description;
+        if (TextUtils.isEmpty(description)) return rule;
+
+        return context.getString(R.string.rules_description_with_details, rule, description);
+    }
+
+    /**
+     * @return "Rule: …" for the call rule that matched the number, or null
+     */
+    public static String getRuleDescription(Context context, NumberInfo numberInfo) {
+        if (numberInfo.matchedRule == null) return null;
+        return context.getString(R.string.rules_matched_rule,
+                RuleTexts.getTitle(context, numberInfo.matchedRule));
+    }
+
+    private static String getShortDescriptionWithoutRule(Context context, NumberInfo numberInfo) {
         String description = getBaseDescription(context, numberInfo);
 
         String source = getSourceDescription(context, numberInfo);

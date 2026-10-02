@@ -88,6 +88,14 @@
                 android:value=".SettingsActivity" />
         </activity>
         <activity
+            android:name=".RulesActivity"
+            android:label="@string/rules_title"
+            android:parentActivityName=".SettingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SettingsActivity" />
+        </activity>
+        <activity
             android:name=".SourceDetailsActivity"
             android:parentActivityName=".SourcesActivity">
             <meta-data
