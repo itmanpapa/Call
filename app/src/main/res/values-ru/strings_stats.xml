@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Call statistics ("Statistics" screen, StatsActivity, card at the top of the call log) -->
+<resources>
+    <string name="stats_title">Статистика</string>
+    <string name="stats_preference_summary">Заблокированные звонки по дням, причинам и источникам</string>
+
+    <string name="stats_summary_card">Заблокировано за 7 дней: %1$d</string>
+    <string name="stats_summary_card_hint">Нажмите, чтобы открыть статистику</string>
+
+    <string name="stats_today">Сегодня</string>
+    <string name="stats_7_days">7 дней</string>
+    <string name="stats_30_days">30 дней</string>
+    <string name="stats_blocked">заблокировано</string>
+
+    <string name="stats_chart_title">Заблокированные звонки за 30 дней</string>
+    <string name="stats_chart_description">Столбчатая диаграмма заблокированных звонков по дням: за 30 дней %1$d, не больше %2$d в день</string>
+
+    <string name="stats_period_30">30 дней</string>
+    <string name="stats_period_year">Год</string>
+
+    <string name="stats_by_reason">По причинам</string>
+    <string name="stats_by_source">По источникам</string>
+    <string name="stats_top_numbers">Чаще всего блокировались</string>
+    <string name="stats_list_empty">За этот период заблокированных звонков нет.</string>
+    <string name="stats_top_numbers_hint">Нажмите на номер, чтобы посмотреть, что о нём известно.</string>
+
+    <string name="stats_reason_blacklist">Чёрный список</string>
+    <string name="stats_reason_rating">Рейтинг сообщества</string>
+    <string name="stats_reason_list">Списки и онлайн-источники</string>
+    <string name="stats_reason_rule">Правила блокировки</string>
+    <string name="stats_reason_user_mark">Моя отметка</string>
+    <string name="stats_reason_hidden">Скрытый номер</string>
+    <string name="stats_reason_contact">Контакт</string>
+    <string name="stats_reason_other">Другое</string>
+
+    <string name="stats_source_yacb">База YACB</string>
+    <string name="stats_source_user_mark">Моя отметка</string>
+
+    <string name="stats_empty">Звонков пока нет. Входящие звонки учитываются с этого момента.</string>
+    <string name="stats_note">Обработано звонков за год: %1$d, заблокировано: %2$d. Статистика хранится только на этом устройстве, 365 дней.</string>
+
+    <string name="stats_clear">Очистить статистику</string>
+    <string name="stats_clear_confirm">Удалить все записанные звонки? Журнал звонков и чёрный список не изменятся.</string>
+    <string name="stats_clear_button">Очистить</string>
+    <string name="stats_load_failed">Не удалось прочитать статистику.</string>
+</resources>

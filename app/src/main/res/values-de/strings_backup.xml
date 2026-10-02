@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup and restore (Settings, BackupController) -->
+<resources>
+    <string name="backup_category">Sicherung</string>
+    <string name="backup_create">Sicherung erstellen</string>
+    <string name="backup_create_summary">Einstellungen, schwarze Liste, Regeln, Markierungen und Listen in einer ZIP-Datei</string>
+    <string name="backup_restore">Wiederherstellen</string>
+    <string name="backup_restore_summary">Aus einer Sicherungsdatei: schwarze Liste und Markierungen werden zusammengeführt, Einstellungen und Regeln ersetzt</string>
+
+    <string name="backup_secrets_title">PhoneBlock-API-Schlüssel sichern?</string>
+    <string name="backup_secrets_message">Die Sicherung kann Ihren PhoneBlock-API-Schlüssel enthalten, damit Sie ihn nach der Wiederherstellung nicht erneut eingeben müssen. Wer die Datei bekommt, kann den Schlüssel benutzen: Bewahren Sie die Sicherung sicher auf.</string>
+    <string name="backup_secrets_include">Mit Schlüssel</string>
+    <string name="backup_secrets_exclude">Ohne Schlüssel</string>
+
+    <string name="backup_creating">Sicherung wird erstellt…</string>
+    <string name="backup_reading">Sicherung wird gelesen…</string>
+    <string name="backup_restoring">Wird wiederhergestellt…</string>
+
+    <string name="backup_created_title">Sicherung erstellt</string>
+    <string name="backup_created_message">Gespeichert als %1$s. Die Sicherung enthält Ihre Einstellungen, schwarze Liste, Regeln, Markierungen und Listen. Bewahren Sie die Datei sicher auf: Sie enthält Telefonnummern.</string>
+    <string name="backup_created_message_secrets">Gespeichert als %1$s. Die Sicherung enthält Ihre Einstellungen, schwarze Liste, Regeln, Markierungen und Listen sowie Ihren PhoneBlock-API-Schlüssel. Bewahren Sie die Datei sicher auf.</string>
+    <string name="backup_failed_title">Sicherung fehlgeschlagen</string>
+    <string name="backup_failed_message">Die Sicherung konnte nicht geschrieben werden: %1$s</string>
+
+    <string name="backup_restore_title">Sicherung vom %1$s</string>
+    <string name="backup_restore_title_version">Sicherung vom %1$s (Version %2$s)</string>
+    <string name="backup_part_settings">Einstellungen (%1$d): ersetzen</string>
+    <string name="backup_part_settings_token">Einstellungen (%1$d, mit PhoneBlock-Schlüssel): ersetzen</string>
+    <string name="backup_part_blacklist">Schwarze Liste (%1$d): zusammenführen</string>
+    <string name="backup_part_rules">Sperrregeln (%1$d): ersetzen</string>
+    <string name="backup_part_marks">Meine Markierungen (%1$d): zusammenführen</string>
+    <string name="backup_part_lists">Listen (%1$s): hinzufügen oder ersetzen</string>
+    <string name="backup_restore_button">Wiederherstellen</string>
+    <string name="backup_restore_nothing">Die Sicherung enthält nichts zum Wiederherstellen.</string>
+
+    <string name="backup_part_name_settings">Einstellungen</string>
+    <string name="backup_part_name_lists">Listen</string>
+    <string name="backup_part_name_rules">Regeln</string>
+    <string name="backup_part_name_marks">Markierungen</string>
+    <string name="backup_part_name_blacklist">schwarze Liste</string>
+
+    <string name="backup_restored_title">Sicherung wiederhergestellt</string>
+    <string name="backup_restored_message">Wiederhergestellt: %1$s.</string>
+    <string name="backup_restore_partial_title">Teilweise wiederhergestellt</string>
+    <string name="backup_restore_partial_message">Wiederhergestellt: %1$s. Fehlgeschlagen: %2$s.</string>
+    <string name="backup_restore_nothing_restored">nichts</string>
+
+    <string name="backup_error_title">Wiederherstellung nicht möglich</string>
+    <string name="backup_error_not_a_backup">Diese Datei ist keine CallGuard-Sicherung.</string>
+    <string name="backup_error_newer">Diese Sicherung stammt von einer neueren App-Version. Bitte aktualisieren Sie zuerst die App.</string>
+    <string name="backup_error_corrupt">Die Sicherungsdatei ist beschädigt.</string>
+    <string name="backup_error_too_large">Die Datei ist zu groß für eine Sicherung.</string>
+    <string name="backup_error_read">Die Datei konnte nicht gelesen werden: %1$s</string>
+    <string name="backup_no_file_app">Keine App zur Dateiauswahl gefunden.</string>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup and restore (Settings, BackupController) -->
+<resources>
+    <string name="backup_category">Резервная копия</string>
+    <string name="backup_create">Создать копию</string>
+    <string name="backup_create_summary">Настройки, чёрный список, правила, отметки и списки в одном ZIP-файле</string>
+    <string name="backup_restore">Восстановить</string>
+    <string name="backup_restore_summary">Из файла копии: чёрный список и отметки объединяются, настройки и правила заменяются</string>
+
+    <string name="backup_secrets_title">Сохранить ключ PhoneBlock?</string>
+    <string name="backup_secrets_message">В копию можно включить ваш API-ключ PhoneBlock, чтобы после восстановления не вводить его заново. Любой, у кого окажется файл, сможет пользоваться ключом: храните копию в надёжном месте.</string>
+    <string name="backup_secrets_include">С ключом</string>
+    <string name="backup_secrets_exclude">Без ключа</string>
+
+    <string name="backup_creating">Создание копии…</string>
+    <string name="backup_reading">Чтение копии…</string>
+    <string name="backup_restoring">Восстановление…</string>
+
+    <string name="backup_created_title">Копия создана</string>
+    <string name="backup_created_message">Сохранено как %1$s. В копии ваши настройки, чёрный список, правила, отметки и списки. Храните файл в надёжном месте: в нём есть номера телефонов.</string>
+    <string name="backup_created_message_secrets">Сохранено как %1$s. В копии ваши настройки, чёрный список, правила, отметки и списки, а также API-ключ PhoneBlock. Храните файл в надёжном месте.</string>
+    <string name="backup_failed_title">Не удалось создать копию</string>
+    <string name="backup_failed_message">Копию не удалось записать: %1$s</string>
+
+    <string name="backup_restore_title">Копия от %1$s</string>
+    <string name="backup_restore_title_version">Копия от %1$s (версия %2$s)</string>
+    <string name="backup_part_settings">Настройки (%1$d): заменить</string>
+    <string name="backup_part_settings_token">Настройки (%1$d, с ключом PhoneBlock): заменить</string>
+    <string name="backup_part_blacklist">Чёрный список (%1$d): объединить</string>
+    <string name="backup_part_rules">Правила блокировки (%1$d): заменить</string>
+    <string name="backup_part_marks">Мои отметки (%1$d): объединить</string>
+    <string name="backup_part_lists">Списки (%1$s): добавить или заменить</string>
+    <string name="backup_restore_button">Восстановить</string>
+    <string name="backup_restore_nothing">В копии нечего восстанавливать.</string>
+
+    <string name="backup_part_name_settings">настройки</string>
+    <string name="backup_part_name_lists">списки</string>
+    <string name="backup_part_name_rules">правила</string>
+    <string name="backup_part_name_marks">отметки</string>
+    <string name="backup_part_name_blacklist">чёрный список</string>
+
+    <string name="backup_restored_title">Копия восстановлена</string>
+    <string name="backup_restored_message">Восстановлено: %1$s.</string>
+    <string name="backup_restore_partial_title">Восстановлено частично</string>
+    <string name="backup_restore_partial_message">Восстановлено: %1$s. Не удалось: %2$s.</string>
+    <string name="backup_restore_nothing_restored">ничего</string>
+
+    <string name="backup_error_title">Не удалось восстановить</string>
+    <string name="backup_error_not_a_backup">Этот файл не является резервной копией CallGuard.</string>
+    <string name="backup_error_newer">Копия создана более новой версией приложения. Сначала обновите приложение.</string>
+    <string name="backup_error_corrupt">Файл копии повреждён.</string>
+    <string name="backup_error_too_large">Файл слишком большой для резервной копии.</string>
+    <string name="backup_error_read">Не удалось прочитать файл: %1$s</string>
+    <string name="backup_no_file_app">Не найдено приложение для выбора файла.</string>
+</resources>

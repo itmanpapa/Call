@@ -94,7 +94,7 @@ public class RulesStore {
 
     // format
 
-    static String toText(List<CallRule> rules) {
+    public static String toText(List<CallRule> rules) {
         StringWriter writer = new StringWriter();
         try {
             write(rules, writer);
@@ -104,7 +104,7 @@ public class RulesStore {
         return writer.toString();
     }
 
-    static List<CallRule> fromText(String text) throws IOException {
+    public static List<CallRule> fromText(String text) throws IOException {
         return read(new StringReader(text));
     }
 

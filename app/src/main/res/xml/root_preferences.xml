@@ -68,6 +68,11 @@
             app:persistent="false"
             app:summary="@string/rules_preference_summary"
             app:title="@string/rules_title" />
+        <Preference
+            app:key="statistics"
+            app:persistent="false"
+            app:summary="@string/stats_preference_summary"
+            app:title="@string/stats_title" />
         <SwitchPreferenceCompat
             app:key="blockNegativeSiaNumbers"
             app:summary="@string/block_negative_sia_numbers_summary"
@@ -118,6 +123,21 @@
             app:persistent="false"
             app:summary="@string/show_notifications_for_blocked_calls_summary"
             app:title="@string/show_notifications_for_blocked_calls" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="categoryBackup"
+        app:title="@string/backup_category">
+        <Preference
+            app:key="backupCreate"
+            app:persistent="false"
+            app:summary="@string/backup_create_summary"
+            app:title="@string/backup_create" />
+        <Preference
+            app:key="backupRestore"
+            app:persistent="false"
+            app:summary="@string/backup_restore_summary"
+            app:title="@string/backup_restore" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/settings_screen_advanced">

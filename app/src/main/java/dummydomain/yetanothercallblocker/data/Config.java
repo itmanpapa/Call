@@ -24,6 +24,7 @@ import dummydomain.yetanothercallblocker.data.provider.YacbDatabaseProvider;
 import dummydomain.yetanothercallblocker.data.rules.RulesManager;
 import dummydomain.yetanothercallblocker.data.rules.RulesStore;
 import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
+import dummydomain.yetanothercallblocker.data.stats.CallEventStore;
 import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.OkHttpTransport;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
@@ -68,6 +69,9 @@ public class Config {
     /** Subdirectory of the files dir with the call rules. */
     static final String RULES_DIR = "rules";
     static final String RULES_FILE = "rules.txt";
+    /** Subdirectory of the files dir with the call statistics. */
+    static final String STATS_DIR = "stats";
+    static final String CALL_EVENTS_FILE = "call_events.csv";
 
     static final String PHONEBLOCK_USER_AGENT_PREFIX = "YetAnotherCallBlocker/";
 
@@ -225,6 +229,7 @@ public class Config {
 
         NumberListStore numberListStore = new NumberListStore(
                 new File(context.getFilesDir(), NUMBER_LISTS_DIR));
+        YacbHolder.setNumberListStore(numberListStore);
         SourcesManager sourcesManager = new SourcesManager(numberListStore, settings,
                 Arrays.asList(
                         new YacbDatabaseProvider(communityDatabase, featuredDatabase),
@@ -293,6 +298,10 @@ public class Config {
         }, "rules-loader");
         rulesLoader.setDaemon(true);
         rulesLoader.start();
+
+        // statistics of handled calls (written in the background, see CallStatsRecorder)
+        YacbHolder.setCallEventStore(new CallEventStore(
+                new File(new File(context.getFilesDir(), STATS_DIR), CALL_EVENTS_FILE)));
 
         NotificationService notificationService = new NotificationService(context);
         YacbHolder.setNotificationService(notificationService);

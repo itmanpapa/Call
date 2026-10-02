@@ -105,6 +105,14 @@
                 android:value=".SourcesActivity" />
         </activity>
         <activity
+            android:name=".StatsActivity"
+            android:label="@string/stats_title"
+            android:parentActivityName=".SettingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SettingsActivity" />
+        </activity>
+        <activity
             android:name=".SetupCheckActivity"
             android:label="@string/setup_check_title"
             android:parentActivityName=".SettingsActivity">

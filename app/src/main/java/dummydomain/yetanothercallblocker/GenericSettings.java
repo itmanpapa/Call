@@ -6,6 +6,9 @@ import android.text.TextUtils;
 
 import androidx.core.util.Supplier;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class GenericSettings {
@@ -87,6 +90,33 @@ public class GenericSettings {
 
     public void unset(String key) {
         pref.edit().remove(key).apply();
+    }
+
+    /** @return a snapshot of all stored values (e.g. for a backup) */
+    public Map<String, ?> getAll() {
+        return new HashMap<>(pref.getAll());
+    }
+
+    /**
+     * Removes and sets several values in one synchronous commit (e.g. restoring a backup).
+     * Supported value types: Boolean, Integer, Long, Float, String and Set of String.
+     *
+     * @return whether the values were written
+     */
+    @SuppressWarnings("unchecked")
+    public boolean applyAll(Map<String, ?> values, Collection<String> keysToRemove) {
+        SharedPreferences.Editor editor = pref.edit();
+        for (String key : keysToRemove) editor.remove(key);
+        for (Map.Entry<String, ?> e : values.entrySet()) {
+            Object v = e.getValue();
+            if (v instanceof Boolean) editor.putBoolean(e.getKey(), (Boolean) v);
+            else if (v instanceof Integer) editor.putInt(e.getKey(), (Integer) v);
+            else if (v instanceof Long) editor.putLong(e.getKey(), (Long) v);
+            else if (v instanceof Float) editor.putFloat(e.getKey(), (Float) v);
+            else if (v instanceof String) editor.putString(e.getKey(), (String) v);
+            else if (v instanceof Set) editor.putStringSet(e.getKey(), (Set<String>) v);
+        }
+        return editor.commit();
     }
 
 }

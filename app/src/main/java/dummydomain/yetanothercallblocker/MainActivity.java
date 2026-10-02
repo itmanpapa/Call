@@ -60,6 +60,7 @@ public class MainActivity extends BaseActivity {
     private AsyncTask<Void, Void, Boolean> checkMainDbTask;
 
     private SetupCheckBanner setupCheckBanner;
+    private StatsSummaryCard statsSummaryCard;
 
     private boolean activityFirstStart = true;
 
@@ -102,6 +103,7 @@ public class MainActivity extends BaseActivity {
         })).attachToRecyclerView(recyclerView);
 
         setupCheckBanner = new SetupCheckBanner(this, findViewById(R.id.setup_banner));
+        statsSummaryCard = new StatsSummaryCard(this, findViewById(R.id.stats_card));
 
         callLogDsFactory = new CallLogDataSource.Factory(getCallLogGroupConverter());
 
@@ -184,6 +186,7 @@ public class MainActivity extends BaseActivity {
         checkPermissions();
 
         setupCheckBanner.refresh();
+        statsSummaryCard.refresh();
 
         updateCallLogVisibility();
         if (activityFirstStart) {
@@ -205,6 +208,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         cancelCheckMainDbTask();
         setupCheckBanner.shutdown();
+        statsSummaryCard.shutdown();
 
         super.onDestroy();
     }
@@ -229,6 +233,7 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onCallEvent(CallEndedEvent event) {
         new Handler(getMainLooper()).postDelayed(this::reloadCallLog, 1000);
+        new Handler(getMainLooper()).postDelayed(statsSummaryCard::refresh, 1000);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)

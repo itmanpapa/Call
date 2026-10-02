@@ -34,6 +34,26 @@ add_call "+4940555000" 2 300 61
 add_call "+441632960001" 3 1500 0
 echo "call log rows: $(adb shell content query --uri content://call_log/calls --projection number | grep -c Row)"
 
+# sample statistics so that the statistics screen is not empty (the debug build allows
+# run-as; the app keeps its files in the device-protected storage)
+seed_stats() {
+    local numbers=("+4930901820" "+4917612345678" "+441632960001" "+4990012345" "")
+    local reasons=("LIST,bnetza" "RATING,yacb" "RULE," "BLACKLIST," "HIDDEN,")
+    local data="format,callguard-call-events,1" d k n
+    for d in $(seq 29 -1 0); do
+        n=$(( (d * 7 + 3) % 5 ))
+        for k in $(seq 1 "$n"); do
+            local i=$(( (d + k) % 5 ))
+            data="$data"$'\n'"c,$(( now - d * 86400000 - k * 3600000 )),${numbers[$i]},BLOCKED,${reasons[$i]}"
+        done
+        data="$data"$'\n'"c,$(( now - d * 86400000 - 1800000 )),+4989123456,ALLOWED,NONE,"
+    done
+    local dir="/data/user_de/0/$PKG/files/stats"
+    echo "$data" | adb shell "run-as $PKG sh -c 'mkdir -p $dir && cat > $dir/call_events.csv'" \
+        || echo "could not seed the statistics"
+}
+seed_stats
+
 shot() {
     sleep 3
     adb exec-out screencap -p > "$OUT/$1.png"
@@ -87,6 +107,7 @@ capture_all() { # suffix
         adb shell input keyevent KEYCODE_BACK
     }
     tap_text_scroll "Blocking rules" && sleep 1 && shot "10_rules_$1" && adb shell input keyevent KEYCODE_BACK
+    tap_text_scroll "Statistics" && sleep 2 && shot "12_stats_$1" && adb shell input keyevent KEYCODE_BACK
     # the setup check is the first entry of the settings
     tap_text "Settings"
     tap_text "Setup check" && sleep 2 && shot "09_setup_check_$1" && adb shell input keyevent KEYCODE_BACK

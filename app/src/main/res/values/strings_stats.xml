@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Call statistics ("Statistics" screen, StatsActivity, card at the top of the call log) -->
+<resources>
+    <string name="stats_title">Statistics</string>
+    <string name="stats_preference_summary">Blocked calls by day, reason and source</string>
+
+    <string name="stats_summary_card">Blocked in 7 days: %1$d</string>
+    <string name="stats_summary_card_hint">Tap to see the statistics</string>
+
+    <string name="stats_dash" translatable="false">—</string>
+    <string name="stats_today">Today</string>
+    <string name="stats_7_days">7 days</string>
+    <string name="stats_30_days">30 days</string>
+    <string name="stats_blocked">blocked</string>
+
+    <string name="stats_chart_title">Blocked calls in the last 30 days</string>
+    <string name="stats_chart_description">Bar chart of blocked calls per day, %1$d in the last 30 days, at most %2$d per day</string>
+
+    <string name="stats_period_30">30 days</string>
+    <string name="stats_period_year">Year</string>
+
+    <string name="stats_by_reason">By reason</string>
+    <string name="stats_by_source">By source</string>
+    <string name="stats_top_numbers">Blocked most often</string>
+    <string name="stats_list_empty">No blocked calls in this period.</string>
+    <string name="stats_top_numbers_hint">Tap a number to see what is known about it.</string>
+
+    <string name="stats_reason_blacklist">Blacklist</string>
+    <string name="stats_reason_rating">Community rating</string>
+    <string name="stats_reason_list">Lists and online sources</string>
+    <string name="stats_reason_rule">Blocking rules</string>
+    <string name="stats_reason_user_mark">My mark</string>
+    <string name="stats_reason_hidden">Hidden number</string>
+    <string name="stats_reason_contact">Contact</string>
+    <string name="stats_reason_other">Other</string>
+
+    <string name="stats_source_yacb">YACB database</string>
+    <string name="stats_source_user_mark">My mark</string>
+
+    <string name="stats_empty">No calls recorded yet. Incoming calls are counted from now on.</string>
+    <string name="stats_note">Calls handled in the last year: %1$d, blocked: %2$d. The statistics are kept on this device only, for 365 days.</string>
+
+    <string name="stats_clear">Clear statistics</string>
+    <string name="stats_clear_confirm">Delete all recorded calls? The call log and the blacklist are not affected.</string>
+    <string name="stats_clear_button">Clear</string>
+    <string name="stats_load_failed">The statistics could not be read.</string>
+</resources>
