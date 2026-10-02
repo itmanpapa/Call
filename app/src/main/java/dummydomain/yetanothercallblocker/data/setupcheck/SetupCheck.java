@@ -129,6 +129,10 @@ public final class SetupCheck {
         }
 
         items.addAll(checkSources(env));
+
+        CheckItem update = checkAppUpdate(env);
+        if (update != null) items.add(update);
+
         return new Result(items);
     }
 
@@ -257,6 +261,14 @@ public final class SetupCheck {
         }
         return new CheckItem(Type.BATTERY, Status.INFO, Reason.BATTERY_OPTIMIZED,
                 Action.OPEN_BATTERY_SETTINGS);
+    }
+
+    /** @return the "update available" hint, or null if no newer version is known */
+    static CheckItem checkAppUpdate(SetupCheckEnvironment env) {
+        String version = env.getAvailableAppUpdate();
+        if (version == null || version.isEmpty()) return null;
+        return new CheckItem(Type.APP_UPDATE, Status.INFO, Reason.APP_UPDATE_AVAILABLE,
+                Action.OPEN_APP_UPDATE, null, -1, version);
     }
 
     static List<CheckItem> checkSources(SetupCheckEnvironment env) {

@@ -84,6 +84,14 @@ public interface SetupCheckEnvironment {
     /** @return the number sources in display order */
     List<Source> getSources();
 
+    /**
+     * @return the version of a newer app release found by the last update check,
+     * or null if none is known
+     */
+    default String getAvailableAppUpdate() {
+        return null;
+    }
+
     /** State of one number source, as far as the check is concerned. Immutable. */
     final class Source {
 

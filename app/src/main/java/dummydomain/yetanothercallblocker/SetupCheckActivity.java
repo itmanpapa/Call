@@ -258,6 +258,9 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
         if (source != null) {
             title.setText(source.getName());
             text.setText(describeSource(item, source));
+        } else if (item.getReason() == CheckItem.Reason.APP_UPDATE_AVAILABLE) {
+            title.setText(getString(R.string.update_available_title, item.getDetail()));
+            text.setText(R.string.update_setup_check_text);
         } else {
             title.setText(titleFor(item.getReason()));
             text.setText(explanationFor(item.getReason()));
@@ -368,6 +371,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 }
                 break;
 
+            case OPEN_APP_UPDATE:
+                startActivity(UpdateActivity.getIntent(this));
+                break;
+
             case OPEN_SOURCE:
                 if (item.getSource() != null) {
                     startActivity(SourceDetailsActivity.getIntent(this,
@@ -459,6 +466,8 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 return R.string.setup_check_action_update;
             case OPEN_SOURCE:
                 return R.string.setup_check_action_details;
+            case OPEN_APP_UPDATE:
+                return R.string.update_action_open;
             default:
                 return 0;
         }

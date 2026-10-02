@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_screen_title">App-Update</string>
+    <string name="update_check_button">Nach Updates suchen</string>
+    <string name="update_check_pref">Nach Updates suchen</string>
+    <string name="update_check_pref_summary">Täglich auf GitHub nach einer neuen Version der App suchen und eine Benachrichtigung anzeigen</string>
+    <string name="update_check_pref_summary_debug">Debug-Build: Updates werden nur manuell gesucht (Über → Nach Updates suchen)</string>
+    <string name="update_available_title">Version %s ist verfügbar</string>
+    <string name="update_notification_text">Tippen, um die Neuerungen zu sehen und das Update zu installieren</string>
+    <string name="update_notification_channel">App-Updates</string>
+    <string name="update_notification_channel_description">Neue Versionen der App</string>
+    <string name="update_installed_version">Installiert: %s</string>
+    <string name="update_latest_version">Neueste Version: %s</string>
+    <string name="update_last_check">Letzte Suche nach Updates: %s</string>
+    <string name="update_checking">Suche nach Updates…</string>
+    <string name="update_check_failed">Suche nach Updates fehlgeschlagen</string>
+    <string name="update_no_releases">Noch keine Releases veröffentlicht</string>
+    <string name="update_up_to_date">Sie haben die neueste Version</string>
+    <string name="update_release_notes">Neuerungen</string>
+    <string name="update_download_and_install">Herunterladen und installieren</string>
+    <string name="update_install">Installieren</string>
+    <string name="update_retry">Erneut versuchen</string>
+    <string name="update_open_release_page">Release-Seite öffnen</string>
+    <string name="update_action_open">Aktualisieren</string>
+    <string name="update_downloading">Wird heruntergeladen…</string>
+    <string name="update_downloading_progress">Wird heruntergeladen: %1$s von %2$s</string>
+    <string name="update_downloaded">Heruntergeladen. Tippen Sie auf „Installieren“ und bestätigen Sie die Installation.</string>
+    <string name="update_download_failed">Download fehlgeschlagen: %s</string>
+    <string name="update_no_apk">Dieses Release enthält keine APK-Datei. Öffnen Sie die Release-Seite, um sie manuell herunterzuladen.</string>
+    <string name="update_no_browser">Keine App zum Öffnen des Links gefunden</string>
+    <string name="update_install_failed">Die Installation konnte nicht gestartet werden. Öffnen Sie die Release-Seite und installieren Sie die APK manuell.</string>
+    <string name="update_error_rate_limit">GitHub begrenzt vorübergehend die Anfragen. Versuchen Sie es später erneut.</string>
+    <string name="update_error_not_apk">Die heruntergeladene Datei ist kein gültiges App-Paket</string>
+    <string name="update_error_wrong_package">Die heruntergeladene Datei ist kein Update dieser App</string>
+    <string name="update_permission_title">Installation von Updates erlauben</string>
+    <string name="update_permission_message">Um das Update zu installieren, muss Android dieser App erlauben, Apps zu installieren. Aktivieren Sie auf dem nächsten Bildschirm „Dieser Quelle vertrauen“ und kehren Sie zurück: Die Installation wird automatisch fortgesetzt.\n\nDas Update wird nur installiert, wenn es mit demselben Schlüssel signiert ist wie die installierte App.</string>
+    <string name="update_permission_open_settings">Einstellungen öffnen</string>
+    <string name="update_setup_check_text">Auf GitHub ist eine neue Version der App verfügbar. Updates enthalten Fehlerbehebungen und Verbesserungen.</string>
+</resources>

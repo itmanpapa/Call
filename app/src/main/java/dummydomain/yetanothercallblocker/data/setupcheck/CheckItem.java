@@ -19,7 +19,9 @@ public final class CheckItem {
         /** No source is enabled at all. */
         SOURCES,
         /** One number source, see {@link #getSource()}. */
-        SOURCE
+        SOURCE,
+        /** A newer version of the app is available, see {@link #getDetail()}. */
+        APP_UPDATE
     }
 
     /** Outcome, from best to worst. Only warnings and errors count as problems. */
@@ -75,7 +77,9 @@ public final class CheckItem {
         SOURCE_NOT_CONFIGURED,
         SOURCE_NEVER,
         SOURCE_ERROR,
-        SOURCE_STALE
+        SOURCE_STALE,
+
+        APP_UPDATE_AVAILABLE
     }
 
     /** What the fix button does. */
@@ -92,7 +96,9 @@ public final class CheckItem {
         /** Update the source now. */
         UPDATE_SOURCE,
         /** Open the details of the source (key, settings, switch). */
-        OPEN_SOURCE
+        OPEN_SOURCE,
+        /** Open the app update screen. */
+        OPEN_APP_UPDATE
     }
 
     private final Type type;
@@ -101,6 +107,7 @@ public final class CheckItem {
     private final Action action;
     private final SetupCheckEnvironment.Source source;
     private final long ageDays;
+    private final String detail;
 
     CheckItem(Type type, Status status, Reason reason, Action action) {
         this(type, status, reason, action, null, -1);
@@ -108,12 +115,18 @@ public final class CheckItem {
 
     CheckItem(Type type, Status status, Reason reason, Action action,
               SetupCheckEnvironment.Source source, long ageDays) {
+        this(type, status, reason, action, source, ageDays, null);
+    }
+
+    CheckItem(Type type, Status status, Reason reason, Action action,
+              SetupCheckEnvironment.Source source, long ageDays, String detail) {
         this.type = type;
         this.status = status;
         this.reason = reason;
         this.action = action;
         this.source = source;
         this.ageDays = ageDays;
+        this.detail = detail;
     }
 
     public Type getType() {
@@ -143,6 +156,14 @@ public final class CheckItem {
      */
     public long getAgeDays() {
         return ageDays;
+    }
+
+    /**
+     * @return an additional value for the text of the finding (the available version
+     * of an {@link Type#APP_UPDATE} item), or null
+     */
+    public String getDetail() {
+        return detail;
     }
 
     /** @return a stable key of the finding, used to remember dismissed warnings */
