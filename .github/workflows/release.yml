@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag, e.g. v0.9.0 (empty: v + versionName from app/build.gradle)'
+        description: 'Release name/tag, e.g. v0.10.0 (empty: v + versionName from app/build.gradle); the code is taken from the selected branch'
         required: false
       ref:
         description: 'Optional branch/commit to build instead of the tag'
@@ -32,7 +32,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref || inputs.tag || github.event.release.tag_name || github.ref }}
+          # manual runs build the selected branch (the tag may not exist yet);
+          # tag pushes and published releases build the tag
+          ref: ${{ inputs.ref || (github.event_name == 'workflow_dispatch' && github.ref) || github.event.release.tag_name || github.ref }}
 
       - name: Determine the release tag
         run: |
