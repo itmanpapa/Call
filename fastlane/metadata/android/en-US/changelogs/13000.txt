@@ -1,0 +1,6 @@
+* Spam SMS warnings (optional): warns about SMS from numbers known as spam
+* Security: updates are installed only if signed with the same key; downloads only from GitHub over HTTPS
+* Fixed a crash when screening a call failed; safer backup restore
+* Phone numbers are no longer written to the app log
+* Separate F-Droid build without the self-updater
+* Optional "Buy me a coffee" button

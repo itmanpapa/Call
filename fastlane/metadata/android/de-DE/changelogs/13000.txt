@@ -1,0 +1,6 @@
+* Warnungen vor Spam-SMS (optional) von bekannten Spam-Nummern
+* Sicherheit: Updates werden nur mit derselben Signatur installiert, Downloads nur von GitHub über HTTPS
+* Absturz bei fehlgeschlagener Anrufprüfung behoben; sichereres Wiederherstellen von Backups
+* Telefonnummern werden nicht mehr ins App-Protokoll geschrieben
+* Eigene F-Droid-Version ohne Selbst-Update
+* Optionaler „Kaffee spendieren“-Knopf

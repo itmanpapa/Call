@@ -15,10 +15,10 @@
 
 ## 0. Подготовка (обязательно до подачи)
 
-1. **Выпустить версию 0.12.1.** В теге `v0.12.0` ещё нет варианта `fdroid` — F-Droid соберёт
-   только тег, где он есть. В `app/build.gradle` поставить `versionName "0.12.1"`,
-   `versionCode 12010`, добавить `fastlane/metadata/android/{en-US,de-DE,ru}/changelogs/12010.txt`
-   (до 500 символов), выпустить релиз как обычно (тег `v0.12.1`). Проверить, что в релизе два APK.
+1. **Выпустить версию 0.13.0.** В теге `v0.12.0` ещё нет варианта `fdroid` — F-Droid соберёт
+   только тег, где он есть. В `app/build.gradle` поставить `versionName "0.13.0"`,
+   `versionCode 13000`, добавить `fastlane/metadata/android/{en-US,de-DE,ru}/changelogs/13000.txt`
+   (до 500 символов), выпустить релиз как обычно (тег `v0.13.0`). Проверить, что в релизе два APK.
    Если версия будет другой — поправить `versionName`/`versionCode`/`commit` в yml.
 2. **Удалить старые описания YACB** из `fastlane/metadata/android/`: папки `ca el eo es fi fr gl he hr
    it nb_NO nl pl pt pt_BR sv tr uk zh-CN zh-TW` и старые `changelogs/3020…5170.txt` в `en-US` и `ru`.
@@ -82,7 +82,7 @@ IzzyOnDroid не собирает из исходников, а берёт на�
 самообновление допустимо только строго по согласию пользователя (opt-in). Поэтому для IzzyOnDroid
 просим брать APK варианта `fdroid`.
 
-1. Убедиться, что в релизе v0.12.1 есть `callguard_fdroid-v0.12.1.apk`.
+1. Убедиться, что в релизе v0.13.0 есть `callguard_fdroid-v0.13.0.apk`.
 2. Открыть issue «[AppRequest] CallGuard» в https://codeberg.org/IzzyOnDroid/repodata/issues
    (трекер переехал с GitLab на Codeberg; нужен аккаунт codeberg.org), шаблон App Request.
    Указать: репозиторий https://github.com/itmanpapa/Call, applicationId `de.itmanpapa.callblocker`,
@@ -110,7 +110,7 @@ IzzyOnDroid не собирает из исходников, а берёт на�
 `callguard_fdroid-v%v.apk`) и `AllowedAPKSigningKeys:` (SHA-256 сертификата, строчными, без двоеточий):
 
 ```
-keytool -printcert -jarfile callguard_fdroid-v0.12.1.apk | sed -n 's/[[:space:]]*SHA256: //p' | tr -d ':' | tr '[:upper:]' '[:lower:]'
+keytool -printcert -jarfile callguard_fdroid-v0.13.0.apk | sed -n 's/[[:space:]]*SHA256: //p' | tr -d ':' | tr '[:upper:]' '[:lower:]'
 ```
 
 Не проверено: совпадёт ли наша сборка (GitHub Actions, temurin 17) со сборкой F-Droid (Debian,
