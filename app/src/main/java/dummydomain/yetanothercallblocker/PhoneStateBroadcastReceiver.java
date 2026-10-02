@@ -44,7 +44,7 @@ public class PhoneStateBroadcastReceiver extends BroadcastReceiver {
         String telephonyExtraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
         String incomingNumber = intent.getStringExtra(extraIncomingNumber);
         boolean hasNumberExtra = intent.hasExtra(extraIncomingNumber);
-        LOG.info("onReceive() extraState={}, incomingNumber={}, hasNumberExtra={}",
+        LOG.debug("onReceive() extraState={}, incomingNumber={}, hasNumberExtra={}",
                 telephonyExtraState, quote(incomingNumber), hasNumberExtra);
 
         extraLogging(intent); // TODO: make optional or remove
