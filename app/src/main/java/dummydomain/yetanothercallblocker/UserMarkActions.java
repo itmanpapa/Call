@@ -49,9 +49,23 @@ public class UserMarkActions {
      * @return the change, or null if the number is hidden or saving failed
      */
     public static Change setMark(NumberInfo numberInfo, UserMark.Type type) {
+        return setMark(numberInfo, type, false);
+    }
+
+    /**
+     * Like {@link #setMark(NumberInfo, UserMark.Type)}; also queues the PhoneBlock report.
+     *
+     * @param deferSpam true if the caller asks for the PhoneBlock category of a SPAM mark
+     *                  itself ({@link PhoneBlockReportDialogs#afterMarkChanged})
+     */
+    public static Change setMark(NumberInfo numberInfo, UserMark.Type type, boolean deferSpam) {
         if (numberInfo == null || numberInfo.noNumber) return null;
-        Change change = setMark(getMarkKey(numberInfo), numberInfo.number, type);
-        if (change != null) numberInfo.userMark = change.current;
+        Change change = saveMark(getMarkKey(numberInfo), numberInfo.number, type);
+        if (change != null) {
+            numberInfo.userMark = change.current;
+            PhoneBlockReports.onMarkChanged(change.number, numberInfo.number, type,
+                    numberInfo.contactItem != null, deferSpam);
+        }
         return change;
     }
 
@@ -65,6 +79,14 @@ public class UserMarkActions {
      * @return the change, or null if saving failed
      */
     public static Change setMark(String key, String rawNumber, UserMark.Type type) {
+        Change change = saveMark(key, rawNumber, type);
+        if (change != null) {
+            PhoneBlockReports.onMarkChanged(change.number, rawNumber, type, false, false);
+        }
+        return change;
+    }
+
+    private static Change saveMark(String key, String rawNumber, UserMark.Type type) {
         UserMarksStore store = YacbHolder.getUserMarksStore();
         if (store == null || UserMarksStore.normalizeKey(key) == null) return null;
 
@@ -100,6 +122,8 @@ public class UserMarkActions {
                 store.remove(change.number);
             }
             store.restore(change.number, change.previous);
+            PhoneBlockReports.onMarkChanged(change.number, null,
+                    change.previous != null ? change.previous.getType() : null, false, false);
             return true;
         } catch (Exception e) {
             LOG.error("undo() failed", e);

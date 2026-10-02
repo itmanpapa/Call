@@ -61,6 +61,8 @@ public class App extends Application {
             // WorkManager keeps its database in the credential-protected storage
             if (SystemUtils.isUserUnlocked(this)) {
                 PhoneBlockSyncWorker.updateSchedule(this, false);
+                // reports of marks queued while WorkManager was unavailable
+                PhoneBlockReports.scheduleIfPending(this);
             }
         } catch (Exception e) {
             LOG.warn("onCreate() failed to schedule the PhoneBlock sync", e);

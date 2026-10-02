@@ -191,21 +191,26 @@ public class InfoDialogHelper {
         bind.run();
 
         spamButton.setOnClickListener(v -> {
-            toggleUserMark(context, numberInfo, UserMark.Type.SPAM);
+            toggleUserMark(context, numberInfo, UserMark.Type.SPAM, bind);
             bind.run();
         });
         notSpamButton.setOnClickListener(v -> {
-            toggleUserMark(context, numberInfo, UserMark.Type.NOT_SPAM);
+            toggleUserMark(context, numberInfo, UserMark.Type.NOT_SPAM, bind);
             bind.run();
         });
     }
 
     /** Sets the mark, or clears it if the number already has a mark of this type. */
-    private static void toggleUserMark(Context context, NumberInfo numberInfo, UserMark.Type type) {
+    private static void toggleUserMark(Context context, NumberInfo numberInfo, UserMark.Type type,
+                                       Runnable onReportChanged) {
         UserMark current = numberInfo.userMark;
         UserMark.Type newType = current != null && current.getType() == type ? null : type;
 
-        UserMarkActions.Change change = UserMarkActions.setMark(numberInfo, newType);
+        // the PhoneBlock category of a SPAM mark is asked in a dialog
+        UserMarkActions.Change change = UserMarkActions.setMark(numberInfo, newType, true);
+        if (change != null) {
+            PhoneBlockReportDialogs.afterMarkChanged(context, numberInfo, newType, onReportChanged);
+        }
 
         int messageResId;
         if (change == null) {
@@ -228,13 +233,17 @@ public class InfoDialogHelper {
         if (mark != null) {
             String date = android.text.format.DateFormat.getDateFormat(context)
                     .format(new Date(mark.getTimestamp()));
-            statusView.setText(context.getString(R.string.user_mark_status,
+            String status = context.getString(R.string.user_mark_status,
                     context.getString(mark.isSpam()
                             ? R.string.user_mark_spam : R.string.user_mark_not_spam),
-                    date));
+                    date);
+            String reportStatus = PhoneBlockReports.getStatusText(context, numberInfo);
+            statusView.setText(reportStatus != null ? status + "\n" + reportStatus : status);
             statusView.setVisibility(View.VISIBLE);
         } else {
-            statusView.setVisibility(View.GONE);
+            String reportStatus = PhoneBlockReports.getStatusText(context, numberInfo);
+            statusView.setText(reportStatus);
+            statusView.setVisibility(reportStatus != null ? View.VISIBLE : View.GONE);
         }
 
         // an explicit blacklist entry wins over the "not spam" mark

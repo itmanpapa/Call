@@ -69,6 +69,7 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
         String yacbInfo;
         long phoneBlockLastSync;
         boolean phoneBlockOnlineEnabled;
+        PhoneBlockReportSection.Counts phoneBlockReports;
     }
 
     private final SourcesManager sourcesManager = YacbHolder.getSourcesManager();
@@ -80,6 +81,7 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
     private boolean binding;
     private boolean tokenShown;
     private boolean verifyingKey;
+    private PhoneBlockReportSection reportSection;
 
     private TextView descriptionView;
     private TextView statusView;
@@ -232,6 +234,7 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
                 PhoneBlockSync sync = YacbHolder.getPhoneBlockSync();
                 d.phoneBlockLastSync = sync != null ? sync.getStatus().getLastSync() : 0;
                 d.phoneBlockOnlineEnabled = sourcesManager.isEnabled(PhoneBlockOnlineProvider.ID);
+                d.phoneBlockReports = PhoneBlockReportSection.load();
                 break;
 
             default:
@@ -391,6 +394,7 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
 
     private void initPhoneBlock() {
         findViewById(R.id.phoneblock_section).setVisibility(View.VISIBLE);
+        reportSection = new PhoneBlockReportSection(this, findViewById(R.id.phoneblock_section));
 
         findViewById(R.id.phoneblock_get_token).setOnClickListener(v ->
                 openUrl(PhoneBlockClient.TOKEN_PAGE_URL));
@@ -449,6 +453,8 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
         online.setChecked(d.phoneBlockOnlineEnabled);
         // the online check is a part of PhoneBlock and needs the key
         online.setEnabled(hasToken && d.item.enabled);
+
+        if (reportSection != null) reportSection.bind(d.phoneBlockReports, hasToken);
     }
 
     private void onSaveKeyClicked() {
@@ -493,6 +499,8 @@ public class SourceDetailsActivity extends BaseActivity implements SourceTasks.L
                     LOG.warn("onSaveKeyClicked() failed to schedule the sync", e);
                 }
                 startPhoneBlockSync(appContext);
+                // reports that failed with the old key
+                PhoneBlockReports.scheduleIfPending(appContext);
             } catch (Exception e) {
                 LOG.warn("onSaveKeyClicked() key check failed", e);
                 error = PhoneBlockHelper.describeError(appContext, e);

@@ -329,6 +329,9 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
+        // the first mark explains reporting to PhoneBlock
+        PhoneBlockReportDialogs.afterMarkChanged(this, numberInfo, UserMark.Type.NOT_SPAM, null);
+
         // the call log is reloaded by onUserMarksChanged()
         Snackbar.make(recyclerView, R.string.user_mark_set_not_spam, Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.base_bottom_navigation)

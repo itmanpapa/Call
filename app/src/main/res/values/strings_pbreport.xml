@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Send my marks to PhoneBlock" -->
+<resources>
+    <string name="pbreport_setting">Send my marks to PhoneBlock</string>
+    <string name="pbreport_setting_details">Numbers you mark as spam are rated on PhoneBlock (with the category you choose) and land on your PhoneBlock blacklist; \"not spam\" puts them on your whitelist. Removing a mark withdraws the report. Contacts and hidden numbers are never sent. Reports made offline are sent later.</string>
+    <plurals name="pbreport_sent_count">
+        <item quantity="one">%d mark sent to PhoneBlock</item>
+        <item quantity="other">%d marks sent to PhoneBlock</item>
+    </plurals>
+    <plurals name="pbreport_pending_count">
+        <item quantity="one">%d waiting to be sent</item>
+        <item quantity="other">%d waiting to be sent</item>
+    </plurals>
+    <string name="pbreport_last_error">Last attempt failed: %1$s</string>
+    <string name="pbreport_auth_error">PhoneBlock rejected the API key (a key that may rate numbers is needed)</string>
+
+    <string name="pbreport_explain_title">Send your marks to PhoneBlock?</string>
+    <string name="pbreport_explain_message">PhoneBlock is a community spam list. With your API key, CallGuard can send the numbers you mark: spam as a rating (you choose the category), \"not spam\" as a legitimate number. This helps other users and adds the numbers to your personal PhoneBlock lists.\n\nOnly the number and the rating are sent, never contacts or hidden numbers. You can change this later in Databases → PhoneBlock.</string>
+    <string name="pbreport_explain_send">Send</string>
+    <string name="pbreport_explain_dont_send">Don\'t send</string>
+
+    <string name="pbreport_category_title">Report to PhoneBlock as</string>
+    <string name="pbreport_category_advertising">Advertising / spam</string>
+    <string name="pbreport_category_poll">Poll</string>
+    <string name="pbreport_category_fraud">Fraud</string>
+    <string name="pbreport_category_ping">Ping call (hung up at once)</string>
+    <string name="pbreport_category_gamble">Gambling / prize draw</string>
+    <string name="pbreport_category_other">Other</string>
+    <string name="pbreport_category_send">Send</string>
+    <string name="pbreport_category_dont_send">Don\'t send</string>
+
+    <string name="pbreport_status_sent">Sent to PhoneBlock</string>
+    <string name="pbreport_status_pending">Waiting to be sent to PhoneBlock</string>
+    <string name="pbreport_status_pending_inactive">Not sent to PhoneBlock: no API key</string>
+    <string name="pbreport_status_rejected">PhoneBlock did not accept this number</string>
+</resources>
