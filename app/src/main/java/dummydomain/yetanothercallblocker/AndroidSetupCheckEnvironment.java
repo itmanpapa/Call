@@ -71,6 +71,16 @@ class AndroidSetupCheckEnvironment implements SetupCheckEnvironment {
     }
 
     @Override
+    public String getAvailableAppUpdate() {
+        try {
+            return AppUpdateManager.get(context).getKnownUpdate();
+        } catch (Exception e) {
+            LOG.warn("getAvailableAppUpdate()", e);
+            return null;
+        }
+    }
+
+    @Override
     public boolean hasCallScreeningRole() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
                 && PermissionHelper.isCallScreeningHeld(context);

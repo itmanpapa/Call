@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App updates from GitHub Releases (AppUpdateManager, UpdateActivity, UpdateCheckWorker) -->
+    <string name="update_screen_title">App update</string>
+    <string name="update_check_button">Check for updates</string>
+    <string name="update_check_pref">Check for updates</string>
+    <string name="update_check_pref_summary">Check GitHub daily for a new version of the app and show a notification</string>
+    <string name="update_check_pref_summary_debug">Debug build: updates are only checked manually (About → Check for updates)</string>
+    <string name="update_available_title">Version %s is available</string>
+    <string name="update_notification_text">Tap to see what\'s new and install the update</string>
+    <string name="update_notification_channel">App updates</string>
+    <string name="update_notification_channel_description">New versions of the app</string>
+    <string name="update_installed_version">Installed: %s</string>
+    <string name="update_latest_version">Latest version: %s</string>
+    <string name="update_last_check">Last update check: %s</string>
+    <string name="update_checking">Checking for updates…</string>
+    <string name="update_check_failed">Couldn\'t check for updates</string>
+    <string name="update_no_releases">No releases published yet</string>
+    <string name="update_up_to_date">You have the latest version</string>
+    <string name="update_release_notes">What\'s new</string>
+    <string name="update_download_and_install">Download and install</string>
+    <string name="update_install">Install</string>
+    <string name="update_retry">Try again</string>
+    <string name="update_open_release_page">Open release page</string>
+    <string name="update_action_open">Update</string>
+    <string name="update_downloading">Downloading…</string>
+    <string name="update_downloading_progress">Downloading: %1$s of %2$s</string>
+    <string name="update_downloaded">Downloaded. Tap \"Install\" and confirm the installation.</string>
+    <string name="update_download_failed">Download failed: %s</string>
+    <string name="update_no_apk">This release has no APK file. Open the release page to download it manually.</string>
+    <string name="update_no_browser">No app found to open the link</string>
+    <string name="update_install_failed">Couldn\'t start the installation. Open the release page and install the APK manually.</string>
+    <string name="update_error_rate_limit">GitHub temporarily limits requests. Try again later.</string>
+    <string name="update_error_not_apk">The downloaded file is not a valid app package</string>
+    <string name="update_error_wrong_package">The downloaded file is not an update of this app</string>
+    <string name="update_permission_title">Allow installing updates</string>
+    <string name="update_permission_message">To install the update, Android needs your permission for this app to install apps. On the next screen, turn on \"Allow from this source\", then come back: the installation continues automatically.\n\nThe update is only installed if it is signed with the same key as the installed app.</string>
+    <string name="update_permission_open_settings">Open settings</string>
+    <string name="update_setup_check_text">A new version of the app is available on GitHub. Updates contain fixes and improvements.</string>
+</resources>

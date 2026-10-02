@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_screen_title">Обновление приложения</string>
+    <string name="update_check_button">Проверить обновления</string>
+    <string name="update_check_pref">Проверять обновления</string>
+    <string name="update_check_pref_summary">Раз в день проверять новую версию приложения на GitHub и показывать уведомление</string>
+    <string name="update_check_pref_summary_debug">Отладочная сборка: обновления проверяются только вручную («О приложении» → «Проверить обновления»)</string>
+    <string name="update_available_title">Доступна версия %s</string>
+    <string name="update_notification_text">Нажмите, чтобы посмотреть изменения и установить обновление</string>
+    <string name="update_notification_channel">Обновления приложения</string>
+    <string name="update_notification_channel_description">Новые версии приложения</string>
+    <string name="update_installed_version">Установлена: %s</string>
+    <string name="update_latest_version">Последняя версия: %s</string>
+    <string name="update_last_check">Последняя проверка обновлений: %s</string>
+    <string name="update_checking">Проверка обновлений…</string>
+    <string name="update_check_failed">Не удалось проверить обновления</string>
+    <string name="update_no_releases">Релизов пока нет</string>
+    <string name="update_up_to_date">У вас последняя версия</string>
+    <string name="update_release_notes">Что нового</string>
+    <string name="update_download_and_install">Скачать и установить</string>
+    <string name="update_install">Установить</string>
+    <string name="update_retry">Повторить</string>
+    <string name="update_open_release_page">Открыть страницу релиза</string>
+    <string name="update_action_open">Обновить</string>
+    <string name="update_downloading">Загрузка…</string>
+    <string name="update_downloading_progress">Загрузка: %1$s из %2$s</string>
+    <string name="update_downloaded">Загружено. Нажмите «Установить» и подтвердите установку.</string>
+    <string name="update_download_failed">Ошибка загрузки: %s</string>
+    <string name="update_no_apk">В этом релизе нет APK-файла. Откройте страницу релиза, чтобы скачать его вручную.</string>
+    <string name="update_no_browser">Не найдено приложение для открытия ссылки</string>
+    <string name="update_install_failed">Не удалось запустить установку. Откройте страницу релиза и установите APK вручную.</string>
+    <string name="update_error_rate_limit">GitHub временно ограничил число запросов. Повторите позже.</string>
+    <string name="update_error_not_apk">Загруженный файл не является пакетом приложения</string>
+    <string name="update_error_wrong_package">Загруженный файл не является обновлением этого приложения</string>
+    <string name="update_permission_title">Разрешите установку обновлений</string>
+    <string name="update_permission_message">Чтобы установить обновление, Android должен разрешить этому приложению устанавливать приложения. На следующем экране включите «Разрешить установку из этого источника» и вернитесь: установка продолжится автоматически.\n\nОбновление установится, только если оно подписано тем же ключом, что и установленное приложение.</string>
+    <string name="update_permission_open_settings">Открыть настройки</string>
+    <string name="update_setup_check_text">На GitHub доступна новая версия приложения. В обновлениях — исправления и улучшения.</string>
+</resources>

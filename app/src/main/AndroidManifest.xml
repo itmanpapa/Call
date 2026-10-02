@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- the caller ID card over the incoming call screen (CallerIdOverlay) -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- installing app updates downloaded from GitHub Releases (UpdateActivity) -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <queries>
         <intent>
@@ -144,6 +146,15 @@
                 <action android:name="android.intent.action.DIAL" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".UpdateActivity"
+            android:label="@string/update_screen_title"
+            android:launchMode="singleTop"
+            android:parentActivityName=".AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AboutActivity" />
         </activity>
         <activity
             android:name=".AboutActivity"

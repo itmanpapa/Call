@@ -2,6 +2,10 @@
     <cache-path
         name="cache"
         path="./" />
+    <!-- downloaded app updates (AppUpdateManager.UPDATES_DIR) -->
+    <cache-path
+        name="updates"
+        path="updates/" />
     <external-files-path
         name="files"
         path="./" />

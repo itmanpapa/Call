@@ -17,6 +17,7 @@ import dummydomain.yetanothercallblocker.utils.DebuggingUtils;
 import dummydomain.yetanothercallblocker.utils.SystemUtils;
 import dummydomain.yetanothercallblocker.work.BnetzaUpdateWorker;
 import dummydomain.yetanothercallblocker.work.PhoneBlockSyncWorker;
+import dummydomain.yetanothercallblocker.work.UpdateCheckWorker;
 
 public class App extends Application {
 
@@ -72,6 +73,15 @@ public class App extends Application {
             }
         } catch (Exception e) {
             LOG.warn("onCreate() failed to schedule the Bundesnetzagentur list update", e);
+        }
+
+        try {
+            // daily check for a new app release (never in debug builds)
+            if (SystemUtils.isUserUnlocked(this)) {
+                UpdateCheckWorker.updateSchedule(this);
+            }
+        } catch (Exception e) {
+            LOG.warn("onCreate() failed to schedule the app update check", e);
         }
 
         setUiMode(settings.getUiMode());

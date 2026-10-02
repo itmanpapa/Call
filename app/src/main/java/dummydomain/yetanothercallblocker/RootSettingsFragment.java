@@ -13,6 +13,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import dummydomain.yetanothercallblocker.data.CallerIdOverlayPolicy;
 import dummydomain.yetanothercallblocker.utils.PackageManagerUtils;
+import dummydomain.yetanothercallblocker.work.UpdateCheckWorker;
 import dummydomain.yetanothercallblocker.work.UpdateScheduler;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -198,6 +199,16 @@ public class RootSettingsFragment extends BaseSettingsFragment {
             } else {
                 updateScheduler.cancelAutoUpdateWorker();
             }
+            return true;
+        });
+
+        SwitchPreferenceCompat appUpdateCheckPref =
+                requirePreference(AppUpdateManager.PREF_CHECK_ENABLED);
+        if (!AppUpdateManager.isAutoCheckAllowed()) {
+            appUpdateCheckPref.setSummary(R.string.update_check_pref_summary_debug);
+        }
+        appUpdateCheckPref.setOnPreferenceChangeListener((preference, newValue) -> {
+            UpdateCheckWorker.updateSchedule(requireContext(), Boolean.TRUE.equals(newValue));
             return true;
         });
 
