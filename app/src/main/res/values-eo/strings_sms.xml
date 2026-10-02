@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Kontroli SMS-sendintojn</string>
+    <string name="sms_warnings_pref_summary">Averti pri SMS de numeroj konataj kiel trudaĵoj. La aplikaĵo nur montras sciigon: ĝi ne povas bloki aŭ forigi mesaĝojn. La tekstoj de mesaĝoj nek konserviĝas nek sendiĝas ien.</string>
+    <string name="sms_link_warnings_pref">Averti pri suspektindaj ligiloj</string>
+    <string name="sms_link_warnings_pref_summary">Averti ankaŭ pri mesaĝoj kun mallongigitaj ligiloj (bit.ly kaj similaj) de nekonataj sendintoj. La teksto kontroliĝas nur en la aparato.</string>
+    <string name="sms_permission_denied">Sen SMS-permeso la aplikaĵo ne povas kontroli sendintojn</string>
+    <string name="sms_warning_channel">SMS-avertoj</string>
+    <string name="sms_warning_channel_description">Mesaĝoj de sendintoj konataj kiel trudaĵoj</string>
+    <string name="sms_warning_title">Eble truda SMS de %s</string>
+    <string name="sms_warning_link_hint">La mesaĝo enhavas ligilon: ne malfermu ĝin</string>
+    <string name="sms_warning_source_community">Komunuma datumbazo</string>
+    <string name="sms_warning_action_details">Detaloj</string>
+    <string name="sms_link_warning_title">Mesaĝo kun ligilo de %s</string>
+    <string name="sms_link_warning_text">Nekonata sendinto: estu singarda kaj ne malfermu la ligilon</string>
+    <string name="sms_link_warning_shortener">La mallongigita ligilo (%s) kaŝas la veran adreson</string>
+    <string name="setup_check_sms_active">SMS-sendintoj estas kontrolataj</string>
+    <string name="setup_check_sms_active_text">Mesaĝoj de numeroj konataj kiel trudaĵoj montras averton. SMS ne povas esti blokataj: tion povas nur la defaŭlta SMS-aplikaĵo.</string>
+    <string name="setup_check_sms_permission">SMS-kontrolo sen permeso</string>
+    <string name="setup_check_sms_permission_text">Permesu al la aplikaĵo ricevi SMS, alie ĝi ne povas averti pri trudmesaĝoj.</string>
+</resources>

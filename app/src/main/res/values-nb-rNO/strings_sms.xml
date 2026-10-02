@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Sjekk SMS-avsendere</string>
+    <string name="sms_warnings_pref_summary">Varsle om SMS fra numre som er kjent som spam. Appen viser bare et varsel: den kan ikke blokkere eller slette meldinger. Meldingstekster lagres eller sendes ikke noe sted.</string>
+    <string name="sms_link_warnings_pref">Varsle om mistenkelige lenker</string>
+    <string name="sms_link_warnings_pref_summary">Varsle også om meldinger med forkortede lenker (bit.ly og lignende) fra ukjente avsendere. Teksten sjekkes bare på enheten.</string>
+    <string name="sms_permission_denied">Uten SMS-tillatelse kan ikke appen sjekke avsendere</string>
+    <string name="sms_warning_channel">SMS-varsler</string>
+    <string name="sms_warning_channel_description">Meldinger fra avsendere som er kjent som spam</string>
+    <string name="sms_warning_title">Mulig søppel-SMS fra %s</string>
+    <string name="sms_warning_link_hint">Meldingen inneholder en lenke: ikke åpne den</string>
+    <string name="sms_warning_source_community">Fellesskapsdatabase</string>
+    <string name="sms_warning_action_details">Detaljer</string>
+    <string name="sms_link_warning_title">Melding med lenke fra %s</string>
+    <string name="sms_link_warning_text">Ukjent avsender: vær forsiktig og ikke åpne lenken</string>
+    <string name="sms_link_warning_shortener">Den forkortede lenken (%s) skjuler den virkelige adressen</string>
+    <string name="setup_check_sms_active">SMS-avsendere sjekkes</string>
+    <string name="setup_check_sms_active_text">Meldinger fra numre som er kjent som spam gir et varsel. SMS kan ikke blokkeres: det kan bare standard SMS-app.</string>
+    <string name="setup_check_sms_permission">SMS-sjekk mangler tillatelse</string>
+    <string name="setup_check_sms_permission_text">Gi appen tillatelse til å motta SMS, ellers kan den ikke varsle om søppelmeldinger.</string>
+</resources>

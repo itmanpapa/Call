@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Comprobar os remitentes de SMS</string>
+    <string name="sms_warnings_pref_summary">Avisar de SMS de números coñecidos como spam. A aplicación só mostra unha notificación: non pode bloquear nin borrar mensaxes. O texto das mensaxes non se garda nin se envía a ningures.</string>
+    <string name="sms_link_warnings_pref">Avisar de ligazóns sospeitosas</string>
+    <string name="sms_link_warnings_pref_summary">Avisar tamén de mensaxes con ligazóns acurtadas (bit.ly e similares) de remitentes descoñecidos. O texto só se comproba no dispositivo.</string>
+    <string name="sms_permission_denied">Sen o permiso de SMS a aplicación non pode comprobar os remitentes</string>
+    <string name="sms_warning_channel">Avisos de SMS</string>
+    <string name="sms_warning_channel_description">Mensaxes de remitentes coñecidos como spam</string>
+    <string name="sms_warning_title">Posible SMS de spam de %s</string>
+    <string name="sms_warning_link_hint">A mensaxe contén unha ligazón: non a abras</string>
+    <string name="sms_warning_source_community">Base de datos da comunidade</string>
+    <string name="sms_warning_action_details">Detalles</string>
+    <string name="sms_link_warning_title">Mensaxe cunha ligazón de %s</string>
+    <string name="sms_link_warning_text">Remitente descoñecido: ten coidado e non abras a ligazón</string>
+    <string name="sms_link_warning_shortener">A ligazón acurtada (%s) agocha o enderezo real</string>
+    <string name="setup_check_sms_active">Compróbanse os remitentes de SMS</string>
+    <string name="setup_check_sms_active_text">As mensaxes de números coñecidos como spam mostran un aviso. Os SMS non se poden bloquear: só pode facelo a aplicación de SMS predeterminada.</string>
+    <string name="setup_check_sms_permission">Comprobación de SMS sen permiso</string>
+    <string name="setup_check_sms_permission_text">Permite que a aplicación reciba SMS; doutro xeito non poderá avisar de mensaxes de spam.</string>
+</resources>

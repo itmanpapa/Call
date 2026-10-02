@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">בדיקת שולחי SMS</string>
+    <string name="sms_warnings_pref_summary">אזהרה על הודעות SMS ממספרים הידועים כספאם. האפליקציה רק מציגה התראה: היא לא יכולה לחסום או למחוק הודעות. תוכן ההודעות לא נשמר ולא נשלח לשום מקום.</string>
+    <string name="sms_link_warnings_pref">אזהרה על קישורים חשודים</string>
+    <string name="sms_link_warnings_pref_summary">אזהרה גם על הודעות עם קישורים מקוצרים (bit.ly וכדומה) משולחים לא ידועים. הטקסט נבדק רק במכשיר.</string>
+    <string name="sms_permission_denied">ללא הרשאת SMS האפליקציה לא יכולה לבדוק שולחים</string>
+    <string name="sms_warning_channel">אזהרות SMS</string>
+    <string name="sms_warning_channel_description">הודעות משולחים הידועים כספאם</string>
+    <string name="sms_warning_title">ייתכן שזו הודעת ספאם מ־%s</string>
+    <string name="sms_warning_link_hint">ההודעה מכילה קישור: אל תפתחו אותו</string>
+    <string name="sms_warning_source_community">מאגר הקהילה</string>
+    <string name="sms_warning_action_details">פרטים</string>
+    <string name="sms_link_warning_title">הודעה עם קישור מ־%s</string>
+    <string name="sms_link_warning_text">שולח לא ידוע: היזהרו ואל תפתחו את הקישור</string>
+    <string name="sms_link_warning_shortener">הקישור המקוצר (%s) מסתיר את הכתובת האמיתית</string>
+    <string name="setup_check_sms_active">שולחי SMS נבדקים</string>
+    <string name="setup_check_sms_active_text">הודעות ממספרים הידועים כספאם מציגות אזהרה. לא ניתן לחסום SMS: רק אפליקציית ה־SMS המוגדרת כברירת מחדל יכולה לעשות זאת.</string>
+    <string name="setup_check_sms_permission">לבדיקת SMS אין הרשאה</string>
+    <string name="setup_check_sms_permission_text">אפשרו לאפליקציה לקבל SMS, אחרת היא לא תוכל להזהיר מפני הודעות ספאם.</string>
+</resources>

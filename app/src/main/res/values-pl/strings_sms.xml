@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Sprawdzaj nadawców SMS</string>
+    <string name="sms_warnings_pref_summary">Ostrzegaj o SMS-ach z numerów znanych jako spam. Aplikacja tylko pokazuje powiadomienie: nie może blokować ani usuwać wiadomości. Treść wiadomości nie jest nigdzie zapisywana ani wysyłana.</string>
+    <string name="sms_link_warnings_pref">Ostrzegaj o podejrzanych linkach</string>
+    <string name="sms_link_warnings_pref_summary">Ostrzegaj także o wiadomościach ze skróconymi linkami (bit.ly i podobne) od nieznanych nadawców. Treść jest sprawdzana tylko na urządzeniu.</string>
+    <string name="sms_permission_denied">Bez uprawnienia SMS aplikacja nie może sprawdzać nadawców</string>
+    <string name="sms_warning_channel">Ostrzeżenia SMS</string>
+    <string name="sms_warning_channel_description">Wiadomości od nadawców znanych jako spam</string>
+    <string name="sms_warning_title">Możliwy spam SMS od %s</string>
+    <string name="sms_warning_link_hint">Wiadomość zawiera link: nie otwieraj go</string>
+    <string name="sms_warning_source_community">Baza społeczności</string>
+    <string name="sms_warning_action_details">Szczegóły</string>
+    <string name="sms_link_warning_title">Wiadomość z linkiem od %s</string>
+    <string name="sms_link_warning_text">Nieznany nadawca: zachowaj ostrożność i nie otwieraj linku</string>
+    <string name="sms_link_warning_shortener">Skrócony link (%s) ukrywa prawdziwy adres</string>
+    <string name="setup_check_sms_active">Nadawcy SMS są sprawdzani</string>
+    <string name="setup_check_sms_active_text">Wiadomości z numerów znanych jako spam wywołują ostrzeżenie. SMS-ów nie można blokować: może to zrobić tylko domyślna aplikacja SMS.</string>
+    <string name="setup_check_sms_permission">Sprawdzanie SMS bez uprawnienia</string>
+    <string name="setup_check_sms_permission_text">Zezwól aplikacji na odbieranie SMS, w przeciwnym razie nie będzie mogła ostrzegać o spamie.</string>
+</resources>

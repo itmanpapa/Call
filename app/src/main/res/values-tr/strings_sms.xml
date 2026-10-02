@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">SMS gönderenlerini denetle</string>
+    <string name="sms_warnings_pref_summary">Spam olarak bilinen numaralardan gelen SMS’ler için uyar. Uygulama yalnızca bildirim gösterir: mesajları engelleyemez veya silemez. Mesaj metinleri hiçbir yere kaydedilmez veya gönderilmez.</string>
+    <string name="sms_link_warnings_pref">Şüpheli bağlantılar için uyar</string>
+    <string name="sms_link_warnings_pref_summary">Bilinmeyen gönderenlerden gelen kısaltılmış bağlantılı (bit.ly vb.) mesajlar için de uyar. Metin yalnızca cihazda denetlenir.</string>
+    <string name="sms_permission_denied">SMS izni olmadan uygulama gönderenleri denetleyemez</string>
+    <string name="sms_warning_channel">SMS uyarıları</string>
+    <string name="sms_warning_channel_description">Spam olarak bilinen gönderenlerden gelen mesajlar</string>
+    <string name="sms_warning_title">%s kaynaklı olası spam SMS</string>
+    <string name="sms_warning_link_hint">Mesaj bir bağlantı içeriyor: açmayın</string>
+    <string name="sms_warning_source_community">Topluluk veritabanı</string>
+    <string name="sms_warning_action_details">Ayrıntılar</string>
+    <string name="sms_link_warning_title">%s kaynaklı bağlantılı mesaj</string>
+    <string name="sms_link_warning_text">Bilinmeyen gönderen: dikkatli olun ve bağlantıyı açmayın</string>
+    <string name="sms_link_warning_shortener">Kısaltılmış bağlantı (%s) gerçek adresi gizliyor</string>
+    <string name="setup_check_sms_active">SMS gönderenleri denetleniyor</string>
+    <string name="setup_check_sms_active_text">Spam olarak bilinen numaralardan gelen mesajlar için uyarı gösterilir. SMS engellenemez: bunu yalnızca varsayılan SMS uygulaması yapabilir.</string>
+    <string name="setup_check_sms_permission">SMS denetimi için izin yok</string>
+    <string name="setup_check_sms_permission_text">Uygulamanın SMS almasına izin verin, aksi halde spam mesajlar için uyaramaz.</string>
+</resources>

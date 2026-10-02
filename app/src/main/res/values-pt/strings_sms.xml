@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Verificar remetentes de SMS</string>
+    <string name="sms_warnings_pref_summary">Avisar sobre SMS de números conhecidos como spam. A aplicação apenas mostra uma notificação: não consegue bloquear nem apagar mensagens. O texto das mensagens não é guardado nem enviado.</string>
+    <string name="sms_link_warnings_pref">Avisar sobre ligações suspeitas</string>
+    <string name="sms_link_warnings_pref_summary">Avisar também sobre mensagens com ligações encurtadas (bit.ly e semelhantes) de remetentes desconhecidos. O texto só é verificado no dispositivo.</string>
+    <string name="sms_permission_denied">Sem a permissão de SMS a aplicação não pode verificar os remetentes</string>
+    <string name="sms_warning_channel">Avisos de SMS</string>
+    <string name="sms_warning_channel_description">Mensagens de remetentes conhecidos como spam</string>
+    <string name="sms_warning_title">Possível SMS de spam de %s</string>
+    <string name="sms_warning_link_hint">A mensagem contém uma ligação: não a abra</string>
+    <string name="sms_warning_source_community">Base de dados da comunidade</string>
+    <string name="sms_warning_action_details">Detalhes</string>
+    <string name="sms_link_warning_title">Mensagem com ligação de %s</string>
+    <string name="sms_link_warning_text">Remetente desconhecido: tenha cuidado e não abra a ligação</string>
+    <string name="sms_link_warning_shortener">A ligação encurtada (%s) esconde o endereço real</string>
+    <string name="setup_check_sms_active">Os remetentes de SMS são verificados</string>
+    <string name="setup_check_sms_active_text">As mensagens de números conhecidos como spam mostram um aviso. Os SMS não podem ser bloqueados: só a aplicação de SMS predefinida o pode fazer.</string>
+    <string name="setup_check_sms_permission">Verificação de SMS sem permissão</string>
+    <string name="setup_check_sms_permission_text">Permita que a aplicação receba SMS; caso contrário, não poderá avisar sobre mensagens de spam.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Έλεγχος αποστολέων SMS</string>
+    <string name="sms_warnings_pref_summary">Προειδοποίηση για SMS από αριθμούς γνωστούς ως spam. Η εφαρμογή εμφανίζει μόνο ειδοποίηση: δεν μπορεί να αποκλείσει ή να διαγράψει μηνύματα. Το κείμενο των μηνυμάτων δεν αποθηκεύεται ούτε αποστέλλεται.</string>
+    <string name="sms_link_warnings_pref">Προειδοποίηση για ύποπτους συνδέσμους</string>
+    <string name="sms_link_warnings_pref_summary">Προειδοποίηση και για μηνύματα με συντομευμένους συνδέσμους (bit.ly κ.λπ.) από άγνωστους αποστολείς. Το κείμενο ελέγχεται μόνο στη συσκευή.</string>
+    <string name="sms_permission_denied">Χωρίς την άδεια SMS η εφαρμογή δεν μπορεί να ελέγξει τους αποστολείς</string>
+    <string name="sms_warning_channel">Προειδοποιήσεις SMS</string>
+    <string name="sms_warning_channel_description">Μηνύματα από αποστολείς γνωστούς ως spam</string>
+    <string name="sms_warning_title">Πιθανό ανεπιθύμητο SMS από %s</string>
+    <string name="sms_warning_link_hint">Το μήνυμα περιέχει σύνδεσμο: μην τον ανοίξετε</string>
+    <string name="sms_warning_source_community">Βάση δεδομένων κοινότητας</string>
+    <string name="sms_warning_action_details">Λεπτομέρειες</string>
+    <string name="sms_link_warning_title">Μήνυμα με σύνδεσμο από %s</string>
+    <string name="sms_link_warning_text">Άγνωστος αποστολέας: προσέξτε και μην ανοίξετε τον σύνδεσμο</string>
+    <string name="sms_link_warning_shortener">Ο συντομευμένος σύνδεσμος (%s) κρύβει την πραγματική διεύθυνση</string>
+    <string name="setup_check_sms_active">Οι αποστολείς SMS ελέγχονται</string>
+    <string name="setup_check_sms_active_text">Τα μηνύματα από αριθμούς γνωστούς ως spam εμφανίζουν προειδοποίηση. Τα SMS δεν μπορούν να αποκλειστούν: αυτό μπορεί να το κάνει μόνο η προεπιλεγμένη εφαρμογή SMS.</string>
+    <string name="setup_check_sms_permission">Ο έλεγχος SMS δεν έχει άδεια</string>
+    <string name="setup_check_sms_permission_text">Επιτρέψτε στην εφαρμογή να λαμβάνει SMS, αλλιώς δεν μπορεί να προειδοποιεί για ανεπιθύμητα μηνύματα.</string>
+</resources>

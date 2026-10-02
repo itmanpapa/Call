@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Перевіряти відправників SMS</string>
+    <string name="sms_warnings_pref_summary">Попереджати про SMS з номерів, відомих як спам. Застосунок лише показує сповіщення: блокувати чи видаляти повідомлення він не може. Тексти повідомлень ніде не зберігаються і нікуди не надсилаються.</string>
+    <string name="sms_link_warnings_pref">Попереджати про підозрілі посилання</string>
+    <string name="sms_link_warnings_pref_summary">Також попереджати про повідомлення з короткими посиланнями (bit.ly тощо) від невідомих відправників. Текст перевіряється лише на пристрої.</string>
+    <string name="sms_permission_denied">Без дозволу на SMS застосунок не може перевіряти відправників</string>
+    <string name="sms_warning_channel">Попередження про SMS</string>
+    <string name="sms_warning_channel_description">Повідомлення від відправників, відомих як спам</string>
+    <string name="sms_warning_title">Можливий спам-SMS від %s</string>
+    <string name="sms_warning_link_hint">У повідомленні є посилання: не відкривайте його</string>
+    <string name="sms_warning_source_community">База спільноти</string>
+    <string name="sms_warning_action_details">Докладніше</string>
+    <string name="sms_link_warning_title">Повідомлення з посиланням від %s</string>
+    <string name="sms_link_warning_text">Невідомий відправник: будьте обережні й не відкривайте посилання</string>
+    <string name="sms_link_warning_shortener">Коротке посилання (%s) приховує справжню адресу</string>
+    <string name="setup_check_sms_active">Відправники SMS перевіряються</string>
+    <string name="setup_check_sms_active_text">Про повідомлення з номерів, відомих як спам, з’явиться попередження. Заблокувати SMS неможливо: це може лише типовий застосунок для SMS.</string>
+    <string name="setup_check_sms_permission">Немає дозволу на перевірку SMS</string>
+    <string name="setup_check_sms_permission_text">Дозвольте застосунку отримувати SMS, інакше він не зможе попереджати про спам-повідомлення.</string>
+</resources>

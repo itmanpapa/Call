@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">الرسائل القصيرة</string>
+    <string name="sms_warnings_pref">فحص مرسلي الرسائل القصيرة</string>
+    <string name="sms_warnings_pref_summary">التحذير من الرسائل القصيرة الواردة من أرقام معروفة كمزعجة. يعرض التطبيق إشعارًا فقط: لا يمكنه حظر الرسائل أو حذفها. لا يتم حفظ نصوص الرسائل أو إرسالها إلى أي مكان.</string>
+    <string name="sms_link_warnings_pref">التحذير من الروابط المشبوهة</string>
+    <string name="sms_link_warnings_pref_summary">التحذير أيضًا من الرسائل التي تحتوي على روابط مختصرة (مثل bit.ly) من مرسلين مجهولين. يتم فحص النص على الجهاز فقط.</string>
+    <string name="sms_permission_denied">بدون إذن الرسائل القصيرة لا يستطيع التطبيق فحص المرسلين</string>
+    <string name="sms_warning_channel">تحذيرات الرسائل القصيرة</string>
+    <string name="sms_warning_channel_description">رسائل من مرسلين معروفين كمزعجين</string>
+    <string name="sms_warning_title">رسالة قصيرة مزعجة محتملة من %s</string>
+    <string name="sms_warning_link_hint">تحتوي الرسالة على رابط: لا تفتحه</string>
+    <string name="sms_warning_source_community">قاعدة بيانات المجتمع</string>
+    <string name="sms_warning_action_details">التفاصيل</string>
+    <string name="sms_link_warning_title">رسالة تحتوي على رابط من %s</string>
+    <string name="sms_link_warning_text">مرسل مجهول: كن حذرًا ولا تفتح الرابط</string>
+    <string name="sms_link_warning_shortener">الرابط المختصر (%s) يخفي العنوان الحقيقي</string>
+    <string name="setup_check_sms_active">يتم فحص مرسلي الرسائل القصيرة</string>
+    <string name="setup_check_sms_active_text">تظهر تحذيرات للرسائل الواردة من أرقام معروفة كمزعجة. لا يمكن حظر الرسائل القصيرة: يستطيع ذلك تطبيق الرسائل الافتراضي فقط.</string>
+    <string name="setup_check_sms_permission">فحص الرسائل القصيرة بلا إذن</string>
+    <string name="setup_check_sms_permission_text">اسمح للتطبيق باستقبال الرسائل القصيرة، وإلا فلن يستطيع التحذير من الرسائل المزعجة.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sms_category">Sms</string>
+    <string name="sms_warnings_pref">Kontrollera sms-avsändare</string>
+    <string name="sms_warnings_pref_summary">Varna för sms från nummer som är kända som spam. Appen visar bara en avisering: den kan inte blockera eller radera meddelanden. Meddelandetexter sparas eller skickas inte någonstans.</string>
+    <string name="sms_link_warnings_pref">Varna för misstänkta länkar</string>
+    <string name="sms_link_warnings_pref_summary">Varna även för meddelanden med förkortade länkar (bit.ly och liknande) från okända avsändare. Texten kontrolleras bara på enheten.</string>
+    <string name="sms_permission_denied">Utan sms-behörighet kan appen inte kontrollera avsändare</string>
+    <string name="sms_warning_channel">Sms-varningar</string>
+    <string name="sms_warning_channel_description">Meddelanden från avsändare som är kända som spam</string>
+    <string name="sms_warning_title">Möjligt skräp-sms från %s</string>
+    <string name="sms_warning_link_hint">Meddelandet innehåller en länk: öppna den inte</string>
+    <string name="sms_warning_source_community">Gemenskapsdatabas</string>
+    <string name="sms_warning_action_details">Detaljer</string>
+    <string name="sms_link_warning_title">Meddelande med länk från %s</string>
+    <string name="sms_link_warning_text">Okänd avsändare: var försiktig och öppna inte länken</string>
+    <string name="sms_link_warning_shortener">Den förkortade länken (%s) döljer den riktiga adressen</string>
+    <string name="setup_check_sms_active">Sms-avsändare kontrolleras</string>
+    <string name="setup_check_sms_active_text">Meddelanden från nummer som är kända som spam ger en varning. Sms kan inte blockeras: det kan bara standardappen för sms.</string>
+    <string name="setup_check_sms_permission">Sms-kontroll saknar behörighet</string>
+    <string name="setup_check_sms_permission_text">Tillåt appen att ta emot sms, annars kan den inte varna för skräpmeddelanden.</string>
+</resources>
