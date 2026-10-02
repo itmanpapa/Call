@@ -30,6 +30,7 @@ import java.util.concurrent.Executors;
 import dummydomain.yetanothercallblocker.data.update.GitHubReleaseClient;
 import dummydomain.yetanothercallblocker.data.update.ReleaseInfo;
 import dummydomain.yetanothercallblocker.data.update.UpdateChecker;
+import dummydomain.yetanothercallblocker.data.update.UpdateSecurity;
 
 /**
  * The update screen: checks GitHub for the latest release, shows its version and notes,
@@ -295,7 +296,8 @@ public class UpdateActivity extends BaseActivity implements AppUpdateManager.Lis
     }
 
     private void openReleasePage() {
-        String url = release != null && !TextUtils.isEmpty(release.getPageUrl())
+        // the page URL comes from the API answer: open only GitHub pages over HTTPS
+        String url = release != null && UpdateSecurity.isAllowedPageUrl(release.getPageUrl())
                 ? release.getPageUrl() : GitHubReleaseClient.RELEASES_PAGE_URL;
         if (!IntentHelper.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(url)))) {
             Toast.makeText(this, R.string.update_no_browser, Toast.LENGTH_SHORT).show();

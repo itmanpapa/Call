@@ -37,6 +37,10 @@ public final class BackupSettingsPolicy {
                     "phoneBlockLastErrorTime",
                     // screen position of the caller ID card on this device
                     "callerIdOverlayY",
+                    // state of the app update check (AppUpdateManager)
+                    "appUpdateLastCheckTime",
+                    "appUpdateLatestVersion",
+                    "appUpdateNotifiedVersion",
                     // not persistent (the state lives in the system), listed for safety
                     "useCallScreeningService",
                     "autoUpdateEnabled",
@@ -75,7 +79,9 @@ public final class BackupSettingsPolicy {
     /**
      * Computes a restore that replaces the backed up settings: keys of the backup are
      * set, other backed up keys are removed (back to their defaults). Excluded keys are
-     * kept; a secret is only touched when the backup contains secrets.
+     * kept; a secret is only touched when the backup contains secrets. A value whose type
+     * differs from the current value of the key is skipped (the current value is kept):
+     * reading it later would throw a ClassCastException.
      *
      * @param current   the current values
      * @param fromBackup the values of the backup
@@ -90,13 +96,21 @@ public final class BackupSettingsPolicy {
             String key = e.getKey();
             if (!isBackedUp(key) || e.getValue() == null) continue;
             if (isSecret(key) && !backupHasSecrets) continue;
+            Object currentValue = current.get(key);
+            if (currentValue != null && !sameType(currentValue, e.getValue())) continue;
             toSet.put(key, e.getValue());
         }
         for (String key : current.keySet()) {
             if (!isBackedUp(key) || toSet.containsKey(key)) continue;
+            if (fromBackup.get(key) != null && current.get(key) != null) continue; // type mismatch
             if (isSecret(key) && !backupHasSecrets) continue;
             toRemove.add(key);
         }
+    }
+
+    private static boolean sameType(Object a, Object b) {
+        if (a instanceof java.util.Set) return b instanceof java.util.Set;
+        return a.getClass() == b.getClass();
     }
 
 }

@@ -62,7 +62,38 @@ public class ApkDownloaderTest {
     }
 
     private ApkDownloader downloader() {
-        return new ApkDownloader(OkHttpClient::new, dir, "CallGuard-test");
+        // the test server is plain HTTP on localhost
+        return new ApkDownloader(OkHttpClient::new, dir, "CallGuard-test", url -> true);
+    }
+
+    @Test
+    public void defaultPolicyRefusesNonGitHubUrlWithoutRequest() {
+        ApkDownloader strict = new ApkDownloader(OkHttpClient::new, dir, "CallGuard-test");
+        try {
+            strict.download(release("0.12.0", 100), null, null);
+            fail();
+        } catch (IOException e) {
+            assertTrue(e.getMessage(), e.getMessage().startsWith("Download URL not allowed"));
+        }
+        assertEquals(0, server.getRequestCount());
+    }
+
+    @Test
+    public void redirectToForbiddenUrlRefused() {
+        server.enqueue(new MockResponse().setResponseCode(302)
+                .setHeader("Location", server.url("/evil/blob").toString()));
+        server.enqueue(new MockResponse().setBody(new Buffer().write(apkBytes(1000))));
+
+        ApkDownloader guarded = new ApkDownloader(OkHttpClient::new, dir, "CallGuard-test",
+                url -> !url.contains("/evil/"));
+        try {
+            guarded.download(release("0.12.0", 1000), null, null);
+            fail();
+        } catch (IOException e) {
+            assertTrue(e.getMessage(), e.getMessage().startsWith("Download URL not allowed"));
+        }
+        assertEquals(1, server.getRequestCount());
+        assertEquals(0, dir.listFiles().length);
     }
 
     @Test

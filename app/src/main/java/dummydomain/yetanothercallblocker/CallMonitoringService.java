@@ -128,7 +128,7 @@ public class CallMonitoringService extends Service {
 
         @Override
         public void onCallStateChanged(int state, String phoneNumber) {
-            LOG.info("onCallStateChanged({}, {})", state, quote(phoneNumber));
+            LOG.debug("onCallStateChanged({}, {})", state, quote(phoneNumber));
 
             /*
              * According to docs, an empty string may be passed if the app lacks permissions.

@@ -63,7 +63,7 @@ public final class CallStatsRecorder {
                 try {
                     store.record(event);
                 } catch (Exception e) {
-                    LOG.warn("record() failed to write {}", event, e);
+                    LOG.warn("record() failed to write the event", e);
                 }
             });
         } catch (Exception e) {

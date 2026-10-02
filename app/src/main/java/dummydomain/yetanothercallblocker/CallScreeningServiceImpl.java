@@ -33,7 +33,7 @@ public class CallScreeningServiceImpl extends CallScreeningService {
 
     @Override
     public void onScreenCall(@NonNull Call.Details callDetails) {
-        LOG.info("onScreenCall({})", callDetails);
+        LOG.debug("onScreenCall({})", callDetails);
 
         boolean shouldBlock = false;
         NumberInfo numberInfo = null;
@@ -103,6 +103,10 @@ public class CallScreeningServiceImpl extends CallScreeningService {
 
                 shouldBlock = numberInfoService.shouldBlock(numberInfo);
             }
+        } catch (Exception e) {
+            // never leave the call unanswered (Telecom would wait for us) or crash
+            LOG.error("onScreenCall() failed, allowing the call", e);
+            shouldBlock = false;
         } finally {
             LOG.debug("onScreenCall() blocking call: {}", shouldBlock);
 
@@ -123,16 +127,22 @@ public class CallScreeningServiceImpl extends CallScreeningService {
                 blocked = false;
             }
 
-            CallStatsRecorder.record(numberInfo, blocked);
+            try {
+                CallStatsRecorder.record(numberInfo, blocked);
+            } catch (Exception e) {
+                LOG.error("onScreenCall() failed to record the call", e);
+            }
 
             if (blocked) {
                 LOG.info("onScreenCall() blocked call");
 
-                NotificationHelper.showBlockedCallNotification(this, numberInfo);
-
-                numberInfoService.blockedCall(numberInfo);
-
-                postEvent(new CallEndedEvent());
+                try {
+                    NotificationHelper.showBlockedCallNotification(this, numberInfo);
+                    numberInfoService.blockedCall(numberInfo);
+                    postEvent(new CallEndedEvent());
+                } catch (Exception e) {
+                    LOG.error("onScreenCall() failed after blocking the call", e);
+                }
             } else if (numberInfo != null) {
                 // the call is about to ring: the phone state listener may not get the
                 // number (no call log permission), so show the caller ID card from here
@@ -174,8 +184,8 @@ public class CallScreeningServiceImpl extends CallScreeningService {
         }
 
         Bundle extras = callDetails.getExtras();
-        if (intentExtras != null) {
-            LOG.trace("extraLogging() intentExtras:");
+        if (extras != null) {
+            LOG.trace("extraLogging() extras:");
             for (String k : extras.keySet()) {
                 LOG.trace("extraLogging() key={}, value={}", k, extras.get(k));
             }

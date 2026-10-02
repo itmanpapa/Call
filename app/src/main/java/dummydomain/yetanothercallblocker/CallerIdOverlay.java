@@ -194,7 +194,14 @@ public final class CallerIdOverlay {
 
             case UPDATE:
                 if (view != null) {
-                    bind(appContext, view, numberInfo);
+                    try {
+                        bind(appContext, view, numberInfo);
+                    } catch (RuntimeException e) {
+                        // a posted runnable must not crash the app during a call
+                        LOG.error("showOnMain() failed to update the card", e);
+                        hideOnMain();
+                        break;
+                    }
                     shownNumber = number;
                     scheduleTimeout();
                 } else if (addView(appContext, numberInfo)) {

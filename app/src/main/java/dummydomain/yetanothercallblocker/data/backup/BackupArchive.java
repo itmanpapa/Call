@@ -48,9 +48,14 @@ public final class BackupArchive {
     static final String KEY_APP_VERSION = "appVersion";
     static final String KEY_SECRETS = "secrets";
 
-    /** Limits for reading (far above real backups). */
-    static final long MAX_ENTRY_BYTES = 64L * 1024 * 1024;
-    static final long MAX_TOTAL_BYTES = 128L * 1024 * 1024;
+    /**
+     * Limits for reading (far above real backups). Everything is held in memory (text
+     * parts also as strings, twice the size), so the limits must fit into the app heap:
+     * an OutOfMemoryError would not be caught as a damaged file.
+     */
+    static final long MAX_ENTRY_BYTES = 24L * 1024 * 1024;
+    static final long MAX_TEXT_ENTRY_BYTES = 8L * 1024 * 1024;
+    static final long MAX_TOTAL_BYTES = 48L * 1024 * 1024;
     static final int MAX_ENTRIES = 1000;
 
     private static final Pattern LIST_ID = Pattern.compile("[A-Za-z0-9_.\\-]{1,64}");
@@ -104,12 +109,14 @@ public final class BackupArchive {
     public static BackupBundle read(InputStream in) throws IOException {
         Map<String, byte[]> entries = new LinkedHashMap<>();
         long total = 0;
+        int count = 0;
 
         ZipInputStream zip = new ZipInputStream(in, StandardCharsets.UTF_8);
         try {
             ZipEntry entry;
             while ((entry = zip.getNextEntry()) != null) {
-                if (entries.size() >= MAX_ENTRIES) {
+                // directories count as well: a file of empty entries is not a backup
+                if (++count > MAX_ENTRIES) {
                     throw new BackupException(BackupException.Reason.TOO_LARGE,
                             "Too many entries");
                 }
@@ -119,7 +126,8 @@ public final class BackupArchive {
                     throw new BackupException(BackupException.Reason.CORRUPT,
                             "Bad entry name: " + name);
                 }
-                byte[] data = readLimited(zip, MAX_ENTRY_BYTES);
+                byte[] data = readLimited(zip, name.startsWith(LISTS_PREFIX)
+                        ? MAX_ENTRY_BYTES : MAX_TEXT_ENTRY_BYTES);
                 total += data.length;
                 if (total > MAX_TOTAL_BYTES) {
                     throw new BackupException(BackupException.Reason.TOO_LARGE, "Too large");

@@ -2,6 +2,11 @@ package dummydomain.yetanothercallblocker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.content.pm.SigningInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -10,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,6 +27,7 @@ import dummydomain.yetanothercallblocker.data.update.ApkDownloader;
 import dummydomain.yetanothercallblocker.data.update.GitHubReleaseClient;
 import dummydomain.yetanothercallblocker.data.update.ReleaseInfo;
 import dummydomain.yetanothercallblocker.data.update.UpdateChecker;
+import dummydomain.yetanothercallblocker.data.update.UpdateSecurity;
 import dummydomain.yetanothercallblocker.utils.DeferredInit;
 import okhttp3.OkHttpClient;
 
@@ -308,24 +316,47 @@ public final class AppUpdateManager {
     }
 
     /**
-     * Checks that the downloaded file is an APK of this app.
+     * Checks that the downloaded file is an APK of this app, signed with the same key
+     * as the installed app (debug builds download the release app: they compare with the
+     * installed release app and refuse if it is not installed).
      *
      * @return an error message or null if the file is fine
      */
     private String checkApk(File file) {
         try {
-            android.content.pm.PackageInfo info = context.getPackageManager()
-                    .getPackageArchiveInfo(file.getPath(), 0);
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageArchiveInfo(file.getPath(), signatureFlags());
             if (info == null) return context.getString(R.string.update_error_not_apk);
 
             String expected = context.getPackageName();
+            String reference = expected;
             if (expected.endsWith(RELEASE_PACKAGE_SUFFIX_DEBUG)) {
                 // debug builds download the release APK (a separate app)
                 expected = expected.substring(0,
                         expected.length() - RELEASE_PACKAGE_SUFFIX_DEBUG.length());
+                reference = expected;
             }
             if (!expected.equals(info.packageName)) {
                 LOG.warn("checkApk() unexpected package {}", info.packageName);
+                return context.getString(R.string.update_error_wrong_package);
+            }
+
+            PackageInfo installed;
+            try {
+                installed = pm.getPackageInfo(reference, signatureFlags());
+            } catch (PackageManager.NameNotFoundException e) {
+                LOG.warn("checkApk() {} is not installed, can't verify the signature", reference);
+                return context.getString(R.string.update_error_wrong_package);
+            }
+
+            List<String> installedSigners = new ArrayList<>();
+            List<String> apkSigners = new ArrayList<>();
+            List<String> apkHistory = new ArrayList<>();
+            readSigners(installed, installedSigners, null);
+            readSigners(info, apkSigners, apkHistory);
+            if (!UpdateSecurity.signaturesMatch(installedSigners, apkSigners, apkHistory)) {
+                LOG.warn("checkApk() signature mismatch: installed {}, apk {}",
+                        installedSigners, apkSigners);
                 return context.getString(R.string.update_error_wrong_package);
             }
         } catch (Exception e) {
@@ -333,6 +364,44 @@ public final class AppUpdateManager {
             return context.getString(R.string.update_error_not_apk);
         }
         return null;
+    }
+
+    @SuppressWarnings("deprecation")
+    private static int signatureFlags() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+                ? PackageManager.GET_SIGNING_CERTIFICATES : PackageManager.GET_SIGNATURES;
+    }
+
+    /**
+     * Adds the SHA-256 digests of the current signers (and, if requested, of the
+     * certificate history, oldest first) of the package.
+     */
+    @SuppressWarnings("deprecation")
+    private static void readSigners(PackageInfo info, List<String> signers,
+                                    List<String> history) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            SigningInfo signingInfo = info.signingInfo;
+            if (signingInfo == null) return;
+            if (signingInfo.hasMultipleSigners()) {
+                addDigests(signingInfo.getApkContentsSigners(), signers);
+            } else {
+                Signature[] chain = signingInfo.getSigningCertificateHistory();
+                if (chain != null && chain.length > 0) {
+                    // the last entry is the current signer
+                    addDigests(new Signature[]{chain[chain.length - 1]}, signers);
+                    if (history != null) addDigests(chain, history);
+                }
+            }
+        } else {
+            addDigests(info.signatures, signers);
+        }
+    }
+
+    private static void addDigests(Signature[] signatures, List<String> out) {
+        if (signatures == null) return;
+        for (Signature signature : signatures) {
+            if (signature != null) out.add(UpdateSecurity.sha256Hex(signature.toByteArray()));
+        }
     }
 
     private void setState(DownloadState state) {

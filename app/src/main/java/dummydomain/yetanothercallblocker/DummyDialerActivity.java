@@ -23,13 +23,19 @@ public class DummyDialerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        LOG.info("onCreate() intent: {}", intent);
+        LOG.debug("onCreate() intent: {}", intent);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return; // not applicable to earlier versions
         }
 
         intent.setComponent(null);
+        // the intent comes from any app: never pass on URI permissions granted to us
+        intent.setClipData(null);
+        intent.removeFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
 
         ActivityInfo found = null;
 

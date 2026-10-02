@@ -191,7 +191,7 @@ public class PhoneBlockReporter {
                 send(token, entry);
                 sent++;
             } catch (PhoneBlockClient.ApiException e) {
-                LOG.warn("sendPending() {} failed: {}", entry.getNumber(), e.getMessage());
+                LOG.warn("sendPending() failed: {}", e.getMessage());
                 if (e.isAuthError()) {
                     markFailed(entry, e.getMessage(), false);
                     return new Result(sent, rejected, false, true, e.getMessage());
@@ -208,7 +208,7 @@ public class PhoneBlockReporter {
                 markFailed(entry, e.getMessage(), true);
                 rejected++;
             } catch (IOException | RuntimeException e) {
-                LOG.warn("sendPending() {} failed", entry.getNumber(), e);
+                LOG.warn("sendPending() failed", e);
                 String message = e.getMessage() != null ? e.getMessage() : e.toString();
                 markFailed(entry, message, false);
                 return new Result(sent, rejected, true, false, message);
