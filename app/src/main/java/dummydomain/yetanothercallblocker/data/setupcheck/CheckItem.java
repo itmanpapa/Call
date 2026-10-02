@@ -21,7 +21,9 @@ public final class CheckItem {
         /** One number source, see {@link #getSource()}. */
         SOURCE,
         /** A newer version of the app is available, see {@link #getDetail()}. */
-        APP_UPDATE
+        APP_UPDATE,
+        /** Warnings about spam SMS (only listed when the setting is on). */
+        SMS_WARNINGS
     }
 
     /** Outcome, from best to worst. Only warnings and errors count as problems. */
@@ -79,7 +81,10 @@ public final class CheckItem {
         SOURCE_ERROR,
         SOURCE_STALE,
 
-        APP_UPDATE_AVAILABLE
+        APP_UPDATE_AVAILABLE,
+
+        SMS_WARNINGS_ACTIVE,
+        SMS_PERMISSION_MISSING
     }
 
     /** What the fix button does. */
@@ -98,7 +103,9 @@ public final class CheckItem {
         /** Open the details of the source (key, settings, switch). */
         OPEN_SOURCE,
         /** Open the app update screen. */
-        OPEN_APP_UPDATE
+        OPEN_APP_UPDATE,
+        /** Ask for the permission to receive SMS. */
+        REQUEST_SMS_PERMISSION
     }
 
     private final Type type;

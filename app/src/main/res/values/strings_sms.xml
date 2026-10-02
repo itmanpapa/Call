@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spam SMS warnings (SmsReceiver, SmsWarnings, setup check) -->
+    <string name="sms_category">SMS</string>
+    <string name="sms_warnings_pref">Check SMS senders</string>
+    <string name="sms_warnings_pref_summary">Warn about SMS from numbers known as spam. The app only shows a notification: it can\'t block or delete messages. Message texts are not stored or sent anywhere.</string>
+    <string name="sms_link_warnings_pref">Warn about suspicious links</string>
+    <string name="sms_link_warnings_pref_summary">Also warn about messages with shortened links (bit.ly and similar) from unknown senders. The text is only checked on this device.</string>
+    <string name="sms_permission_denied">Without the SMS permission the app can\'t check message senders</string>
+    <string name="sms_warning_channel">SMS warnings</string>
+    <string name="sms_warning_channel_description">Messages from senders known as spam</string>
+    <string name="sms_warning_title">Possible spam SMS from %s</string>
+    <string name="sms_warning_link_hint">The message contains a link: don\'t open it</string>
+    <string name="sms_warning_source_community">Community database</string>
+    <string name="sms_warning_action_details">Details</string>
+    <string name="sms_link_warning_title">Message with a link from %s</string>
+    <string name="sms_link_warning_text">Unknown sender: be careful and don\'t open the link</string>
+    <string name="sms_link_warning_shortener">The short link (%s) hides the real address</string>
+    <string name="setup_check_sms_active">SMS senders are checked</string>
+    <string name="setup_check_sms_active_text">Messages from numbers known as spam get a warning. SMS can\'t be blocked: only the default SMS app can do that.</string>
+    <string name="setup_check_sms_permission">SMS check has no permission</string>
+    <string name="setup_check_sms_permission_text">Allow the app to receive SMS, otherwise it can\'t warn about spam messages.</string>
+</resources>

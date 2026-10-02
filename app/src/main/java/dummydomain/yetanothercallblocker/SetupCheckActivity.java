@@ -140,9 +140,12 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         Settings settings = App.getSettings();
-        PermissionHelper.handlePermissionsResult(this, requestCode, permissions, grantResults,
-                settings.getIncomingCallNotifications(), settings.getCallBlockingEnabled(),
-                settings.getUseContacts());
+        if (!PermissionHelper.handleSmsPermissionResult(this, requestCode, permissions,
+                grantResults)) {
+            PermissionHelper.handlePermissionsResult(this, requestCode, permissions,
+                    grantResults, settings.getIncomingCallNotifications(),
+                    settings.getCallBlockingEnabled(), settings.getUseContacts());
+        }
 
         // "don't ask again": the system doesn't show the dialog any more
         for (int i = 0; i < permissions.length && i < grantResults.length; i++) {
@@ -375,6 +378,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 startActivity(UpdateActivity.getIntent(this));
                 break;
 
+            case REQUEST_SMS_PERMISSION:
+                PermissionHelper.requestSmsPermission(this);
+                break;
+
             case OPEN_SOURCE:
                 if (item.getSource() != null) {
                     startActivity(SourceDetailsActivity.getIntent(this,
@@ -453,6 +460,7 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
             case REQUEST_CALL_SCREENING:
             case REQUEST_PERMISSIONS:
             case REQUEST_OVERLAY_PERMISSION:
+            case REQUEST_SMS_PERMISSION:
                 return R.string.setup_check_action_allow;
             case OPEN_NOTIFICATION_SETTINGS:
                 return R.string.setup_check_action_notifications;
@@ -522,6 +530,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 return R.string.setup_check_contacts;
             case SOURCES_NONE_ENABLED:
                 return R.string.setup_check_sources_none;
+            case SMS_WARNINGS_ACTIVE:
+                return R.string.setup_check_sms_active;
+            case SMS_PERMISSION_MISSING:
+                return R.string.setup_check_sms_permission;
             default:
                 return R.string.setup_check_title;
         }
@@ -576,6 +588,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 return R.string.setup_check_contacts_text;
             case SOURCES_NONE_ENABLED:
                 return R.string.setup_check_sources_none_text;
+            case SMS_WARNINGS_ACTIVE:
+                return R.string.setup_check_sms_active_text;
+            case SMS_PERMISSION_MISSING:
+                return R.string.setup_check_sms_permission_text;
             default:
                 return R.string.setup_check_preference_summary;
         }

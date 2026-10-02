@@ -46,6 +46,8 @@ public class SetupCheckTest {
         boolean blacklistEmpty = true;
         boolean useContacts;
         boolean ignoringBatteryOptimizations;
+        boolean smsWarnings;
+        boolean smsPermission;
         final List<Source> sources = new ArrayList<>();
 
         FakeEnvironment() {
@@ -73,6 +75,8 @@ public class SetupCheckTest {
         @Override public boolean isUseContactsEnabled() { return useContacts; }
         @Override public boolean isIgnoringBatteryOptimizations() { return ignoringBatteryOptimizations; }
         @Override public List<Source> getSources() { return sources; }
+        @Override public boolean isSmsWarningsEnabled() { return smsWarnings; }
+        @Override public boolean hasSmsPermission() { return smsPermission; }
     }
 
     static SetupCheckEnvironment.Source source(String id, boolean hasData, long lastSuccessAt,
@@ -494,6 +498,41 @@ public class SetupCheckTest {
     public void itemKeysIncludeTheSource() {
         CheckItem item = checkSource(source("phoneblock", false, 0, null));
         assertEquals("SOURCE:SOURCE_NEVER:phoneblock", item.getKey());
+    }
+
+    // SMS warnings
+
+    @Test
+    public void smsWarningsOffAreNotListed() {
+        env.smsPermission = true;
+        assertNull(item(Type.SMS_WARNINGS));
+    }
+
+    @Test
+    public void smsWarningsActiveAreInfo() {
+        env.smsWarnings = true;
+        env.smsPermission = true;
+
+        CheckItem item = item(Type.SMS_WARNINGS);
+        assertEquals(Status.INFO, item.getStatus());
+        assertEquals(Reason.SMS_WARNINGS_ACTIVE, item.getReason());
+        assertEquals(Action.NONE, item.getAction());
+        assertEquals(0, SetupCheck.run(env).getProblemCount());
+    }
+
+    @Test
+    public void smsWarningsWithoutPermissionWarn() {
+        env.smsWarnings = true;
+
+        CheckItem item = item(Type.SMS_WARNINGS);
+        assertEquals(Status.WARNING, item.getStatus());
+        assertEquals(Reason.SMS_PERMISSION_MISSING, item.getReason());
+        assertEquals(Action.REQUEST_SMS_PERMISSION, item.getAction());
+
+        SetupCheck.Result result = SetupCheck.run(env);
+        // SMS are never blocked: calls are still protected
+        assertTrue(result.isProtectionWorking());
+        assertEquals(1, result.getWarningCount());
     }
 
 }

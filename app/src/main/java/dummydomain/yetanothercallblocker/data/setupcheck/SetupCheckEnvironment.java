@@ -92,6 +92,16 @@ public interface SetupCheckEnvironment {
         return null;
     }
 
+    /** @return the "check SMS senders" setting */
+    default boolean isSmsWarningsEnabled() {
+        return false;
+    }
+
+    /** @return true if RECEIVE_SMS is granted */
+    default boolean hasSmsPermission() {
+        return false;
+    }
+
     /** State of one number source, as far as the check is concerned. Immutable. */
     final class Source {
 

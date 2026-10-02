@@ -55,6 +55,11 @@ public class RootSettingsFragment extends BaseSettingsFragment {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if (PermissionHelper.handleSmsPermissionResult(requireContext(),
+                requestCode, permissions, grantResults)) {
+            return;
+        }
+
         Settings settings = App.getSettings();
 
         PermissionHelper.handlePermissionsResult(requireContext(),
@@ -164,6 +169,17 @@ public class RootSettingsFragment extends BaseSettingsFragment {
         setPrefChangeListener(Settings.PREF_BLOCK_NEGATIVE_SIA_NUMBERS, callBlockingListener);
         setPrefChangeListener(Settings.PREF_BLOCK_HIDDEN_NUMBERS, callBlockingListener);
         setPrefChangeListener(Settings.PREF_BLOCK_BLACKLISTED, callBlockingListener);
+
+        setPrefChangeListener(Settings.PREF_SMS_WARNINGS, (pref, newValue) -> {
+            boolean enabled = Boolean.TRUE.equals(newValue);
+            Context context = requireContext();
+            SmsWarnings.syncReceiverState(context, enabled);
+            if (enabled) {
+                SmsWarnings.initChannel(context);
+                PermissionHelper.requestSmsPermission(this);
+            }
+            return true;
+        });
 
         requirePreference(PREF_SETUP_CHECK).setOnPreferenceClickListener(preference -> {
             startActivity(SetupCheckActivity.getIntent(requireContext()));
