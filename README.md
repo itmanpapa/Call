@@ -1,162 +1,77 @@
-# CallGuard — форк Yet Another Call Blocker
+# CallGuard
 
-Это форк [Yet Another Call Blocker](https://gitlab.com/xynngh/YetAnotherCallBlocker) от **xynngh**.
-Последняя версия оригинала, 0.5.17, вышла в 2021 году. Форк собирается под современный Android SDK,
-а дальше по плану получит интерфейс на Material 3 и дополнительные источники данных о спам-номерах
-(в первую очередь для Германии).
+**Free and open source spam call blocker for Android.** CallGuard identifies and blocks unwanted calls using several community and official databases, works offline, and keeps your data on your phone.
 
-* Исходный проект: https://gitlab.com/xynngh/YetAnotherCallBlocker (история коммитов и авторство сохранены)
-* Лицензия: [AGPL-3.0-only](LICENSE), как у оригинала. Исходники форка открыты под той же лицензией.
-* `applicationId`: `de.itmanpapa.callblocker` (debug-сборка: `de.itmanpapa.callblocker.debug`),
-  поэтому форк ставится рядом с оригинальным YACB
-* Минимальная версия Android: 8.0 (API 26), targetSdk 36
+CallGuard is a fork of [Yet Another Call Blocker](https://gitlab.com/xynngh/YetAnotherCallBlocker) by **xynngh** (last release 0.5.17, 2021), rebuilt for current Android with a Material 3 interface and new data sources — with a focus on Germany.
 
-### Сборка
+[Русская версия](README.ru.md) · [Changelog](https://github.com/itmanpapa/Call/releases) · [License: AGPL-3.0-only](LICENSE)
 
-```
-./gradlew assembleDebug
-```
+<p>
+<img src="docs/screenshots/02_call_log_light.png" width="200" alt="Call log"/>
+<img src="docs/screenshots/11_incoming_call_light.png" width="200" alt="Caller-ID card during an incoming call"/>
+<img src="docs/screenshots/07_sources_light.png" width="200" alt="Databases"/>
+<img src="docs/screenshots/12_stats_dark.png" width="200" alt="Statistics"/>
+</p>
 
-Нужны JDK 17+ и Android SDK (platform 36). CI собирает debug-APK на каждый push
-(`.github/workflows/build.yml`).
+## Features
 
-### Релиз
+- **Blocks spam before it rings** — uses Android's Call Screening role (Android 10+).
+- **Several databases, checked offline:**
+  - YACB community database (international, delta updates),
+  - [PhoneBlock](https://phoneblock.net) — free German community list (free API key),
+  - official list of the [Bundesnetzagentur](https://www.bundesnetzagentur.de/massnahmenliste) (downloaded automatically),
+  - your own lists: CSV, Fritz!Box phone book XML, vCard — from a file or a URL with auto-update.
+- **Caller-ID card** over the incoming-call screen: rating, category, source, "Block" / "Not spam".
+- **Your own marks** ("spam" / "not spam") override every database; optionally reported to PhoneBlock.
+- **Blocking rules:** number patterns (`+44*`, `0900*`), hidden numbers, foreign numbers, premium-rate numbers, schedules, "let a repeated call through".
+- **Blacklist** with wildcards, swipe-to-block in the call log.
+- **Spam SMS warnings** (optional): warns about SMS from numbers known as spam.
+- **Setup check** — tells you exactly what prevents protection from working and how to fix it.
+- **Statistics** and **backup / restore** of all settings and lists.
+- **Material 3** design with dynamic colors and dark theme, **27 languages**, in-app language picker.
+- **In-app updates** from GitHub Releases (GitHub build only).
 
-При push тега `v*` запускается `.github/workflows/release.yml`: он собирает подписанный APK
-и публикует его в GitHub Releases. Ключ подписи задаётся в Secrets репозитория:
+## Install
 
-| Secret | Значение |
-| --- | --- |
-| `SIGNING_KEYSTORE_BASE64` | keystore в base64 (`base64 -w0 release.jks`) |
-| `SIGNING_KEYSTORE_PASSWORD` | пароль keystore |
-| `SIGNING_KEY_ALIAS` | alias ключа |
-| `SIGNING_KEY_PASSWORD` | пароль ключа |
+Download the latest `callguard-vX.Y.Z.apk` from **[Releases](https://github.com/itmanpapa/Call/releases/latest)** and install it. Android 8.0 or newer is required. Afterwards CallGuard notifies you about new versions itself.
 
----
+After the first start open **Settings → Setup check** and fix everything marked red (call screening role, permissions, blocking options).
 
-*Ниже — оригинальный README проекта.*
-
-**Disclaimer:** This is a free and open source project, but it relies on third-party web-services for some functions to work. This project is not affiliated with any third-party entities in any other sense.
-
-
-# Yet Another Call Blocker
-
-A free and open source application that can block unwanted calls or warn about probable intentions of callers using a third-party crowdsourced phone number database (from some other proprietary app).
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-      alt="Get it on F-Droid"
-      height="80">](https://f-droid.org/app/dummydomain.yetanothercallblocker)
-
-
-## Key features
-
-* Uses offline database.
-* Blocks calls with negative rating automatically (option).
-* Local blacklist with wildcard support.
-* Displays a notification with phone number summary (rating, reviews count, category) during incoming calls (option).
-* Automatic incremental/delta database updates (option).
-* You can view online reviews for caller's number (provided by 3rd party service).
-* "Advanced call blocking mode" for blocking calls on Android 7+ before the phone starts ringing (needs to be manually enabled in Settings).
-
-
-## How to use
-
-* [Install](https://f-droid.org/app/dummydomain.yetanothercallblocker) and launch the app.
-* The option to show caller info notifications is enabled by default, so the app will ask for phone-related permissions.
-* At first start, the app will suggest to download main database which is required for most of the functions. Simply confirm the download.  
-  (The DB is downloaded from [another gitlab repo](https://gitlab.com/xynngh/YetAnotherCallBlocker_data), so no privacy-related implications.)
-* Check the "Auto-update database" checkbox in the menu (recommended) to automatically receive daily DB updates (these are incremental/delta updates, so they consume very little traffic).
-* Check the "Block by rating" checkbox to block calls with negative rating automatically.
-* You can also check the "Use contacts" checkbox if you want your contacts not to be treated as unknown callers.
-* After these steps everything should just work (but you can always find more options in Settings). Enjoy!
-
-See [frequently asked questions](FAQ.md) to learn more.
-
-
-## [Screenshots](fastlane/metadata/android/en-US/images/phoneScreenshots/)
-
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="The info screen" width="280"/>
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Online reviews" width="280"/>
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Incoming call notification" width="280"/>
-
-
-## More on features
-
-At this point most of the essential features (one would expect from a call blocking app) are implemented. Here's an overview:
-
-* Automatic blocking of calls with negative rating, calls from hidden or locally blacklisted numbers. *Works offline.*  
-  Call blocking should work on most Android versions (including Android 10).  
-  Some phones (like some Xiaomi) [require](https://gitlab.com/xynngh/YetAnotherCallBlocker/-/issues/12) to enable "Advanced call blocking mode" or a monitoring service.
-* Local blacklist with wildcard support.  
-  Import of NoPhoneSpam backup is supported.
-* Showing a notification with some caller info (positive/negative rating, category, number of negative reviews and such) when the phone's ringing. *Works offline.*
-* Loading and displaying a list of reviews for a number (accessed from the notification or the info view). *Requires internet.*
-* Automatic update of the database (for offline use). *Requires internet.*
-* Displaying call log with caller rating and the ability to show more info or load online reviews for the number. The list *works offline*, but loading reviews *requires internet.*
-* If "use contacts" option is enabled, the numbers present in the phone book are never blocked and the contact name is displayed next to/instead of a number throughout the app.
-* "Advanced call blocking mode" for blocking calls on Android 7+ before the phone starts ringing.  
-  Needs to be manually enabled in app Settings.
-
+F-Droid / IzzyOnDroid: in preparation.
 
 ## Privacy
 
-Protecting the user's privacy is the first concern during development. No personal data is sent to or otherwise shared with anyone.
-The only known possible data leaks (to the third-party servers) are the following:
+- All lookups for incoming calls are done **offline** against downloaded databases.
+- Optional online checks (PhoneBlock) send only a **SHA-1 hash** of the number.
+- No analytics, no ads, no tracking.
+- Network services used: YACB/"Should I Answer" database updates and reviews, PhoneBlock (with your own key), Bundesnetzagentur website, GitHub (update check). Some of these services are not free software.
 
-* Database update procedure leaks user's IP address to the update servers.  
-  The request also includes current database version (base or updated)  
-  and a country code (either auto-detected or set manually).
-* Online review requests leak user's IP address coupled with the phone number in question.  
-  The request also includes country codes (either auto-detected or set manually).  
-  Shouldn't be a big deal unless you request it for numbers in your phone book.  
-  If the "use contacts" feature is enabled, a confirmation dialog is shown if online reviews are requested for a number present in your phone book.
+## Support the project
 
-No other identifiable information is sent with the requests.
+If CallGuard is useful to you, you can buy me a coffee ☕ — the link will appear here and in *Settings → About*.
 
+## Development
 
-## Available data
+```
+./gradlew assembleGithubDebug     # or assembleDebug before flavors are introduced
+./gradlew testGithubDebugUnitTest
+```
 
-The following data is available in the main offline database:
+Requires JDK 17+ and Android SDK platform 36.
 
-* a phone number,
-* a category (telemarketers, dept collectors, scam, etc.),
-* a number of negative reviews,
-* a number of positive reviews,
-* a number of neutral reviews.
+- CI (`.github/workflows/build.yml`) builds, runs unit tests, lint and a translation check on every push.
+- `.github/workflows/screenshots.yml` runs the app on an emulator and stores screenshots in `docs/screenshots`.
+- Releases: run **Actions → Release → Run workflow** on `main`. The version is taken from `versionName` in `app/build.gradle`; the workflow creates the tag and the release and attaches the signed APK. Signing keys are stored in repository secrets (`SIGNING_KEYSTORE_BASE64`, `SIGNING_KEYSTORE_PASSWORD`, `SIGNING_KEY_ALIAS`, `SIGNING_KEY_PASSWORD`).
+- Manual test checklist: [docs/TESTING.md](docs/TESTING.md).
 
-The main database may receive delta updates from third-party servers.
+## Credits
 
-The "featured" database provides "names" (company names or short descriptions) for some (presumably) subset of numbers in the main database.
+- [Yet Another Call Blocker](https://gitlab.com/xynngh/YetAnotherCallBlocker) by xynngh — the original app; its full commit history is preserved here.
+- [PhoneBlock](https://phoneblock.net) ([haumacher/phoneblock](https://github.com/haumacher/phoneblock)) and its community.
+- Bundesnetzagentur — public list of measures against number misuse.
 
-The third-party servers can be queried for a list of detailed user reviews for a specific phone number.
-A detailed review contains:
-
-* A rating: positive, negative or neutral.
-* A category: each review may have a different one.
-* A title and a comment: the actual description the user left for the number.
-
-
-## Rationale
-
-Some may find the original application (whose DB and servers are used) hard to trust because of its proprietary nature (and also the use of firebase analytics and the like).  
-But since the database behind that application is crowdsourced, some may find it acceptable (in a moral sense) to use that database in a separate open source application.  
-Also, this project is meant to be non-commercial. So, there's that.
-
+This project is not affiliated with any of the services it uses.
 
 ## License
 
-[AGPLv3-only](https://www.gnu.org/licenses/agpl-3.0.en.html).
-
-
-## Contributing
-
-Any contributions are welcome.
-
-[Translate the app on Weblate](https://hosted.weblate.org/engage/yet-another-call-blocker/).
-
-[More on contributing](CONTRIBUTING.md).
-
-
-## Building
-
-See [BUILDING.md](BUILDING.md).
+[AGPL-3.0-only](LICENSE), like the original project.
