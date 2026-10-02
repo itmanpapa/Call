@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -35,6 +37,31 @@ public class OkHttpTransport implements PhoneBlockClient.HttpTransport {
             builder.header(header.getKey(), header.getValue());
         }
 
+        return execute(builder);
+    }
+
+    @Override
+    public PhoneBlockClient.HttpResponse send(String method, String url,
+                                              Map<String, String> headers,
+                                              String contentType, String body)
+            throws IOException {
+        RequestBody requestBody = null;
+        if (body != null) {
+            requestBody = RequestBody.create(MediaType.parse(
+                    contentType != null ? contentType : "application/octet-stream"), body);
+        } else if ("POST".equals(method) || "PUT".equals(method)) {
+            // OkHttp requires a body for these methods
+            requestBody = RequestBody.create(null, new byte[0]);
+        }
+
+        Request.Builder builder = new Request.Builder().url(url).method(method, requestBody);
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            builder.header(header.getKey(), header.getValue());
+        }
+        return execute(builder);
+    }
+
+    private PhoneBlockClient.HttpResponse execute(Request.Builder builder) throws IOException {
         Response response = clientSupplier.get().newCall(builder.build()).execute();
         boolean ok = false;
         try {

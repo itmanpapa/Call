@@ -41,7 +41,14 @@ import java.util.Objects;
  *     {@code PhoneInfo} object ({@code phone, votes, votesWildcard, rating, whiteListed,
  *     blackListed, archived, dateAdded, lastUpdate, label, location, ...}); an unknown
  *     number is answered with {@code phone="unknown"}, {@code votes=0},
- *     {@code rating="A_LEGITIMATE"}.</li>
+ *     {@code rating="A_LEGITIMATE"};</li>
+ *     <li>reporting (needs a key with the "rate" privilege, otherwise HTTP 401):
+ *     {@code POST /rate} with {@code {"phone":"+49…","rating":"E_ADVERTISING","comment":…}}
+ *     (answer 200 "Rating recorded.", 400 for an invalid number) puts the number on the
+ *     user's blacklist (any rating but {@code A_LEGITIMATE}) or whitelist
+ *     ({@code A_LEGITIMATE}); {@code DELETE /blacklist/{phone}} and
+ *     {@code DELETE /whitelist/{phone}} remove it again (204, or 404 if not listed).
+ *     The server has no rate limit for these calls.</li>
  * </ul>
  *
  * <p>The transport is pluggable ({@link HttpTransport}) so that parsing can be tested
@@ -302,7 +309,7 @@ public class PhoneBlockClient {
         }
     }
 
-    /** Executes HTTP GET requests. */
+    /** Executes HTTP requests. */
     public interface HttpTransport {
         /**
          * @param url     full URL
@@ -311,6 +318,23 @@ public class PhoneBlockClient {
          * @throws IOException on network errors
          */
         HttpResponse get(String url, Map<String, String> headers) throws IOException;
+
+        /**
+         * Executes a request with another method (POST, DELETE, ...). Only needed for
+         * reporting numbers; read-only transports may keep the default.
+         *
+         * @param method      HTTP method
+         * @param url         full URL
+         * @param headers     request headers
+         * @param contentType content type of the body, null if there is no body
+         * @param body        request body (sent as UTF-8), null for none
+         * @return the response (also for non-2xx codes)
+         * @throws IOException on network errors
+         */
+        default HttpResponse send(String method, String url, Map<String, String> headers,
+                                  String contentType, String body) throws IOException {
+            throw new UnsupportedOperationException(method + " is not supported");
+        }
     }
 
     /** An error response of the API. */
@@ -412,6 +436,111 @@ public class PhoneBlockClient {
             if (response.getBody() == null) throw new IOException("Empty response");
             return parsePhoneInfo(response.getBody());
         }
+    }
+
+    // reporting
+
+    /**
+     * Rates a number ({@code POST /rate}, server: {@code RateServlet}). This is also how
+     * a number gets onto the user's personal lists: any rating except
+     * {@link Rating#A_LEGITIMATE} puts it on the blacklist, {@code A_LEGITIMATE} on the
+     * whitelist (an existing entry on the other list is flipped). A repeated rating of
+     * the same kind doesn't count as a second vote, but updates the stored rating.
+     * The server answers 200 with the text "Rating recorded.", 400 for an invalid
+     * number and 401 for a missing key or a key without the "rate" privilege.
+     *
+     * @param token   API key, not empty
+     * @param e164    the number in E.164 form ({@code +49...})
+     * @param rating  the rating, not null
+     * @param comment optional comment (the server cuts it to 8192 characters), may be null
+     * @throws IllegalArgumentException if the number is not in E.164 form
+     */
+    public void rate(String token, String e164, Rating rating, String comment)
+            throws IOException {
+        Objects.requireNonNull(rating, "rating");
+        String phone = requireE164(e164);
+
+        String body = buildRateRequest(phone, rating, comment);
+        LOG.debug("rate() {} {}", phone, rating);
+        try (HttpResponse response = transport.send("POST", baseUrl + "/rate",
+                headers(token), "application/json; charset=UTF-8", body)) {
+            checkSuccess(response);
+        }
+    }
+
+    /**
+     * Removes a number from the user's personal blacklist
+     * ({@code DELETE /blacklist/{phone}}, server: {@code PersonalizationServlet}); the
+     * user's rating and vote are withdrawn as well.
+     *
+     * @return true if the number was removed, false if it wasn't on the list (HTTP 404)
+     * @throws IllegalArgumentException if the number is not in E.164 form
+     */
+    public boolean removeFromBlacklist(String token, String e164) throws IOException {
+        return removeFromList("/blacklist/", token, e164);
+    }
+
+    /**
+     * Removes a number from the user's personal whitelist
+     * ({@code DELETE /whitelist/{phone}}).
+     *
+     * @return true if the number was removed, false if it wasn't on the list (HTTP 404)
+     * @throws IllegalArgumentException if the number is not in E.164 form
+     */
+    public boolean removeFromWhitelist(String token, String e164) throws IOException {
+        return removeFromList("/whitelist/", token, e164);
+    }
+
+    private boolean removeFromList(String path, String token, String e164) throws IOException {
+        String phone = requireE164(e164);
+        LOG.debug("removeFromList() {}{}", path, phone);
+        // the official app sends the "+" unencoded; it is a valid path character
+        try (HttpResponse response = transport.send("DELETE", baseUrl + path + phone,
+                headers(token), null, null)) {
+            if (response.getCode() == 404) return false;
+            checkSuccess(response);
+            return true;
+        }
+    }
+
+    /** @return the JSON body of a {@code /rate} request */
+    static String buildRateRequest(String e164, Rating rating, String comment) {
+        StringBuilder sb = new StringBuilder("{\"phone\":");
+        appendJsonString(sb, e164);
+        sb.append(",\"rating\":");
+        appendJsonString(sb, rating.name());
+        if (comment != null && !comment.trim().isEmpty()) {
+            sb.append(",\"comment\":");
+            appendJsonString(sb, comment.trim());
+        }
+        return sb.append('}').toString();
+    }
+
+    static void appendJsonString(StringBuilder sb, String s) {
+        sb.append('"');
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '"': sb.append("\\\""); break;
+                case '\\': sb.append("\\\\"); break;
+                case '\n': sb.append("\\n"); break;
+                case '\r': sb.append("\\r"); break;
+                case '\t': sb.append("\\t"); break;
+                default:
+                    if (c < 0x20) {
+                        sb.append(String.format(Locale.ROOT, "\\u%04x", (int) c));
+                    } else {
+                        sb.append(c);
+                    }
+            }
+        }
+        sb.append('"');
+    }
+
+    private static String requireE164(String e164) {
+        String phone = normalizePhone(e164);
+        if (phone == null) throw new IllegalArgumentException("Not an E.164 number: " + e164);
+        return phone;
     }
 
     // parsing

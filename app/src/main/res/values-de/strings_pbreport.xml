@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Send my marks to PhoneBlock" -->
+<resources>
+    <string name="pbreport_setting">Meine Markierungen an PhoneBlock senden</string>
+    <string name="pbreport_setting_details">Als Spam markierte Nummern werden bei PhoneBlock bewertet (mit der gewählten Kategorie) und landen auf Ihrer PhoneBlock-Blacklist; „kein Spam“ setzt sie auf Ihre Whitelist. Wird eine Markierung entfernt, wird die Bewertung zurückgezogen. Kontakte und unterdrückte Nummern werden nie gesendet. Offline gesetzte Markierungen werden später gesendet.</string>
+    <plurals name="pbreport_sent_count">
+        <item quantity="one">%d Markierung an PhoneBlock gesendet</item>
+        <item quantity="other">%d Markierungen an PhoneBlock gesendet</item>
+    </plurals>
+    <plurals name="pbreport_pending_count">
+        <item quantity="one">%d wartet auf das Senden</item>
+        <item quantity="other">%d warten auf das Senden</item>
+    </plurals>
+    <string name="pbreport_last_error">Letzter Versuch fehlgeschlagen: %1$s</string>
+    <string name="pbreport_auth_error">PhoneBlock hat den API-Schlüssel abgelehnt (ein Schlüssel mit Bewertungsrecht wird benötigt)</string>
+
+    <string name="pbreport_explain_title">Markierungen an PhoneBlock senden?</string>
+    <string name="pbreport_explain_message">PhoneBlock ist eine von der Community gepflegte Spam-Liste. Mit Ihrem API-Schlüssel kann CallGuard die Nummern senden, die Sie markieren: Spam als Bewertung (die Kategorie wählen Sie), „kein Spam“ als seriöse Nummer. Das hilft anderen und trägt die Nummern in Ihre persönlichen PhoneBlock-Listen ein.\n\nGesendet werden nur Nummer und Bewertung, niemals Kontakte oder unterdrückte Nummern. Sie können das später unter Datenbanken → PhoneBlock ändern.</string>
+    <string name="pbreport_explain_send">Senden</string>
+    <string name="pbreport_explain_dont_send">Nicht senden</string>
+
+    <string name="pbreport_category_title">An PhoneBlock melden als</string>
+    <string name="pbreport_category_advertising">Werbung / Spam</string>
+    <string name="pbreport_category_poll">Umfrage</string>
+    <string name="pbreport_category_fraud">Betrug</string>
+    <string name="pbreport_category_ping">Ping-Anruf (sofort aufgelegt)</string>
+    <string name="pbreport_category_gamble">Gewinnspiel / Glücksspiel</string>
+    <string name="pbreport_category_other">Sonstiges</string>
+    <string name="pbreport_category_send">Senden</string>
+    <string name="pbreport_category_dont_send">Nicht senden</string>
+
+    <string name="pbreport_status_sent">An PhoneBlock gesendet</string>
+    <string name="pbreport_status_pending">Wartet auf das Senden an PhoneBlock</string>
+    <string name="pbreport_status_pending_inactive">Nicht an PhoneBlock gesendet: kein API-Schlüssel</string>
+    <string name="pbreport_status_rejected">PhoneBlock hat diese Nummer nicht angenommen</string>
+</resources>

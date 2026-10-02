@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Send my marks to PhoneBlock" -->
+<resources>
+    <string name="pbreport_setting">Отправлять мои отметки в PhoneBlock</string>
+    <string name="pbreport_setting_details">Номера, отмеченные как спам, получают оценку в PhoneBlock (с выбранной категорией) и попадают в ваш чёрный список PhoneBlock; «не спам» — в ваш белый список. Снятие отметки отзывает оценку. Контакты и скрытые номера никогда не отправляются. Отметки, сделанные без сети, отправляются позже.</string>
+    <plurals name="pbreport_sent_count">
+        <item quantity="one">Отправлена %d отметка</item>
+        <item quantity="few">Отправлено %d отметки</item>
+        <item quantity="many">Отправлено %d отметок</item>
+        <item quantity="other">Отправлено %d отметки</item>
+    </plurals>
+    <plurals name="pbreport_pending_count">
+        <item quantity="one">%d ожидает отправки</item>
+        <item quantity="few">%d ожидают отправки</item>
+        <item quantity="many">%d ожидают отправки</item>
+        <item quantity="other">%d ожидают отправки</item>
+    </plurals>
+    <string name="pbreport_last_error">Последняя попытка не удалась: %1$s</string>
+    <string name="pbreport_auth_error">PhoneBlock не принял ключ API (нужен ключ с правом ставить оценки)</string>
+
+    <string name="pbreport_explain_title">Отправлять отметки в PhoneBlock?</string>
+    <string name="pbreport_explain_message">PhoneBlock — общий список спам-номеров, который ведут сами пользователи. С вашим ключом API CallGuard может отправлять номера, которые вы отмечаете: спам — как оценку (категорию выберете вы), «не спам» — как добросовестный номер. Это помогает другим и добавляет номера в ваши личные списки PhoneBlock.\n\nОтправляются только номер и оценка; контакты и скрытые номера — никогда. Изменить это можно в разделе «Базы данных» → PhoneBlock.</string>
+    <string name="pbreport_explain_send">Отправлять</string>
+    <string name="pbreport_explain_dont_send">Не отправлять</string>
+
+    <string name="pbreport_category_title">Сообщить в PhoneBlock как</string>
+    <string name="pbreport_category_advertising">Реклама / спам</string>
+    <string name="pbreport_category_poll">Опрос</string>
+    <string name="pbreport_category_fraud">Мошенничество</string>
+    <string name="pbreport_category_ping">Пинг-звонок (сразу сбросили)</string>
+    <string name="pbreport_category_gamble">Азартные игры / розыгрыши</string>
+    <string name="pbreport_category_other">Другое</string>
+    <string name="pbreport_category_send">Отправить</string>
+    <string name="pbreport_category_dont_send">Не отправлять</string>
+
+    <string name="pbreport_status_sent">Отправлено в PhoneBlock</string>
+    <string name="pbreport_status_pending">Ожидает отправки в PhoneBlock</string>
+    <string name="pbreport_status_pending_inactive">Не отправлено в PhoneBlock: нет ключа API</string>
+    <string name="pbreport_status_rejected">PhoneBlock не принял этот номер</string>
+</resources>
