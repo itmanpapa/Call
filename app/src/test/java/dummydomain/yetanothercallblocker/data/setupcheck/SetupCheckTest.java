@@ -37,6 +37,9 @@ public class SetupCheckTest {
         boolean notificationsEnabled = true;
         int blockedChannels;
         boolean incomingCallNotifications = true;
+        // the card is on by default in the app; off here so the other tests see no item
+        boolean callerIdOverlay;
+        boolean overlayPermission = true;
         boolean blockByRating = true;
         boolean blockHidden;
         boolean blockBlacklisted = true;
@@ -61,6 +64,8 @@ public class SetupCheckTest {
         @Override public boolean areNotificationsEnabled() { return notificationsEnabled; }
         @Override public int getBlockedCallChannelCount() { return blockedChannels; }
         @Override public boolean isIncomingCallNotificationsEnabled() { return incomingCallNotifications; }
+        @Override public boolean isCallerIdOverlayEnabled() { return callerIdOverlay; }
+        @Override public boolean canDrawOverlays() { return overlayPermission; }
         @Override public boolean isBlockByRatingEnabled() { return blockByRating; }
         @Override public boolean isBlockHiddenEnabled() { return blockHidden; }
         @Override public boolean isBlockBlacklistedEnabled() { return blockBlacklisted; }
@@ -180,6 +185,50 @@ public class SetupCheckTest {
         assertEquals(Type.BATTERY, items.get(4).getType());
         assertEquals(Type.CONTACTS, items.get(5).getType());
         assertEquals(Type.SOURCE, items.get(6).getType());
+    }
+
+    // caller ID card
+
+    @Test
+    public void overlayWithPermissionIsOk() {
+        env.callerIdOverlay = true;
+        CheckItem item = item(Type.OVERLAY);
+        assertNotNull(item);
+        assertEquals(Status.OK, item.getStatus());
+        assertEquals(Reason.OVERLAY_OK, item.getReason());
+        assertTrue(SetupCheck.run(env).isProtectionWorking());
+    }
+
+    @Test
+    public void overlayWithoutPermissionIsAWarning() {
+        env.callerIdOverlay = true;
+        env.overlayPermission = false;
+        CheckItem item = item(Type.OVERLAY);
+        assertEquals(Status.WARNING, item.getStatus());
+        assertEquals(Reason.OVERLAY_PERMISSION_MISSING, item.getReason());
+        assertEquals(Action.REQUEST_OVERLAY_PERMISSION, item.getAction());
+
+        SetupCheck.Result result = SetupCheck.run(env);
+        assertTrue(result.isProtectionWorking());
+        assertEquals(1, result.getWarningCount());
+    }
+
+    @Test
+    public void overlayItemFollowsNotifications() {
+        env.callerIdOverlay = true;
+        java.util.List<CheckItem> items = SetupCheck.run(env).getItems();
+        assertEquals(Type.NOTIFICATIONS, items.get(3).getType());
+        assertEquals(Type.OVERLAY, items.get(4).getType());
+    }
+
+    @Test
+    public void noOverlayItemWhenTheCardIsOff() {
+        env.overlayPermission = false;
+        assertNull(item(Type.OVERLAY));
+
+        env.callerIdOverlay = true;
+        env.incomingCallNotifications = false;
+        assertNull(item(Type.OVERLAY));
     }
 
     // call screening

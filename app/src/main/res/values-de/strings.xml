@@ -157,6 +157,22 @@
     <string name="notification_block_failed">Die Nummer konnte nicht zur Sperrliste hinzugefügt werden</string>
     <string name="prominent_call_notification">Auffällige Anrufbenachrichtigung</string>
     <string name="prominent_call_notification_summary">Pop-up-Benachrichtigung mit „Blockieren“ und „Kein Spam“ für Spam und unbekannte Anrufer</string>
+    <string name="caller_id_overlay">Anruferkarte über dem Anrufbildschirm</string>
+    <string name="caller_id_overlay_summary">Zeigt, wer anruft, mit „Blockieren“ und „Kein Spam“ über dem Bildschirm des eingehenden Anrufs. Nicht für Kontakte und nicht auf dem Sperrbildschirm</string>
+    <string name="caller_id_overlay_permission">Über anderen Apps einblenden erlauben</string>
+    <string name="caller_id_overlay_permission_summary">Die Anruferkarte braucht die Berechtigung „Über anderen Apps einblenden“</string>
+    <string name="caller_id_overlay_permission_hint">CallGuard in der Liste suchen und „Über anderen Apps einblenden“ erlauben</string>
+    <string name="caller_id_overlay_hidden_number">Unterdrückte Nummer</string>
+    <string name="caller_id_overlay_positive">Wahrscheinlich kein Spam</string>
+    <string name="caller_id_overlay_close">Schließen</string>
+    <string name="setup_check_overlay_ok">Anruferkarte ist bereit</string>
+    <string name="setup_check_overlay_ok_text">Die Karte mit den Anruferinfos erscheint über dem Bildschirm des eingehenden Anrufs. Auf dem Sperrbildschirm wird sie nicht angezeigt: dort sehen Sie die Benachrichtigung.</string>
+    <string name="setup_check_overlay_missing">Anruferkarte kann nicht angezeigt werden</string>
+    <string name="setup_check_overlay_missing_text">Erlauben Sie „Über anderen Apps einblenden“. Ohne diese Berechtigung verdeckt das Pop-up der Telefon-App unsere Benachrichtigung während des Anrufs, und die Anruferinfos sind nur in der Benachrichtigungsleiste zu sehen.</string>
+    <plurals name="caller_id_overlay_reports">
+        <item quantity="one">%d Meldung</item>
+        <item quantity="other">%d Meldungen</item>
+    </plurals>
     <string name="notification_channel_name_monitoring_service">Überwachungsdienst</string>
     <string name="notification_channel_name_blocked_info">Blockierte Infos</string>
     <string name="notification_channel_name_negative">Negative</string>

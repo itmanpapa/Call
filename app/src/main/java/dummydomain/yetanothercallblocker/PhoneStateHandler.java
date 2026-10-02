@@ -122,6 +122,8 @@ public class PhoneStateHandler {
 
         isOffHook = true;
 
+        notificationService.callAnswered();
+
         postEvent(new CallOngoingEvent());
     }
 

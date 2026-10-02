@@ -341,6 +341,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 openNotificationSettings();
                 break;
 
+            case REQUEST_OVERLAY_PERMISSION:
+                if (!CallerIdOverlay.requestPermission(this)) openAppDetails();
+                break;
+
             case OPEN_SETTINGS:
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
@@ -441,6 +445,7 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
         switch (action) {
             case REQUEST_CALL_SCREENING:
             case REQUEST_PERMISSIONS:
+            case REQUEST_OVERLAY_PERMISSION:
                 return R.string.setup_check_action_allow;
             case OPEN_NOTIFICATION_SETTINGS:
                 return R.string.setup_check_action_notifications;
@@ -496,6 +501,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 return R.string.setup_check_notifications_channels;
             case NOTIFICATIONS_SETTING_OFF:
                 return R.string.setup_check_notifications_setting_off;
+            case OVERLAY_OK:
+                return R.string.setup_check_overlay_ok;
+            case OVERLAY_PERMISSION_MISSING:
+                return R.string.setup_check_overlay_missing;
             case BATTERY_EXEMPT:
                 return R.string.setup_check_battery_exempt;
             case BATTERY_OPTIMIZED:
@@ -546,6 +555,10 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                 return R.string.setup_check_notifications_channels_text;
             case NOTIFICATIONS_SETTING_OFF:
                 return R.string.setup_check_notifications_setting_off_text;
+            case OVERLAY_OK:
+                return R.string.setup_check_overlay_ok_text;
+            case OVERLAY_PERMISSION_MISSING:
+                return R.string.setup_check_overlay_missing_text;
             case BATTERY_EXEMPT:
                 return R.string.setup_check_battery_exempt_text;
             case BATTERY_OPTIMIZED:

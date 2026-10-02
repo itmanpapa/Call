@@ -57,6 +57,12 @@ public interface SetupCheckEnvironment {
     /** @return the "show caller info" setting */
     boolean isIncomingCallNotificationsEnabled();
 
+    /** @return the "caller ID card over the call screen" setting */
+    boolean isCallerIdOverlayEnabled();
+
+    /** @return true if the app may draw over other apps ("display over other apps") */
+    boolean canDrawOverlays();
+
     /** @return the "block by rating" setting (numbers flagged by the databases) */
     boolean isBlockByRatingEnabled();
 

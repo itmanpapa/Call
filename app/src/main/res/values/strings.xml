@@ -35,6 +35,22 @@
     <string name="notification_block_failed">Could not add the number to the blacklist</string>
     <string name="prominent_call_notification">Prominent call notification</string>
     <string name="prominent_call_notification_summary">A pop-up notification with “Block” and “Not spam” buttons for spam and unknown callers</string>
+    <string name="caller_id_overlay">Caller ID card over the call screen</string>
+    <string name="caller_id_overlay_summary">Shows who is calling with “Block” and “Not spam” buttons on top of the incoming call screen. Not for contacts and not on the lock screen</string>
+    <string name="caller_id_overlay_permission">Allow display over other apps</string>
+    <string name="caller_id_overlay_permission_summary">The caller ID card needs the “Display over other apps” permission</string>
+    <string name="caller_id_overlay_permission_hint">Find CallGuard in the list and allow “Display over other apps”</string>
+    <string name="caller_id_overlay_hidden_number">Hidden number</string>
+    <string name="caller_id_overlay_positive">Probably not spam</string>
+    <string name="caller_id_overlay_close">Close</string>
+    <string name="setup_check_overlay_ok">Caller ID card is ready</string>
+    <string name="setup_check_overlay_ok_text">The card with the caller info appears over the incoming call screen. It is not shown on the lock screen: there you see the notification.</string>
+    <string name="setup_check_overlay_missing">Caller ID card can’t be shown</string>
+    <string name="setup_check_overlay_missing_text">Allow “Display over other apps”. Without it the dialer’s own pop-up covers our notification during a call, and you see the caller info only in the notification shade.</string>
+    <plurals name="caller_id_overlay_reports">
+        <item quantity="one">%d report</item>
+        <item quantity="other">%d reports</item>
+    </plurals>
 
     <string name="notification_incoming_call_contact">Contact</string>
     <string name="notification_incoming_call_positive">Positive call</string>

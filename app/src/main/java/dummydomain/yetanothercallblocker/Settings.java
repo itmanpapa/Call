@@ -34,6 +34,8 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public static final String PREF_NOTIFICATIONS_UNKNOWN = "showNotificationsForUnknownCallers";
     public static final String PREF_NOTIFICATIONS_BLOCKED = "showNotificationsForBlockedCalls";
     public static final String PREF_PROMINENT_CALL_NOTIFICATION = "prominentCallNotification";
+    public static final String PREF_CALLER_ID_OVERLAY = "callerIdOverlay";
+    public static final String PREF_CALLER_ID_OVERLAY_Y = "callerIdOverlayY";
     public static final String PREF_BLOCK_IN_LIMITED_MODE = "blockInLimitedMode";
     public static final String PREF_LAST_UPDATE_TIME = "lastUpdateTime";
     public static final String PREF_LAST_UPDATE_CHECK_TIME = "lastUpdateCheckTime";
@@ -247,6 +249,27 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
 
     public void setProminentCallNotification(boolean show) {
         setBoolean(PREF_PROMINENT_CALL_NOTIFICATION, show);
+    }
+
+    /**
+     * @return whether the caller ID card is shown over the incoming call screen
+     * (enabled by default; works only with the "display over other apps" permission)
+     */
+    public boolean getCallerIdOverlay() {
+        return getBoolean(PREF_CALLER_ID_OVERLAY, true);
+    }
+
+    public void setCallerIdOverlay(boolean show) {
+        setBoolean(PREF_CALLER_ID_OVERLAY, show);
+    }
+
+    /** @return the vertical position of the caller ID card in pixels, -1 for the default */
+    public int getCallerIdOverlayY() {
+        return getInt(PREF_CALLER_ID_OVERLAY_Y, -1);
+    }
+
+    public void setCallerIdOverlayY(int y) {
+        setInt(PREF_CALLER_ID_OVERLAY_Y, y);
     }
 
     public boolean isBlockingByRatingInLimitedModeAllowed() {

@@ -131,6 +131,15 @@ public class CallScreeningServiceImpl extends CallScreeningService {
                 numberInfoService.blockedCall(numberInfo);
 
                 postEvent(new CallEndedEvent());
+            } else if (numberInfo != null) {
+                // the call is about to ring: the phone state listener may not get the
+                // number (no call log permission), so show the caller ID card from here
+                // too; repeated reports of the same call are ignored by the card
+                try {
+                    CallerIdOverlay.show(this, numberInfo, false);
+                } catch (Exception e) {
+                    LOG.error("onScreenCall() failed to show the caller ID card", e);
+                }
             }
         }
 

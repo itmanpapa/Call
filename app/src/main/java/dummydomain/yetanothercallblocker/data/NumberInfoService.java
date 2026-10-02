@@ -313,6 +313,7 @@ public class NumberInfoService {
         numberInfo.sourceId = UserMarkPolicy.SOURCE_ID;
         numberInfo.sourceName = null; // localized by NumberInfoUtils
         numberInfo.sourceCategory = null;
+        numberInfo.sourceReviewCount = -1;
 
         LOG.trace("applyUserMark() rating={}", numberInfo.rating);
     }
@@ -325,6 +326,7 @@ public class NumberInfoService {
         numberInfo.sourceName = sourcesManager.getDisplayName(result.getSourceId());
         if (numberInfo.sourceName == null) numberInfo.sourceName = result.getSourceId();
         numberInfo.sourceCategory = result.getCategory();
+        numberInfo.sourceReviewCount = result.hasReviewCount() ? result.getReviewCount() : -1;
 
         if (numberInfo.name == null && !TextUtils.isEmpty(result.getName())) {
             numberInfo.name = result.getName();

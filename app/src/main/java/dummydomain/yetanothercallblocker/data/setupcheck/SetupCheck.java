@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import dummydomain.yetanothercallblocker.data.CallerIdOverlayPolicy;
+
 import dummydomain.yetanothercallblocker.data.setupcheck.CheckItem.Action;
 import dummydomain.yetanothercallblocker.data.setupcheck.CheckItem.Reason;
 import dummydomain.yetanothercallblocker.data.setupcheck.CheckItem.Status;
@@ -115,6 +117,9 @@ public final class SetupCheck {
         items.add(checkBlocking(env));
         items.add(checkNotifications(env, blocking));
 
+        CheckItem overlay = checkOverlay(env);
+        if (overlay != null) items.add(overlay);
+
         CheckItem battery = checkBattery(env);
         if (battery != null) items.add(battery);
 
@@ -222,6 +227,22 @@ public final class SetupCheck {
                     Action.OPEN_SETTINGS);
         }
         return new CheckItem(type, Status.OK, Reason.NOTIFICATIONS_OK, Action.NONE);
+    }
+
+    /**
+     * @return the caller ID card item, or null if the card is off (by its own setting or
+     * because caller info is off)
+     */
+    static CheckItem checkOverlay(SetupCheckEnvironment env) {
+        if (!env.isIncomingCallNotificationsEnabled() || !env.isCallerIdOverlayEnabled()) {
+            return null;
+        }
+        if (CallerIdOverlayPolicy.isPermissionMissing(true, true, env.canDrawOverlays())) {
+            // the notification still works, but the dialer's own heads-up hides it
+            return new CheckItem(Type.OVERLAY, Status.WARNING,
+                    Reason.OVERLAY_PERMISSION_MISSING, Action.REQUEST_OVERLAY_PERMISSION);
+        }
+        return new CheckItem(Type.OVERLAY, Status.OK, Reason.OVERLAY_OK, Action.NONE);
     }
 
     /**

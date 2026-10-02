@@ -42,20 +42,28 @@ public class NumberInfoUtils {
     }
 
     private static String getBaseDescription(Context context, NumberInfo numberInfo) {
-        if (numberInfo.communityDatabaseItem != null) {
-            NumberCategory category = NumberCategory.getById(
-                    numberInfo.communityDatabaseItem.getCategory());
-
-            if (category != null && category != NumberCategory.NONE) {
-                return SiaNumberCategoryUtils.getName(context, category);
-            }
-        }
+        String category = getCategoryName(context, numberInfo);
+        if (category != null) return category;
 
         if (numberInfo.blacklistItem != null && numberInfo.contactItem == null) {
             return context.getString(R.string.info_in_blacklist);
         }
 
         return null;
+    }
+
+    /**
+     * @return the localized category of the number from the community database
+     * (e.g. "Telemarketer"), or null
+     */
+    public static String getCategoryName(Context context, NumberInfo numberInfo) {
+        if (numberInfo.communityDatabaseItem == null) return null;
+
+        NumberCategory category = NumberCategory.getById(
+                numberInfo.communityDatabaseItem.getCategory());
+        if (category == null || category == NumberCategory.NONE) return null;
+
+        return SiaNumberCategoryUtils.getName(context, category);
     }
 
     /**

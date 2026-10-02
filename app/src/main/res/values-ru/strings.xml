@@ -203,6 +203,24 @@
     <string name="notification_block_failed">Не удалось добавить номер в чёрный список</string>
     <string name="prominent_call_notification">Заметное уведомление о звонке</string>
     <string name="prominent_call_notification_summary">Всплывающее уведомление с кнопками «Заблокировать» и «Не спам» для спама и неизвестных номеров</string>
+    <string name="caller_id_overlay">Карточка поверх экрана звонка</string>
+    <string name="caller_id_overlay_summary">Показывает, кто звонит, с кнопками «Заблокировать» и «Не спам» поверх экрана входящего вызова. Не для контактов и не на экране блокировки</string>
+    <string name="caller_id_overlay_permission">Разрешить показ поверх других приложений</string>
+    <string name="caller_id_overlay_permission_summary">Для карточки нужно разрешение «Поверх других приложений»</string>
+    <string name="caller_id_overlay_permission_hint">Найдите CallGuard в списке и разрешите показ поверх других приложений</string>
+    <string name="caller_id_overlay_hidden_number">Скрытый номер</string>
+    <string name="caller_id_overlay_positive">Вероятно, не спам</string>
+    <string name="caller_id_overlay_close">Закрыть</string>
+    <string name="setup_check_overlay_ok">Карточка звонящего готова</string>
+    <string name="setup_check_overlay_ok_text">Карточка с информацией о звонящем появляется поверх экрана входящего вызова. На экране блокировки её нет: там видно уведомление.</string>
+    <string name="setup_check_overlay_missing">Карточка звонящего не может появиться</string>
+    <string name="setup_check_overlay_missing_text">Разрешите показ поверх других приложений. Без этого во время звонка всплывающее окно звонилки закрывает наше уведомление, и информацию о звонящем видно только в шторке.</string>
+    <plurals name="caller_id_overlay_reports">
+        <item quantity="one">%d жалоба</item>
+        <item quantity="few">%d жалобы</item>
+        <item quantity="many">%d жалоб</item>
+        <item quantity="other">%d жалобы</item>
+    </plurals>
     <string name="notification_channel_group_name_services">Службы</string>
     <string name="notification_channel_name_monitoring_service">Служба мониторинга</string>
     <string name="use_monitoring_service">Использовать службу мониторинга</string>

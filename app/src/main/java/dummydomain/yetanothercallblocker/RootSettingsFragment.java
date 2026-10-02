@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import dummydomain.yetanothercallblocker.data.CallerIdOverlayPolicy;
 import dummydomain.yetanothercallblocker.utils.PackageManagerUtils;
 import dummydomain.yetanothercallblocker.work.UpdateScheduler;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,6 +28,7 @@ public class RootSettingsFragment extends BaseSettingsFragment {
     private static final String PREF_DATABASES = "databases";
     private static final String PREF_SETUP_CHECK = "setupCheck";
     private static final String PREF_CALL_RULES = "callRules";
+    private static final String PREF_CALLER_ID_OVERLAY_PERMISSION = "callerIdOverlayPermission";
 
     private static final String STATE_REQUEST_TOKEN = "STATE_REQUEST_TOKEN";
 
@@ -84,6 +86,10 @@ public class RootSettingsFragment extends BaseSettingsFragment {
         // needs to be updated after the confirmation dialog was closed
         // due to activity recreation (orientation change, etc.)
         updateBlockedCallNotificationsPreference();
+
+        // the user may come back from the "display over other apps" screen
+        updateOverlayPermissionPreference(App.getSettings().getIncomingCallNotifications(),
+                App.getSettings().getCallerIdOverlay());
     }
 
     @Override
@@ -99,12 +105,32 @@ public class RootSettingsFragment extends BaseSettingsFragment {
     @Override
     protected void initScreen() {
         setPrefChangeListener(Settings.PREF_INCOMING_CALL_NOTIFICATIONS, (pref, newValue) -> {
-            if (Boolean.TRUE.equals(newValue)) {
+            boolean enabled = Boolean.TRUE.equals(newValue);
+            if (enabled) {
                 PermissionHelper.checkPermissions(requireContext(), this,
                         true, false, false);
             }
+            updateOverlayPermissionPreference(enabled, App.getSettings().getCallerIdOverlay());
             return true;
         });
+
+        setPrefChangeListener(Settings.PREF_CALLER_ID_OVERLAY, (pref, newValue) -> {
+            boolean enabled = Boolean.TRUE.equals(newValue);
+            if (enabled && !CallerIdOverlay.canDrawOverlays(requireContext())) {
+                requestOverlayPermission();
+            }
+            updateOverlayPermissionPreference(
+                    App.getSettings().getIncomingCallNotifications(), enabled);
+            return true;
+        });
+
+        requirePreference(PREF_CALLER_ID_OVERLAY_PERMISSION)
+                .setOnPreferenceClickListener(preference -> {
+                    requestOverlayPermission();
+                    return true;
+                });
+        updateOverlayPermissionPreference(App.getSettings().getIncomingCallNotifications(),
+                App.getSettings().getCallerIdOverlay());
 
         Preference.OnPreferenceChangeListener callBlockingListener = (preference, newValue) -> {
             if (Boolean.TRUE.equals(newValue)) {
@@ -225,6 +251,22 @@ public class RootSettingsFragment extends BaseSettingsFragment {
                 return true;
             });
         }
+    }
+
+    private void requestOverlayPermission() {
+        CallerIdOverlay.requestPermission(requireContext());
+    }
+
+    /**
+     * Shows the "allow display over other apps" item while the caller ID card is wanted,
+     * but not permitted. Takes the new values because a change listener runs before
+     * the preference is saved.
+     */
+    private void updateOverlayPermissionPreference(boolean callInfoEnabled,
+                                                   boolean overlayEnabled) {
+        requirePreference(PREF_CALLER_ID_OVERLAY_PERMISSION).setVisible(
+                CallerIdOverlayPolicy.isPermissionMissing(callInfoEnabled, overlayEnabled,
+                        CallerIdOverlay.canDrawOverlays(requireContext())));
     }
 
     private void updateCallScreeningPreference() {

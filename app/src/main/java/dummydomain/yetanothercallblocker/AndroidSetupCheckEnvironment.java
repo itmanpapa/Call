@@ -163,6 +163,16 @@ class AndroidSetupCheckEnvironment implements SetupCheckEnvironment {
     }
 
     @Override
+    public boolean isCallerIdOverlayEnabled() {
+        return settings.getCallerIdOverlay();
+    }
+
+    @Override
+    public boolean canDrawOverlays() {
+        return CallerIdOverlay.canDrawOverlays(context);
+    }
+
+    @Override
     public boolean isBlockByRatingEnabled() {
         return settings.getBlockNegativeSiaNumbers();
     }

@@ -21,6 +21,18 @@
             app:summary="@string/prominent_call_notification_summary"
             app:title="@string/prominent_call_notification" />
         <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:dependency="incomingCallNotifications"
+            app:key="callerIdOverlay"
+            app:summary="@string/caller_id_overlay_summary"
+            app:title="@string/caller_id_overlay" />
+        <Preference
+            app:icon="@drawable/ic_warning_24dp"
+            app:key="callerIdOverlayPermission"
+            app:persistent="false"
+            app:summary="@string/caller_id_overlay_permission_summary"
+            app:title="@string/caller_id_overlay_permission" />
+        <SwitchPreferenceCompat
             app:key="autoUpdateEnabled"
             app:persistent="false"
             app:summary="@string/auto_updates_summary"

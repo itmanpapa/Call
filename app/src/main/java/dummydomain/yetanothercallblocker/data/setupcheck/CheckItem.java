@@ -12,6 +12,8 @@ public final class CheckItem {
         PERMISSIONS,
         BLOCKING,
         NOTIFICATIONS,
+        /** The caller ID card over the incoming call screen. */
+        OVERLAY,
         BATTERY,
         CONTACTS,
         /** No source is enabled at all. */
@@ -57,6 +59,9 @@ public final class CheckItem {
         NOTIFICATIONS_CHANNELS_BLOCKED,
         NOTIFICATIONS_SETTING_OFF,
 
+        OVERLAY_OK,
+        OVERLAY_PERMISSION_MISSING,
+
         BATTERY_EXEMPT,
         BATTERY_OPTIMIZED,
 
@@ -79,6 +84,8 @@ public final class CheckItem {
         REQUEST_CALL_SCREENING,
         REQUEST_PERMISSIONS,
         OPEN_NOTIFICATION_SETTINGS,
+        /** Open the system "display over other apps" screen of the app. */
+        REQUEST_OVERLAY_PERMISSION,
         OPEN_SETTINGS,
         OPEN_BATTERY_SETTINGS,
         OPEN_SOURCES,

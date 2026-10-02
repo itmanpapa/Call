@@ -36,6 +36,8 @@ public class NumberInfo {
     public String sourceId;
     public String sourceName;
     public String sourceCategory;
+    // number of reports (e.g. PhoneBlock votes) behind the source rating, -1 if unknown
+    public int sourceReviewCount = -1;
 
     // the user's own mark ("My mark"), null if none; when set, it decides the rating
     // (see UserMarkPolicy) and sourceId is UserMarkPolicy.SOURCE_ID

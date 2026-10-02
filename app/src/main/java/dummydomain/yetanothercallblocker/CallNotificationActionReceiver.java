@@ -18,9 +18,9 @@ import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.utils.PhoneUtils;
 
 /**
- * Handles the actions of the call notifications: "Block" (adds the number to the
- * blacklist and ends the ringing call if possible) and "Not spam" (sets the
- * NOT_SPAM mark). Not exported: only reachable through our immutable PendingIntents.
+ * Handles the actions of the call notifications and of the caller ID card: "Block"
+ * (adds the number to the blacklist and ends the ringing call if possible) and
+ * "Not spam" (sets the NOT_SPAM mark). Not exported: only reachable through our immutable PendingIntents.
  */
 public class CallNotificationActionReceiver extends BroadcastReceiver {
 
@@ -55,7 +55,8 @@ public class CallNotificationActionReceiver extends BroadcastReceiver {
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private static String getName(NumberInfo numberInfo) {
+    /** @return the caller name passed to the blacklist entry, or null */
+    static String getName(NumberInfo numberInfo) {
         if (!TextUtils.isEmpty(numberInfo.name)) return numberInfo.name;
         if (numberInfo.featuredDatabaseItem != null) return numberInfo.featuredDatabaseItem.getName();
         return null;
@@ -81,13 +82,31 @@ public class CallNotificationActionReceiver extends BroadcastReceiver {
 
         // the notification is no longer needed whatever the outcome
         NotificationHelper.cancel(appContext, tag, id);
+        // neither is the caller ID card of this caller
+        CallerIdOverlay.hideFor(number);
+
+        PendingResult pendingResult = goAsync();
+        perform(appContext, action, number, normalizedNumber, name, pendingResult::finish);
+    }
+
+    /**
+     * Performs a "Block" or "Not spam" action (shared by the notifications and the
+     * caller ID card): "Block" ends the ringing call right away and adds the number to
+     * the blacklist in the background, "Not spam" sets the mark. Shows a toast with the
+     * outcome.
+     *
+     * @param action   {@link #ACTION_BLOCK} or {@link #ACTION_NOT_SPAM}
+     * @param onFinish called on the background thread when done, may be null
+     */
+    static void perform(Context context, String action, String number,
+                        String normalizedNumber, String name, Runnable onFinish) {
+        Context appContext = context.getApplicationContext();
 
         if (ACTION_BLOCK.equals(action)) {
             // end the call right away, the blacklist write happens in the background
             endRingingCall(appContext);
         }
 
-        PendingResult pendingResult = goAsync();
         Thread thread = new Thread(() -> {
             try {
                 int messageResId;
@@ -104,9 +123,9 @@ public class CallNotificationActionReceiver extends BroadcastReceiver {
                 }
                 showToast(appContext, messageResId);
             } catch (Exception e) {
-                LOG.error("onReceive() failed", e);
+                LOG.error("perform() failed", e);
             } finally {
-                pendingResult.finish();
+                if (onFinish != null) onFinish.run();
             }
         }, "call-notification-action");
         thread.start();
