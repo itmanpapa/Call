@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translations of strings added after the upstream translations were made. -->
+<resources>
+    <string name="save_crashes_to_external_storage_summary">Absturzberichte und Logs im öffentlichen Speicher sichern, sonst werden Absturzberichte in einem privaten App-Ordner gespeichert. Die Berichte können sensible Daten enthalten (Telefonnummern, Kontaktnamen). Andere Apps mit Speicherberechtigung können im öffentlichen Speicher auf diese Daten zugreifen</string>
+    <string name="save_logcat_on_crash">Logcat bei Absturz speichern</string>
+    <string name="save_logcat_on_crash_summary">Bei einem Absturz die Logcat-Ausgabe speichern (zusätzlich zum einfachen Stacktrace)</string>
+    <string name="export_logcat">Logcat exportieren</string>
+    <string name="export_logcat_summary">Logcat-Inhalt exportieren und mit einer App Ihrer Wahl teilen (z. B. mit einem E-Mail-Programm). Die Berichte können sensible Daten enthalten (Telefonnummern, Kontaktnamen). Nur die gewählte App erhält Zugriff auf diese Daten</string>
+    <string name="db_filtering_info_summary">Mit dieser Funktion lässt sich Speicherplatz sparen, indem Daten entfernt werden, die für Sie nicht relevant sind (z. B. Nummern aus anderen Regionen oder Ländern). Die allgemeine Funktion der App (z. B. das Blockieren) wird nicht beeinträchtigt. Gefiltert wird beim ersten Herunterladen und bei jeder Aktualisierung der Datenbank. Bereits vorhandene Daten (vor dem Aktivieren heruntergeladen) können mit der Option „Datenbank filtern“ unten gefiltert werden. Das Deaktivieren der Funktion oder das Ändern der Parameter stellt entfernte Daten nicht wieder her – dafür muss die Datenbank neu heruntergeladen werden</string>
+    <string name="db_filtering_enabled_summary">Filtert beim Herunterladen und Aktualisieren der Datenbank</string>
+    <string name="db_filtering_prefixes_to_keep">Zu behaltende Vorwahlen</string>
+    <string name="db_filtering_prefixes_to_keep_summary">Kommagetrennte Liste der Präfixe von Nummern, die behalten werden sollen. Die Präfixe müssen im internationalen Format angegeben werden (z. B. +1234). Wenn Sie z. B. nur Anrufe von Nummern mit +49 erhalten, tragen Sie hier +49 ein</string>
+    <string name="db_filtering_thorough">Gründliche Filterung</string>
+    <string name="db_filtering_thorough_summary">Wenn aktiviert, wird jeder Datenblock durchsucht und Nummern, die nicht zu den Präfixen passen, werden entfernt. Andernfalls werden nur ganze unerwünschte Blöcke entfernt (einige unerwünschte Nummern bleiben in gewünschten Blöcken). Es wird empfohlen, dies eingeschaltet zu lassen. Erforderlich, um Kurznummern zu behalten</string>
+    <string name="db_filtering_keep_short_numbers">Kurznummern behalten</string>
+    <string name="db_filtering_keep_short_numbers_summary">Nummern, die kürzer als die angegebene Länge sind, unabhängig von den Präfixen behalten</string>
+    <string name="db_filtering_keep_short_numbers_max_length">Länge der zu behaltenden Nummern</string>
+    <string name="db_filtering_keep_short_numbers_max_length_summary">Maximale Länge (einschließlich) der Kurznummern, die unabhängig von den Präfixen behalten werden. Bei 5 werden z. B. Nummern mit höchstens 5 Ziffern behalten</string>
+    <string name="db_filtering_filter_db">Datenbank filtern</string>
+    <string name="db_filtering_filter_db_summary">Die Datenbankfilterung jetzt ausführen (um vorhandene Daten zu filtern)</string>
+    <string name="number_pattern_hint">Geben Sie die Nummer im Format +LAND-NUMMER ein (so wie Android sie in der Telefon-App anzeigt). „*“ steht für null oder mehr Ziffern, „#“ für genau eine Ziffer.</string>
+    <string name="contacts_are_not_blocked_blacklist_notice">Anrufe von Kontakten werden nie blockiert (auch nicht bei passendem Muster)</string>
+    <string name="contacts_are_not_blocked_not_enabled">Anrufe von Kontakten können blockiert werden, weil die Option „Kontakte verwenden“ nicht aktiviert ist!</string>
+    <string name="title_lookup_number">Nummer nachschlagen</string>
+    <string name="lookup_clear_number">Nummer löschen</string>
+    <string name="lookup_load_reviews">Bewertungen laden (online)</string>
+    <string name="lookup_res_featured_name">Hervorgehobener Name: %s</string>
+    <string name="monitoring_service_description">Ein Dienst, der den Telefonstatus im Hintergrund überwacht</string>
+</resources>

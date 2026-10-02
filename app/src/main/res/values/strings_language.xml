@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- In-app language picker (Settings → Language) -->
+<resources>
+    <string name="pref_language">Language</string>
+    <string name="pref_language_system">System default</string>
+
+    <!-- Each language is named in itself, so the names are not translated.
+         The values are BCP 47 tags; keep them in sync with xml/locales_config.xml. -->
+    <string-array name="language_entries" translatable="false">
+        <item>@string/pref_language_system</item>
+        <item>Català</item>
+        <item>Deutsch</item>
+        <item>English</item>
+        <item>Español</item>
+        <item>Esperanto</item>
+        <item>Français</item>
+        <item>Galego</item>
+        <item>Hrvatski</item>
+        <item>Italiano</item>
+        <item>Nederlands</item>
+        <item>Norsk bokmål</item>
+        <item>Polski</item>
+        <item>Português (Brasil)</item>
+        <item>Português (Portugal)</item>
+        <item>Slovenščina</item>
+        <item>Suomi</item>
+        <item>Svenska</item>
+        <item>Tiếng Việt</item>
+        <item>Türkçe</item>
+        <item>Ελληνικά</item>
+        <item>Русский</item>
+        <item>Українська</item>
+        <item>עברית</item>
+        <item>العربية</item>
+        <item>தமிழ்</item>
+        <item>简体中文</item>
+        <item>繁體中文</item>
+    </string-array>
+    <string-array name="language_values" translatable="false">
+        <item>system</item>
+        <item>ca</item>
+        <item>de</item>
+        <item>en</item>
+        <item>es</item>
+        <item>eo</item>
+        <item>fr</item>
+        <item>gl</item>
+        <item>hr</item>
+        <item>it</item>
+        <item>nl</item>
+        <item>nb-NO</item>
+        <item>pl</item>
+        <item>pt-BR</item>
+        <item>pt-PT</item>
+        <item>sl</item>
+        <item>fi</item>
+        <item>sv</item>
+        <item>vi</item>
+        <item>tr</item>
+        <item>el</item>
+        <item>ru</item>
+        <item>uk</item>
+        <item>he</item>
+        <item>ar</item>
+        <item>ta</item>
+        <item>zh-CN</item>
+        <item>zh-TW</item>
+    </string-array>
+</resources>

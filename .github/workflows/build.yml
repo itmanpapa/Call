@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # fails on malformed XML, duplicate names and placeholder mismatches;
+      # missing translations are only reported
+      - name: Check translations
+        run: python3 .github/scripts/check_translations.py
+
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
