@@ -49,6 +49,16 @@ tap_text() { # taps the center of the first node with the given text
     adb shell input tap $(( (x1 + x2) / 2 )) $(( (y1 + y2) / 2 ))
 }
 
+tap_text_scroll() { # like tap_text, scrolls down (up to 4 times) to find the node
+    for _ in 1 2 3 4 5; do
+        tap_text "$1" 2>/dev/null && return 0
+        adb shell input swipe 540 1700 540 700 300
+        sleep 1
+    done
+    echo "node '$1' not found after scrolling"
+    return 1
+}
+
 capture_all() { # suffix
     adb shell am force-stop "$PKG"
     adb shell am start -W -n "$PKG/dummydomain.yetanothercallblocker.MainActivity"
@@ -59,9 +69,11 @@ capture_all() { # suffix
     adb shell input keyevent KEYCODE_BACK  # hide the keyboard to bring back the navigation bar
     tap_text "Blacklist" && shot "04_blacklist_$1"
     tap_text "Settings" && shot "05_settings_$1"
-    tap_text "Databases" && sleep 1 && shot "07_sources_$1"
-    tap_text "PhoneBlock" && sleep 1 && shot "08_phoneblock_$1" && adb shell input keyevent KEYCODE_BACK
-    adb shell input keyevent KEYCODE_BACK
+    tap_text_scroll "Databases" && sleep 1 && shot "07_sources_$1" && {
+        tap_text "PhoneBlock" && sleep 1 && shot "08_phoneblock_$1" && adb shell input keyevent KEYCODE_BACK
+        adb shell input keyevent KEYCODE_BACK
+    }
+    tap_text_scroll "Blocking rules" && sleep 1 && shot "10_rules_$1" && adb shell input keyevent KEYCODE_BACK
     # the setup check is the first entry of the settings
     tap_text "Settings"
     tap_text "Setup check" && sleep 2 && shot "09_setup_check_$1" && adb shell input keyevent KEYCODE_BACK
