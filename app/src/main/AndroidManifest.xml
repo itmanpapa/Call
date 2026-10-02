@@ -95,6 +95,14 @@
                 android:value=".SourcesActivity" />
         </activity>
         <activity
+            android:name=".SetupCheckActivity"
+            android:label="@string/setup_check_title"
+            android:parentActivityName=".SettingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SettingsActivity" />
+        </activity>
+        <activity
             android:name=".ReviewsActivity"
             android:label="@string/title_activity_reviews"
             android:launchMode="singleTop"

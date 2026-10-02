@@ -62,6 +62,9 @@ capture_all() { # suffix
     tap_text "Databases" && sleep 1 && shot "07_sources_$1"
     tap_text "PhoneBlock" && sleep 1 && shot "08_phoneblock_$1" && adb shell input keyevent KEYCODE_BACK
     adb shell input keyevent KEYCODE_BACK
+    # the setup check is the first entry of the settings
+    tap_text "Settings"
+    tap_text "Setup check" && sleep 2 && shot "09_setup_check_$1" && adb shell input keyevent KEYCODE_BACK
     tap_text "Call log" && sleep 2 && tap_text "+4930901820" && shot "06_info_dialog_$1"
 }
 

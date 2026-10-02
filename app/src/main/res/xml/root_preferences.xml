@@ -1,6 +1,13 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     app:title="@string/title_settings_activity">
 
+    <Preference
+        app:icon="@drawable/ic_security_24dp"
+        app:key="setupCheck"
+        app:persistent="false"
+        app:summary="@string/setup_check_preference_summary"
+        app:title="@string/setup_check_title" />
+
     <PreferenceCategory app:title="@string/settings_category_main">
         <SwitchPreferenceCompat
             app:defaultValue="true"

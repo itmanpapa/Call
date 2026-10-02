@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity {
 
     private AsyncTask<Void, Void, Boolean> checkMainDbTask;
 
+    private SetupCheckBanner setupCheckBanner;
+
     private boolean activityFirstStart = true;
 
     @Override
@@ -98,6 +100,8 @@ public class MainActivity extends BaseActivity {
                 if (group != null) markNotSpam(group.getItems().get(0).numberInfo);
             }
         })).attachToRecyclerView(recyclerView);
+
+        setupCheckBanner = new SetupCheckBanner(this, findViewById(R.id.setup_banner));
 
         callLogDsFactory = new CallLogDataSource.Factory(getCallLogGroupConverter());
 
@@ -179,6 +183,8 @@ public class MainActivity extends BaseActivity {
 
         checkPermissions();
 
+        setupCheckBanner.refresh();
+
         updateCallLogVisibility();
         if (activityFirstStart) {
             activityFirstStart = false;
@@ -198,6 +204,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         cancelCheckMainDbTask();
+        setupCheckBanner.shutdown();
 
         super.onDestroy();
     }
