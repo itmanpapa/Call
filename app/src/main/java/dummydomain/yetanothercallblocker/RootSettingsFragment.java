@@ -240,7 +240,10 @@ public class RootSettingsFragment extends BaseSettingsFragment {
 
         SwitchPreferenceCompat appUpdateCheckPref =
                 requirePreference(AppUpdateManager.PREF_CHECK_ENABLED);
-        if (!AppUpdateManager.isAutoCheckAllowed()) {
+        if (!AppUpdateManager.isSelfUpdateEnabled()) {
+            // the F-Droid build is updated by its app store
+            appUpdateCheckPref.setVisible(false);
+        } else if (!AppUpdateManager.isAutoCheckAllowed()) {
             appUpdateCheckPref.setSummary(R.string.update_check_pref_summary_debug);
         }
         appUpdateCheckPref.setOnPreferenceChangeListener((preference, newValue) -> {

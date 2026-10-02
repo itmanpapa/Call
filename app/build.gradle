@@ -48,6 +48,29 @@ android {
         }
     }
 
+    // Two distributions of the same app (same applicationId): "github" is published in
+    // GitHub Releases and updates itself from there, "fdroid" is built by F-Droid and
+    // IzzyOnDroid and has no self-updater at all (no update check, no APK download,
+    // no REQUEST_INSTALL_PACKAGES, see src/fdroid/AndroidManifest.xml).
+    flavorDimensions = ["distribution"]
+    productFlavors {
+        github {
+            dimension "distribution"
+            buildConfigField "boolean", "SELF_UPDATE", "true"
+        }
+        fdroid {
+            dimension "distribution"
+            buildConfigField "boolean", "SELF_UPDATE", "false"
+        }
+    }
+
+    // reproducible builds: no Google-encrypted dependency metadata block in the APK
+    // (F-Droid's scanner rejects it and it cannot be reproduced)
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17

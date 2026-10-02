@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Donation link for the "Buy me a coffee" button on the "About" screen, e.g.
+        https://buymeacoffee.com/<name>, https://ko-fi.com/<name> or
+        https://liberapay.com/<name>. Empty: the button is hidden.
+        Keep it in sync with .github/FUNDING.yml and README.md: F-Droid accepts only
+        donation links that the developer publishes in the repository.
+    -->
+    <string name="donation_url" translatable="false"></string>
+</resources>

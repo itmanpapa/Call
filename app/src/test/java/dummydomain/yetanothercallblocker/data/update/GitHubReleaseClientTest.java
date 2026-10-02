@@ -258,6 +258,24 @@ public class GitHubReleaseClientTest {
     }
 
     @Test
+    public void fdroidFlavorApkNeverUsed() throws IOException {
+        ReleaseInfo release = GitHubReleaseClient.parseRelease(new StringReader(
+                "{\"tag_name\":\"v0.12.1\",\"assets\":["
+                        + "{\"name\":\"callguard_fdroid-v0.12.1.apk\",\"state\":\"uploaded\","
+                        + "\"size\":5,\"browser_download_url\":\"https://example.org/f.apk\"},"
+                        + "{\"name\":\"callguard-v0.12.1.apk\",\"state\":\"uploaded\","
+                        + "\"size\":7,\"browser_download_url\":\"https://example.org/g.apk\"}]}"));
+        assertEquals("callguard-v0.12.1.apk", release.getApkName());
+        assertEquals(7, release.getApkSize());
+
+        ReleaseInfo onlyFdroid = GitHubReleaseClient.parseRelease(new StringReader(
+                "{\"tag_name\":\"v0.12.1\",\"assets\":["
+                        + "{\"name\":\"callguard_fdroid-v0.12.1.apk\",\"state\":\"uploaded\","
+                        + "\"size\":5,\"browser_download_url\":\"https://example.org/f.apk\"}]}"));
+        assertFalse(onlyFdroid.hasApk());
+    }
+
+    @Test
     public void incompleteUploadIgnored() throws IOException {
         ReleaseInfo release = GitHubReleaseClient.parseRelease(new StringReader(
                 "{\"tag_name\":\"v0.12.0\",\"assets\":["

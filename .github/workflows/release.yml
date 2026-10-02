@@ -68,17 +68,22 @@ jobs:
           echo "$SIGNING_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
           echo "SIGNING_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
 
-      - name: Build signed release APK
+      # "github" flavor: the APK of our releases, updates itself from GitHub Releases.
+      # "fdroid" flavor: the same app without the self-updater, for IzzyOnDroid (and for
+      # F-Droid's reproducible build check). Its asset name does not start with
+      # "callguard-", so the in-app updater (GitHubReleaseClient) never picks it.
+      - name: Build signed release APKs
         env:
           SIGNING_KEYSTORE_PASSWORD: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-        run: ./gradlew --no-daemon assembleRelease
+        run: ./gradlew --no-daemon assembleGithubRelease assembleFdroidRelease
 
-      - name: Rename APK
+      - name: Rename APKs
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/release/app-release.apk "dist/callguard-${RELEASE_TAG}.apk"
+          cp app/build/outputs/apk/github/release/app-github-release.apk "dist/callguard-${RELEASE_TAG}.apk"
+          cp app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "dist/callguard_fdroid-${RELEASE_TAG}.apk"
 
       - uses: softprops/action-gh-release@v2
         with:

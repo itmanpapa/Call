@@ -34,3 +34,16 @@ Open and build the project in Android Studio or use Gradle:
 ```
 ./gradlew build
 ```
+
+## Build variants
+
+The app has two product flavors with the same `applicationId`:
+
+* `github` — the APK of our GitHub releases, with the in-app updater
+  (`./gradlew assembleGithubRelease`, output in `app/build/outputs/apk/github/`);
+* `fdroid` — for F-Droid and IzzyOnDroid, without any self-update code path: no update
+  check, no APK download, no `REQUEST_INSTALL_PACKAGES`
+  (`./gradlew assembleFdroidRelease`, output in `app/build/outputs/apk/fdroid/`).
+
+The release workflow attaches both to a GitHub release: `callguard-vX.Y.Z.apk` (`github`)
+and `callguard_fdroid-vX.Y.Z.apk` (`fdroid`). See `docs/fdroid/SUBMISSION.md`.
