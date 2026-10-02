@@ -36,6 +36,7 @@ public class NumberInfoService {
     protected final ContactsProvider contactsProvider;
     protected final BlacklistService blacklistService;
     protected final SourcesManager sourcesManager;
+    protected volatile UserMarksStore userMarksStore;
 
     public NumberInfoService(Settings settings, HiddenNumberDetector hiddenNumberDetector,
                              NumberNormalizer numberNormalizer, CommunityDatabase communityDatabase,
@@ -60,6 +61,17 @@ public class NumberInfoService {
         this.contactsProvider = contactsProvider;
         this.blacklistService = blacklistService;
         this.sourcesManager = sourcesManager;
+    }
+
+    /**
+     * @param userMarksStore the user's own marks ("My mark"), may be null
+     */
+    public void setUserMarksStore(UserMarksStore userMarksStore) {
+        this.userMarksStore = userMarksStore;
+    }
+
+    public UserMarksStore getUserMarksStore() {
+        return userMarksStore;
     }
 
     public NumberInfo getNumberInfo(String number, String countryCode, boolean full) {
@@ -104,6 +116,9 @@ public class NumberInfoService {
                 = numberNormalizer.normalizeNumber(number, countryCode);
         LOG.trace("getNumberInfo() normalizedNumber={}", numberInfo.normalizedNumber);
 
+        numberInfo.userMark = getUserMark(number, normalizedNumber);
+        LOG.trace("getNumberInfo() userMark={}", numberInfo.userMark);
+
         // the YACB database can be disabled on the "Data sources" screen (enabled by default)
         boolean useYacbDatabase = sourcesManager == null
                 || sourcesManager.isEnabled(YacbDatabaseProvider.ID);
@@ -142,14 +157,18 @@ public class NumberInfoService {
         }
         LOG.trace("getNumberInfo() rating={}", numberInfo.rating);
 
-        if (numberInfo.rating != NumberInfo.Rating.NEGATIVE) {
+        boolean queryOtherSources = UserMarkPolicy.shouldQueryOtherSources(numberInfo.userMark);
+
+        if (queryOtherSources && numberInfo.rating != NumberInfo.Rating.NEGATIVE) {
             applyListedNumbers(numberInfo, normalizedNumber);
         }
 
-        if (allowOnline && numberInfo.rating != NumberInfo.Rating.NEGATIVE
+        if (queryOtherSources && allowOnline && numberInfo.rating != NumberInfo.Rating.NEGATIVE
                 && numberInfo.contactItem == null) {
             applyOnlineSources(numberInfo, normalizedNumber);
         }
+
+        applyUserMark(numberInfo);
 
         if (blacklistService != null && settings.getBlacklistIsNotEmpty()) {
             // avoid loading blacklist if blocking for other reason
@@ -198,6 +217,38 @@ public class NumberInfoService {
             return;
         }
         applySourceResult(numberInfo, result);
+    }
+
+    /**
+     * @return the user's mark of the number (looked up by the normalized number first),
+     * or null
+     */
+    protected UserMark getUserMark(String number, String normalizedNumber) {
+        UserMarksStore store = userMarksStore;
+        if (store == null) return null;
+        try {
+            return store.get(normalizedNumber, number);
+        } catch (Exception e) {
+            LOG.warn("getUserMark() lookup failed", e);
+            return null;
+        }
+    }
+
+    /**
+     * The user's mark overrides the computed rating; an explicit blacklist entry still
+     * wins over a NOT_SPAM mark (see {@link UserMarkPolicy}).
+     */
+    protected void applyUserMark(NumberInfo numberInfo) {
+        UserMarkPolicy.Effect effect = UserMarkPolicy.effect(numberInfo.userMark);
+        if (effect == UserMarkPolicy.Effect.NONE) return;
+
+        numberInfo.rating = effect == UserMarkPolicy.Effect.FORCE_NEGATIVE
+                ? NumberInfo.Rating.NEGATIVE : NumberInfo.Rating.POSITIVE;
+        numberInfo.sourceId = UserMarkPolicy.SOURCE_ID;
+        numberInfo.sourceName = null; // localized by NumberInfoUtils
+        numberInfo.sourceCategory = null;
+
+        LOG.trace("applyUserMark() rating={}", numberInfo.rating);
     }
 
     private void applySourceResult(NumberInfo numberInfo, ProviderResult result) {

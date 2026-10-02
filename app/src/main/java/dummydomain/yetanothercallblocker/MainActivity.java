@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,11 +32,13 @@ import dummydomain.yetanothercallblocker.data.CallLogDataSource;
 import dummydomain.yetanothercallblocker.data.CallLogItem;
 import dummydomain.yetanothercallblocker.data.CallLogItemGroup;
 import dummydomain.yetanothercallblocker.data.NumberInfo;
+import dummydomain.yetanothercallblocker.data.UserMark;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.event.CallEndedEvent;
 import dummydomain.yetanothercallblocker.event.MainDbDownloadFinishedEvent;
 import dummydomain.yetanothercallblocker.event.MainDbDownloadingEvent;
 import dummydomain.yetanothercallblocker.event.SecondaryDbUpdateFinished;
+import dummydomain.yetanothercallblocker.event.UserMarksChangedEvent;
 import dummydomain.yetanothercallblocker.work.TaskService;
 import dummydomain.yetanothercallblocker.work.UpdateScheduler;
 
@@ -82,6 +85,17 @@ public class MainActivity extends BaseActivity {
             public void onBlock(int position) {
                 CallLogItemGroup group = callLogAdapter.getGroup(position);
                 if (group != null) blockNumber(group.getItems().get(0).numberInfo);
+            }
+
+            @Override
+            public boolean canMarkNotSpam(int position) {
+                return canBlock(position) && YacbHolder.getUserMarksStore() != null;
+            }
+
+            @Override
+            public void onMarkNotSpam(int position) {
+                CallLogItemGroup group = callLogAdapter.getGroup(position);
+                if (group != null) markNotSpam(group.getItems().get(0).numberInfo);
             }
         })).attachToRecyclerView(recyclerView);
 
@@ -296,6 +310,28 @@ public class MainActivity extends BaseActivity {
         String name = numberInfo.featuredDatabaseItem != null
                 ? numberInfo.featuredDatabaseItem.getName() : null;
         startActivity(EditBlacklistItemActivity.getIntent(this, name, numberInfo.number));
+    }
+
+    private void markNotSpam(NumberInfo numberInfo) {
+        UserMarkActions.Change change = UserMarkActions.setMark(
+                numberInfo, UserMark.Type.NOT_SPAM);
+        if (change == null) {
+            Snackbar.make(recyclerView, R.string.user_mark_save_failed, Snackbar.LENGTH_LONG)
+                    .setAnchorView(R.id.base_bottom_navigation)
+                    .show();
+            return;
+        }
+
+        // the call log is reloaded by onUserMarksChanged()
+        Snackbar.make(recyclerView, R.string.user_mark_set_not_spam, Snackbar.LENGTH_LONG)
+                .setAnchorView(R.id.base_bottom_navigation)
+                .setAction(R.string.user_mark_undo, v -> UserMarkActions.undo(change))
+                .show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onUserMarksChanged(UserMarksChangedEvent event) {
+        reloadCallLog();
     }
 
     private void onCallLogItemClicked(CallLogItemGroup item) {

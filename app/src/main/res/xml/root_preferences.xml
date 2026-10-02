@@ -8,6 +8,12 @@
             app:summary="@string/incoming_call_notifications_summary"
             app:title="@string/incoming_call_notifications" />
         <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:dependency="incomingCallNotifications"
+            app:key="prominentCallNotification"
+            app:summary="@string/prominent_call_notification_summary"
+            app:title="@string/prominent_call_notification" />
+        <SwitchPreferenceCompat
             app:key="autoUpdateEnabled"
             app:persistent="false"
             app:summary="@string/auto_updates_summary"

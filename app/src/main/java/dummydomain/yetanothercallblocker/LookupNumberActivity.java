@@ -17,7 +17,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 
+import dummydomain.yetanothercallblocker.data.NumberUtils;
 import dummydomain.yetanothercallblocker.data.SiaNumberCategoryUtils;
+import dummydomain.yetanothercallblocker.data.UserMark;
+import dummydomain.yetanothercallblocker.data.UserMarksStore;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabaseItem;
@@ -39,6 +42,9 @@ public class LookupNumberActivity extends BaseActivity {
     private TextView reviewsPhoneNumber, reviewsDetails;
 
     private AsyncTask<String, Void, Pair<CommunityDatabaseItem, FeaturedDatabaseItem>> queryTask;
+
+    /** The user's own mark of the last queried number, set by the query task. */
+    private volatile UserMark queriedUserMark;
 
     @Override
     protected int getNavigationItemId() {
@@ -194,10 +200,10 @@ public class LookupNumberActivity extends BaseActivity {
         clearOutput();
         if (isWrongNumberInput()) return;
 
-        startQueryTask(getPureNumber());
+        startQueryTask(getPureNumber(), phoneNumberInput.getText().toString());
     }
 
-    private void startQueryTask(String number) {
+    private void startQueryTask(String number, String rawNumber) {
         cancelQueryTask();
 
         @SuppressLint("StaticFieldLeak")
@@ -206,6 +212,8 @@ public class LookupNumberActivity extends BaseActivity {
             @Override
             protected Pair<CommunityDatabaseItem, FeaturedDatabaseItem> doInBackground(String... params) {
                 String purePhoneNumber = params[0];
+
+                queriedUserMark = findUserMark(purePhoneNumber, params[1]);
                 CommunityDatabaseItem item = YacbHolder.getCommunityDatabase()
                         .getDbItemByNumber(purePhoneNumber);
 
@@ -220,7 +228,7 @@ public class LookupNumberActivity extends BaseActivity {
                 onQueryResult(result.first, result.second);
             }
         };
-        task.execute(number);
+        task.execute(number, rawNumber);
     }
 
     private void cancelQueryTask() {
@@ -230,11 +238,34 @@ public class LookupNumberActivity extends BaseActivity {
         }
     }
 
+    private UserMark findUserMark(String pureNumber, String rawNumber) {
+        UserMarksStore store = YacbHolder.getUserMarksStore();
+        if (store == null) return null;
+        try {
+            String normalized = !TextUtils.isEmpty(rawNumber)
+                    ? NumberUtils.normalizeNumber(rawNumber.trim(),
+                    settings.getCachedAutoDetectedCountryCode())
+                    : null;
+            return store.get(normalized, '+' + pureNumber, pureNumber, rawNumber);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private void onQueryResult(CommunityDatabaseItem item, FeaturedDatabaseItem featuredItem) {
         String number = "", details = "";
 
+        UserMark userMark = queriedUserMark;
+        if (userMark != null) {
+            details += getString(R.string.user_mark_status,
+                    getString(userMark.isSpam()
+                            ? R.string.user_mark_spam : R.string.user_mark_not_spam),
+                    android.text.format.DateFormat.getDateFormat(this)
+                            .format(new java.util.Date(userMark.getTimestamp()))) + '\n';
+        }
+
         if (item == null) {
-            details = getString(R.string.lookup_number_not_found);
+            details += getString(R.string.lookup_number_not_found);
         } else {
             number = '+' + String.valueOf(item.getNumber());
 

@@ -8,16 +8,21 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
 import dummydomain.yetanothercallblocker.data.NumberInfo;
 import dummydomain.yetanothercallblocker.data.SiaNumberCategoryUtils;
+import dummydomain.yetanothercallblocker.data.UserMark;
 import dummydomain.yetanothercallblocker.data.YacbHolder;
 import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
 import dummydomain.yetanothercallblocker.sia.model.database.FeaturedDatabaseItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.Date;
 
 public class InfoDialogHelper {
 
@@ -86,7 +91,7 @@ public class InfoDialogHelper {
 
         TextView sourceView = view.findViewById(R.id.source);
         String sourceDescription = NumberInfoUtils.getSourceDescription(context, numberInfo);
-        if (!TextUtils.isEmpty(sourceDescription)) {
+        if (!TextUtils.isEmpty(sourceDescription) && numberInfo.userMark == null) {
             sourceView.setText(context.getString(R.string.info_source, sourceDescription));
         } else {
             sourceView.setVisibility(View.GONE);
@@ -94,6 +99,8 @@ public class InfoDialogHelper {
 
         ReviewsSummaryHelper.populateSummary(view.findViewById(R.id.reviews_summary),
                 numberInfo.communityDatabaseItem);
+
+        initUserMarkViews(context, view, numberInfo);
 
         if (onDismissListener != null) builder.setOnDismissListener(onDismissListener);
 
@@ -163,6 +170,82 @@ public class InfoDialogHelper {
         });
 
         dialog.show();
+    }
+
+    private static void initUserMarkViews(Context context, View view, NumberInfo numberInfo) {
+        TextView statusView = view.findViewById(R.id.user_mark_status);
+        TextView hintView = view.findViewById(R.id.user_mark_hint);
+        View buttons = view.findViewById(R.id.user_mark_buttons);
+        Button spamButton = view.findViewById(R.id.user_mark_spam);
+        Button notSpamButton = view.findViewById(R.id.user_mark_not_spam);
+
+        if (numberInfo.noNumber || YacbHolder.getUserMarksStore() == null) {
+            statusView.setVisibility(View.GONE);
+            hintView.setVisibility(View.GONE);
+            buttons.setVisibility(View.GONE);
+            return;
+        }
+
+        Runnable bind = () -> bindUserMark(context, numberInfo,
+                statusView, hintView, spamButton, notSpamButton);
+        bind.run();
+
+        spamButton.setOnClickListener(v -> {
+            toggleUserMark(context, numberInfo, UserMark.Type.SPAM);
+            bind.run();
+        });
+        notSpamButton.setOnClickListener(v -> {
+            toggleUserMark(context, numberInfo, UserMark.Type.NOT_SPAM);
+            bind.run();
+        });
+    }
+
+    /** Sets the mark, or clears it if the number already has a mark of this type. */
+    private static void toggleUserMark(Context context, NumberInfo numberInfo, UserMark.Type type) {
+        UserMark current = numberInfo.userMark;
+        UserMark.Type newType = current != null && current.getType() == type ? null : type;
+
+        UserMarkActions.Change change = UserMarkActions.setMark(numberInfo, newType);
+
+        int messageResId;
+        if (change == null) {
+            messageResId = R.string.user_mark_save_failed;
+        } else if (newType == null) {
+            messageResId = R.string.user_mark_cleared;
+        } else if (newType == UserMark.Type.SPAM) {
+            messageResId = R.string.user_mark_set_spam;
+        } else {
+            messageResId = R.string.user_mark_set_not_spam;
+        }
+        Toast.makeText(context, messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    private static void bindUserMark(Context context, NumberInfo numberInfo,
+                                     TextView statusView, TextView hintView,
+                                     Button spamButton, Button notSpamButton) {
+        UserMark mark = numberInfo.userMark;
+
+        if (mark != null) {
+            String date = android.text.format.DateFormat.getDateFormat(context)
+                    .format(new Date(mark.getTimestamp()));
+            statusView.setText(context.getString(R.string.user_mark_status,
+                    context.getString(mark.isSpam()
+                            ? R.string.user_mark_spam : R.string.user_mark_not_spam),
+                    date));
+            statusView.setVisibility(View.VISIBLE);
+        } else {
+            statusView.setVisibility(View.GONE);
+        }
+
+        // an explicit blacklist entry wins over the "not spam" mark
+        boolean blacklistWins = mark != null && mark.isNotSpam()
+                && numberInfo.blacklistItem != null && numberInfo.contactItem == null;
+        hintView.setVisibility(blacklistWins ? View.VISIBLE : View.GONE);
+
+        spamButton.setText(mark != null && mark.isSpam()
+                ? R.string.user_mark_action_clear : R.string.user_mark_action_spam);
+        notSpamButton.setText(mark != null && mark.isNotSpam()
+                ? R.string.user_mark_action_clear : R.string.user_mark_action_not_spam);
     }
 
 }

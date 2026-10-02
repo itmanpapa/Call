@@ -17,7 +17,8 @@ import com.google.android.material.color.MaterialColors;
 import java.util.Objects;
 
 /**
- * Swipe a call log entry to the left to add the number to the blacklist.
+ * Swipe a call log entry to the left to add the number to the blacklist,
+ * to the right to mark it "not spam".
  */
 public class SwipeToBlockCallback extends ItemTouchHelper.SimpleCallback {
 
@@ -26,16 +27,26 @@ public class SwipeToBlockCallback extends ItemTouchHelper.SimpleCallback {
         boolean canBlock(int position);
 
         void onBlock(int position);
+
+        /** @return whether the item at the position can be marked "not spam" */
+        default boolean canMarkNotSpam(int position) {
+            return false;
+        }
+
+        default void onMarkNotSpam(int position) {
+        }
     }
 
     private final Listener listener;
 
     private final Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Drawable icon;
+    private final Paint notSpamBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Drawable notSpamIcon;
     private final int iconMargin;
 
     public SwipeToBlockCallback(Context context, Listener listener) {
-        super(0, ItemTouchHelper.LEFT);
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.listener = listener;
 
         backgroundPaint.setColor(MaterialColors.getColor(context,
@@ -46,6 +57,14 @@ public class SwipeToBlockCallback extends ItemTouchHelper.SimpleCallback {
         DrawableCompat.setTint(icon, MaterialColors.getColor(context,
                 com.google.android.material.R.attr.colorOnErrorContainer, 0xFF410002));
 
+        notSpamBackgroundPaint.setColor(MaterialColors.getColor(context,
+                com.google.android.material.R.attr.colorTertiaryContainer, 0xFFC8E6C9));
+
+        notSpamIcon = DrawableCompat.wrap(Objects.requireNonNull(
+                ContextCompat.getDrawable(context, R.drawable.ic_thumb_up_24dp)).mutate());
+        DrawableCompat.setTint(notSpamIcon, MaterialColors.getColor(context,
+                com.google.android.material.R.attr.colorOnTertiaryContainer, 0xFF1B5E20));
+
         iconMargin = context.getResources().getDimensionPixelSize(R.dimen.item_padding);
     }
 
@@ -53,8 +72,11 @@ public class SwipeToBlockCallback extends ItemTouchHelper.SimpleCallback {
     public int getSwipeDirs(@NonNull RecyclerView recyclerView,
                             @NonNull RecyclerView.ViewHolder viewHolder) {
         int position = viewHolder.getBindingAdapterPosition();
-        if (position == RecyclerView.NO_POSITION || !listener.canBlock(position)) return 0;
-        return super.getSwipeDirs(recyclerView, viewHolder);
+        if (position == RecyclerView.NO_POSITION) return 0;
+        int dirs = 0;
+        if (listener.canBlock(position)) dirs |= ItemTouchHelper.LEFT;
+        if (listener.canMarkNotSpam(position)) dirs |= ItemTouchHelper.RIGHT;
+        return dirs & super.getSwipeDirs(recyclerView, viewHolder);
     }
 
     @Override
@@ -75,7 +97,11 @@ public class SwipeToBlockCallback extends ItemTouchHelper.SimpleCallback {
         RecyclerView.Adapter<?> adapter = viewHolder.getBindingAdapter();
         if (adapter != null && position != RecyclerView.NO_POSITION) {
             adapter.notifyItemChanged(position); // return the item to its place
-            listener.onBlock(position);
+            if (direction == ItemTouchHelper.RIGHT) {
+                listener.onMarkNotSpam(position);
+            } else {
+                listener.onBlock(position);
+            }
         }
     }
 
@@ -95,6 +121,19 @@ public class SwipeToBlockCallback extends ItemTouchHelper.SimpleCallback {
             icon.setBounds(right - icon.getIntrinsicWidth(), top, right, top + iconSize);
             if (-dX > iconMargin + icon.getIntrinsicWidth()) {
                 icon.draw(c);
+            }
+        } else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && dX > 0) {
+            View itemView = viewHolder.itemView;
+
+            c.drawRect(itemView.getLeft(), itemView.getTop(),
+                    itemView.getLeft() + dX, itemView.getBottom(), notSpamBackgroundPaint);
+
+            int iconSize = notSpamIcon.getIntrinsicHeight();
+            int top = itemView.getTop() + (itemView.getHeight() - iconSize) / 2;
+            int left = itemView.getLeft() + iconMargin;
+            notSpamIcon.setBounds(left, top, left + notSpamIcon.getIntrinsicWidth(), top + iconSize);
+            if (dX > iconMargin + notSpamIcon.getIntrinsicWidth()) {
+                notSpamIcon.draw(c);
             }
         }
 

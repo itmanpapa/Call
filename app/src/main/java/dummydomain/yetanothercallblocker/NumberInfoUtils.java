@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import dummydomain.yetanothercallblocker.data.NumberInfo;
 import dummydomain.yetanothercallblocker.data.SiaNumberCategoryUtils;
+import dummydomain.yetanothercallblocker.data.UserMark;
 import dummydomain.yetanothercallblocker.data.sources.MeasureType;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
 import dummydomain.yetanothercallblocker.sia.model.NumberCategory;
@@ -43,6 +44,8 @@ public class NumberInfoUtils {
      * e.g. "Bundesnetzagentur: Number disconnected", or null
      */
     public static String getSourceDescription(Context context, NumberInfo numberInfo) {
+        if (numberInfo.userMark != null) return getUserMarkDescription(context, numberInfo.userMark);
+
         if (TextUtils.isEmpty(numberInfo.sourceName)) return null;
 
         String category = getSourceCategoryName(context, numberInfo.sourceCategory);
@@ -50,6 +53,16 @@ public class NumberInfoUtils {
 
         return context.getString(R.string.info_source_with_category,
                 numberInfo.sourceName, category);
+    }
+
+    /**
+     * @return e.g. "My mark: spam"
+     */
+    public static String getUserMarkDescription(Context context, UserMark mark) {
+        return context.getString(R.string.info_source_with_category,
+                context.getString(R.string.user_mark_source),
+                context.getString(mark.isSpam()
+                        ? R.string.user_mark_spam : R.string.user_mark_not_spam));
     }
 
     /**

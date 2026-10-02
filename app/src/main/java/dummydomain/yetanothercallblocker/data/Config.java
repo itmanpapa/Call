@@ -27,6 +27,7 @@ import dummydomain.yetanothercallblocker.data.sources.OkHttpTransport;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockClient;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
 import dummydomain.yetanothercallblocker.data.sources.OkHttpListDownloader;
+import dummydomain.yetanothercallblocker.event.UserMarksChangedEvent;
 import dummydomain.yetanothercallblocker.sia.Settings;
 import dummydomain.yetanothercallblocker.sia.SettingsImpl;
 import dummydomain.yetanothercallblocker.sia.Storage;
@@ -46,6 +47,7 @@ import dummydomain.yetanothercallblocker.utils.DeferredInit;
 import dummydomain.yetanothercallblocker.utils.SystemUtils;
 import okhttp3.OkHttpClient;
 
+import static dummydomain.yetanothercallblocker.EventUtils.postEvent;
 import static dummydomain.yetanothercallblocker.data.SiaConstants.SIA_PATH_PREFIX;
 import static dummydomain.yetanothercallblocker.data.SiaConstants.SIA_PROPERTIES;
 import static dummydomain.yetanothercallblocker.data.SiaConstants.SIA_SECONDARY_PATH_PREFIX;
@@ -58,6 +60,9 @@ public class Config {
     /** Subdirectory of the files dir with the PhoneBlock sync state. */
     static final String PHONEBLOCK_DIR = "phoneblock";
     static final String PHONEBLOCK_STATE_FILE = "state.txt";
+
+    /** File (in the files dir) with the user's own spam marks. */
+    static final String USER_MARKS_FILE = "user_marks.csv";
 
     static final String PHONEBLOCK_USER_AGENT_PREFIX = "YetAnotherCallBlocker/";
 
@@ -257,6 +262,12 @@ public class Config {
                 communityDatabase, featuredDatabase, contactsProvider, blacklistService,
                 sourcesManager);
         YacbHolder.setNumberInfoService(numberInfoService);
+
+        UserMarksStore userMarksStore = new UserMarksStore(
+                new File(context.getFilesDir(), USER_MARKS_FILE));
+        userMarksStore.setListener(() -> postEvent(new UserMarksChangedEvent()));
+        YacbHolder.setUserMarksStore(userMarksStore);
+        numberInfoService.setUserMarksStore(userMarksStore);
 
         NotificationService notificationService = new NotificationService(context);
         YacbHolder.setNotificationService(notificationService);

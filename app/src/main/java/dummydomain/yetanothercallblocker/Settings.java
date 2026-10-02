@@ -33,6 +33,7 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
     public static final String PREF_NOTIFICATIONS_KNOWN = "showNotificationsForKnownCallers";
     public static final String PREF_NOTIFICATIONS_UNKNOWN = "showNotificationsForUnknownCallers";
     public static final String PREF_NOTIFICATIONS_BLOCKED = "showNotificationsForBlockedCalls";
+    public static final String PREF_PROMINENT_CALL_NOTIFICATION = "prominentCallNotification";
     public static final String PREF_BLOCK_IN_LIMITED_MODE = "blockInLimitedMode";
     public static final String PREF_LAST_UPDATE_TIME = "lastUpdateTime";
     public static final String PREF_LAST_UPDATE_CHECK_TIME = "lastUpdateCheckTime";
@@ -221,6 +222,18 @@ public class Settings extends GenericSettings implements SourcesManager.Preferen
 
     public void setNotificationsForBlockedCalls(boolean show) {
         setBoolean(PREF_NOTIFICATIONS_BLOCKED, show);
+    }
+
+    /**
+     * @return whether spam and unknown callers get a heads-up notification
+     * with "Block" / "Not spam" actions (enabled by default)
+     */
+    public boolean getProminentCallNotification() {
+        return getBoolean(PREF_PROMINENT_CALL_NOTIFICATION, true);
+    }
+
+    public void setProminentCallNotification(boolean show) {
+        setBoolean(PREF_PROMINENT_CALL_NOTIFICATION, show);
     }
 
     public boolean isBlockingByRatingInLimitedModeAllowed() {

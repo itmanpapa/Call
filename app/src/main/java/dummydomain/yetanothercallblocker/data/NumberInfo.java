@@ -34,6 +34,10 @@ public class NumberInfo {
     public String sourceName;
     public String sourceCategory;
 
+    // the user's own mark ("My mark"), null if none; when set, it decides the rating
+    // (see UserMarkPolicy) and sourceId is UserMarkPolicy.SOURCE_ID
+    public UserMark userMark;
+
     // precomputed for convenience
     public boolean noNumber;
     public String name;

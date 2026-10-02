@@ -13,6 +13,28 @@
     <string name="notification_channel_name_blocked_info">Blocked info</string>
     <string name="notification_channel_name_monitoring_service">Monitoring service</string>
     <string name="notification_channel_name_tasks">Tasks</string>
+    <!-- My mark (user spam marks) and the prominent call notification -->
+    <string name="user_mark_source">My mark</string>
+    <string name="user_mark_spam">spam</string>
+    <string name="user_mark_not_spam">not spam</string>
+    <string name="user_mark_action_spam">It’s spam</string>
+    <string name="user_mark_action_not_spam">Not spam</string>
+    <string name="user_mark_action_clear">Remove mark</string>
+    <string name="user_mark_status">My mark: %1$s (%2$s)</string>
+    <string name="user_mark_blacklist_wins">The number is in the blacklist, so it is still blocked</string>
+    <string name="user_mark_set_spam">Marked as spam</string>
+    <string name="user_mark_set_not_spam">Marked as not spam</string>
+    <string name="user_mark_cleared">Mark removed</string>
+    <string name="user_mark_save_failed">Could not save the mark</string>
+    <string name="user_mark_undo">Undo</string>
+    <string name="notification_channel_name_call_alert">Spam and unknown calls (pop-up)</string>
+    <string name="notification_call_alert_spam">Likely spam</string>
+    <string name="notification_call_alert_unknown">Unknown caller</string>
+    <string name="notification_action_block">Block</string>
+    <string name="notification_block_added">Added to the blacklist</string>
+    <string name="notification_block_failed">Could not add the number to the blacklist</string>
+    <string name="prominent_call_notification">Prominent call notification</string>
+    <string name="prominent_call_notification_summary">A pop-up notification with “Block” and “Not spam” buttons for spam and unknown callers</string>
 
     <string name="notification_incoming_call_contact">Contact</string>
     <string name="notification_incoming_call_positive">Positive call</string>

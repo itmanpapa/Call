@@ -37,7 +37,7 @@ public class PhoneStateHandler {
     private final NumberInfoService numberInfoService;
     private final NotificationService notificationService;
 
-    private boolean isOffHook;
+    private volatile boolean isOffHook;
 
     private List<CallEvent> lastEvents = new ArrayList<>();
     private long lastEventTimestamp;
@@ -133,6 +133,11 @@ public class PhoneStateHandler {
         notificationService.stopAllCallsIndication();
 
         postEvent(new CallEndedEvent());
+    }
+
+    /** @return whether a call is active (used by the "Block" notification action) */
+    public boolean isOffHook() {
+        return isOffHook;
     }
 
     private static Predicate<CallEvent> sameNumber(String number) {

@@ -71,4 +71,47 @@
         android:gravity="center_horizontal"
         android:text="@string/info_in_blacklist" />
 
+    <TextView
+        android:id="@+id/user_mark_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:textAppearance="?attr/textAppearanceLabelLarge"
+        tools:text="My mark: spam (02.10.2026)" />
+
+    <TextView
+        android:id="@+id/user_mark_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/user_mark_blacklist_wins"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/user_mark_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/user_mark_spam"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_mark_action_spam" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/user_mark_not_spam"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/user_mark_action_not_spam" />
+
+    </LinearLayout>
+
 </LinearLayout>

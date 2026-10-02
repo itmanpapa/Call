@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dummydomain.yetanothercallblocker.data.NumberInfo;
+import dummydomain.yetanothercallblocker.data.UserMarkPolicy;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabaseItem;
 
 import static dummydomain.yetanothercallblocker.IntentHelper.clearTop;
@@ -44,6 +45,12 @@ public class NotificationHelper {
     private static final String CHANNEL_ID_BLOCKED_INFO = "blocked_info";
     private static final String CHANNEL_ID_MONITORING_SERVICE = "monitoring_service";
     private static final String CHANNEL_ID_TASKS = "tasks";
+    // IMPORTANCE_HIGH (heads-up) for spam and unknown callers; a new ID because
+    // the importance of an existing channel can't be raised after creation
+    private static final String CHANNEL_ID_CALL_ALERT = "incoming_call_alert";
+
+    /** Auto-dismiss timeout of the prominent notification in case the idle event is lost. */
+    private static final long CALL_ALERT_TIMEOUT_MILLIS = 3 * 60 * 1000;
 
     private static boolean notificationChannelsInitialized;
 
@@ -62,20 +69,46 @@ public class NotificationHelper {
     public static void showIncomingCallNotification(Context context, NumberInfo numberInfo) {
         NotificationWithInfo notificationWithInfo = createIncomingCallNotification(context, numberInfo);
 
+        boolean regularAllowed = true;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             if (CHANNEL_ID_KNOWN.equals(notificationWithInfo.channelId)) {
                 if (!App.getSettings().getNotificationsForKnownCallers()) {
-                    return;
+                    regularAllowed = false;
                 }
             } else if (CHANNEL_ID_UNKNOWN.equals(notificationWithInfo.channelId)) {
                 if (!App.getSettings().getNotificationsForUnknownCallers()) {
-                    return;
+                    regularAllowed = false;
                 }
             }
         }
 
+        UserMarkPolicy.IncomingNotification kind = UserMarkPolicy.incomingNotification(
+                numberInfo.rating == NumberInfo.Rating.NEGATIVE,
+                numberInfo.rating == NumberInfo.Rating.UNKNOWN,
+                numberInfo.contactItem != null, numberInfo.noNumber, numberInfo.userMark,
+                App.getSettings().getProminentCallNotification(), regularAllowed);
+
+        Notification notification;
+        switch (kind) {
+            case PROMINENT:
+                notification = createCallAlertNotification(context, numberInfo);
+                break;
+            case REGULAR:
+                notification = notificationWithInfo.notification;
+                break;
+            default:
+                return;
+        }
+
         notify(context, NOTIFICATION_TAG_INCOMING_CALL, NOTIFICATION_ID_INCOMING_CALL,
-                notificationWithInfo.notification);
+                notification);
+    }
+
+    /**
+     * Cancels a notification shown by this class (used by the notification actions).
+     */
+    public static void cancel(Context context, String tag, int id) {
+        NotificationManagerCompat.from(context).cancel(tag, id);
     }
 
     public static void hideIncomingCallNotification(Context context) {
@@ -92,9 +125,13 @@ public class NotificationHelper {
 
         Notification notification = createBlockedCallNotification(context, numberInfo);
 
-        String tag = NOTIFICATION_TAG_BLOCKED_CALL
-                + (!numberInfo.noNumber ? numberInfo.number : System.nanoTime()); // TODO: handle repeating
+        String tag = getBlockedCallNotificationTag(numberInfo);
         notify(context, tag, NOTIFICATION_ID_BLOCKED_CALL, notification);
+    }
+
+    private static String getBlockedCallNotificationTag(NumberInfo numberInfo) {
+        return NOTIFICATION_TAG_BLOCKED_CALL
+                + (!numberInfo.noNumber ? numberInfo.number : System.nanoTime()); // TODO: handle repeating
     }
 
     public static Notification createMonitoringServiceNotification(Context context) {
@@ -185,6 +222,54 @@ public class NotificationHelper {
         return new NotificationWithInfo(builder.build(), channelId);
     }
 
+    /**
+     * The heads-up notification for spam and unknown callers that were not blocked,
+     * with "Block" and "Not spam" actions.
+     */
+    private static Notification createCallAlertNotification(Context context,
+                                                            NumberInfo numberInfo) {
+        String title = context.getString(numberInfo.rating == NumberInfo.Rating.NEGATIVE
+                ? R.string.notification_call_alert_spam
+                : R.string.notification_call_alert_unknown);
+        title = concat(title, " - ", getTitleExtra(context, numberInfo));
+
+        String text = getInfoDescription(context, numberInfo);
+
+        IconAndColor iconAndColor = IconAndColor.forNumberRating(
+                numberInfo.rating, numberInfo.contactItem != null);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                context, CHANNEL_ID_CALL_ALERT)
+                .setSmallIcon(iconAndColor.iconResId)
+                .setColor(iconAndColor.getColorInt(context))
+                .setContentTitle(title)
+                .setContentText(firstLine(text))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setOnlyAlertOnce(true)
+                .setShowWhen(false)
+                .setTimeoutAfter(CALL_ALERT_TIMEOUT_MILLIS);
+
+        builder.setContentIntent(createInfoIntent(context, numberInfo));
+
+        if (!numberInfo.noNumber) {
+            builder.addAction(R.drawable.ic_block_24dp,
+                    context.getString(R.string.notification_action_block),
+                    CallNotificationActionReceiver.createPendingIntent(context,
+                            CallNotificationActionReceiver.ACTION_BLOCK, numberInfo,
+                            NOTIFICATION_TAG_INCOMING_CALL, NOTIFICATION_ID_INCOMING_CALL));
+            builder.addAction(R.drawable.ic_thumb_up_24dp,
+                    context.getString(R.string.user_mark_action_not_spam),
+                    CallNotificationActionReceiver.createPendingIntent(context,
+                            CallNotificationActionReceiver.ACTION_NOT_SPAM, numberInfo,
+                            NOTIFICATION_TAG_INCOMING_CALL, NOTIFICATION_ID_INCOMING_CALL));
+        }
+
+        return builder.build();
+    }
+
     private static Notification createBlockedCallNotification(Context context, NumberInfo numberInfo) {
         String title = concat(context.getString(R.string.notification_blocked_call),
                 " - ", getTitleExtra(context, numberInfo));
@@ -203,6 +288,16 @@ public class NotificationHelper {
                 .setCategory(NotificationCompat.CATEGORY_STATUS);
 
         addCallNotificationIntents(context, builder, numberInfo);
+
+        if (UserMarkPolicy.offerNotSpamForBlockedCall(
+                numberInfo.blockingReason == NumberInfo.BlockingReason.SIA_RATING,
+                numberInfo.noNumber)) {
+            builder.addAction(0, context.getString(R.string.user_mark_action_not_spam),
+                    CallNotificationActionReceiver.createPendingIntent(context,
+                            CallNotificationActionReceiver.ACTION_NOT_SPAM, numberInfo,
+                            getBlockedCallNotificationTag(numberInfo),
+                            NOTIFICATION_ID_BLOCKED_CALL));
+        }
 
         return builder.build();
     }
@@ -364,6 +459,18 @@ public class NotificationHelper {
                     NotificationManager.IMPORTANCE_LOW
             );
             channel.setGroup(channelGroupIncoming.getId());
+            channels.add(channel);
+
+            channel = new NotificationChannel(
+                    CHANNEL_ID_CALL_ALERT,
+                    context.getString(R.string.notification_channel_name_call_alert),
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setGroup(channelGroupIncoming.getId());
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            // the phone is already ringing: pop up silently
+            channel.setSound(null, null);
+            channel.enableVibration(false);
             channels.add(channel);
 
             channel = new NotificationChannel(

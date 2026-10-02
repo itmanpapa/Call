@@ -33,6 +33,8 @@ public class YacbHolder {
 
     private static NumberInfoService numberInfoService;
 
+    private static UserMarksStore userMarksStore;
+
     @SuppressLint("StaticFieldLeak")
     private static NotificationService notificationService;
 
@@ -85,6 +87,10 @@ public class YacbHolder {
 
     static void setBnetzaAutoUpdater(BnetzaAutoUpdater bnetzaAutoUpdater) {
         YacbHolder.bnetzaAutoUpdater = bnetzaAutoUpdater;
+    }
+
+    static void setUserMarksStore(UserMarksStore userMarksStore) {
+        YacbHolder.userMarksStore = userMarksStore;
     }
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
@@ -149,6 +155,11 @@ public class YacbHolder {
      */
     public static BnetzaAutoUpdater getBnetzaAutoUpdater() {
         return bnetzaAutoUpdater;
+    }
+
+    /** The user's own spam marks ("My mark"). */
+    public static UserMarksStore getUserMarksStore() {
+        return userMarksStore;
     }
 
     public static NumberInfoService getNumberInfoService() {
