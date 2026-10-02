@@ -1,2 +1,0 @@
-* S'ha afegit traducció parcial al xinès (simplificat) gràcies a Jane Kong (@Myon).
-* Dependències actualitzades.

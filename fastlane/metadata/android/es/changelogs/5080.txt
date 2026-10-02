@@ -1,9 +1,0 @@
-* Corregido el fallo de arranque sin el permiso READ_CALL_LOG.
-* Corregido el fallo del editor de listas negras en versiones antiguas de Android.
-* Traducciones actualizadas gracias a Milo Ivir (@milotype), Yannis T. (@azakosath), Evo (@verahawk).
-* Otros cambios menores.
-
-0.5.7:
-
-* Mejoras en el registro de llamadas: nuevo aspecto, mejor rendimiento, desplazamiento infinito, opciones de agrupación.
-* Otros cambios menores.

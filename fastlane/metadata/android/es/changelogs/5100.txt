@@ -1,4 +1,0 @@
-* Corregida la importación de archivos de listas negras de más de 4000 bytes.
-* Corregido el fallo ocasional después de borrar elementos de la lista negra.
-* Simplificación del formato de importación de la lista negra (véase el registro de cambios para más detalles).
-* Traducciones actualizadas gracias a J. Lavoie, Milo Ivir (@milotype), Yannis T. (@azakosath), Evo (@verahawk), Oğuz Ersen (@ersen).

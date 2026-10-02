@@ -1,7 +1,0 @@
-* El filtrado de las bases de datos ocupan menos espacio (opción avanzada).
-* La base de datos está optimizada para poca RAM.
-* Campo numérico de la pantalla de búsqueda se completa del portapapeles.
-* Corregido un error debido al que la aplicación se atascaba en un bucle.
-* Traducido al Vietnamita, gracias a bruh (@quangtrung02hn16).
-* Traducciones actualizadas gracias a J. Lavoie (@Edanas), ssantos, Heimen Stoffels (@Vistaus), Oğuz Ersen (@ersen), phlostically.
-* Traducido al Hebreo.

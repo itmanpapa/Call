@@ -1,3 +1,0 @@
-* S'ha solucionat un bloqueig d'inici en una actualització recent de LineageOS 15.1-17.1.
-* Els prefixos de filtratge de bases de dades ara s'emplenen automàticament en funció de les trucades recents (només si no s'han introduït anteriorment).
-* Traduccions actualitzades gràcies a Minibus93, Milo Ivir (@milotype), bruh (@quangtrung02hn16), Agnieszka C (@Aga), Evo (@verahawk), senderisme, Havokdan, Tzvika (@shiloni), bojanopatje.

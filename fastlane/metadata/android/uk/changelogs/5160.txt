@@ -1,3 +1,0 @@
-* Виправлено аварійний запуск при нещодавньому оновленні LineageOS 15.1-17.1.
-* Префікси фільтрації баз даних тепер автоматично заповнюються на основі останніх дзвінків (тільки якщо вони не були введені раніше).
-* Оновлені переклади завдяки Minibus93, Milo Ivir (@ milotype), bruh (@ quangtrung02hn16), Agnieszka C (@ Aga), Evo (@verahawk), hiking, Havokdan, Tzvika (@shiloni), bojanopatje.

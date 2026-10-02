@@ -1,9 +1,0 @@
-* Mejoras en el registro de llamadas: nuevo aspecto, mejor rendimiento, desplazamiento infinito, opciones de agrupación.
-* Otros cambios menores.
-
-0.5.6:
-
-* Mejoras en el contenido de las notificaciones.
-* Se ha añadido un botón para añadir una revisión desde la pantalla de búsqueda.
-* Añadida la traducción al turco gracias a Oğuz Ersen (@ersen).
-* Traducciones actualizadas gracias a Yannis T. (@azakosath) y Evo (@verahawk).

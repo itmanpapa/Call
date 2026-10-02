@@ -1,2 +1,0 @@
-* Riktig samtalsblockering i Android 9.
-* Fixade hantering av nya samtal under aktiva samtal.
