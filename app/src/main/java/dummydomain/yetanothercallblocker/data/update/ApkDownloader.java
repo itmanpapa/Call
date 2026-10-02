@@ -143,27 +143,16 @@ public class ApkDownloader {
         OkHttpClient client = clientSupplier.get().newBuilder()
                 .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-                .followRedirects(true)
-                .followSslRedirects(true)
-                // checks the URL of every request, including each redirect
-                .addNetworkInterceptor(chain -> {
-                    String url = chain.request().url().toString();
-                    if (!urlPolicy.test(url)) {
-                        throw new IOException("Download URL not allowed: " + url);
-                    }
-                    return chain.proceed(chain.request());
-                })
+                // redirects are followed manually below, so that every URL
+                // is checked against the policy before it is requested
+                .followRedirects(false)
+                .followSslRedirects(false)
                 .build();
-
-        Request.Builder requestBuilder = new Request.Builder()
-                .url(release.getApkUrl())
-                .header("Accept", "application/octet-stream");
-        if (userAgent != null) requestBuilder.header("User-Agent", userAgent);
 
         LOG.info("download() {} -> {}", release.getApkUrl(), target);
 
         boolean ok = false;
-        try (Response response = client.newCall(requestBuilder.build()).execute()) {
+        try (Response response = executeFollowingRedirects(client, release.getApkUrl())) {
             if (!response.isSuccessful()) throw new IOException("HTTP " + response.code());
             ResponseBody body = response.body();
             if (body == null) throw new IOException("Empty response");
@@ -206,6 +195,37 @@ public class ApkDownloader {
             return target;
         } finally {
             if (!ok) delete(part);
+        }
+    }
+
+    private static final int MAX_REDIRECTS = 5;
+
+    /**
+     * Executes a GET request, following up to {@link #MAX_REDIRECTS} redirects;
+     * each URL (including redirect targets) must pass the URL policy.
+     */
+    private Response executeFollowingRedirects(OkHttpClient client, String startUrl)
+            throws IOException {
+        String url = startUrl;
+        for (int i = 0; ; i++) {
+            if (!urlPolicy.test(url)) {
+                throw new IOException("Download URL not allowed: " + url);
+            }
+            Request.Builder requestBuilder = new Request.Builder()
+                    .url(url)
+                    .header("Accept", "application/octet-stream");
+            if (userAgent != null) requestBuilder.header("User-Agent", userAgent);
+
+            Response response = client.newCall(requestBuilder.build()).execute();
+            if (!response.isRedirect()) return response;
+
+            String location = response.header("Location");
+            okhttp3.HttpUrl next = location != null
+                    ? response.request().url().resolve(location) : null;
+            response.close();
+            if (next == null) throw new IOException("Redirect without a valid location");
+            if (i >= MAX_REDIRECTS) throw new IOException("Too many redirects");
+            url = next.toString();
         }
     }
 
