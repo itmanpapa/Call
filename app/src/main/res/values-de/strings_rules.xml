@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Call rules ("Rules" screen, RulesActivity) -->
+<resources>
+    <string name="rules_title">Sperrregeln</string>
+    <string name="rules_preference_summary">Vorwahlen, unterdrückte und ausländische Nummern, Mehrwertnummern, wiederholte Anrufe, Zeitplan</string>
+
+    <string name="rules_presets_title">Fertige Regeln</string>
+    <string name="rules_preset_hidden">Unterdrückte Nummern</string>
+    <string name="rules_preset_premium">Mehrwertnummern 0900/0137/0180</string>
+    <string name="rules_preset_repeated">Wiederholte Anrufe durchlassen</string>
+    <string name="rules_preset_foreign">Ausländische Nummern</string>
+    <string name="rules_hint">Es entscheidet die erste passende Regel. Erlaubende Regeln haben Vorrang vor Bewertungen und Listen, nicht aber vor Ihrer Sperrliste. Lange drücken zum Verschieben, wischen zum Löschen.</string>
+    <string name="rules_empty">Noch keine Regeln. Tippen Sie oben auf eine fertige Regel oder fügen Sie eine eigene hinzu.</string>
+
+    <string name="rules_add">Regel hinzufügen</string>
+    <string name="rules_edit">Regel bearbeiten</string>
+    <string name="rules_save">Speichern</string>
+    <string name="rules_enabled">Regel aktiviert</string>
+    <string name="rules_undo">Rückgängig</string>
+    <string name="rules_deleted">Regel gelöscht: %1$s</string>
+    <string name="rules_save_failed">Die Regeln konnten nicht gespeichert werden</string>
+
+    <string name="rules_type_pattern">Nummer oder Vorwahl</string>
+    <string name="rules_type_hidden">Unterdrückte Nummern</string>
+    <string name="rules_type_foreign">Ausländische Nummern</string>
+    <string name="rules_type_premium_de">Mehrwertnummern (Deutschland)</string>
+    <string name="rules_type_repeated">Wiederholter Anruf</string>
+
+    <string name="rules_type_pattern_description">Nummern, die zu einem der Muster passen. National (0900*) oder international (+44*) möglich.</string>
+    <string name="rules_type_hidden_description">Anrufe ohne Rufnummernanzeige (unterdrückte, anonyme oder unbekannte Nummer).</string>
+    <string name="rules_type_foreign_description">Nummern mit einer anderen Ländervorwahl als Ihrer (das Land wird automatisch erkannt oder in den erweiterten Einstellungen festgelegt).</string>
+    <string name="rules_type_premium_de_description">Deutsche Nummern, bei denen ein Rückruf Geld kostet: 0900 Premium-Dienste, 0137 Massenverkehr (Lockanrufe), 0180 Service-Nummern und die frühere 0190.</string>
+    <string name="rules_type_repeated_description">Ruft eine unbekannte Nummer innerhalb des Zeitfensters erneut an, wird der Anruf durchgelassen, auch wenn eine Bewertung oder eine Nummernliste ihn sperren würde. Ihre Sperrliste gilt weiterhin.</string>
+    <string name="rules_premium_de_numbers">0900, 0137, 0180, 0190</string>
+
+    <plurals name="rules_repeated_title">
+        <item quantity="one">Wiederholter Anruf innerhalb von %d Minute</item>
+        <item quantity="other">Wiederholter Anruf innerhalb von %d Minuten</item>
+    </plurals>
+
+    <string name="rules_action">Aktion</string>
+    <string name="rules_action_block">Sperren</string>
+    <string name="rules_action_allow">Durchlassen</string>
+    <string name="rules_except_contacts">Außer Kontakte</string>
+    <string name="rules_except_contacts_short">außer Kontakte</string>
+    <string name="rules_including_contacts">auch Kontakte</string>
+
+    <string name="rules_schedule_enabled">Nur zu bestimmten Zeiten</string>
+    <string name="rules_schedule_from">Von %1$s</string>
+    <string name="rules_schedule_to">Bis %1$s</string>
+    <string name="rules_schedule_all_day">ganztägig</string>
+    <string name="rules_schedule_range">%1$s–%2$s</string>
+    <string name="rules_invalid">ungültiges Muster</string>
+
+    <string name="rules_patterns">Nummern oder Vorwahlen</string>
+    <string name="rules_patterns_helper">Zum Beispiel: +44*, 0900*. * – beliebige Ziffern, # – eine Ziffer, durch Kommas getrennt</string>
+    <string name="rules_patterns_invalid">Ziffern mit * oder # eingeben, durch Kommas getrennt</string>
+    <string name="rules_window">Zeitfenster, Minuten</string>
+    <string name="rules_window_invalid">Von %1$d bis %2$d Minuten</string>
+    <string name="rules_label">Name (optional)</string>
+
+    <string name="rules_matched_rule">Regel: %1$s</string>
+    <string name="rules_description_with_details">%1$s · %2$s</string>
+</resources>

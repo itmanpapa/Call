@@ -38,6 +38,11 @@
             app:persistent="false"
             app:summary="@string/databases_preference_summary"
             app:title="@string/databases_title" />
+        <Preference
+            app:key="callRules"
+            app:persistent="false"
+            app:summary="@string/rules_preference_summary"
+            app:title="@string/rules_title" />
         <SwitchPreferenceCompat
             app:key="blockNegativeSiaNumbers"
             app:summary="@string/block_negative_sia_numbers_summary"

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Call rules ("Rules" screen, RulesActivity) -->
+<resources>
+    <string name="rules_title">Blocking rules</string>
+    <string name="rules_preference_summary">Prefixes, hidden and foreign numbers, premium-rate numbers, repeated callers, schedules</string>
+
+    <string name="rules_presets_title">Ready-made rules</string>
+    <string name="rules_preset_hidden">Hidden numbers</string>
+    <string name="rules_preset_premium">Premium-rate numbers 0900/0137/0180</string>
+    <string name="rules_preset_repeated">Let repeated calls through</string>
+    <string name="rules_preset_foreign">Foreign numbers</string>
+    <string name="rules_hint">The first matching rule decides. Allow rules beat ratings and lists, but not your blacklist. Long-press to reorder, swipe to delete.</string>
+    <string name="rules_empty">No rules yet. Tap a ready-made rule above or add your own.</string>
+
+    <string name="rules_add">Add rule</string>
+    <string name="rules_edit">Edit rule</string>
+    <string name="rules_save">Save</string>
+    <string name="rules_enabled">Rule enabled</string>
+    <string name="rules_undo">Undo</string>
+    <string name="rules_deleted">Rule deleted: %1$s</string>
+    <string name="rules_save_failed">Could not save the rules</string>
+
+    <string name="rules_type_pattern">Number or prefix</string>
+    <string name="rules_type_hidden">Hidden numbers</string>
+    <string name="rules_type_foreign">Foreign numbers</string>
+    <string name="rules_type_premium_de">Premium-rate numbers (Germany)</string>
+    <string name="rules_type_repeated">Repeated call</string>
+
+    <string name="rules_type_pattern_description">Numbers matching one of the patterns. Use national (0900*) or international (+44*) form.</string>
+    <string name="rules_type_hidden_description">Calls without caller ID (private, anonymous or unknown number).</string>
+    <string name="rules_type_foreign_description">Numbers with a country calling code different from yours (the country is detected automatically or set in the advanced settings).</string>
+    <string name="rules_type_premium_de_description">German numbers that cost money when you call back: 0900 premium-rate, 0137 mass calls (ping calls), 0180 service numbers and the former 0190 range.</string>
+    <string name="rules_type_repeated_description">If an unknown number calls again within the time window, let the call through even if a rating or a number list would block it. Your blacklist still applies.</string>
+    <string name="rules_premium_de_numbers">0900, 0137, 0180, 0190</string>
+
+    <plurals name="rules_repeated_title">
+        <item quantity="one">Repeated call within %d minute</item>
+        <item quantity="other">Repeated call within %d minutes</item>
+    </plurals>
+
+    <string name="rules_action">Action</string>
+    <string name="rules_action_block">Block</string>
+    <string name="rules_action_allow">Allow</string>
+    <string name="rules_except_contacts">Except contacts</string>
+    <string name="rules_except_contacts_short">except contacts</string>
+    <string name="rules_including_contacts">including contacts</string>
+
+    <string name="rules_schedule_enabled">Only at certain times</string>
+    <string name="rules_schedule_from">From %1$s</string>
+    <string name="rules_schedule_to">To %1$s</string>
+    <string name="rules_schedule_all_day">all day</string>
+    <string name="rules_schedule_range">%1$s–%2$s</string>
+    <string name="rules_invalid">invalid pattern</string>
+
+    <string name="rules_patterns">Numbers or prefixes</string>
+    <string name="rules_patterns_helper">For example: +44*, 0900*. * — any digits, # — one digit, separate with commas</string>
+    <string name="rules_patterns_invalid">Enter digits with * or #, separated by commas</string>
+    <string name="rules_window">Time window, minutes</string>
+    <string name="rules_window_invalid">From %1$d to %2$d minutes</string>
+    <string name="rules_label">Name (optional)</string>
+
+    <string name="rules_matched_rule">Rule: %1$s</string>
+    <string name="rules_description_with_details">%1$s · %2$s</string>
+</resources>

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import dummydomain.yetanothercallblocker.NotificationService;
 import dummydomain.yetanothercallblocker.PhoneStateHandler;
 import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
+import dummydomain.yetanothercallblocker.data.rules.RulesManager;
 import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
 import dummydomain.yetanothercallblocker.sia.model.CommunityReviewsLoader;
@@ -32,6 +33,8 @@ public class YacbHolder {
     private static BnetzaAutoUpdater bnetzaAutoUpdater;
 
     private static NumberInfoService numberInfoService;
+
+    private static RulesManager rulesManager;
 
     @SuppressLint("StaticFieldLeak")
     private static NotificationService notificationService;
@@ -89,6 +92,10 @@ public class YacbHolder {
 
     static void setNumberInfoService(NumberInfoService numberInfoService) {
         YacbHolder.numberInfoService = numberInfoService;
+    }
+
+    static void setRulesManager(RulesManager rulesManager) {
+        YacbHolder.rulesManager = rulesManager;
     }
 
     static void setNotificationService(NotificationService notificationService) {
@@ -153,6 +160,11 @@ public class YacbHolder {
 
     public static NumberInfoService getNumberInfoService() {
         return numberInfoService;
+    }
+
+    /** The call rules ("Rules" screen); mutations write a file, call them off the main thread. */
+    public static RulesManager getRulesManager() {
+        return rulesManager;
     }
 
     public static NotificationService getNotificationService() {
