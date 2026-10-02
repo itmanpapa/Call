@@ -245,6 +245,17 @@ public class RulesManager {
         }
     }
 
+    /**
+     * Replaces all rules (e.g. restored from a backup); missing or duplicate ids are
+     * reassigned.
+     */
+    public void replaceAll(List<CallRule> newRules) throws IOException {
+        synchronized (lock) {
+            ensureLoaded();
+            replace(assignMissingIds(new ArrayList<>(newRules)));
+        }
+    }
+
     private static int indexOf(List<CallRule> list, long id) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId() == id) return i;

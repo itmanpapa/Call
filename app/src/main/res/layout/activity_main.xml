@@ -101,6 +101,51 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- "Blocked in 7 days: N", filled by StatsSummaryCard, opens the statistics -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/stats_card"
+        style="@style/Widget.Material3.CardView.Filled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_padding"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/item_padding"
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/item_padding"
+            android:paddingTop="10dp"
+            android:paddingEnd="@dimen/item_padding"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_bar_chart_24dp"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/stats_card_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                tools:text="Blocked in 7 days: 12" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <TextView
         android:id="@+id/callLogPermissionMessage"
         android:layout_width="wrap_content"

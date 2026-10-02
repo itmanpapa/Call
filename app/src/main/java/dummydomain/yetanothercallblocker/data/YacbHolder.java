@@ -7,7 +7,9 @@ import dummydomain.yetanothercallblocker.PhoneStateHandler;
 import dummydomain.yetanothercallblocker.data.db.BlacklistDao;
 import dummydomain.yetanothercallblocker.data.rules.RulesManager;
 import dummydomain.yetanothercallblocker.data.sources.BnetzaAutoUpdater;
+import dummydomain.yetanothercallblocker.data.sources.NumberListStore;
 import dummydomain.yetanothercallblocker.data.sources.PhoneBlockSync;
+import dummydomain.yetanothercallblocker.data.stats.CallEventStore;
 import dummydomain.yetanothercallblocker.sia.model.CommunityReviewsLoader;
 import dummydomain.yetanothercallblocker.sia.model.SiaMetadata;
 import dummydomain.yetanothercallblocker.sia.model.database.CommunityDatabase;
@@ -36,6 +38,8 @@ public class YacbHolder {
 
     private static UserMarksStore userMarksStore;
     private static RulesManager rulesManager;
+    private static CallEventStore callEventStore;
+    private static NumberListStore numberListStore;
 
     @SuppressLint("StaticFieldLeak")
     private static NotificationService notificationService;
@@ -101,6 +105,14 @@ public class YacbHolder {
 
     static void setRulesManager(RulesManager rulesManager) {
         YacbHolder.rulesManager = rulesManager;
+    }
+
+    static void setNumberListStore(NumberListStore numberListStore) {
+        YacbHolder.numberListStore = numberListStore;
+    }
+
+    static void setCallEventStore(CallEventStore callEventStore) {
+        YacbHolder.callEventStore = callEventStore;
     }
 
     static void setNotificationService(NotificationService notificationService) {
@@ -175,6 +187,16 @@ public class YacbHolder {
     /** The call rules ("Rules" screen); mutations write a file, call them off the main thread. */
     public static RulesManager getRulesManager() {
         return rulesManager;
+    }
+
+    /** The files of the imported lists (use {@link #getSourcesManager()} to change them). */
+    public static NumberListStore getNumberListStore() {
+        return numberListStore;
+    }
+
+    /** The statistics of handled calls; blocks on file I/O, use a background thread. */
+    public static CallEventStore getCallEventStore() {
+        return callEventStore;
     }
 
     public static NotificationService getNotificationService() {

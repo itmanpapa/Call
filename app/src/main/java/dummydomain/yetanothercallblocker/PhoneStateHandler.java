@@ -115,6 +115,8 @@ public class PhoneStateHandler {
         if (!blocked && showNotifications) {
             notificationService.startCallIndication(numberInfo);
         }
+
+        CallStatsRecorder.record(numberInfo, blocked);
     }
 
     public void onOffHook(Source source, String phoneNumber) {

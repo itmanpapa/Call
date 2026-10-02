@@ -30,12 +30,18 @@ public class RootSettingsFragment extends BaseSettingsFragment {
     private static final String PREF_SETUP_CHECK = "setupCheck";
     private static final String PREF_CALL_RULES = "callRules";
     private static final String PREF_CALLER_ID_OVERLAY_PERMISSION = "callerIdOverlayPermission";
+    private static final String PREF_STATISTICS = "statistics";
+    private static final String PREF_BACKUP_CREATE = "backupCreate";
+    private static final String PREF_BACKUP_RESTORE = "backupRestore";
 
     private static final String STATE_REQUEST_TOKEN = "STATE_REQUEST_TOKEN";
 
     private final UpdateScheduler updateScheduler = UpdateScheduler.get(App.getInstance());
 
     private PermissionHelper.RequestToken requestToken;
+
+    // registers its activity result launchers, so it must be created with the fragment
+    private final BackupController backupController = new BackupController(this);
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -66,6 +72,13 @@ public class RootSettingsFragment extends BaseSettingsFragment {
 
         requestToken = PermissionHelper.RequestToken
                 .fromSavedInstanceState(savedInstanceState, STATE_REQUEST_TOKEN);
+        backupController.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        backupController.shutdown();
+        super.onDestroy();
     }
 
     @Override
@@ -75,6 +88,7 @@ public class RootSettingsFragment extends BaseSettingsFragment {
         if (requestToken != null) {
             requestToken.onSaveInstanceState(outState, STATE_REQUEST_TOKEN);
         }
+        backupController.onSaveInstanceState(outState);
     }
 
     @Override
@@ -156,6 +170,21 @@ public class RootSettingsFragment extends BaseSettingsFragment {
 
         requirePreference(PREF_CALL_RULES).setOnPreferenceClickListener(preference -> {
             startActivity(RulesActivity.getIntent(requireContext()));
+            return true;
+        });
+
+        requirePreference(PREF_STATISTICS).setOnPreferenceClickListener(preference -> {
+            startActivity(StatsActivity.getIntent(requireContext()));
+            return true;
+        });
+
+        requirePreference(PREF_BACKUP_CREATE).setOnPreferenceClickListener(preference -> {
+            backupController.startCreate();
+            return true;
+        });
+
+        requirePreference(PREF_BACKUP_RESTORE).setOnPreferenceClickListener(preference -> {
+            backupController.startRestore();
             return true;
         });
 

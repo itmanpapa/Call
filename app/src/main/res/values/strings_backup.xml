@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup and restore (Settings, BackupController) -->
+<resources>
+    <string name="backup_category">Backup</string>
+    <string name="backup_create">Create backup</string>
+    <string name="backup_create_summary">Settings, blacklist, rules, marks and lists in one ZIP file</string>
+    <string name="backup_restore">Restore</string>
+    <string name="backup_restore_summary">From a backup file: the blacklist and the marks are merged, settings and rules are replaced</string>
+
+    <string name="backup_secrets_title">Include the PhoneBlock API key?</string>
+    <string name="backup_secrets_message">The backup can contain your PhoneBlock API key, so that it does not have to be entered again after a restore. Anyone who gets the file can use the key: keep the backup private.</string>
+    <string name="backup_secrets_include">Include key</string>
+    <string name="backup_secrets_exclude">Without key</string>
+
+    <string name="backup_creating">Creating the backup…</string>
+    <string name="backup_reading">Reading the backup…</string>
+    <string name="backup_restoring">Restoring…</string>
+
+    <string name="backup_created_title">Backup created</string>
+    <string name="backup_created_message">Saved as %1$s. The backup contains your settings, blacklist, rules, marks and lists. Keep the file private: it contains phone numbers.</string>
+    <string name="backup_created_message_secrets">Saved as %1$s. The backup contains your settings, blacklist, rules, marks and lists, and your PhoneBlock API key. Keep the file private.</string>
+    <string name="backup_failed_title">Backup failed</string>
+    <string name="backup_failed_message">The backup could not be written: %1$s</string>
+
+    <string name="backup_restore_title">Backup from %1$s</string>
+    <string name="backup_restore_title_version">Backup from %1$s (version %2$s)</string>
+    <string name="backup_part_settings">Settings (%1$d): replace</string>
+    <string name="backup_part_settings_token">Settings (%1$d, with the PhoneBlock key): replace</string>
+    <string name="backup_part_blacklist">Blacklist (%1$d): merge</string>
+    <string name="backup_part_rules">Blocking rules (%1$d): replace</string>
+    <string name="backup_part_marks">My marks (%1$d): merge</string>
+    <string name="backup_part_lists">Lists (%1$s): add or replace</string>
+    <string name="backup_restore_button">Restore</string>
+    <string name="backup_restore_nothing">The backup contains nothing to restore.</string>
+
+    <string name="backup_part_name_settings">settings</string>
+    <string name="backup_part_name_lists">lists</string>
+    <string name="backup_part_name_rules">rules</string>
+    <string name="backup_part_name_marks">marks</string>
+    <string name="backup_part_name_blacklist">blacklist</string>
+
+    <string name="backup_restored_title">Backup restored</string>
+    <string name="backup_restored_message">Restored: %1$s.</string>
+    <string name="backup_restore_partial_title">Partly restored</string>
+    <string name="backup_restore_partial_message">Restored: %1$s. Failed: %2$s.</string>
+    <string name="backup_restore_nothing_restored">nothing</string>
+
+    <string name="backup_error_title">Cannot restore</string>
+    <string name="backup_error_not_a_backup">This file is not a CallGuard backup.</string>
+    <string name="backup_error_newer">This backup was made by a newer version of the app. Update the app first.</string>
+    <string name="backup_error_corrupt">The backup file is damaged.</string>
+    <string name="backup_error_too_large">The file is too large to be a backup.</string>
+    <string name="backup_error_read">The file could not be read: %1$s</string>
+    <string name="backup_no_file_app">No app for choosing a file was found.</string>
+</resources>

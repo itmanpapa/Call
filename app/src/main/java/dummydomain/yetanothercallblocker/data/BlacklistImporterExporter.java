@@ -68,15 +68,24 @@ public class BlacklistImporterExporter {
 
     public boolean importBlacklist(BlacklistDao blacklistDao, BlacklistService blacklistService,
                                    FileDescriptor fileDescriptor) {
-        List<BlacklistItem> items = null;
-
         try (FileInputStream inputStream = new FileInputStream(fileDescriptor)) {
-            items = read(inputStream);
+            return importBlacklist(blacklistDao, blacklistService, inputStream) >= 0;
         } catch (IOException e) {
             LOG.warn("importBlacklist()", e);
+            return false;
         }
+    }
 
-        if (items == null) return false;
+    /**
+     * Merges the items of a backup into the blacklist (existing patterns are updated,
+     * new ones are added).
+     *
+     * @return the number of items read, or -1 if the data is not a blacklist backup
+     */
+    public int importBlacklist(BlacklistDao blacklistDao, BlacklistService blacklistService,
+                               InputStream inputStream) throws IOException {
+        List<BlacklistItem> items = read(inputStream);
+        if (items == null) return -1;
 
         for (BlacklistItem item : items) {
             BlacklistItem existingItem = null;
@@ -120,7 +129,7 @@ public class BlacklistImporterExporter {
             }
         }
 
-        return true;
+        return items.size();
     }
 
     public List<BlacklistItem> read(InputStream inputStream) throws IOException {

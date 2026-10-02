@@ -123,6 +123,8 @@ public class CallScreeningServiceImpl extends CallScreeningService {
                 blocked = false;
             }
 
+            CallStatsRecorder.record(numberInfo, blocked);
+
             if (blocked) {
                 LOG.info("onScreenCall() blocked call");
 

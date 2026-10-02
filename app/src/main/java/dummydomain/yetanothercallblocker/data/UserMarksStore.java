@@ -23,6 +23,7 @@ import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -79,6 +80,10 @@ public class UserMarksStore {
 
     public UserMarksStore(File file) {
         this.file = Objects.requireNonNull(file);
+    }
+
+    public File getFile() {
+        return file;
     }
 
     public void setListener(Listener listener) {
@@ -202,6 +207,43 @@ public class UserMarksStore {
         return Collections.unmodifiableList(list);
     }
 
+    /**
+     * Merges marks (e.g. from a backup) in one write: a mark is taken unless the store
+     * already has a newer mark of the same number.
+     *
+     * @return the number of added or replaced marks
+     */
+    public int merge(Collection<UserMark> newMarks) throws IOException {
+        int changed = 0;
+        synchronized (this) {
+            ensureLoaded();
+            checkWritable();
+            Map<String, UserMark> backup = new LinkedHashMap<>(marks);
+            for (UserMark mark : newMarks) {
+                String key = normalizeKey(mark.getNumber());
+                if (key == null) continue;
+                UserMark existing = marks.get(key);
+                if (existing != null && (existing.getTimestamp() > mark.getTimestamp()
+                        || existing.equals(mark))) {
+                    continue;
+                }
+                marks.put(key, key.equals(mark.getNumber()) ? mark
+                        : new UserMark(key, mark.getType(), mark.getTimestamp(), mark.getNote()));
+                changed++;
+            }
+            if (changed == 0) return 0;
+            try {
+                save();
+            } catch (IOException e) {
+                marks.clear();
+                marks.putAll(backup);
+                throw e;
+            }
+        }
+        notifyListener();
+        return changed;
+    }
+
     public synchronized int size() {
         ensureLoaded();
         return marks.size();
@@ -244,8 +286,26 @@ public class UserMarksStore {
 
     private void load() throws IOException {
         try (Reader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(file), StandardCharsets.UTF_8));
-             CSVParser parser = CSV_FORMAT.parse(reader)) {
+                new FileInputStream(file), StandardCharsets.UTF_8))) {
+            parse(reader, marks);
+        }
+        LOG.debug("load() loaded {} marks", marks.size());
+    }
+
+    /**
+     * Reads marks in the format of this store (e.g. from a backup) without changing
+     * any store.
+     *
+     * @throws IOException if the data is not a marks file or has a newer version
+     */
+    public static List<UserMark> read(Reader reader) throws IOException {
+        Map<String, UserMark> map = new LinkedHashMap<>();
+        parse(reader, map);
+        return new ArrayList<>(map.values());
+    }
+
+    private static void parse(Reader reader, Map<String, UserMark> marks) throws IOException {
+        try (CSVParser parser = CSV_FORMAT.parse(reader)) {
             boolean formatSeen = false;
             for (CSVRecord record : parser) {
                 if (record.size() == 0) continue;
@@ -273,8 +333,10 @@ public class UserMarksStore {
                 // unknown record types are ignored
             }
             if (!formatSeen && !marks.isEmpty()) throw new IOException("Missing format header");
+        } catch (IllegalStateException e) {
+            // commons-csv reports malformed input this way
+            throw new IOException("Malformed marks file", e);
         }
-        LOG.debug("load() loaded {} marks", marks.size());
     }
 
     private static UserMark parseMark(CSVRecord record) {

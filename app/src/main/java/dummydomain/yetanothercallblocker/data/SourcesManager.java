@@ -375,6 +375,20 @@ public class SourcesManager {
     }
 
     /**
+     * Re-reads the enabled flags from the preferences (after they were replaced, e.g. by
+     * restoring a backup). The order is read from the preferences on every change anyway.
+     */
+    public void reloadPreferences() {
+        synchronized (this) {
+            disabled.clear();
+            disabled.addAll(parseIds(preferences.getDisabledSources()));
+            enabledOverrides.clear();
+            enabledOverrides.addAll(parseIds(preferences.getEnabledSources()));
+            snapshot = buildSnapshot();
+        }
+    }
+
+    /**
      * Moves the source one position up (towards higher priority).
      *
      * @return true if the source was moved

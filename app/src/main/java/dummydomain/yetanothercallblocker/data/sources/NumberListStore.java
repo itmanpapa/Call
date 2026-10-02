@@ -350,8 +350,21 @@ public class NumberListStore {
         return ids;
     }
 
-    File getFile(String sourceId) {
+    /** @return the file of the list (it may not exist), e.g. to copy it into a backup */
+    public File getFile(String sourceId) {
+        checkSourceId(sourceId);
         return new File(directory, FILE_PREFIX + sourceId + FILE_SUFFIX);
+    }
+
+    /**
+     * Parses a list file of this format (e.g. from a backup) without storing it.
+     *
+     * @param expectedSourceId the source id the file must belong to
+     * @throws IOException if the data is malformed or has a newer version
+     */
+    public static StoredList parse(Reader reader, String expectedSourceId) throws IOException {
+        checkSourceId(expectedSourceId);
+        return read(reader, expectedSourceId, false);
     }
 
     private static void checkSourceId(String sourceId) {

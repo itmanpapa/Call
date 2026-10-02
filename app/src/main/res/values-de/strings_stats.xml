@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Call statistics ("Statistics" screen, StatsActivity, card at the top of the call log) -->
+<resources>
+    <string name="stats_title">Statistik</string>
+    <string name="stats_preference_summary">Blockierte Anrufe nach Tag, Grund und Quelle</string>
+
+    <string name="stats_summary_card">In 7 Tagen blockiert: %1$d</string>
+    <string name="stats_summary_card_hint">Tippen, um die Statistik zu öffnen</string>
+
+    <string name="stats_today">Heute</string>
+    <string name="stats_7_days">7 Tage</string>
+    <string name="stats_30_days">30 Tage</string>
+    <string name="stats_blocked">blockiert</string>
+
+    <string name="stats_chart_title">Blockierte Anrufe der letzten 30 Tage</string>
+    <string name="stats_chart_description">Balkendiagramm der blockierten Anrufe pro Tag: %1$d in 30 Tagen, höchstens %2$d pro Tag</string>
+
+    <string name="stats_period_30">30 Tage</string>
+    <string name="stats_period_year">Jahr</string>
+
+    <string name="stats_by_reason">Nach Grund</string>
+    <string name="stats_by_source">Nach Quelle</string>
+    <string name="stats_top_numbers">Am häufigsten blockiert</string>
+    <string name="stats_list_empty">Keine blockierten Anrufe in diesem Zeitraum.</string>
+    <string name="stats_top_numbers_hint">Tippen Sie auf eine Nummer, um mehr darüber zu erfahren.</string>
+
+    <string name="stats_reason_blacklist">Schwarze Liste</string>
+    <string name="stats_reason_rating">Bewertung der Community</string>
+    <string name="stats_reason_list">Listen und Online-Quellen</string>
+    <string name="stats_reason_rule">Sperrregeln</string>
+    <string name="stats_reason_user_mark">Meine Markierung</string>
+    <string name="stats_reason_hidden">Unterdrückte Nummer</string>
+    <string name="stats_reason_contact">Kontakt</string>
+    <string name="stats_reason_other">Sonstiges</string>
+
+    <string name="stats_source_yacb">YACB-Datenbank</string>
+    <string name="stats_source_user_mark">Meine Markierung</string>
+
+    <string name="stats_empty">Noch keine Anrufe erfasst. Eingehende Anrufe werden ab jetzt gezählt.</string>
+    <string name="stats_note">Bearbeitete Anrufe im letzten Jahr: %1$d, blockiert: %2$d. Die Statistik bleibt nur auf diesem Gerät, 365 Tage lang.</string>
+
+    <string name="stats_clear">Statistik löschen</string>
+    <string name="stats_clear_confirm">Alle erfassten Anrufe löschen? Anrufliste und schwarze Liste bleiben unverändert.</string>
+    <string name="stats_clear_button">Löschen</string>
+    <string name="stats_load_failed">Die Statistik konnte nicht gelesen werden.</string>
+</resources>
