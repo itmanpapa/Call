@@ -49,6 +49,14 @@
             app:title="@string/ui_mode"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
+            app:defaultValue="system"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="appLanguage"
+            app:persistent="false"
+            app:title="@string/pref_language"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
             app:defaultValue="consecutive"
             app:entries="@array/call_log_grouping_entries"
             app:entryValues="@array/call_log_grouping_values"

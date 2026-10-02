@@ -8,6 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreferenceCompat;
 
@@ -15,6 +18,8 @@ import dummydomain.yetanothercallblocker.data.CallerIdOverlayPolicy;
 import dummydomain.yetanothercallblocker.utils.PackageManagerUtils;
 import dummydomain.yetanothercallblocker.work.UpdateScheduler;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.Locale;
 
 public class RootSettingsFragment extends BaseSettingsFragment {
 
@@ -29,6 +34,8 @@ public class RootSettingsFragment extends BaseSettingsFragment {
     private static final String PREF_SETUP_CHECK = "setupCheck";
     private static final String PREF_CALL_RULES = "callRules";
     private static final String PREF_CALLER_ID_OVERLAY_PERMISSION = "callerIdOverlayPermission";
+    private static final String PREF_APP_LANGUAGE = "appLanguage";
+    private static final String LANGUAGE_SYSTEM = "system";
 
     private static final String STATE_REQUEST_TOKEN = "STATE_REQUEST_TOKEN";
 
@@ -214,6 +221,8 @@ public class RootSettingsFragment extends BaseSettingsFragment {
             return true;
         });
 
+        initLanguagePreference();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requirePreference(PREF_NOTIFICATION_CHANNEL_SETTINGS)
                     .setOnPreferenceClickListener(preference -> {
@@ -251,6 +260,43 @@ public class RootSettingsFragment extends BaseSettingsFragment {
                 return true;
             });
         }
+    }
+
+    /**
+     * The language is stored by AppCompat (the system per-app language on Android 13+,
+     * AppLocalesMetadataHolderService before that), so the preference itself is not persistent.
+     */
+    private void initLanguagePreference() {
+        ListPreference languagePref = requirePreference(PREF_APP_LANGUAGE);
+        languagePref.setValue(findLanguageValue(languagePref.getEntryValues(),
+                AppCompatDelegate.getApplicationLocales()));
+        languagePref.setOnPreferenceChangeListener((preference, newValue) -> {
+            String tag = (String) newValue;
+            AppCompatDelegate.setApplicationLocales(LANGUAGE_SYSTEM.equals(tag)
+                    ? LocaleListCompat.getEmptyLocaleList()
+                    : LocaleListCompat.forLanguageTags(tag));
+            return true;
+        });
+    }
+
+    private static String findLanguageValue(CharSequence[] values, LocaleListCompat locales) {
+        if (locales.isEmpty() || locales.get(0) == null) return LANGUAGE_SYSTEM;
+
+        Locale locale = locales.get(0);
+        String tag = locale.toLanguageTag();
+        String language = locale.getLanguage();
+        // "iw" is the legacy code for Hebrew
+        if ("iw".equals(language)) language = "he";
+
+        String byLanguage = null;
+        for (CharSequence value : values) {
+            String v = value.toString();
+            if (v.equalsIgnoreCase(tag)) return v;
+            if (byLanguage == null && v.split("-")[0].equalsIgnoreCase(language)) {
+                byLanguage = v;
+            }
+        }
+        return byLanguage != null ? byLanguage : LANGUAGE_SYSTEM;
     }
 
     private void requestOverlayPermission() {

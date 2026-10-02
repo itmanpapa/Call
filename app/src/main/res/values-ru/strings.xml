@@ -129,6 +129,7 @@
         <item quantity="one">%1$d выбран</item>
         <item quantity="few">%1$d выбрано</item>
         <item quantity="many">%1$d выбрано</item>
+        <item quantity="other">%1$d выбрано</item>
     </plurals>
     <plurals name="selected_values">
         <item quantity="one">Выбран: %s</item>
@@ -140,9 +141,10 @@
     <string name="open_blacklist_activity">Чёрный список</string>
     <string name="title_blacklist_activity">Чёрный список</string>
     <plurals name="blacklist_item_stats">
-        <item quantity="one">Звонил %2$s</item>
+        <item quantity="one">%1$d звонок, последний: %2$s</item>
         <item quantity="few">%1$d звонка, последний: %2$s</item>
         <item quantity="many">%1$d звонков, последний: %2$s</item>
+        <item quantity="other">%1$d звонка, последний: %2$s</item>
     </plurals>
     <string name="blacklist_item_date_no_info">нет информации</string>
     <string name="blacklist_item_no_calls">Никогда не звонил</string>

@@ -108,9 +108,10 @@
     <string name="open_blacklist_activity">Чорний список</string>
     <string name="title_blacklist_activity">Чорний список</string>
     <plurals name="blacklist_item_stats">
-        <item quantity="one">Дзвонив %2$s</item>
+        <item quantity="one">%1$d дзвінок, останній: %2$s</item>
         <item quantity="few">%1$d дзвінка, останній: %2$s</item>
         <item quantity="many">%1$d дзвінків, останній: %2$s</item>
+        <item quantity="other">%1$d дзвінка, останній: %2$s</item>
     </plurals>
     <string name="blacklist_item_date_no_info">немає інформації</string>
     <string name="blacklist_item_no_calls">Ніколи не дзвонив</string>
