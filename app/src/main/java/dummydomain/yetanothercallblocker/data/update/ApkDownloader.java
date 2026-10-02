@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BooleanSupplier;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import okhttp3.OkHttpClient;
@@ -23,8 +24,10 @@ import okhttp3.ResponseBody;
  * Downloads an update APK into a directory of its own (the app's cache), reporting the
  * progress. The file is written as {@code *.part} and renamed when complete; its size
  * must match the size announced by the release (and by {@code Content-Length}). Other
- * files in the directory (older downloads) are deleted. Plain Java with OkHttp 3.12;
- * must not be used on the Android main thread.
+ * files in the directory (older downloads) are deleted. The URL and every redirect
+ * must pass the URL policy (by default {@link UpdateSecurity#isAllowedDownloadUrl}:
+ * HTTPS to GitHub only). Plain Java with OkHttp 3.12; must not be used on the Android
+ * main thread.
  */
 public class ApkDownloader {
 
@@ -60,17 +63,31 @@ public class ApkDownloader {
     private final Supplier<OkHttpClient> clientSupplier;
     private final File directory;
     private final String userAgent;
+    private final Predicate<String> urlPolicy;
 
     /**
+     * Creates a downloader that accepts only HTTPS URLs on GitHub
+     * ({@link UpdateSecurity#isAllowedDownloadUrl}).
+     *
      * @param clientSupplier supplies a base client (timeouts are adjusted here)
      * @param directory      directory for the downloads, used exclusively by this class
      * @param userAgent      User-Agent header, may be null
      */
     public ApkDownloader(Supplier<OkHttpClient> clientSupplier, File directory,
                          String userAgent) {
+        this(clientSupplier, directory, userAgent, UpdateSecurity::isAllowedDownloadUrl);
+    }
+
+    /**
+     * @param urlPolicy decides whether the download URL and each redirect target
+     *                  may be requested
+     */
+    ApkDownloader(Supplier<OkHttpClient> clientSupplier, File directory,
+                  String userAgent, Predicate<String> urlPolicy) {
         this.clientSupplier = Objects.requireNonNull(clientSupplier, "clientSupplier");
         this.directory = Objects.requireNonNull(directory, "directory");
         this.userAgent = userAgent;
+        this.urlPolicy = Objects.requireNonNull(urlPolicy, "urlPolicy");
     }
 
     public File getDirectory() {
@@ -97,6 +114,9 @@ public class ApkDownloader {
     public File download(ReleaseInfo release, ProgressListener listener,
                          BooleanSupplier cancelled) throws IOException {
         if (!release.hasApk()) throw new IOException("The release has no APK");
+        if (!urlPolicy.test(release.getApkUrl())) {
+            throw new IOException("Download URL not allowed: " + release.getApkUrl());
+        }
 
         if (!directory.isDirectory() && !directory.mkdirs()) {
             throw new IOException("Can't create " + directory);
@@ -125,6 +145,14 @@ public class ApkDownloader {
                 .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .followRedirects(true)
                 .followSslRedirects(true)
+                // checks the URL of every request, including each redirect
+                .addNetworkInterceptor(chain -> {
+                    String url = chain.request().url().toString();
+                    if (!urlPolicy.test(url)) {
+                        throw new IOException("Download URL not allowed: " + url);
+                    }
+                    return chain.proceed(chain.request());
+                })
                 .build();
 
         Request.Builder requestBuilder = new Request.Builder()

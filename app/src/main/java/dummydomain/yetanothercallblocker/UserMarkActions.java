@@ -105,7 +105,7 @@ public class UserMarkActions {
             } else {
                 store.remove(key);
             }
-            LOG.info("setMark() {} -> {}", previous, current);
+            LOG.debug("setMark() {} -> {}", previous, current);
             return new Change(UserMarksStore.normalizeKey(key), previous, current);
         } catch (Exception e) {
             LOG.error("setMark() failed", e);
@@ -151,7 +151,7 @@ public class UserMarkActions {
             if (pattern.isEmpty()) return false;
 
             blacklistService.insert(new BlacklistItem(name, pattern));
-            LOG.info("addToBlacklist() added {}", pattern);
+            LOG.debug("addToBlacklist() added {}", pattern);
             return true;
         } catch (Exception e) {
             LOG.error("addToBlacklist() failed", e);

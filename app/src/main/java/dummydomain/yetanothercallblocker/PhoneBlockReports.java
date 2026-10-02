@@ -205,7 +205,7 @@ public final class PhoneBlockReports {
                 ? effective.getRating() : null;
         PhoneBlockReportQueue.Entry entry = getQueue().request(key, verdict, rating,
                 System.currentTimeMillis());
-        LOG.info("queue() {}", entry);
+        LOG.debug("queue() {}", entry);
         if (entry != null && entry.isPending() && isExplained()) {
             PhoneBlockReportWorker.schedule(appContext);
         }

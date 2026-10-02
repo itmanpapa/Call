@@ -137,6 +137,70 @@ public class BackupArchiveTest {
     }
 
     @Test
+    public void compressedBombIsRejected() throws IOException {
+        // ~9 MB of zeros compress to a few KB: a text part above its limit
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ZipOutputStream zip = new ZipOutputStream(out)) {
+            put(zip, BackupArchive.ENTRY_MANIFEST, "callguard-backup\t1\n");
+            zip.putNextEntry(new ZipEntry(BackupArchive.ENTRY_BLACKLIST));
+            byte[] zeros = new byte[1024 * 1024];
+            for (int i = 0; i < 9; i++) zip.write(zeros);
+            zip.closeEntry();
+        }
+        assertTrue(out.size() < 100_000);
+        assertReason(BackupException.Reason.TOO_LARGE, out.toByteArray());
+    }
+
+    @Test
+    public void tooManyDirectoryEntriesAreRejected() throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ZipOutputStream zip = new ZipOutputStream(out)) {
+            put(zip, BackupArchive.ENTRY_MANIFEST, "callguard-backup\t1\n");
+            for (int i = 0; i <= BackupArchive.MAX_ENTRIES; i++) {
+                zip.putNextEntry(new ZipEntry("dir" + i + "/"));
+                zip.closeEntry();
+            }
+        }
+        assertReason(BackupException.Reason.TOO_LARGE, out.toByteArray());
+    }
+
+    @Test
+    public void garbageAfterZipHeaderFailsCleanly() {
+        byte[] data = new byte[4096];
+        data[0] = 'P';
+        data[1] = 'K';
+        data[2] = 3;
+        data[3] = 4;
+        for (int i = 4; i < data.length; i++) data[i] = (byte) (i * 7);
+        try {
+            read(data);
+            fail();
+        } catch (IOException expected) {
+            // a BackupException or another IOException, never a RuntimeException
+        }
+    }
+
+    @Test
+    public void restoreSkipsValuesOfAnotherType() {
+        Map<String, Object> current = new LinkedHashMap<>();
+        current.put("blockHiddenNumbers", true);
+        current.put("callLogGrouping", "day");
+        current.put("appUpdateLatestVersion", "0.12.0");
+        Map<String, Object> backup = new LinkedHashMap<>();
+        backup.put("blockHiddenNumbers", "yes"); // a String instead of a Boolean
+        backup.put("callLogGrouping", "none");
+        backup.put("appUpdateLatestVersion", "0.1.0");
+
+        Map<String, Object> toSet = new LinkedHashMap<>();
+        java.util.List<String> toRemove = new java.util.ArrayList<>();
+        BackupSettingsPolicy.planRestore(current, backup, false, toSet, toRemove);
+
+        assertEquals(1, toSet.size());
+        assertEquals("none", toSet.get("callLogGrouping"));
+        assertTrue(toRemove.toString(), toRemove.isEmpty());
+    }
+
+    @Test
     public void badSettingsAreCorrupt() throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
