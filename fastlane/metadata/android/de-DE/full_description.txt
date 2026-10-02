@@ -1,0 +1,31 @@
+CallGuard blockiert Spam- und Betrugsanrufe und zeigt dir, wer anruft, bevor du abnimmst. Die App ist ein modernisierter Fork von <a href="https://gitlab.com/xynngh/YetAnotherCallBlocker">Yet Another Call Blocker</a> von xynngh, mit neuer Material-3-Oberfläche und zusätzlichen Datenquellen, besonders für Deutschland.
+
+<b>Funktionen</b>
+
+* <b>Anrufprüfung:</b> unerwünschte Anrufe werden abgewiesen, bevor das Telefon klingelt (als „Anrufer-ID-App“ ab Android 10, als Standard-Telefon-App unter Android 8–9).
+* <b>Offline-Nummerndatenbank:</b> die von Nutzern gepflegte Datenbank von Yet Another Call Blocker mit Bewertungen und Kategorien, automatisch mit kleinen Delta-Updates aktualisiert.
+* <b>PhoneBlock:</b> die Community-Sperrliste von phoneblock.net (benötigt deinen eigenen kostenlosen PhoneBlock-Schlüssel); Spam-Nummern kannst du auch dorthin melden.
+* <b>Bundesnetzagentur:</b> die offizielle Liste der Rufnummern, gegen die die Bundesnetzagentur Maßnahmen ergriffen hat – wird automatisch geladen und aktualisiert.
+* <b>Sperrregeln:</b> Vorwahlen, unterdrückte und ausländische Nummern, Premiumnummern (0900/0137/0180), wiederholte Anrufe durchlassen, Zeitpläne. Fertige Regeln mit einem Tipp.
+* <b>Anruferkarte:</b> wer anruft, mit Bewertung und Kategorie, direkt über dem Anrufbildschirm, mit den Knöpfen „Blockieren“ und „Kein Spam“.
+* <b>Eigene Markierungen:</b> Nummern als Spam oder kein Spam markieren; deine Markierung hat Vorrang vor Bewertungen, Listen und Regeln. Lokale Sperrliste mit Platzhaltern.
+* <b>Statistik:</b> blockierte Anrufe nach Tag, Grund und Quelle.
+* <b>Funktionsprüfung:</b> zeigt, was den Schutz einschränkt, und wie man es behebt.
+* <b>Sicherung:</b> Export und Import von Einstellungen, Sperrliste, Regeln und Markierungen.
+* Nummernsuche, Anrufliste mit Bewertungen, helles und dunkles Design, 27 Sprachen.
+
+Keine Werbung, keine Tracker, keine Analyse.
+
+<b>Netzwerkdienste</b>
+
+Einige Funktionen nutzen Dienste Dritter, die keine freie Software sind und nicht von diesem Projekt betrieben werden (Anti-Feature „Nicht-freie Netzwerkdienste“):
+
+* Updates der YACB-Datenbank und ausführliche Online-Bewertungen kommen von den Servern des Dienstes „Should I Answer?“;
+* PhoneBlock (phoneblock.net) – nur wenn du es einschaltest und deinen Schlüssel einträgst;
+* die Liste der Bundesnetzagentur wird von der Website bundesnetzagentur.de geladen.
+
+Online-Bewertungen werden nur auf deinen Wunsch geladen (dabei wird die Nummer gesendet); die PhoneBlock-Onlineprüfung sendet nur einen Hash der Nummer. Kontakte und Anrufliste werden nie hochgeladen. Jede Quelle lässt sich unter „Datenbanken“ abschalten.
+
+<b>Danksagung</b>
+
+Basiert auf Yet Another Call Blocker von xynngh und der Bibliothek LibPhoneNumberInfo. Lizenz: AGPL-3.0-only. Quellcode: <a href="https://github.com/itmanpapa/Call">github.com/itmanpapa/Call</a>

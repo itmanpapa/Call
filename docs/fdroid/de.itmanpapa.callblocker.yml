@@ -1,0 +1,49 @@
+# Draft of fdroiddata/metadata/de.itmanpapa.callblocker.yml
+# (https://gitlab.com/fdroid/fdroiddata). See docs/fdroid/SUBMISSION.md.
+#
+# IMPORTANT: the "fdroid" flavor exists only from the release that follows v0.12.0.
+# The tag v0.12.0 has no product flavors (and contains the GitHub self-updater), so the
+# first build entry below is for the next tag (v0.12.1, versionCode 12010). Release it
+# first (versionName/versionCode in app/build.gradle), then submit this file.
+# Before submitting, remove these comment lines (fdroid rewritemeta strips comments anyway).
+
+AntiFeatures:
+  NonFreeNet:
+    en-US: >-
+      Updates of the phone number database and online reviews come from the servers of
+      the proprietary "Should I Answer?" service; optional PhoneBlock (phoneblock.net)
+      and the Bundesnetzagentur website are used as further data sources.
+Categories:
+  - Phone & SMS
+  - Security
+License: AGPL-3.0-only
+AuthorName: itmanpapa
+WebSite: https://github.com/itmanpapa/Call
+SourceCode: https://github.com/itmanpapa/Call
+IssueTracker: https://github.com/itmanpapa/Call/issues
+Changelog: https://github.com/itmanpapa/Call/releases
+# Add once a donation account exists and is published in .github/FUNDING.yml / README:
+# Donate: https://buymeacoffee.com/<name>
+# Liberapay: <name>
+
+AutoName: CallGuard
+
+RepoType: git
+Repo: https://github.com/itmanpapa/Call.git
+# Optional, reproducible builds with our own signature (see SUBMISSION.md, section 4):
+# Binaries: https://github.com/itmanpapa/Call/releases/download/v%v/callguard_fdroid-v%v.apk
+
+Builds:
+  - versionName: 0.12.1
+    versionCode: 12010
+    commit: v0.12.1
+    subdir: app
+    gradle:
+      - fdroid
+
+# AllowedAPKSigningKeys: <sha-256 of the release certificate, lower case, no colons>
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags ^v[0-9.]+$
+CurrentVersion: 0.12.1
+CurrentVersionCode: 12010

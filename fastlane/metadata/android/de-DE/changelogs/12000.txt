@@ -1,0 +1,5 @@
+* Statistik blockierter Anrufe (nach Tag, Grund und Quelle)
+* Sicherung und Wiederherstellung von Einstellungen, Sperrliste, Regeln, Markierungen und Listen
+* Spam-Nummern an PhoneBlock melden
+* App-Sprache in den Einstellungen wählbar; alle 27 Sprachen aktualisiert
+* Update-Prüfung für die GitHub-Version

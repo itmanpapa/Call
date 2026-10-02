@@ -1,0 +1,5 @@
+* Statistics of blocked calls (by day, reason and source)
+* Backup and restore of settings, blacklist, rules, marks and lists
+* Report spam numbers to PhoneBlock
+* Choose the app language in the settings; all 27 languages updated
+* Update check for the GitHub version
