@@ -93,10 +93,24 @@ capture_all() { # suffix
     tap_text "Call log" && sleep 2 && tap_text "+4930901820" && shot "06_info_dialog_$1"
 }
 
+incoming_call() { # suffix: simulated call from an unknown number to see the caller-ID card
+    adb shell appops set "$PKG" SYSTEM_ALERT_WINDOW allow
+    adb shell input keyevent KEYCODE_HOME
+    sleep 2
+    adb emu gsm call 015112345678
+    sleep 8
+    dismiss_system_dialogs
+    shot "11_incoming_call_$1"
+    adb emu gsm cancel 015112345678
+    sleep 3
+}
+
 adb shell cmd uimode night no
 capture_all light
+incoming_call light
 
 adb shell cmd uimode night yes
 capture_all dark
+incoming_call dark
 
 ls -la "$OUT"
