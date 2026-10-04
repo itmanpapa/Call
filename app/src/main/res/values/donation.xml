@@ -7,5 +7,5 @@
         Keep it in sync with .github/FUNDING.yml and README.md: F-Droid accepts only
         donation links that the developer publishes in the repository.
     -->
-    <string name="donation_url" translatable="false"></string>
+    <string name="donation_url" translatable="false">https://ko-fi.com/itmasterpro</string>
 </resources>

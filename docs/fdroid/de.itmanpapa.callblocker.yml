@@ -22,8 +22,8 @@ WebSite: https://github.com/itmanpapa/Call
 SourceCode: https://github.com/itmanpapa/Call
 IssueTracker: https://github.com/itmanpapa/Call/issues
 Changelog: https://github.com/itmanpapa/Call/releases
-# Add once a donation account exists and is published in .github/FUNDING.yml / README:
-# Donate: https://buymeacoffee.com/<name>
+# Donation link published by the developer in .github/FUNDING.yml and README.md
+Donate: https://ko-fi.com/itmasterpro
 # Liberapay: <name>
 
 AutoName: CallGuard

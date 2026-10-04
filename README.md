@@ -50,7 +50,7 @@ F-Droid / IzzyOnDroid: in preparation.
 
 ## Support the project
 
-If CallGuard is useful to you, you can buy me a coffee ☕ — the link will appear here and in *Settings → About*.
+If CallGuard is useful to you, you can [buy me a coffee ☕ on Ko-fi](https://ko-fi.com/itmasterpro) — the same link is in *Settings → About*.
 
 ## Development
 
