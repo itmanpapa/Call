@@ -78,7 +78,7 @@ jobs:
               exit 0
             fi
             git reset -q --hard FETCH_HEAD
-            rm -f docs/screenshots/*.png
+            # only add/replace: a screen the emulator failed to capture keeps its old picture
             mkdir -p docs/screenshots
             cp "$RUNNER_TEMP"/shots/*.png docs/screenshots/
             git add -A docs/screenshots

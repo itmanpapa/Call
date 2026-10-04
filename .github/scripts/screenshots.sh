@@ -60,7 +60,7 @@ shot() {
     echo "captured $1"
 }
 
-tap_text() { # taps the center of the first node with the given text
+tap_text() { # taps the center of the first node with the given text (a grep pattern)
     if [ "$1" != "Wait" ] && [ "$1" != "Close app" ]; then dismiss_system_dialogs; fi
     adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
     adb pull /sdcard/ui.xml /tmp/ui.xml >/dev/null 2>&1
@@ -80,7 +80,11 @@ dismiss_system_dialogs() { # e.g. "Pixel Launcher isn't responding" on a slow em
     fi
 }
 
-tap_text_scroll() { # like tap_text, scrolls down (up to 4 times) to find the node
+tap_text_scroll() { # like tap_text, scrolls to the top, then down (up to 4 times) to find the node
+    tap_text "$1" 2>/dev/null && return 0
+    adb shell input swipe 540 700 540 2000 200
+    adb shell input swipe 540 700 540 2000 200
+    sleep 1
     for _ in 1 2 3 4 5; do
         tap_text "$1" 2>/dev/null && return 0
         adb shell input swipe 540 1700 540 700 300
@@ -115,7 +119,7 @@ capture_all() { # suffix
     adb shell input keyevent KEYCODE_BACK
     # About (overflow menu of the call log) and the cryptocurrency donation dialog
     adb shell input keyevent KEYCODE_MENU && sleep 1 && tap_text "About" && sleep 2 && {
-        tap_text_scroll "🪙 Donate crypto" && sleep 2 && shot "13_donate_btc_$1" \
+        tap_text_scroll "[^\"]*Donate crypto" && sleep 2 && shot "13_donate_btc_$1" \
             && tap_text "TRC20" && sleep 1 && shot "14_donate_trc20_$1" \
             && adb shell input keyevent KEYCODE_BACK
         adb shell input keyevent KEYCODE_BACK
