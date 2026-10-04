@@ -110,20 +110,32 @@ capture_all() { # suffix
         tap_text "PhoneBlock" && sleep 1 && shot "08_phoneblock_$1" && adb shell input keyevent KEYCODE_BACK
         adb shell input keyevent KEYCODE_BACK
     }
-    tap_text_scroll "Blocking rules" && sleep 1 && shot "10_rules_$1" && adb shell input keyevent KEYCODE_BACK
-    tap_text_scroll "Statistics" && sleep 2 && shot "12_stats_$1" && adb shell input keyevent KEYCODE_BACK
-    # the setup check is the first entry of the settings
-    tap_text "Settings"
-    tap_text "Setup check" && sleep 2 && shot "09_setup_check_$1" && adb shell input keyevent KEYCODE_BACK
-    tap_text "Call log" && sleep 2 && tap_text "+4930901820" && shot "06_info_dialog_$1"
-    adb shell input keyevent KEYCODE_BACK
+    # each of the next screens starts from a fresh app: "Back" on the emulator does not
+    # always return to the same place, and one miss used to break all later steps
+    goto_tab "Settings" && tap_text_scroll "Blocking rules" && sleep 1 && shot "10_rules_$1"
+    goto_tab "Settings" && tap_text_scroll "Statistics" && sleep 2 && shot "12_stats_$1"
+    goto_tab "Settings" && tap_text "Setup check" && sleep 2 && shot "09_setup_check_$1"
+    goto_tab "Call log" && sleep 2 && tap_text "[^\"]*901820" && shot "06_info_dialog_$1"
     # About (overflow menu of the call log) and the cryptocurrency donation dialog
-    adb shell input keyevent KEYCODE_MENU && sleep 1 && tap_text "About" && sleep 2 && {
-        tap_text_scroll "[^\"]*Donate crypto" && sleep 2 && shot "13_donate_btc_$1" \
-            && tap_text "TRC20" && sleep 1 && shot "14_donate_trc20_$1" \
-            && adb shell input keyevent KEYCODE_BACK
-        adb shell input keyevent KEYCODE_BACK
-    }
+    goto_tab "Call log" && adb shell input keyevent KEYCODE_MENU && sleep 1 \
+        && tap_text "About" && sleep 2 \
+        && tap_text_scroll "[^\"]*Donate crypto" && sleep 2 && shot "13_donate_btc_$1" \
+        && tap_text "TRC20" && sleep 1 && shot "14_donate_trc20_$1"
+}
+
+restart_app() {
+    adb shell am force-stop "$PKG"
+    adb shell am start -W -n "$PKG/dummydomain.yetanothercallblocker.MainActivity" >/dev/null
+    sleep 3
+    dismiss_system_dialogs
+}
+
+goto_tab() { # tab label: restarts the app and opens a tab of the bottom navigation
+    restart_app
+    tap_text "$1" && sleep 1 && return 0
+    adb shell input keyevent KEYCODE_BACK  # a dialog over the main screen
+    sleep 1
+    tap_text "$1" && sleep 1
 }
 
 incoming_call() { # suffix: simulated call from an unknown number to see the caller-ID card
