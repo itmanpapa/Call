@@ -13,6 +13,11 @@ on:
 permissions:
   contents: write
 
+# a newer push makes the screenshots of the older one useless
+concurrency:
+  group: screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   screenshots:
     runs-on: ubuntu-24.04
@@ -57,18 +62,29 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/heads/claude/')
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
-          mkdir -p docs/screenshots
-          rm -f docs/screenshots/*.png
+          mkdir -p "$RUNNER_TEMP/shots"
           for f in screenshots/*.png; do
-            convert "$f" -resize 540x "docs/screenshots/$(basename "$f")"
+            convert "$f" -resize 540x "$RUNNER_TEMP/shots/$(basename "$f")"
           done
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/screenshots
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Скриншоты для ${GITHUB_SHA::7} [skip ci]"
           for i in 1 2 3; do
-            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            # commit on top of the current branch head instead of rebasing binary files
+            git fetch -q origin "${GITHUB_REF_NAME}"
+            # same paths as in "on.push" above: newer changes there start their own run
+            if ! git diff --quiet "${GITHUB_SHA}" FETCH_HEAD -- app/src/main/res app/src/main/java \
+                .github/scripts/screenshots.sh .github/workflows/screenshots.yml; then
+              echo "the branch has newer commits, their run will update the screenshots"
+              exit 0
+            fi
+            git reset -q --hard FETCH_HEAD
+            rm -f docs/screenshots/*.png
+            mkdir -p docs/screenshots
+            cp "$RUNNER_TEMP"/shots/*.png docs/screenshots/
+            git add -A docs/screenshots
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -q -m "Скриншоты для ${GITHUB_SHA::7} [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 5
           done
           exit 1
