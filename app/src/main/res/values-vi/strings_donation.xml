@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Mời tôi một ly cà phê</string>
-    <string name="donation_btc_button">₿ Ủng hộ bằng Bitcoin</string>
     <string name="donation_btc_hint">Chỉ gửi Bitcoin (BTC, mạng Bitcoin) đến địa chỉ này. Quét mã QR bằng ví của bạn hoặc sao chép địa chỉ.</string>
-    <string name="donation_btc_qr_description">Mã QR của địa chỉ Bitcoin</string>
     <string name="donation_btc_copy">Sao chép địa chỉ</string>
     <string name="donation_btc_copied">Đã sao chép địa chỉ</string>
     <string name="donation_btc_open_wallet">Mở trong ví</string>
     <string name="donation_btc_no_wallet">Không tìm thấy ứng dụng ví Bitcoin. Hãy sao chép địa chỉ.</string>
     <string name="donation_btc_close">Đóng</string>
+    <string name="donation_crypto_button">🪙 Ủng hộ bằng tiền mã hóa</string>
+    <string name="donation_crypto_title">Tiền mã hóa</string>
+    <string name="donation_crypto_qr_description">Mã QR của địa chỉ</string>
+    <string name="donation_trc20_hint">Chỉ gửi USDT hoặc token TRC20 khác (hoặc TRX) trên mạng TRON đến địa chỉ này.</string>
+    <string name="donation_bep20_hint">Chỉ gửi USDT hoặc token BEP20 khác (hoặc BNB) trên BNB Smart Chain đến địa chỉ này.</string>
 </resources>

@@ -1,0 +1,2 @@
+* Neues App-Symbol
+* Projekt unterstützen: Ko-fi oder Kryptowährung (Bitcoin, TRC20, BEP20) mit QR-Codes unter Einstellungen → Über

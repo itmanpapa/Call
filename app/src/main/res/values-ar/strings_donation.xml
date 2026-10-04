@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ اشترِ لي قهوة</string>
-    <string name="donation_btc_button">₿ تبرّع بالبيتكوين</string>
     <string name="donation_btc_hint">أرسل إلى هذا العنوان عملة بيتكوين (BTC، شبكة Bitcoin) فقط. امسح رمز QR بمحفظتك أو انسخ العنوان.</string>
-    <string name="donation_btc_qr_description">رمز QR لعنوان البيتكوين</string>
     <string name="donation_btc_copy">نسخ العنوان</string>
     <string name="donation_btc_copied">تم نسخ العنوان</string>
     <string name="donation_btc_open_wallet">فتح في المحفظة</string>
     <string name="donation_btc_no_wallet">لم يُعثر على تطبيق محفظة بيتكوين. انسخ العنوان بدلاً من ذلك.</string>
     <string name="donation_btc_close">إغلاق</string>
+    <string name="donation_crypto_button">🪙 تبرّع بالعملات المشفّرة</string>
+    <string name="donation_crypto_title">العملات المشفّرة</string>
+    <string name="donation_crypto_qr_description">رمز QR للعنوان</string>
+    <string name="donation_trc20_hint">أرسل إلى هذا العنوان USDT أو رموز TRC20 أخرى (أو TRX) على شبكة TRON فقط.</string>
+    <string name="donation_bep20_hint">أرسل إلى هذا العنوان USDT أو رموز BEP20 أخرى (أو BNB) على شبكة BNB Smart Chain فقط.</string>
 </resources>

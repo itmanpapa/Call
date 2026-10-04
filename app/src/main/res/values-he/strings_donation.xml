@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ קנו לי קפה</string>
-    <string name="donation_btc_button">₿ תרומה בביטקוין</string>
     <string name="donation_btc_hint">שלחו לכתובת זו ביטקוין בלבד (BTC, רשת Bitcoin). סרקו את קוד ה-QR בארנק או העתיקו את הכתובת.</string>
-    <string name="donation_btc_qr_description">קוד QR של כתובת הביטקוין</string>
     <string name="donation_btc_copy">העתקת הכתובת</string>
     <string name="donation_btc_copied">הכתובת הועתקה</string>
     <string name="donation_btc_open_wallet">פתיחה בארנק</string>
     <string name="donation_btc_no_wallet">לא נמצאה אפליקציית ארנק ביטקוין. העתיקו את הכתובת.</string>
     <string name="donation_btc_close">סגירה</string>
+    <string name="donation_crypto_button">🪙 תרומה במטבע קריפטו</string>
+    <string name="donation_crypto_title">מטבע קריפטו</string>
+    <string name="donation_crypto_qr_description">קוד QR של הכתובת</string>
+    <string name="donation_trc20_hint">שלחו לכתובת זו רק USDT או אסימוני TRC20 אחרים (או TRX) ברשת TRON.</string>
+    <string name="donation_bep20_hint">שלחו לכתובת זו רק USDT או אסימוני BEP20 אחרים (או BNB) ברשת BNB Smart Chain.</string>
 </resources>

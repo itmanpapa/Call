@@ -104,14 +104,14 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <!-- visible only when res/values/donation.xml has a valid donation_btc_address -->
+        <!-- visible only when res/values/donation.xml has a valid cryptocurrency address -->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/about_donate_btc"
+            android:id="@+id/about_donate_crypto"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/donation_btc_button"
+            android:text="@string/donation_crypto_button"
             android:visibility="gone"
             tools:visibility="visible" />
 

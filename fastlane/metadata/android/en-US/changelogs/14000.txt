@@ -1,0 +1,2 @@
+* New app icon
+* Support the project: Ko-fi or cryptocurrency (Bitcoin, TRC20, BEP20) with QR codes in Settings → About

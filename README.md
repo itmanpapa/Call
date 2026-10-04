@@ -53,9 +53,13 @@ F-Droid / IzzyOnDroid: in preparation.
 If CallGuard is useful to you, you can support its development — both options are also in *Settings → About*:
 
 - ☕ [Buy me a coffee on Ko-fi](https://ko-fi.com/itmasterpro)
-- ₿ Bitcoin (BTC, Bitcoin network only): `bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7`
+- 🪙 Cryptocurrency — **check the network before sending**, coins sent on another network are lost:
 
-<img src="docs/donate-btc.png" width="160" alt="QR code of the Bitcoin address"/>
+| ₿ Bitcoin (BTC) | TRON (TRC20) | BNB Smart Chain (BEP20) |
+|:-:|:-:|:-:|
+| <img src="docs/donate-btc.png" width="140" alt="QR code: Bitcoin"/> | <img src="docs/donate-trc20.png" width="140" alt="QR code: TRC20"/> | <img src="docs/donate-bep20.png" width="140" alt="QR code: BEP20"/> |
+| `bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7` | `TEnG8Lbaw2BBjFgaJtJNepkU4UJQW3iR9g` | `0x2F31dbb7b6068838594385d85373ECd2275F228A` |
+| Bitcoin network only | USDT or other TRC20 tokens, TRX | USDT or other BEP20 tokens, BNB |
 
 ## Development
 

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ 請我喝杯咖啡</string>
-    <string name="donation_btc_button">₿ 用比特幣捐助</string>
     <string name="donation_btc_hint">請只向此地址傳送比特幣（BTC，Bitcoin 網路）。用錢包掃描 QR 碼或複製地址。</string>
-    <string name="donation_btc_qr_description">比特幣地址的 QR 碼</string>
     <string name="donation_btc_copy">複製地址</string>
     <string name="donation_btc_copied">已複製地址</string>
     <string name="donation_btc_open_wallet">在錢包中開啟</string>
     <string name="donation_btc_no_wallet">找不到比特幣錢包應用程式。請複製地址。</string>
     <string name="donation_btc_close">關閉</string>
+    <string name="donation_crypto_button">🪙 用加密貨幣捐助</string>
+    <string name="donation_crypto_title">加密貨幣</string>
+    <string name="donation_crypto_qr_description">地址的 QR 碼</string>
+    <string name="donation_trc20_hint">請只向此地址傳送 TRON 網路上的 USDT 或其他 TRC20 代幣（或 TRX）。</string>
+    <string name="donation_bep20_hint">請只向此地址傳送 BNB Smart Chain 上的 USDT 或其他 BEP20 代幣（或 BNB）。</string>
 </resources>

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Κέρασέ με έναν καφέ</string>
-    <string name="donation_btc_button">₿ Δωρεά με Bitcoin</string>
     <string name="donation_btc_hint">Στείλτε σε αυτή τη διεύθυνση μόνο Bitcoin (BTC, δίκτυο Bitcoin). Σαρώστε τον κωδικό QR με το πορτοφόλι σας ή αντιγράψτε τη διεύθυνση.</string>
-    <string name="donation_btc_qr_description">Κωδικός QR της διεύθυνσης Bitcoin</string>
     <string name="donation_btc_copy">Αντιγραφή διεύθυνσης</string>
     <string name="donation_btc_copied">Η διεύθυνση αντιγράφηκε</string>
     <string name="donation_btc_open_wallet">Άνοιγμα στο πορτοφόλι</string>
     <string name="donation_btc_no_wallet">Δεν βρέθηκε εφαρμογή πορτοφολιού Bitcoin. Αντιγράψτε τη διεύθυνση.</string>
     <string name="donation_btc_close">Κλείσιμο</string>
+    <string name="donation_crypto_button">🪙 Δωρεά με κρυπτονομίσματα</string>
+    <string name="donation_crypto_title">Κρυπτονόμισμα</string>
+    <string name="donation_crypto_qr_description">Κωδικός QR της διεύθυνσης</string>
+    <string name="donation_trc20_hint">Στείλτε σε αυτή τη διεύθυνση μόνο USDT ή άλλα tokens TRC20 (ή TRX) στο δίκτυο TRON.</string>
+    <string name="donation_bep20_hint">Στείλτε σε αυτή τη διεύθυνση μόνο USDT ή άλλα tokens BEP20 (ή BNB) στο BNB Smart Chain.</string>
 </resources>

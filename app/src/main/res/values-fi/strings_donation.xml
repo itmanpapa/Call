@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Tarjoa minulle kahvit</string>
-    <string name="donation_btc_button">₿ Lahjoita bitcoineilla</string>
     <string name="donation_btc_hint">Lähetä tähän osoitteeseen vain bitcoineja (BTC, Bitcoin-verkko). Skannaa QR-koodi lompakollasi tai kopioi osoite.</string>
-    <string name="donation_btc_qr_description">Bitcoin-osoitteen QR-koodi</string>
     <string name="donation_btc_copy">Kopioi osoite</string>
     <string name="donation_btc_copied">Osoite kopioitu</string>
     <string name="donation_btc_open_wallet">Avaa lompakossa</string>
     <string name="donation_btc_no_wallet">Bitcoin-lompakkosovellusta ei löytynyt. Kopioi osoite.</string>
     <string name="donation_btc_close">Sulje</string>
+    <string name="donation_crypto_button">🪙 Lahjoita kryptovaluuttana</string>
+    <string name="donation_crypto_title">Kryptovaluutta</string>
+    <string name="donation_crypto_qr_description">Osoitteen QR-koodi</string>
+    <string name="donation_trc20_hint">Lähetä tähän osoitteeseen vain USDT:tä tai muita TRC20-tokeneita (tai TRX:ää) TRON-verkossa.</string>
+    <string name="donation_bep20_hint">Lähetä tähän osoitteeseen vain USDT:tä tai muita BEP20-tokeneita (tai BNB:tä) BNB Smart Chainissa.</string>
 </resources>

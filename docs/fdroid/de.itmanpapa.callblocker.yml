@@ -3,7 +3,7 @@
 #
 # IMPORTANT: the "fdroid" flavor exists only from the release that follows v0.12.0.
 # The tag v0.12.0 has no product flavors (and contains the GitHub self-updater), so the
-# first build entry below is for the next tag (v0.13.0, versionCode 13000). Release it
+# first build entry below is for the next tag (v0.14.0, versionCode 14000). Release it
 # first (versionName/versionCode in app/build.gradle), then submit this file.
 # Before submitting, remove these comment lines (fdroid rewritemeta strips comments anyway).
 
@@ -35,9 +35,9 @@ Repo: https://github.com/itmanpapa/Call.git
 # Binaries: https://github.com/itmanpapa/Call/releases/download/v%v/callguard_fdroid-v%v.apk
 
 Builds:
-  - versionName: 0.13.0
-    versionCode: 13000
-    commit: v0.13.0
+  - versionName: 0.14.0
+    versionCode: 14000
+    commit: v0.14.0
     subdir: app
     gradle:
       - fdroid
@@ -46,5 +46,5 @@ Builds:
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^v[0-9.]+$
-CurrentVersion: 0.13.0
-CurrentVersionCode: 13000
+CurrentVersion: 0.14.0
+CurrentVersionCode: 14000

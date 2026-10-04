@@ -15,18 +15,17 @@
 
 ## 0. Подготовка (обязательно до подачи)
 
-1. **Выпустить версию 0.13.0.** В теге `v0.12.0` ещё нет варианта `fdroid` — F-Droid соберёт
-   только тег, где он есть. В `app/build.gradle` поставить `versionName "0.13.0"`,
-   `versionCode 13000` и `changelogs/13000.txt` (en-US, de-DE, ru) уже готовы — осталось выпустить
-   релиз как обычно (тег `v0.13.0`). Проверить, что в релизе два APK.
+1. **Выпустить версию 0.14.0.** ✅ 0.13.0 выпущена (первая с вариантом `fdroid`). В 0.14.0 — новая
+   иконка и пожертвования; `versionName "0.14.0"`, `versionCode 14000` и `changelogs/14000.txt` готовы,
+   yml ниже указывает на тег `v0.14.0` — выпустить релиз как обычно и проверить, что в нём два APK.
    Если версия будет другой — поправить `versionName`/`versionCode`/`commit` в yml.
 2. ~~Удалить старые описания YACB~~ — сделано: в `fastlane/metadata/android/` остались только
    en-US, de-DE и ru; остальные языки в F-Droid получат английский текст.
 3. **Иконка.** ✅ Своя иконка (кольцо с трубкой и зелёной точкой), `en-US/images/icon.png` и
    `featureGraphic.png` перерисованы.
 4. **Пожертвования.** ✅ Ko-fi (`donation_url` в `app/src/main/res/values/donation.xml`, `ko_fi:` в
-   `.github/FUNDING.yml`, README, `Donate:` в yml) и Bitcoin (`donation_btc_address` там же, README,
-   `Bitcoin:` в yml). F-Droid принимает только реквизиты, которые разработчик сам опубликовал в
+   `.github/FUNDING.yml`, README, `Donate:` в yml) и криптовалюта (`donation_btc_address`, `donation_trc20_address`,
+   `donation_bep20_address` там же, README; в yml есть поле только для `Bitcoin:`). F-Droid принимает только реквизиты, которые разработчик сам опубликовал в
    репозитории (FUNDING.yml/README) — при смене адреса менять во всех этих местах.
 
 ## 1. F-Droid (основной репозиторий)
@@ -77,7 +76,7 @@ IzzyOnDroid не собирает из исходников, а берёт на�
 самообновление допустимо только строго по согласию пользователя (opt-in). Поэтому для IzzyOnDroid
 просим брать APK варианта `fdroid`.
 
-1. Убедиться, что в релизе v0.13.0 есть `callguard_fdroid-v0.13.0.apk`.
+1. Убедиться, что в релизе v0.14.0 есть `callguard_fdroid-v0.14.0.apk`.
 2. Открыть issue «[AppRequest] CallGuard» в https://codeberg.org/IzzyOnDroid/repodata/issues
    (трекер переехал с GitLab на Codeberg; нужен аккаунт codeberg.org), шаблон App Request.
    Указать: репозиторий https://github.com/itmanpapa/Call, applicationId `de.itmanpapa.callblocker`,
@@ -105,7 +104,7 @@ IzzyOnDroid не собирает из исходников, а берёт на�
 `callguard_fdroid-v%v.apk`) и `AllowedAPKSigningKeys:` (SHA-256 сертификата, строчными, без двоеточий):
 
 ```
-keytool -printcert -jarfile callguard_fdroid-v0.13.0.apk | sed -n 's/[[:space:]]*SHA256: //p' | tr -d ':' | tr '[:upper:]' '[:lower:]'
+keytool -printcert -jarfile callguard_fdroid-v0.14.0.apk | sed -n 's/[[:space:]]*SHA256: //p' | tr -d ':' | tr '[:upper:]' '[:lower:]'
 ```
 
 Не проверено: совпадёт ли наша сборка (GitHub Actions, temurin 17) со сборкой F-Droid (Debian,

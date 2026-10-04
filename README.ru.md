@@ -40,9 +40,13 @@ CallGuard — форк [Yet Another Call Blocker](https://gitlab.com/xynngh/YetA
 Если CallGuard вам полезен, можно поддержать разработку — оба способа есть и в *Настройки → О приложении*:
 
 - ☕ [Угостить автора кофе на Ko-fi](https://ko-fi.com/itmasterpro)
-- ₿ Bitcoin (BTC, только сеть Bitcoin): `bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7`
+- 🪙 Криптовалюта — **проверьте сеть перед отправкой**, монеты, отправленные в другой сети, пропадут:
 
-<img src="docs/donate-btc.png" width="160" alt="QR-код биткоин-адреса"/>
+| ₿ Bitcoin (BTC) | TRON (TRC20) | BNB Smart Chain (BEP20) |
+|:-:|:-:|:-:|
+| <img src="docs/donate-btc.png" width="140" alt="QR-код: Bitcoin"/> | <img src="docs/donate-trc20.png" width="140" alt="QR-код: TRC20"/> | <img src="docs/donate-bep20.png" width="140" alt="QR-код: BEP20"/> |
+| `bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7` | `TEnG8Lbaw2BBjFgaJtJNepkU4UJQW3iR9g` | `0x2F31dbb7b6068838594385d85373ECd2275F228A` |
+| только сеть Bitcoin | USDT или другие токены TRC20, TRX | USDT или другие токены BEP20, BNB |
 
 ## Разработка
 

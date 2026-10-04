@@ -3,4 +3,4 @@
 * Fixed a crash when screening a call failed; safer backup restore
 * Phone numbers are no longer written to the app log
 * Separate F-Droid build without the self-updater
-* New app icon; support the project with Ko-fi or Bitcoin (QR code) in About
+* Optional "Buy me a coffee" button

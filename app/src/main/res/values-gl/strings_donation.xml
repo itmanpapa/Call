@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Convídame a un café</string>
-    <string name="donation_btc_button">₿ Doar con Bitcoin</string>
     <string name="donation_btc_hint">Envía a este enderezo só Bitcoin (BTC, rede Bitcoin). Escanea o código QR coa túa carteira ou copia o enderezo.</string>
-    <string name="donation_btc_qr_description">Código QR do enderezo Bitcoin</string>
     <string name="donation_btc_copy">Copiar enderezo</string>
     <string name="donation_btc_copied">Enderezo copiado</string>
     <string name="donation_btc_open_wallet">Abrir na carteira</string>
     <string name="donation_btc_no_wallet">Non se atopou ningunha carteira de Bitcoin. Copia o enderezo.</string>
     <string name="donation_btc_close">Pechar</string>
+    <string name="donation_crypto_button">🪙 Doar con criptomoedas</string>
+    <string name="donation_crypto_title">Criptomoeda</string>
+    <string name="donation_crypto_qr_description">Código QR do enderezo</string>
+    <string name="donation_trc20_hint">Envía a este enderezo só USDT ou outros tokens TRC20 (ou TRX) na rede TRON.</string>
+    <string name="donation_bep20_hint">Envía a este enderezo só USDT ou outros tokens BEP20 (ou BNB) en BNB Smart Chain.</string>
 </resources>

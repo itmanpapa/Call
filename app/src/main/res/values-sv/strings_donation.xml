@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Bjud mig på en kaffe</string>
-    <string name="donation_btc_button">₿ Donera med bitcoin</string>
     <string name="donation_btc_hint">Skicka endast bitcoin (BTC, Bitcoin-nätverket) till den här adressen. Skanna QR-koden med din plånbok eller kopiera adressen.</string>
-    <string name="donation_btc_qr_description">QR-kod för bitcoinadressen</string>
     <string name="donation_btc_copy">Kopiera adress</string>
     <string name="donation_btc_copied">Adressen har kopierats</string>
     <string name="donation_btc_open_wallet">Öppna i plånbok</string>
     <string name="donation_btc_no_wallet">Ingen bitcoinplånbok hittades. Kopiera adressen i stället.</string>
     <string name="donation_btc_close">Stäng</string>
+    <string name="donation_crypto_button">🪙 Donera med krypto</string>
+    <string name="donation_crypto_title">Kryptovaluta</string>
+    <string name="donation_crypto_qr_description">QR-kod för adressen</string>
+    <string name="donation_trc20_hint">Skicka endast USDT eller andra TRC20-tokens (eller TRX) på TRON-nätverket till den här adressen.</string>
+    <string name="donation_bep20_hint">Skicka endast USDT eller andra BEP20-tokens (eller BNB) på BNB Smart Chain till den här adressen.</string>
 </resources>

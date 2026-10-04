@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Častite me s kavo</string>
-    <string name="donation_btc_button">₿ Donirajte z Bitcoinom</string>
     <string name="donation_btc_hint">Na ta naslov pošiljajte samo Bitcoin (BTC, omrežje Bitcoin). Kodo QR skenirajte z denarnico ali kopirajte naslov.</string>
-    <string name="donation_btc_qr_description">Koda QR naslova Bitcoin</string>
     <string name="donation_btc_copy">Kopiraj naslov</string>
     <string name="donation_btc_copied">Naslov kopiran</string>
     <string name="donation_btc_open_wallet">Odpri v denarnici</string>
     <string name="donation_btc_no_wallet">Denarnice Bitcoin ni bilo mogoče najti. Kopirajte naslov.</string>
     <string name="donation_btc_close">Zapri</string>
+    <string name="donation_crypto_button">🪙 Donirajte s kriptovaluto</string>
+    <string name="donation_crypto_title">Kriptovaluta</string>
+    <string name="donation_crypto_qr_description">Koda QR naslova</string>
+    <string name="donation_trc20_hint">Na ta naslov pošiljajte samo USDT ali druge žetone TRC20 (ali TRX) v omrežju TRON.</string>
+    <string name="donation_bep20_hint">Na ta naslov pošiljajte samo USDT ali druge žetone BEP20 (ali BNB) v omrežju BNB Smart Chain.</string>
 </resources>

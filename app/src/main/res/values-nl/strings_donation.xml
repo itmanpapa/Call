@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Trakteer me op een koffie</string>
-    <string name="donation_btc_button">₿ Doneer met Bitcoin</string>
     <string name="donation_btc_hint">Stuur naar dit adres alleen Bitcoin (BTC, Bitcoin-netwerk). Scan de QR-code met je wallet of kopieer het adres.</string>
-    <string name="donation_btc_qr_description">QR-code van het Bitcoin-adres</string>
     <string name="donation_btc_copy">Adres kopiëren</string>
     <string name="donation_btc_copied">Adres gekopieerd</string>
     <string name="donation_btc_open_wallet">Openen in wallet</string>
     <string name="donation_btc_no_wallet">Geen Bitcoin-wallet gevonden. Kopieer het adres.</string>
     <string name="donation_btc_close">Sluiten</string>
+    <string name="donation_crypto_button">🪙 Doneer met crypto</string>
+    <string name="donation_crypto_title">Cryptovaluta</string>
+    <string name="donation_crypto_qr_description">QR-code van het adres</string>
+    <string name="donation_trc20_hint">Stuur naar dit adres alleen USDT of andere TRC20-tokens (of TRX) op het TRON-netwerk.</string>
+    <string name="donation_bep20_hint">Stuur naar dit adres alleen USDT of andere BEP20-tokens (of BNB) op BNB Smart Chain.</string>
 </resources>

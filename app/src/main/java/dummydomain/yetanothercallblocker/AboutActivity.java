@@ -19,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -30,16 +33,20 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import dummydomain.yetanothercallblocker.data.donation.BitcoinAddress;
+import dummydomain.yetanothercallblocker.data.donation.EvmAddress;
+import dummydomain.yetanothercallblocker.data.donation.TronAddress;
 
 /**
  * "About": app name, version, the update check (not in the F-Droid build), license, the
  * links to the fork and the original project and the optional donation buttons (Ko-fi,
- * Bitcoin). The
+ * cryptocurrency). The
  * status of the databases is shown on the "Databases" screen.
  */
 public class AboutActivity extends BaseActivity {
@@ -77,61 +84,138 @@ public class AboutActivity extends BaseActivity {
             donate.setOnClickListener(v -> openUrl(donationUrl));
         }
 
-        // shown only when a valid Bitcoin address is configured (res/values/donation.xml)
-        String btcAddress = BitcoinAddress.normalize(getString(R.string.donation_btc_address));
-        View donateBtc = findViewById(R.id.about_donate_btc);
-        if (btcAddress == null) {
-            donateBtc.setVisibility(View.GONE);
+        // shown only when at least one valid cryptocurrency address is configured
+        // (res/values/donation.xml)
+        List<Wallet> wallets = getWallets();
+        View donateCrypto = findViewById(R.id.about_donate_crypto);
+        if (wallets.isEmpty()) {
+            donateCrypto.setVisibility(View.GONE);
         } else {
-            donateBtc.setVisibility(View.VISIBLE);
-            donateBtc.setOnClickListener(v -> showBitcoinDialog(btcAddress));
+            donateCrypto.setVisibility(View.VISIBLE);
+            donateCrypto.setOnClickListener(v -> showCryptoDialog(wallets));
         }
     }
 
-    /** Address with a QR code, "Copy" and "Open in wallet" (bitcoin: URI). */
-    @SuppressLint("InflateParams") // dialog view, there is no parent
-    private void showBitcoinDialog(String address) {
-        View view = getLayoutInflater().inflate(R.layout.dialog_donation_btc, null);
-        ((TextView) view.findViewById(R.id.donation_btc_address)).setText(address);
+    /** A donation address on one network. */
+    private static final class Wallet {
+        final @IdRes int buttonId;
+        final @StringRes int hint;
+        final String address;
+        final String qrContent;
+        /** for "Open in wallet", {@code null} if there is no common URI scheme */
+        final String uri;
 
-        ImageView qr = view.findViewById(R.id.donation_btc_qr);
-        Bitmap bitmap = qrCode(BitcoinAddress.toUri(address).toUpperCase(Locale.ROOT));
-        if (bitmap != null) {
-            qr.setImageBitmap(bitmap);
-        } else {
-            qr.setVisibility(View.GONE);
+        Wallet(@IdRes int buttonId, @StringRes int hint, String address, String qrContent,
+               String uri) {
+            this.buttonId = buttonId;
+            this.hint = hint;
+            this.address = address;
+            this.qrContent = qrContent;
+            this.uri = uri;
         }
+    }
 
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.donation_btc_title)
+    private List<Wallet> getWallets() {
+        List<Wallet> wallets = new ArrayList<>();
+        String btc = BitcoinAddress.normalize(getString(R.string.donation_btc_address));
+        if (btc != null) {
+            // upper case lets the QR code use the compact alphanumeric mode
+            // (BIP 21 allows an upper-case "BITCOIN:" scheme and bech32 address)
+            wallets.add(new Wallet(R.id.donation_crypto_btc, R.string.donation_btc_hint, btc,
+                    BitcoinAddress.toUri(btc).toUpperCase(Locale.ROOT),
+                    BitcoinAddress.toUri(btc)));
+        }
+        String trc20 = TronAddress.normalize(getString(R.string.donation_trc20_address));
+        if (trc20 != null) {
+            wallets.add(new Wallet(R.id.donation_crypto_trc20, R.string.donation_trc20_hint,
+                    trc20, trc20, null));
+        }
+        String bep20 = EvmAddress.normalize(getString(R.string.donation_bep20_address));
+        if (bep20 != null) {
+            wallets.add(new Wallet(R.id.donation_crypto_bep20, R.string.donation_bep20_hint,
+                    bep20, bep20, null));
+        }
+        return wallets;
+    }
+
+    /** Address with a QR code, "Copy" and (for Bitcoin) "Open in wallet". */
+    @SuppressLint("InflateParams") // dialog view, there is no parent
+    private void showCryptoDialog(List<Wallet> wallets) {
+        View view = getLayoutInflater().inflate(R.layout.dialog_donation_crypto, null);
+        MaterialButtonToggleGroup networks = view.findViewById(R.id.donation_crypto_networks);
+        TextView hint = view.findViewById(R.id.donation_crypto_hint);
+        ImageView qr = view.findViewById(R.id.donation_crypto_qr);
+        TextView addressView = view.findViewById(R.id.donation_crypto_address);
+
+        for (int id : new int[] {R.id.donation_crypto_btc, R.id.donation_crypto_trc20,
+                R.id.donation_crypto_bep20}) {
+            view.findViewById(id).setVisibility(View.GONE);
+        }
+        for (Wallet wallet : wallets) {
+            view.findViewById(wallet.buttonId).setVisibility(View.VISIBLE);
+        }
+        if (wallets.size() < 2) networks.setVisibility(View.GONE);
+
+        Wallet[] selected = {wallets.get(0)};
+
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.donation_crypto_title)
                 .setView(view)
-                .setPositiveButton(R.string.donation_btc_copy, (d, w) -> copyAddress(address))
-                .setNeutralButton(R.string.donation_btc_open_wallet, (d, w) -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse(BitcoinAddress.toUri(address)));
-                    if (!IntentHelper.startActivity(this, intent)) {
-                        Toast.makeText(this, R.string.donation_btc_no_wallet,
-                                Toast.LENGTH_LONG).show();
-                    }
-                })
+                // the listeners are set below, so that the buttons do not close the dialog
+                .setPositiveButton(R.string.donation_btc_copy, null)
+                .setNeutralButton(R.string.donation_btc_open_wallet, null)
                 .setNegativeButton(R.string.donation_btc_close, null)
-                .show();
+                .create();
+
+        Runnable show = () -> {
+            Wallet wallet = selected[0];
+            hint.setText(wallet.hint);
+            addressView.setText(wallet.address);
+            Bitmap bitmap = qrCode(wallet.qrContent);
+            qr.setImageBitmap(bitmap);
+            qr.setVisibility(bitmap != null ? View.VISIBLE : View.GONE);
+            View openWallet = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+            if (openWallet != null) {
+                openWallet.setVisibility(wallet.uri != null ? View.VISIBLE : View.GONE);
+            }
+        };
+
+        networks.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (!isChecked) return;
+            for (Wallet wallet : wallets) {
+                if (wallet.buttonId == checkedId) selected[0] = wallet;
+            }
+            show.run();
+        });
+
+        dialog.setOnShowListener(d -> {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+                    v -> copyAddress(selected[0].address));
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(selected[0].uri));
+                if (!IntentHelper.startActivity(this, intent)) {
+                    Toast.makeText(this, R.string.donation_btc_no_wallet,
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+            show.run();
+        });
+        networks.check(selected[0].buttonId);
+        dialog.show();
     }
 
     private void copyAddress(String address) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard == null) return;
-        clipboard.setPrimaryClip(ClipData.newPlainText("Bitcoin", address));
+        clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.donation_crypto_title),
+                address));
         // Android 13+ confirms copying itself
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             Toast.makeText(this, R.string.donation_btc_copied, Toast.LENGTH_SHORT).show();
         }
     }
 
-    /**
-     * Renders a QR code; upper case lets it use the compact alphanumeric mode
-     * (BIP 21 allows an upper-case "BITCOIN:" scheme and bech32 address).
-     */
+    /** Renders a QR code, {@code null} on error. */
     private static Bitmap qrCode(String content) {
         try {
             int size = 512;

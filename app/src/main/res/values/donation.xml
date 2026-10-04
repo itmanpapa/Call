@@ -10,9 +10,14 @@
     <string name="donation_url" translatable="false">https://ko-fi.com/itmasterpro</string>
 
     <!--
-        Bitcoin address for the "Donate Bitcoin" button on the "About" screen (native
-        SegWit, bc1...). Empty or invalid: the button is hidden. Keep it in sync with
-        README.md and the F-Droid metadata (Bitcoin:).
+        Cryptocurrency addresses for the "Donate crypto" dialog on the "About" screen.
+        Empty or invalid: that network is hidden (the button too, when all are empty).
+        Keep them in sync with README.md (and Bitcoin with the F-Droid metadata).
     -->
+    <!-- Bitcoin, native SegWit (bc1...) -->
     <string name="donation_btc_address" translatable="false">bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7</string>
+    <!-- TRON network (TRC20 tokens such as USDT, T...) -->
+    <string name="donation_trc20_address" translatable="false">TEnG8Lbaw2BBjFgaJtJNepkU4UJQW3iR9g</string>
+    <!-- BNB Smart Chain (BEP20 tokens such as USDT, 0x...) -->
+    <string name="donation_bep20_address" translatable="false">0x2F31dbb7b6068838594385d85373ECd2275F228A</string>
 </resources>

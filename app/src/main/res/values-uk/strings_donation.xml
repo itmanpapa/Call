@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Пригостити кавою</string>
-    <string name="donation_btc_button">₿ Підтримати біткоїном</string>
     <string name="donation_btc_hint">Надсилайте на цю адресу лише Bitcoin (BTC, мережа Bitcoin). Відскануйте QR-код гаманцем або скопіюйте адресу.</string>
-    <string name="donation_btc_qr_description">QR-код біткоїн-адреси</string>
     <string name="donation_btc_copy">Скопіювати адресу</string>
     <string name="donation_btc_copied">Адресу скопійовано</string>
     <string name="donation_btc_open_wallet">Відкрити в гаманці</string>
     <string name="donation_btc_no_wallet">Не знайдено застосунку-гаманця Bitcoin. Скопіюйте адресу.</string>
     <string name="donation_btc_close">Закрити</string>
+    <string name="donation_crypto_button">🪙 Підтримати криптовалютою</string>
+    <string name="donation_crypto_title">Криптовалюта</string>
+    <string name="donation_crypto_qr_description">QR-код адреси</string>
+    <string name="donation_trc20_hint">Надсилайте на цю адресу лише USDT або інші токени TRC20 (або TRX) у мережі TRON.</string>
+    <string name="donation_bep20_hint">Надсилайте на цю адресу лише USDT або інші токени BEP20 (або BNB) у мережі BNB Smart Chain.</string>
 </resources>
