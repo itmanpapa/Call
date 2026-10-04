@@ -1,3 +1,5 @@
+<img src="docs/icon.png" width="96" align="right" alt="CallGuard icon"/>
+
 # CallGuard
 
 **Free and open source spam call blocker for Android.** CallGuard identifies and blocks unwanted calls using several community and official databases, works offline, and keeps your data on your phone.
