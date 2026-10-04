@@ -8,4 +8,11 @@
         donation links that the developer publishes in the repository.
     -->
     <string name="donation_url" translatable="false">https://ko-fi.com/itmasterpro</string>
+
+    <!--
+        Bitcoin address for the "Donate Bitcoin" button on the "About" screen (native
+        SegWit, bc1...). Empty or invalid: the button is hidden. Keep it in sync with
+        README.md and the F-Droid metadata (Bitcoin:).
+    -->
+    <string name="donation_btc_address" translatable="false">bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7</string>
 </resources>

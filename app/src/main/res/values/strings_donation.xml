@@ -3,4 +3,15 @@
     <!-- the "Buy me a coffee" button on the "About" screen, shown only when
          donation_url (values/donation.xml) is set -->
     <string name="donation_button">☕ Buy me a coffee</string>
+    <!-- the Bitcoin dialog on the "About" screen, shown only when
+         donation_btc_address (values/donation.xml) is a valid address -->
+    <string name="donation_btc_button">₿ Donate Bitcoin</string>
+    <string name="donation_btc_title" translatable="false">Bitcoin (BTC)</string>
+    <string name="donation_btc_hint">Send only Bitcoin (BTC, Bitcoin network) to this address. Scan the QR code with your wallet or copy the address.</string>
+    <string name="donation_btc_qr_description">QR code of the Bitcoin address</string>
+    <string name="donation_btc_copy">Copy address</string>
+    <string name="donation_btc_copied">Address copied</string>
+    <string name="donation_btc_open_wallet">Open in wallet</string>
+    <string name="donation_btc_no_wallet">No Bitcoin wallet app found. Copy the address instead.</string>
+    <string name="donation_btc_close">Close</string>
 </resources>

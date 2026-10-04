@@ -3,4 +3,4 @@
 * Absturz bei fehlgeschlagener Anrufprüfung behoben; sichereres Wiederherstellen von Backups
 * Telefonnummern werden nicht mehr ins App-Protokoll geschrieben
 * Eigene F-Droid-Version ohne Selbst-Update
-* Optionaler „Kaffee spendieren“-Knopf
+* Neues App-Symbol; Unterstützung per Ko-fi oder Bitcoin (QR-Code) unter „Über“

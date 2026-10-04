@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Угостить кофе</string>
+    <string name="donation_btc_button">₿ Поддержать биткоином</string>
+    <string name="donation_btc_hint">Отправляйте на этот адрес только Bitcoin (BTC, сеть Bitcoin). Отсканируйте QR-код кошельком или скопируйте адрес.</string>
+    <string name="donation_btc_qr_description">QR-код биткоин-адреса</string>
+    <string name="donation_btc_copy">Скопировать адрес</string>
+    <string name="donation_btc_copied">Адрес скопирован</string>
+    <string name="donation_btc_open_wallet">Открыть в кошельке</string>
+    <string name="donation_btc_no_wallet">Не найдено приложение-кошелёк Bitcoin. Скопируйте адрес.</string>
+    <string name="donation_btc_close">Закрыть</string>
 </resources>

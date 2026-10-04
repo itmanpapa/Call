@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Bana bir kahve ısmarla</string>
+    <string name="donation_btc_button">₿ Bitcoin ile bağış yap</string>
+    <string name="donation_btc_hint">Bu adrese yalnızca Bitcoin (BTC, Bitcoin ağı) gönderin. QR kodunu cüzdanınızla tarayın veya adresi kopyalayın.</string>
+    <string name="donation_btc_qr_description">Bitcoin adresinin QR kodu</string>
+    <string name="donation_btc_copy">Adresi kopyala</string>
+    <string name="donation_btc_copied">Adres kopyalandı</string>
+    <string name="donation_btc_open_wallet">Cüzdanda aç</string>
+    <string name="donation_btc_no_wallet">Bitcoin cüzdan uygulaması bulunamadı. Adresi kopyalayın.</string>
+    <string name="donation_btc_close">Kapat</string>
 </resources>

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ 请我喝杯咖啡</string>
+    <string name="donation_btc_button">₿ 用比特币捐助</string>
+    <string name="donation_btc_hint">请只向此地址发送比特币（BTC，Bitcoin 网络）。用钱包扫描二维码或复制地址。</string>
+    <string name="donation_btc_qr_description">比特币地址的二维码</string>
+    <string name="donation_btc_copy">复制地址</string>
+    <string name="donation_btc_copied">地址已复制</string>
+    <string name="donation_btc_open_wallet">在钱包中打开</string>
+    <string name="donation_btc_no_wallet">未找到比特币钱包应用。请复制地址。</string>
+    <string name="donation_btc_close">关闭</string>
 </resources>

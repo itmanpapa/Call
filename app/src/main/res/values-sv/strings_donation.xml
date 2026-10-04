@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Bjud mig på en kaffe</string>
+    <string name="donation_btc_button">₿ Donera med bitcoin</string>
+    <string name="donation_btc_hint">Skicka endast bitcoin (BTC, Bitcoin-nätverket) till den här adressen. Skanna QR-koden med din plånbok eller kopiera adressen.</string>
+    <string name="donation_btc_qr_description">QR-kod för bitcoinadressen</string>
+    <string name="donation_btc_copy">Kopiera adress</string>
+    <string name="donation_btc_copied">Adressen har kopierats</string>
+    <string name="donation_btc_open_wallet">Öppna i plånbok</string>
+    <string name="donation_btc_no_wallet">Ingen bitcoinplånbok hittades. Kopiera adressen i stället.</string>
+    <string name="donation_btc_close">Stäng</string>
 </resources>

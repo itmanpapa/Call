@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Trakteer me op een koffie</string>
+    <string name="donation_btc_button">₿ Doneer met Bitcoin</string>
+    <string name="donation_btc_hint">Stuur naar dit adres alleen Bitcoin (BTC, Bitcoin-netwerk). Scan de QR-code met je wallet of kopieer het adres.</string>
+    <string name="donation_btc_qr_description">QR-code van het Bitcoin-adres</string>
+    <string name="donation_btc_copy">Adres kopiëren</string>
+    <string name="donation_btc_copied">Adres gekopieerd</string>
+    <string name="donation_btc_open_wallet">Openen in wallet</string>
+    <string name="donation_btc_no_wallet">Geen Bitcoin-wallet gevonden. Kopieer het adres.</string>
+    <string name="donation_btc_close">Sluiten</string>
 </resources>

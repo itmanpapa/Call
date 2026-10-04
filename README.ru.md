@@ -37,7 +37,12 @@ CallGuard — форк [Yet Another Call Blocker](https://gitlab.com/xynngh/YetA
 
 ## Поддержать проект
 
-Если CallGuard вам полезен, можно [угостить автора кофе ☕ на Ko-fi](https://ko-fi.com/itmasterpro) — та же ссылка есть в *Настройки → О приложении*.
+Если CallGuard вам полезен, можно поддержать разработку — оба способа есть и в *Настройки → О приложении*:
+
+- ☕ [Угостить автора кофе на Ko-fi](https://ko-fi.com/itmasterpro)
+- ₿ Bitcoin (BTC, только сеть Bitcoin): `bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7`
+
+<img src="docs/donate-btc.png" width="160" alt="QR-код биткоин-адреса"/>
 
 ## Разработка
 

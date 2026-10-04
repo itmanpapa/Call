@@ -112,6 +112,13 @@ capture_all() { # suffix
     tap_text "Settings"
     tap_text "Setup check" && sleep 2 && shot "09_setup_check_$1" && adb shell input keyevent KEYCODE_BACK
     tap_text "Call log" && sleep 2 && tap_text "+4930901820" && shot "06_info_dialog_$1"
+    adb shell input keyevent KEYCODE_BACK
+    # About (overflow menu of the call log) and the Bitcoin donation dialog
+    adb shell input keyevent KEYCODE_MENU && sleep 1 && tap_text "About" && sleep 2 && {
+        tap_text_scroll "₿ Donate Bitcoin" && sleep 2 && shot "13_donate_btc_$1" \
+            && adb shell input keyevent KEYCODE_BACK
+        adb shell input keyevent KEYCODE_BACK
+    }
 }
 
 incoming_call() { # suffix: simulated call from an unknown number to see the caller-ID card

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Časti me kavom</string>
+    <string name="donation_btc_button">₿ Doniraj Bitcoinom</string>
+    <string name="donation_btc_hint">Na ovu adresu šaljite samo Bitcoin (BTC, mreža Bitcoin). Skenirajte QR kôd novčanikom ili kopirajte adresu.</string>
+    <string name="donation_btc_qr_description">QR kôd Bitcoin adrese</string>
+    <string name="donation_btc_copy">Kopiraj adresu</string>
+    <string name="donation_btc_copied">Adresa kopirana</string>
+    <string name="donation_btc_open_wallet">Otvori u novčaniku</string>
+    <string name="donation_btc_no_wallet">Nije pronađen Bitcoin novčanik. Kopirajte adresu.</string>
+    <string name="donation_btc_close">Zatvori</string>
 </resources>

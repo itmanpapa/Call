@@ -22,15 +22,12 @@
    Если версия будет другой — поправить `versionName`/`versionCode`/`commit` в yml.
 2. ~~Удалить старые описания YACB~~ — сделано: в `fastlane/metadata/android/` остались только
    en-US, de-DE и ru; остальные языки в F-Droid получат английский текст.
-3. **Иконка.** Иконка приложения та же, что у оригинального YACB (щит с трубкой). Правила F-Droid для
-   форков требуют своё имя, иконку и строки. Имя уже своё; иконку лучше заменить (хотя бы другой
-   цвет/деталь), иначе рецензент, скорее всего, попросит это сделать. После замены перерисовать
-   `en-US/images/icon.png` и `featureGraphic.png`.
-4. **Пожертвования (необязательно).** Когда появится аккаунт (Buy Me a Coffee, Ko-fi, Liberapay):
-   ссылку — в `app/src/main/res/values/donation.xml` (`donation_url`, тогда в «О приложении» появится
-   кнопка «☕ Угостить кофе»), раскомментировать строку в `.github/FUNDING.yml`, добавить ссылку в
-   README и в yml (`Donate:` или `Liberapay:`). F-Droid принимает только ссылки, которые разработчик
-   сам опубликовал в репозитории (FUNDING.yml/README).
+3. **Иконка.** ✅ Своя иконка (кольцо с трубкой и зелёной точкой), `en-US/images/icon.png` и
+   `featureGraphic.png` перерисованы.
+4. **Пожертвования.** ✅ Ko-fi (`donation_url` в `app/src/main/res/values/donation.xml`, `ko_fi:` в
+   `.github/FUNDING.yml`, README, `Donate:` в yml) и Bitcoin (`donation_btc_address` там же, README,
+   `Bitcoin:` в yml). F-Droid принимает только реквизиты, которые разработчик сам опубликовал в
+   репозитории (FUNDING.yml/README) — при смене адреса менять во всех этих местах.
 
 ## 1. F-Droid (основной репозиторий)
 

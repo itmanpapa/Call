@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Tarjoa minulle kahvit</string>
+    <string name="donation_btc_button">₿ Lahjoita bitcoineilla</string>
+    <string name="donation_btc_hint">Lähetä tähän osoitteeseen vain bitcoineja (BTC, Bitcoin-verkko). Skannaa QR-koodi lompakollasi tai kopioi osoite.</string>
+    <string name="donation_btc_qr_description">Bitcoin-osoitteen QR-koodi</string>
+    <string name="donation_btc_copy">Kopioi osoite</string>
+    <string name="donation_btc_copied">Osoite kopioitu</string>
+    <string name="donation_btc_open_wallet">Avaa lompakossa</string>
+    <string name="donation_btc_no_wallet">Bitcoin-lompakkosovellusta ei löytynyt. Kopioi osoite.</string>
+    <string name="donation_btc_close">Sulje</string>
 </resources>

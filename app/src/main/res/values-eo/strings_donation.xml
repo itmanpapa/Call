@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Regalu min per kafo</string>
+    <string name="donation_btc_button">₿ Donaci per Bitcoin</string>
+    <string name="donation_btc_hint">Sendu al ĉi tiu adreso nur Bitcoin (BTC, reto Bitcoin). Skanu la QR-kodon per via monujo aŭ kopiu la adreson.</string>
+    <string name="donation_btc_qr_description">QR-kodo de la Bitcoin-adreso</string>
+    <string name="donation_btc_copy">Kopii adreson</string>
+    <string name="donation_btc_copied">Adreso kopiita</string>
+    <string name="donation_btc_open_wallet">Malfermi en monujo</string>
+    <string name="donation_btc_no_wallet">Neniu Bitcoin-monujo trovita. Kopiu la adreson.</string>
+    <string name="donation_btc_close">Fermi</string>
 </resources>

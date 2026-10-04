@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Convida\'m a un cafè</string>
+    <string name="donation_btc_button">₿ Dona amb Bitcoin</string>
+    <string name="donation_btc_hint">Envia a aquesta adreça només Bitcoin (BTC, xarxa Bitcoin). Escaneja el codi QR amb el teu moneder o copia l\'adreça.</string>
+    <string name="donation_btc_qr_description">Codi QR de l\'adreça Bitcoin</string>
+    <string name="donation_btc_copy">Copia l\'adreça</string>
+    <string name="donation_btc_copied">Adreça copiada</string>
+    <string name="donation_btc_open_wallet">Obre al moneder</string>
+    <string name="donation_btc_no_wallet">No s\'ha trobat cap moneder de Bitcoin. Copia l\'adreça.</string>
+    <string name="donation_btc_close">Tanca</string>
 </resources>

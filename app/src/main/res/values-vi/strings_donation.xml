@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Mời tôi một ly cà phê</string>
+    <string name="donation_btc_button">₿ Ủng hộ bằng Bitcoin</string>
+    <string name="donation_btc_hint">Chỉ gửi Bitcoin (BTC, mạng Bitcoin) đến địa chỉ này. Quét mã QR bằng ví của bạn hoặc sao chép địa chỉ.</string>
+    <string name="donation_btc_qr_description">Mã QR của địa chỉ Bitcoin</string>
+    <string name="donation_btc_copy">Sao chép địa chỉ</string>
+    <string name="donation_btc_copied">Đã sao chép địa chỉ</string>
+    <string name="donation_btc_open_wallet">Mở trong ví</string>
+    <string name="donation_btc_no_wallet">Không tìm thấy ứng dụng ví Bitcoin. Hãy sao chép địa chỉ.</string>
+    <string name="donation_btc_close">Đóng</string>
 </resources>

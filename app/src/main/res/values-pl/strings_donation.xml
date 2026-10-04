@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="donation_button">☕ Postaw mi kawę</string>
+    <string name="donation_btc_button">₿ Wesprzyj w Bitcoinie</string>
+    <string name="donation_btc_hint">Wysyłaj na ten adres tylko Bitcoin (BTC, sieć Bitcoin). Zeskanuj kod QR portfelem lub skopiuj adres.</string>
+    <string name="donation_btc_qr_description">Kod QR adresu Bitcoin</string>
+    <string name="donation_btc_copy">Kopiuj adres</string>
+    <string name="donation_btc_copied">Adres skopiowany</string>
+    <string name="donation_btc_open_wallet">Otwórz w portfelu</string>
+    <string name="donation_btc_no_wallet">Nie znaleziono portfela Bitcoin. Skopiuj adres.</string>
+    <string name="donation_btc_close">Zamknij</string>
 </resources>

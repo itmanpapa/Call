@@ -50,7 +50,12 @@ F-Droid / IzzyOnDroid: in preparation.
 
 ## Support the project
 
-If CallGuard is useful to you, you can [buy me a coffee ☕ on Ko-fi](https://ko-fi.com/itmasterpro) — the same link is in *Settings → About*.
+If CallGuard is useful to you, you can support its development — both options are also in *Settings → About*:
+
+- ☕ [Buy me a coffee on Ko-fi](https://ko-fi.com/itmasterpro)
+- ₿ Bitcoin (BTC, Bitcoin network only): `bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7`
+
+<img src="docs/donate-btc.png" width="160" alt="QR code of the Bitcoin address"/>
 
 ## Development
 
