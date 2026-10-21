@@ -7,19 +7,25 @@ import static org.junit.Assert.assertNull;
 
 public class EvmAddressTest {
 
+    /** The example address of EIP-55. */
+    private static final String ADDRESS = "0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed";
+
     @Test
-    public void projectAddressIsValid() {
-        // the EIP-55 checksum of this address was verified when it was added
-        String address = "0x2F31dbb7b6068838594385d85373ECd2275F228A";
-        assertEquals(address, EvmAddress.normalize(" " + address + " "));
+    public void validAddressIsAccepted() {
+        assertEquals(ADDRESS, EvmAddress.normalize(ADDRESS));
+        assertEquals(ADDRESS, EvmAddress.normalize(" " + ADDRESS + " "));
     }
 
     @Test
     public void invalidAddressesRejected() {
         assertNull(EvmAddress.normalize(null));
-        assertNull(EvmAddress.normalize("2F31dbb7b6068838594385d85373ECd2275F228A"));
-        assertNull(EvmAddress.normalize("0x2F31dbb7b6068838594385d85373ECd2275F228"));
-        assertNull(EvmAddress.normalize("0x2F31dbb7b6068838594385d85373ECd2275F228G"));
+        assertNull(EvmAddress.normalize(""));
+        // without the "0x" prefix
+        assertNull(EvmAddress.normalize("5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed"));
+        // too short
+        assertNull(EvmAddress.normalize("0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAe"));
+        // not a hexadecimal character
+        assertNull(EvmAddress.normalize("0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAeG"));
     }
 
 }

@@ -1,4 +1,6 @@
 # "Sponsor" button on GitHub; also the developer-published donation link for F-Droid / IzzyOnDroid.
 # Keep in sync with app/src/main/res/values/donation.xml and README.md.
 ko_fi: itmasterpro
-custom: ["https://github.com/itmanpapa/Call#support-the-project"]  # crypto addresses + QR codes in README
+# Cryptocurrency: the addresses are not published at the moment; add them here
+# (custom: ["<bitcoin>", "<tron>", "<evm>"]) together with README.md and
+# app/src/main/res/values/donation.xml.

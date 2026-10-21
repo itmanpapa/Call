@@ -1,0 +1,4 @@
+* The online reviews of a number are shown in a proper screen again (the number as the title, a scrollable list)
+* The incoming call notification is shown again when the app screens the calls (the "Call screening" role)
+* The caller ID card and the notification are no longer skipped when the call blocking is switched off
+* Setup check: a button that shows the caller ID card with a test number

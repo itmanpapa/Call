@@ -7,10 +7,11 @@ import static org.junit.Assert.assertNull;
 
 public class BitcoinAddressTest {
 
-    private static final String ADDRESS = "bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7";
+    /** The example address of BIP-173. */
+    private static final String ADDRESS = "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4";
 
     @Test
-    public void projectAddressIsValid() {
+    public void validAddressIsAccepted() {
         assertEquals(ADDRESS, BitcoinAddress.normalize(ADDRESS));
         assertEquals(ADDRESS, BitcoinAddress.normalize("  " + ADDRESS + "\n"));
     }
@@ -30,9 +31,9 @@ public class BitcoinAddressTest {
         assertNull(BitcoinAddress.normalize(null));
         assertNull(BitcoinAddress.normalize(""));
         // one character changed
-        assertNull(BitcoinAddress.normalize("bc1q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n8"));
+        assertNull(BitcoinAddress.normalize("bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t5"));
         // mixed case
-        assertNull(BitcoinAddress.normalize("bc1Q5y996877x4svlethgpzsp7yjx2ecsr59mlv7n7"));
+        assertNull(BitcoinAddress.normalize("bC1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4"));
         // testnet
         assertNull(BitcoinAddress.normalize("tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx"));
         // version 0 with bech32m checksum

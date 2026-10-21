@@ -34,6 +34,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - The caller ID card and the incoming call notification are no longer skipped when the call blocking is switched off.
 - A call whose direction the system does not report is no longer ignored by the call screening (only outgoing calls are).
 
+### Changed
+
+- The cryptocurrency donation is not published at the moment: the addresses are removed from the README and from the app (the button disappears by itself). The Ko-fi link stays. The new addresses go into `app/src/main/res/values/donation.xml` (and into the README, `.github/FUNDING.yml` and the F-Droid metadata).
+
 
 ## [0.5.17] - 2021-11-13
 

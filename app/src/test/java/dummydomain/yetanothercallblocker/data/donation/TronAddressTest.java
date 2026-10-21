@@ -7,18 +7,13 @@ import static org.junit.Assert.assertNull;
 
 public class TronAddressTest {
 
-    private static final String ADDRESS = "TEnG8Lbaw2BBjFgaJtJNepkU4UJQW3iR9g";
+    /** The example address of the USDT contract on TRON. */
+    private static final String ADDRESS = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 
     @Test
-    public void projectAddressIsValid() {
+    public void validAddressIsAccepted() {
+        assertEquals(ADDRESS, TronAddress.normalize(ADDRESS));
         assertEquals(ADDRESS, TronAddress.normalize(" " + ADDRESS + "\n"));
-    }
-
-    @Test
-    public void knownAddressIsValid() {
-        // USDT contract on TRON
-        assertEquals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-                TronAddress.normalize("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"));
     }
 
     @Test
@@ -26,9 +21,9 @@ public class TronAddressTest {
         assertNull(TronAddress.normalize(null));
         assertNull(TronAddress.normalize(""));
         // one character changed
-        assertNull(TronAddress.normalize("TEnG8Lbaw2BBjFgaJtJNepkU4UJQW3iR9h"));
+        assertNull(TronAddress.normalize("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6u"));
         // invalid base58 character (0)
-        assertNull(TronAddress.normalize("TEnG8Lbaw2BBjFgaJtJNepkU4UJQW3iR90"));
+        assertNull(TronAddress.normalize("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj60"));
         // a Bitcoin address
         assertNull(TronAddress.normalize("1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"));
     }
