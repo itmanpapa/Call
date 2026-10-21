@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Skrita številka</string>
     <string name="caller_id_overlay_positive">Verjetno ni neželeno</string>
     <string name="caller_id_overlay_close">Zapri</string>
+    <string name="caller_id_overlay_switched_off">Kartica klicatelja je izklopljena v nastavitvah</string>
     <string name="setup_check_overlay_ok">Kartica klicatelja je pripravljena</string>
     <string name="setup_check_overlay_ok_text">Kartica s podatki o klicatelju se prikaže nad zaslonom dohodnega klica. Na zaklenjenem zaslonu se ne prikaže: tam vidite obvestilo.</string>
     <string name="setup_check_overlay_missing">Kartice klicatelja ni mogoče prikazati</string>
@@ -313,6 +314,7 @@
     <string name="setup_check_howto_steps">1. Številko drugega telefona dodajte na črni seznam (gumb spodaj).\n2. Prepričajte se, da ta številka ni shranjena v stikih, ali za čas preizkusa izklopite »Uporabi stike«: številke iz stikov niso nikoli blokirane.\n3. S tem telefonom pokličite iz drugega telefona.\n4. Klic bi se moral takoj končati in se v dnevniku klicev prikazati kot blokiran.\n5. Nato preizkusni vnos odstranite s črnega seznama.</string>
     <string name="setup_check_howto_add">Dodaj številko na črni seznam</string>
     <string name="setup_check_howto_blacklist">Odpri črni seznam</string>
+    <string name="setup_check_howto_card">Prikaži karto klicatelja</string>
     <string name="setup_check_test_entry_name">Preizkusni klic</string>
     <string name="setup_check_banner_title">Zaščita ne deluje v celoti</string>
     <plurals name="setup_check_banner_text">

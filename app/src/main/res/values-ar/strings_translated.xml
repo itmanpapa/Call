@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">رقم مخفي</string>
     <string name="caller_id_overlay_positive">على الأرجح غير مزعج</string>
     <string name="caller_id_overlay_close">إغلاق</string>
+    <string name="caller_id_overlay_switched_off">بطاقة المتصل معطّلة في الإعدادات</string>
     <string name="setup_check_overlay_ok">بطاقة المتصل جاهزة</string>
     <string name="setup_check_overlay_ok_text">تظهر البطاقة التي تحتوي على معلومات المتصل فوق شاشة المكالمة الواردة. لا تظهر على شاشة القفل: هناك يظهر لك الإشعار.</string>
     <string name="setup_check_overlay_missing">لا يمكن عرض بطاقة المتصل</string>
@@ -316,6 +317,7 @@
     <string name="setup_check_howto_steps">1. أضف رقم هاتف ثانٍ إلى القائمة السوداء (الزر أدناه).\n2. تأكد من أن هذا الرقم غير محفوظ في جهات اتصالك، أو أوقف «استخدام جهات الاتصال» أثناء الاختبار: أرقام جهات الاتصال لا تُحظر أبدًا.\n3. اتصل بهذا الهاتف من الهاتف الثاني.\n4. يجب أن تنتهي المكالمة فورًا، وتظهر في سجل المكالمات كمحظورة.\n5. بعد ذلك احذف إدخال الاختبار من القائمة السوداء.</string>
     <string name="setup_check_howto_add">إضافة رقم إلى القائمة السوداء</string>
     <string name="setup_check_howto_blacklist">فتح القائمة السوداء</string>
+    <string name="setup_check_howto_card">إظهار بطاقة المتصل</string>
     <string name="setup_check_test_entry_name">مكالمة اختبار</string>
     <string name="setup_check_banner_title">الحماية لا تعمل بالكامل</string>
     <plurals name="setup_check_banner_text">

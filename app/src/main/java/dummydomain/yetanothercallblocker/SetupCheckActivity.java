@@ -80,6 +80,31 @@ public class SetupCheckActivity extends BaseActivity implements SourceTasks.List
                         getString(R.string.setup_check_test_entry_name), null)));
         findViewById(R.id.setup_howto_blacklist).setOnClickListener(v ->
                 startActivity(new Intent(this, BlacklistActivity.class)));
+        findViewById(R.id.setup_howto_card).setOnClickListener(v -> showTestCard());
+    }
+
+    /**
+     * Shows the caller ID card with a test number, to check that it works at all
+     * (the permission, the setting and the screen the incoming call uses).
+     */
+    private void showTestCard() {
+        if (!App.getSettings().getCallerIdOverlay()) {
+            Toast.makeText(this, R.string.caller_id_overlay_switched_off, Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        if (!CallerIdOverlay.canDrawOverlays(this)) {
+            Toast.makeText(this, R.string.setup_check_overlay_missing, Toast.LENGTH_LONG)
+                    .show();
+            if (!CallerIdOverlay.requestPermission(this)) openAppDetails();
+            return;
+        }
+
+        if (!CallerIdOverlay.showTest(this)) {
+            Toast.makeText(this, R.string.caller_id_overlay_switched_off, Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 
     @Override

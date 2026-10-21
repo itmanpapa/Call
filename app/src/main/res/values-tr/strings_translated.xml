@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Gizli numara</string>
     <string name="caller_id_overlay_positive">Muhtemelen spam değil</string>
     <string name="caller_id_overlay_close">Kapat</string>
+    <string name="caller_id_overlay_switched_off">Arayan kartı ayarlarda kapalı</string>
     <string name="setup_check_overlay_ok">Arayan kartı hazır</string>
     <string name="setup_check_overlay_ok_text">Arayan bilgilerini içeren kart, gelen arama ekranının üzerinde görünür. Kilit ekranında gösterilmez: orada bildirimi görürsünüz.</string>
     <string name="setup_check_overlay_missing">Arayan kartı gösterilemiyor</string>
@@ -218,6 +219,7 @@
     <string name="setup_check_howto_steps">1. İkinci bir telefonun numarasını kara listeye ekleyin (aşağıdaki düğme).\n2. Bu numaranın kişilerinizde kayıtlı olmadığından emin olun veya test için “Kişileri kullan”ı kapatın: kişilerdeki numaralar asla engellenmez.\n3. İkinci telefondan bu telefonu arayın.\n4. Arama hemen sonlanmalı ve arama kaydında engellenmiş olarak görünmelidir.\n5. Ardından test kaydını kara listeden kaldırın.</string>
     <string name="setup_check_howto_add">Kara listeye numara ekle</string>
     <string name="setup_check_howto_blacklist">Kara listeyi aç</string>
+    <string name="setup_check_howto_card">Arayan kartını göster</string>
     <string name="setup_check_test_entry_name">Test araması</string>
     <string name="setup_check_banner_title">Koruma tam olarak çalışmıyor</string>
     <plurals name="setup_check_banner_text">

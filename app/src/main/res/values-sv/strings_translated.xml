@@ -31,6 +31,7 @@
     <string name="caller_id_overlay_hidden_number">Dolt nummer</string>
     <string name="caller_id_overlay_positive">Troligen inte skräp</string>
     <string name="caller_id_overlay_close">Stäng</string>
+    <string name="caller_id_overlay_switched_off">Uppringningskortet är avstängt i inställningarna</string>
     <string name="setup_check_overlay_ok">Uppringarkortet är klart</string>
     <string name="setup_check_overlay_ok_text">Kortet med information om uppringaren visas ovanpå skärmen för inkommande samtal. Det visas inte på låsskärmen: där ser du aviseringen.</string>
     <string name="setup_check_overlay_missing">Uppringarkortet kan inte visas</string>
@@ -357,6 +358,7 @@
     <string name="setup_check_howto_steps">1. Lägg till numret till en annan telefon i svartlistan (knappen nedan).\n2. Se till att numret inte är sparat i dina kontakter, eller stäng av ”Använd kontakter” under testet: nummer från kontakter blockeras aldrig.\n3. Ring den här telefonen från den andra telefonen.\n4. Samtalet ska avslutas direkt och visas som blockerat i samtalsloggen.\n5. Ta sedan bort testposten från svartlistan.</string>
     <string name="setup_check_howto_add">Lägg till ett nummer i svartlistan</string>
     <string name="setup_check_howto_blacklist">Öppna svartlistan</string>
+    <string name="setup_check_howto_card">Visa uppringarens kort</string>
     <string name="setup_check_test_entry_name">Testsamtal</string>
     <string name="setup_check_banner_title">Skyddet fungerar inte fullt ut</string>
     <plurals name="setup_check_banner_text">

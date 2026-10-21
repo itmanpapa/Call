@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Número ocult</string>
     <string name="caller_id_overlay_positive">Probablement no és brossa</string>
     <string name="caller_id_overlay_close">Tanca</string>
+    <string name="caller_id_overlay_switched_off">La targeta del caller està desactivada a la configuració</string>
     <string name="setup_check_overlay_ok">La fitxa de qui truca està a punt</string>
     <string name="setup_check_overlay_ok_text">La fitxa amb la informació de qui truca apareix sobre la pantalla de trucada entrant. No es mostra a la pantalla de bloqueig: allà veus la notificació.</string>
     <string name="setup_check_overlay_missing">No es pot mostrar la fitxa de qui truca</string>
@@ -222,6 +223,7 @@
     <string name="setup_check_howto_steps">1. Afegiu el número d’un segon telèfon a la llista negra (botó de sota).\n2. Assegureu-vos que aquest número no estigui desat als contactes, o desactiveu «Empra contactes» durant la prova: els números dels contactes no es bloquen mai.\n3. Truqueu a aquest telèfon des del segon telèfon.\n4. La trucada s’hauria d’acabar de seguida i aparèixer com a blocada al registre de trucades.\n5. Després, suprimiu l’entrada de prova de la llista negra.</string>
     <string name="setup_check_howto_add">Afegeix un número a la llista negra</string>
     <string name="setup_check_howto_blacklist">Obre la llista negra</string>
+    <string name="setup_check_howto_card">Mostra la targeta del caller</string>
     <string name="setup_check_test_entry_name">Trucada de prova</string>
     <string name="setup_check_banner_title">La protecció no funciona del tot</string>
     <plurals name="setup_check_banner_text">

@@ -165,6 +165,7 @@
     <string name="caller_id_overlay_hidden_number">Unterdrückte Nummer</string>
     <string name="caller_id_overlay_positive">Wahrscheinlich kein Spam</string>
     <string name="caller_id_overlay_close">Schließen</string>
+    <string name="caller_id_overlay_switched_off">Die Anruferkarte ist in den Einstellungen ausgeschaltet</string>
     <string name="setup_check_overlay_ok">Anruferkarte ist bereit</string>
     <string name="setup_check_overlay_ok_text">Die Karte mit den Anruferinfos erscheint über dem Bildschirm des eingehenden Anrufs. Auf dem Sperrbildschirm wird sie nicht angezeigt: dort sehen Sie die Benachrichtigung.</string>
     <string name="setup_check_overlay_missing">Anruferkarte kann nicht angezeigt werden</string>
@@ -413,6 +414,7 @@
     <string name="setup_check_howto_steps">1. Fügen Sie die Nummer eines zweiten Telefons vorübergehend zur schwarzen Liste hinzu (Schaltfläche unten).\n2. Diese Nummer darf nicht in Ihren Kontakten stehen, oder schalten Sie „Kontakte verwenden“ für den Test aus: Nummern aus Kontakten werden nie blockiert.\n3. Rufen Sie dieses Telefon vom zweiten Telefon aus an.\n4. Der Anruf sollte sofort beendet werden, und die Anrufliste zeigt ihn als blockiert.\n5. Entfernen Sie danach den Testeintrag aus der schwarzen Liste.</string>
     <string name="setup_check_howto_add">Nummer zur schwarzen Liste hinzufügen</string>
     <string name="setup_check_howto_blacklist">Schwarze Liste öffnen</string>
+    <string name="setup_check_howto_card">Anruferkarte anzeigen</string>
     <string name="setup_check_test_entry_name">Testanruf</string>
     <string name="setup_check_banner_title">Der Schutz funktioniert nicht vollständig</string>
     <plurals name="setup_check_banner_text">

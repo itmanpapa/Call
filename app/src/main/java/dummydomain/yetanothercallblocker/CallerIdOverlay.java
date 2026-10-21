@@ -68,6 +68,8 @@ public final class CallerIdOverlay {
     private static final int MAX_WIDTH_DP = 480;
     /** Rough height of the card, used to keep a remembered position on the screen. */
     private static final int APPROX_HEIGHT_DP = 160;
+    /** How long the test card stays on the screen. */
+    private static final long TEST_TIMEOUT_MILLIS = 10_000;
 
     private static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
@@ -146,6 +148,34 @@ public final class CallerIdOverlay {
     public static void hide() {
         runOnMain(CallerIdOverlay::hideOnMain);
     }
+
+    /**
+     * Shows the card with a test number, to check that it works at all (the permission,
+     * the setting and the screen the call screen uses).
+     *
+     * @return whether the card was shown
+     */
+    public static boolean showTest(Context context) {
+        Context appContext = context.getApplicationContext();
+
+        if (!App.getSettings().getCallerIdOverlay()) return false;
+        if (!canDrawOverlays(appContext)) return false;
+
+        NumberInfo numberInfo = new NumberInfo();
+        numberInfo.number = context.getString(R.string.lookup_default_test_number);
+        numberInfo.rating = NumberInfo.Rating.NEGATIVE;
+
+        // the test card ignores the other conditions (a contact, no incoming call
+        // notifications): only the permission and the setting matter here
+        runOnMain(() -> showOnMain(appContext, numberInfo));
+
+        // the test card disappears by itself
+        HANDLER.removeCallbacks(TEST_HIDE);
+        HANDLER.postDelayed(TEST_HIDE, TEST_TIMEOUT_MILLIS);
+        return true;
+    }
+
+    private static final Runnable TEST_HIDE = () -> hideOnMain();
 
     /** Hides the card if it shows the given caller. */
     public static void hideFor(String number) {

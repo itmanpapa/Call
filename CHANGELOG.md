@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- The "Setup check" screen has a button that shows the caller ID card with a test number, to check that it works at all.
 - Galician translation thanks to josé m. ([@ghose](https://hosted.weblate.org/user/ghose/)).
 - Partial Tamil translation thanks to GobinathAL ([@GobinathAL](https://hosted.weblate.org/user/GobinathAL/)).
 - Partial Arabic translation thanks to DJEBBARI.ABDELHAMID ([@dxing96](https://hosted.weblate.org/user/dxing96/)).
@@ -25,6 +26,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Updated Italian translation of the app description thanks to Translator-3000.
 - Updated Italian translation thanks to Iginio Massari ([@darthmassari](https://hosted.weblate.org/user/darthmassari/)).
 - Updated German translation thanks to Ettore Atalan ([@Atalanttore](https://hosted.weblate.org/user/Atalanttore/)).
+
+### Fixed
+
+- The online reviews of a number ("Check" screen) are shown in a normal screen with the number as the title; the old layout was broken (the number was cut in half, the list did not scroll) on Android 15 and newer.
+- The incoming call notification is shown again when the app screens the calls (the "Call screening" role); before, it only appeared while the optional monitoring service was running.
+- The caller ID card and the incoming call notification are no longer skipped when the call blocking is switched off.
+- A call whose direction the system does not report is no longer ignored by the call screening (only outgoing calls are).
 
 
 ## [0.5.17] - 2021-11-13

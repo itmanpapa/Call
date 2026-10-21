@@ -33,6 +33,7 @@
     <string name="caller_id_overlay_hidden_number">隐藏号码</string>
     <string name="caller_id_overlay_positive">可能不是骚扰</string>
     <string name="caller_id_overlay_close">关闭</string>
+    <string name="caller_id_overlay_switched_off">设置中已关闭来电信息卡片</string>
     <string name="setup_check_overlay_ok">来电者卡片已就绪</string>
     <string name="setup_check_overlay_ok_text">包含来电者信息的卡片会显示在来电界面上方。锁屏时不会显示：此时您会看到通知。</string>
     <string name="setup_check_overlay_missing">无法显示来电者卡片</string>
@@ -321,6 +322,7 @@
     <string name="setup_check_howto_steps">1. 将另一部手机的号码加入黑名单（下方按钮）。\n2. 确保该号码未保存在您的联系人中，或在测试期间关闭“使用联系人”：联系人中的号码永远不会被拦截。\n3. 用第二部手机拨打本机。\n4. 来电应立即结束，并在通话记录中显示为已拦截。\n5. 之后从黑名单中删除测试条目。</string>
     <string name="setup_check_howto_add">将号码加入黑名单</string>
     <string name="setup_check_howto_blacklist">打开黑名单</string>
+    <string name="setup_check_howto_card">显示来电信息卡片</string>
     <string name="setup_check_test_entry_name">测试来电</string>
     <string name="setup_check_banner_title">保护未完全生效</string>
     <plurals name="setup_check_banner_text">

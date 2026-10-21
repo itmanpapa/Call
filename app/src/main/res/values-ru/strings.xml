@@ -213,6 +213,7 @@
     <string name="caller_id_overlay_hidden_number">Скрытый номер</string>
     <string name="caller_id_overlay_positive">Вероятно, не спам</string>
     <string name="caller_id_overlay_close">Закрыть</string>
+    <string name="caller_id_overlay_switched_off">Карточка звонящего отключена в настройках</string>
     <string name="setup_check_overlay_ok">Карточка звонящего готова</string>
     <string name="setup_check_overlay_ok_text">Карточка с информацией о звонящем появляется поверх экрана входящего вызова. На экране блокировки её нет: там видно уведомление.</string>
     <string name="setup_check_overlay_missing">Карточка звонящего не может появиться</string>
@@ -452,6 +453,7 @@
     <string name="setup_check_howto_steps">1. Временно добавьте номер второго телефона в чёрный список (кнопка ниже).\n2. Убедитесь, что этого номера нет в контактах, или на время проверки выключите «Доступ к контактам»: номера из контактов никогда не блокируются.\n3. Позвоните на этот телефон со второго.\n4. Звонок должен сразу сброситься, а в журнале он будет отмечен как заблокированный.\n5. После проверки удалите тестовую запись из чёрного списка.</string>
     <string name="setup_check_howto_add">Добавить номер в чёрный список</string>
     <string name="setup_check_howto_blacklist">Открыть чёрный список</string>
+    <string name="setup_check_howto_card">Показать карточку звонящего</string>
     <string name="setup_check_test_entry_name">Проверочный звонок</string>
     <string name="setup_check_banner_title">Защита работает не полностью</string>
     <plurals name="setup_check_banner_text">

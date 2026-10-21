@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Numer zastrzeżony</string>
     <string name="caller_id_overlay_positive">Raczej nie spam</string>
     <string name="caller_id_overlay_close">Zamknij</string>
+    <string name="caller_id_overlay_switched_off">Karta dzwoniącego jest wyłączona w ustawieniach</string>
     <string name="setup_check_overlay_ok">Karta rozmówcy jest gotowa</string>
     <string name="setup_check_overlay_ok_text">Karta z informacjami o rozmówcy pojawia się na ekranie połączenia przychodzącego. Nie jest pokazywana na ekranie blokady: tam widzisz powiadomienie.</string>
     <string name="setup_check_overlay_missing">Nie można pokazać karty rozmówcy</string>
@@ -226,6 +227,7 @@
     <string name="setup_check_howto_steps">1. Dodaj numer drugiego telefonu do czarnej listy (przycisk poniżej).\n2. Upewnij się, że tego numeru nie ma w kontaktach, lub wyłącz na czas testu „Użyj kontaktów”: numery z kontaktów nigdy nie są blokowane.\n3. Zadzwoń na ten telefon z drugiego telefonu.\n4. Połączenie powinno się od razu zakończyć, a rejestr połączeń pokaże je jako zablokowane.\n5. Następnie usuń wpis testowy z czarnej listy.</string>
     <string name="setup_check_howto_add">Dodaj numer do czarnej listy</string>
     <string name="setup_check_howto_blacklist">Otwórz czarną listę</string>
+    <string name="setup_check_howto_card">Pokaż kartę dzwoniącego</string>
     <string name="setup_check_test_entry_name">Połączenie testowe</string>
     <string name="setup_check_banner_title">Ochrona nie działa w pełni</string>
     <plurals name="setup_check_banner_text">

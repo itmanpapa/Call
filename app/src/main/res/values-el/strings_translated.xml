@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Απόκρυψη αριθμού</string>
     <string name="caller_id_overlay_positive">Μάλλον όχι ανεπιθύμητη</string>
     <string name="caller_id_overlay_close">Κλείσιμο</string>
+    <string name="caller_id_overlay_switched_off">Η κάρτα κλήσης είναι απενεργοποιημένη στις ρυθμίσεις</string>
     <string name="setup_check_overlay_ok">Η κάρτα καλούντος είναι έτοιμη</string>
     <string name="setup_check_overlay_ok_text">Η κάρτα με τα στοιχεία του καλούντος εμφανίζεται πάνω από την οθόνη εισερχόμενης κλήσης. Δεν εμφανίζεται στην οθόνη κλειδώματος: εκεί βλέπετε την ειδοποίηση.</string>
     <string name="setup_check_overlay_missing">Η κάρτα καλούντος δεν μπορεί να εμφανιστεί</string>
@@ -235,6 +236,7 @@
     <string name="setup_check_howto_steps">1. Προσθέστε τον αριθμό ενός δεύτερου τηλεφώνου στη μαύρη λίστα (κουμπί παρακάτω).\n2. Βεβαιωθείτε ότι ο αριθμός δεν είναι αποθηκευμένος στις επαφές σας ή απενεργοποιήστε τη «Χρήση επαφών» για τη δοκιμή: οι αριθμοί των επαφών δεν αποκλείονται ποτέ.\n3. Καλέστε αυτό το τηλέφωνο από το δεύτερο τηλέφωνο.\n4. Η κλήση πρέπει να τερματιστεί αμέσως και να εμφανίζεται ως αποκλεισμένη στο αρχείο κλήσεων.\n5. Στη συνέχεια αφαιρέστε τη δοκιμαστική καταχώριση από τη μαύρη λίστα.</string>
     <string name="setup_check_howto_add">Προσθήκη αριθμού στη μαύρη λίστα</string>
     <string name="setup_check_howto_blacklist">Άνοιγμα μαύρης λίστας</string>
+    <string name="setup_check_howto_card">Εμφάνιση κάρτας κλήσης</string>
     <string name="setup_check_test_entry_name">Δοκιμαστική κλήση</string>
     <string name="setup_check_banner_title">Η προστασία δεν λειτουργεί πλήρως</string>
     <plurals name="setup_check_banner_text">

@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Skjult nummer</string>
     <string name="caller_id_overlay_positive">Sannsynligvis ikke søppel</string>
     <string name="caller_id_overlay_close">Lukk</string>
+    <string name="caller_id_overlay_switched_off">Ringeringskortet er slått av i innstillingene</string>
     <string name="setup_check_overlay_ok">Oppringerkortet er klart</string>
     <string name="setup_check_overlay_ok_text">Kortet med informasjon om oppringeren vises over skjermen for innkommende anrop. Det vises ikke på låseskjermen: der ser du varselet.</string>
     <string name="setup_check_overlay_missing">Oppringerkortet kan ikke vises</string>
@@ -235,6 +236,7 @@
     <string name="setup_check_howto_steps">1. Legg til nummeret til en annen telefon i svartelisten (knappen nedenfor).\n2. Sørg for at nummeret ikke er lagret i kontaktene dine, eller slå av «Bruk kontaktliste» under testen: numre fra kontakter blokkeres aldri.\n3. Ring denne telefonen fra den andre telefonen.\n4. Anropet skal avsluttes med en gang og vises som blokkert i anropsloggen.\n5. Fjern deretter testoppføringen fra svartelisten.</string>
     <string name="setup_check_howto_add">Legg til et nummer i svartelisten</string>
     <string name="setup_check_howto_blacklist">Åpne svartelisten</string>
+    <string name="setup_check_howto_card">Vis ringingeskortet</string>
     <string name="setup_check_test_entry_name">Testanrop</string>
     <string name="setup_check_banner_title">Beskyttelsen fungerer ikke fullt ut</string>
     <plurals name="setup_check_banner_text">
