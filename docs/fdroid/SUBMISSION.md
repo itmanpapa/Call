@@ -15,18 +15,22 @@
 
 ## 0. Подготовка (обязательно до подачи)
 
-1. **Выпустить версию 0.14.0.** ✅ 0.13.0 выпущена (первая с вариантом `fdroid`). В 0.14.0 — новая
-   иконка и пожертвования; `versionName "0.14.0"`, `versionCode 14000` и `changelogs/14000.txt` готовы,
-   yml ниже указывает на тег `v0.14.0` — выпустить релиз как обычно и проверить, что в нём два APK.
-   Если версия будет другой — поправить `versionName`/`versionCode`/`commit` в yml.
+1. **Выпустить версию 0.14.1.** ✅ 0.13.0 выпущена (первая с вариантом `fdroid`), 0.14.0 и 0.14.1 —
+   тоже выпущены (0.14.1: карточка звонящего и экран online-отзывов). `versionName "0.14.1"`,
+   `versionCode 14001` и `changelogs/14001.txt` готовы, yml ниже указывает на тег `v0.14.1` —
+   выпустить релиз как обычно и проверить, что в нём два APK. Если версия будет другой —
+   поправить `versionName`/`versionCode`/`commit` в yml.
 2. ~~Удалить старые описания YACB~~ — сделано: в `fastlane/metadata/android/` остались только
    en-US, de-DE и ru; остальные языки в F-Droid получат английский текст.
 3. **Иконка.** ✅ Своя иконка (кольцо с трубкой и зелёной точкой), `en-US/images/icon.png` и
    `featureGraphic.png` перерисованы.
 4. **Пожертвования.** ✅ Ko-fi (`donation_url` в `app/src/main/res/values/donation.xml`, `ko_fi:` в
-   `.github/FUNDING.yml`, README, `Donate:` в yml) и криптовалюта (`donation_btc_address`, `donation_trc20_address`,
-   `donation_bep20_address` там же, README; в yml есть поле только для `Bitcoin:`). F-Droid принимает только реквизиты, которые разработчик сам опубликовал в
-   репозитории (FUNDING.yml/README) — при смене адреса менять во всех этих местах.
+   `.github/FUNDING.yml`, README, `Donate:` в yml). Криптовалюта сейчас не опубликована: адреса
+   (`donation_btc_address`, `donation_trc20_address`, `donation_bep20_address` в
+   `app/src/main/res/values/donation.xml`) пустые, кнопка «Пожертвовать криптовалютой» в приложении
+   не показывается. F-Droid принимает только реквизиты, которые разработчик сам опубликовал в
+   репозитории (FUNDING.yml/README) — при публикации новых адресов менять во всех этих местах
+   (README, FUNDING.yml, yml, `donation.xml`) одновременно.
 
 ## 1. F-Droid (основной репозиторий)
 

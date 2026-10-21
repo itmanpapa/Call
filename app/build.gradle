@@ -10,8 +10,8 @@ android {
         applicationId "de.itmanpapa.callblocker"
         minSdk 26
         targetSdk 36
-        versionCode 14001
-        versionName "0.14.1"
+        versionCode 14002
+        versionName "0.14.2"
 
         javaCompileOptions {
             annotationProcessorOptions {
