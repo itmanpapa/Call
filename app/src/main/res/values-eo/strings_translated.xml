@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Kaŝita numero</string>
     <string name="caller_id_overlay_positive">Verŝajne ne trudvoko</string>
     <string name="caller_id_overlay_close">Fermi</string>
+    <string name="caller_id_overlay_switched_off">La alvokon-karto estas malŝaltita en la agordoj</string>
     <string name="setup_check_overlay_ok">La karto de alvokanto estas preta</string>
     <string name="setup_check_overlay_ok_text">La karto kun informoj pri la alvokanto aperas super la ekrano de envenanta alvoko. Ĝi ne aperas sur la ŝlosita ekrano: tie vi vidas la sciigon.</string>
     <string name="setup_check_overlay_missing">La karto de alvokanto ne povas aperi</string>
@@ -222,6 +223,7 @@
     <string name="setup_check_howto_steps">1. Aldonu la numeron de dua telefono al la bloklisto (butono sube).\n2. Certigu, ke tiu numero ne estas konservita en viaj kontaktoj, aŭ malŝaltu “Uzi kontaktojn” por la testo: numeroj el kontaktoj neniam estas blokataj.\n3. Voku ĉi tiun telefonon de la dua telefono.\n4. La alvoko devus tuj finiĝi kaj aperi kiel blokita en la alvoka historio.\n5. Poste forigu la testan eron el la bloklisto.</string>
     <string name="setup_check_howto_add">Aldoni numeron al la bloklisto</string>
     <string name="setup_check_howto_blacklist">Malfermi la blokliston</string>
+    <string name="setup_check_howto_card">Montri la alvokon-karton</string>
     <string name="setup_check_test_entry_name">Prova alvoko</string>
     <string name="setup_check_banner_title">Protekto ne plene funkcias</string>
     <plurals name="setup_check_banner_text">

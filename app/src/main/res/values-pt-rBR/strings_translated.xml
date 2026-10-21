@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Número oculto</string>
     <string name="caller_id_overlay_positive">Provavelmente não é spam</string>
     <string name="caller_id_overlay_close">Fechar</string>
+    <string name="caller_id_overlay_switched_off">O cartão de quem está chamando está desativado nas configurações</string>
     <string name="setup_check_overlay_ok">O cartão do chamador está pronto</string>
     <string name="setup_check_overlay_ok_text">O cartão com as informações do chamador aparece sobre a tela de chamada recebida. Ele não é exibido na tela de bloqueio: lá você vê a notificação.</string>
     <string name="setup_check_overlay_missing">Não é possível mostrar o cartão do chamador</string>
@@ -222,6 +223,7 @@
     <string name="setup_check_howto_steps">1. Adicione o número de um segundo telefone à lista negra (botão abaixo).\n2. Verifique se esse número não está salvo nos seus contatos ou desative “Usar Contatos” durante o teste: números dos contatos nunca são bloqueados.\n3. Ligue para este telefone a partir do segundo telefone.\n4. A chamada deve ser encerrada imediatamente e aparecer como bloqueada no registro de chamadas.\n5. Depois, remova a entrada de teste da lista negra.</string>
     <string name="setup_check_howto_add">Adicionar um número à lista negra</string>
     <string name="setup_check_howto_blacklist">Abrir a lista negra</string>
+    <string name="setup_check_howto_card">Mostrar o cartão de quem está chamando</string>
     <string name="setup_check_test_entry_name">Chamada de teste</string>
     <string name="setup_check_banner_title">A proteção não está funcionando totalmente</string>
     <plurals name="setup_check_banner_text">

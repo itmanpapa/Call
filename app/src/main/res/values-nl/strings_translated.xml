@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Verborgen nummer</string>
     <string name="caller_id_overlay_positive">Waarschijnlijk geen spam</string>
     <string name="caller_id_overlay_close">Sluiten</string>
+    <string name="caller_id_overlay_switched_off">De bellerkaart is uitgeschakeld in de instellingen</string>
     <string name="setup_check_overlay_ok">De bellerkaart is klaar</string>
     <string name="setup_check_overlay_ok_text">De kaart met informatie over de beller verschijnt boven het scherm van de inkomende oproep. Op het vergrendelscherm wordt ze niet getoond: daar ziet u de melding.</string>
     <string name="setup_check_overlay_missing">De bellerkaart kan niet worden getoond</string>
@@ -218,6 +219,7 @@
     <string name="setup_check_howto_steps">1. Voeg het nummer van een tweede telefoon toe aan de zwarte lijst (knop hieronder).\n2. Zorg dat dat nummer niet in uw contacten staat, of zet ‘Contactpersonen uitlezen’ tijdens de test uit: nummers uit contacten worden nooit geblokkeerd.\n3. Bel deze telefoon met de tweede telefoon.\n4. De oproep moet meteen eindigen en in de oproepgeschiedenis als geblokkeerd verschijnen.\n5. Verwijder daarna de testvermelding van de zwarte lijst.</string>
     <string name="setup_check_howto_add">Nummer toevoegen aan de zwarte lijst</string>
     <string name="setup_check_howto_blacklist">Zwarte lijst openen</string>
+    <string name="setup_check_howto_card">Bellerkaart tonen</string>
     <string name="setup_check_test_entry_name">Testoproep</string>
     <string name="setup_check_banner_title">De bescherming werkt niet volledig</string>
     <plurals name="setup_check_banner_text">

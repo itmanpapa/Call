@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Numéro masqué</string>
     <string name="caller_id_overlay_positive">Probablement pas un spam</string>
     <string name="caller_id_overlay_close">Fermer</string>
+    <string name="caller_id_overlay_switched_off">La fiche de l’appelant est désactivée dans les paramètres</string>
     <string name="setup_check_overlay_ok">La fiche de l’appelant est prête</string>
     <string name="setup_check_overlay_ok_text">La fiche avec les informations sur l’appelant apparaît par-dessus l’écran d’appel entrant. Elle ne s’affiche pas sur l’écran de verrouillage : vous y voyez la notification.</string>
     <string name="setup_check_overlay_missing">La fiche de l’appelant ne peut pas s’afficher</string>
@@ -222,6 +223,7 @@
     <string name="setup_check_howto_steps">1. Ajoutez le numéro d’un second téléphone à la liste noire (bouton ci-dessous).\n2. Vérifiez que ce numéro n’est pas enregistré dans vos contacts, ou désactivez « Utiliser les contacts » pendant le test : les numéros des contacts ne sont jamais bloqués.\n3. Appelez ce téléphone depuis le second téléphone.\n4. L’appel doit se terminer immédiatement et apparaître comme bloqué dans le journal d’appels.\n5. Ensuite, supprimez l’entrée de test de la liste noire.</string>
     <string name="setup_check_howto_add">Ajouter un numéro à la liste noire</string>
     <string name="setup_check_howto_blacklist">Ouvrir la liste noire</string>
+    <string name="setup_check_howto_card">Afficher la fiche de l’appelant</string>
     <string name="setup_check_test_entry_name">Appel de test</string>
     <string name="setup_check_banner_title">La protection ne fonctionne pas entièrement</string>
     <plurals name="setup_check_banner_text">

@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Số ẩn</string>
     <string name="caller_id_overlay_positive">Có thể không phải spam</string>
     <string name="caller_id_overlay_close">Đóng</string>
+    <string name="caller_id_overlay_switched_off">Thẻ người gọi đã tắt trong cài đặt</string>
     <string name="setup_check_overlay_ok">Thẻ người gọi đã sẵn sàng</string>
     <string name="setup_check_overlay_ok_text">Thẻ chứa thông tin người gọi xuất hiện phía trên màn hình cuộc gọi đến. Thẻ không hiện trên màn hình khóa: ở đó bạn thấy thông báo.</string>
     <string name="setup_check_overlay_missing">Không thể hiển thị thẻ người gọi</string>
@@ -214,6 +215,7 @@
     <string name="setup_check_howto_steps">1. Thêm số của một điện thoại thứ hai vào danh sách đen (nút bên dưới).\n2. Đảm bảo số đó không được lưu trong danh bạ, hoặc tắt “Sử dụng danh bạ” khi kiểm tra: số trong danh bạ không bao giờ bị chặn.\n3. Gọi đến điện thoại này từ điện thoại thứ hai.\n4. Cuộc gọi sẽ kết thúc ngay và hiện là đã chặn trong nhật ký cuộc gọi.\n5. Sau đó xóa mục kiểm tra khỏi danh sách đen.</string>
     <string name="setup_check_howto_add">Thêm số vào danh sách đen</string>
     <string name="setup_check_howto_blacklist">Mở danh sách đen</string>
+    <string name="setup_check_howto_card">Hiển thẻ người gọi</string>
     <string name="setup_check_test_entry_name">Cuộc gọi thử</string>
     <string name="setup_check_banner_title">Bảo vệ chưa hoạt động đầy đủ</string>
     <plurals name="setup_check_banner_text">

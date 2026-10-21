@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">隱藏號碼</string>
     <string name="caller_id_overlay_positive">可能不是騷擾</string>
     <string name="caller_id_overlay_close">關閉</string>
+    <string name="caller_id_overlay_switched_off">設定中已關閉來電資訊卡片</string>
     <string name="setup_check_overlay_ok">來電者卡片已就緒</string>
     <string name="setup_check_overlay_ok_text">包含來電者資訊的卡片會顯示在來電介面上方。鎖定畫面時不會顯示：此時你會看到通知。</string>
     <string name="setup_check_overlay_missing">無法顯示來電者卡片</string>
@@ -330,6 +331,7 @@
     <string name="setup_check_howto_steps">1. 將另一部手機的號碼加入黑名單（下方按鈕）。\n2. 確保該號碼未儲存在你的聯絡人中，或在測試期間關閉「使用聯絡人」：聯絡人中的號碼永遠不會被封鎖。\n3. 用第二部手機撥打本機。\n4. 來電應立即結束，並在通話記錄中顯示為已封鎖。\n5. 之後從黑名單中刪除測試條目。</string>
     <string name="setup_check_howto_add">將號碼加入黑名單</string>
     <string name="setup_check_howto_blacklist">開啟黑名單</string>
+    <string name="setup_check_howto_card">顯示來電資訊卡片</string>
     <string name="setup_check_test_entry_name">測試來電</string>
     <string name="setup_check_banner_title">保護未完全生效</string>
     <plurals name="setup_check_banner_text">

@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">מספר חסוי</string>
     <string name="caller_id_overlay_positive">כנראה לא ספאם</string>
     <string name="caller_id_overlay_close">סגירה</string>
+    <string name="caller_id_overlay_switched_off">כרטיס המתקשר מושבת בהגדרות</string>
     <string name="setup_check_overlay_ok">כרטיס המתקשר מוכן</string>
     <string name="setup_check_overlay_ok_text">הכרטיס עם פרטי המתקשר מופיע מעל מסך השיחה הנכנסת. הוא לא מוצג במסך הנעילה: שם רואים את ההתראה.</string>
     <string name="setup_check_overlay_missing">לא ניתן להציג את כרטיס המתקשר</string>
@@ -226,6 +227,7 @@
     <string name="setup_check_howto_steps">1. יש להוסיף את המספר של טלפון שני לרשימה השחורה (הלחצן למטה).\n2. יש לוודא שהמספר הזה אינו שמור באנשי הקשר, או לכבות את „השתמש באנשי קשר” לזמן הבדיקה: מספרים מאנשי הקשר אף פעם לא נחסמים.\n3. יש להתקשר לטלפון הזה מהטלפון השני.\n4. השיחה אמורה להסתיים מיד ולהופיע ביומן השיחות כחסומה.\n5. לאחר מכן יש להסיר את רשומת הבדיקה מהרשימה השחורה.</string>
     <string name="setup_check_howto_add">הוספת מספר לרשימה השחורה</string>
     <string name="setup_check_howto_blacklist">פתיחת הרשימה השחורה</string>
+    <string name="setup_check_howto_card">הצגת כרטיס המתקשר</string>
     <string name="setup_check_test_entry_name">שיחת בדיקה</string>
     <string name="setup_check_banner_title">ההגנה לא פועלת באופן מלא</string>
     <plurals name="setup_check_banner_text">

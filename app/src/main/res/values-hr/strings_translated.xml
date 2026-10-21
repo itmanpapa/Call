@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Skriveni broj</string>
     <string name="caller_id_overlay_positive">Vjerojatno nije neželjeno</string>
     <string name="caller_id_overlay_close">Zatvori</string>
+    <string name="caller_id_overlay_switched_off">Kartica pozivaatelja je isključena u postavkama</string>
     <string name="setup_check_overlay_ok">Kartica pozivatelja je spremna</string>
     <string name="setup_check_overlay_ok_text">Kartica s podacima o pozivatelju pojavljuje se preko zaslona dolaznog poziva. Ne prikazuje se na zaključanom zaslonu: tamo vidite obavijest.</string>
     <string name="setup_check_overlay_missing">Kartica pozivatelja ne može se prikazati</string>
@@ -222,6 +223,7 @@
     <string name="setup_check_howto_steps">1. Dodajte broj drugog telefona na popis nepoželjnih (gumb u nastavku).\n2. Provjerite da taj broj nije spremljen u kontaktima ili isključite „Koristi kontakte” za vrijeme testa: brojevi iz kontakata nikad se ne blokiraju.\n3. Nazovite ovaj telefon s drugog telefona.\n4. Poziv bi se trebao odmah prekinuti i u zapisniku poziva biti prikazan kao blokiran.\n5. Nakon toga uklonite probni unos s popisa nepoželjnih.</string>
     <string name="setup_check_howto_add">Dodaj broj na popis nepoželjnih</string>
     <string name="setup_check_howto_blacklist">Otvori popis nepoželjnih</string>
+    <string name="setup_check_howto_card">Prikaži karticu pozivaatelja</string>
     <string name="setup_check_test_entry_name">Probni poziv</string>
     <string name="setup_check_banner_title">Zaštita ne radi u potpunosti</string>
     <plurals name="setup_check_banner_text">

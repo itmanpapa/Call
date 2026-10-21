@@ -10,11 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -23,11 +22,18 @@ import dummydomain.yetanothercallblocker.sia.model.CommunityReview;
 
 import static dummydomain.yetanothercallblocker.IntentHelper.clearTop;
 
-public class ReviewsActivity extends AppCompatActivity {
+/**
+ * The online reviews of a number (the community database of the "Should I Answer" service).
+ *
+ * <p>Uses the standard screen frame of the app (the top app bar with the number as the title
+ * and the list below it), so it looks like the other screens and scrolls properly.</p>
+ */
+public class ReviewsActivity extends BaseActivity {
 
     private static final String PARAM_NUMBER = "param_number";
 
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private static final Logger LOG = LoggerFactory.getLogger(ReviewsActivity.class);
+
     private CustomListViewAdapter listViewAdapter;
 
     private AsyncTask<String, Void, List<CommunityReview>> loadReviewsTask;
@@ -47,9 +53,6 @@ public class ReviewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
-        setSupportActionBar(findViewById(R.id.toolbar));
-
-        collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -58,7 +61,6 @@ public class ReviewsActivity extends AppCompatActivity {
 
         listViewAdapter = new CustomListViewAdapter();
         RecyclerView reviewsList = findViewById(R.id.reviews_list);
-        reviewsList.setLayoutManager(new LinearLayoutManager(this));
         reviewsList.setAdapter(listViewAdapter);
         reviewsList.addItemDecoration(new CustomVerticalDivider(this));
 
@@ -66,14 +68,14 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
         handleIntent(intent);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         cancelReviewsLoadingTask();
 
         super.onDestroy();
@@ -89,7 +91,7 @@ public class ReviewsActivity extends AppCompatActivity {
         String paramNumber = intent.getStringExtra(PARAM_NUMBER);
 
         findViewById(R.id.reviews_summary).setVisibility(View.GONE);
-        collapsingToolbarLayout.setTitle(paramNumber);
+        setTitle(paramNumber);
         setText(getString(R.string.reviews_loading));
 
         cancelReviewsLoadingTask();
@@ -105,6 +107,7 @@ public class ReviewsActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(List<CommunityReview> reviews) {
+                LOG.debug("onPostExecute() {} reviews", reviews == null ? -1 : reviews.size());
                 setText("");
                 handleReviews(reviews);
             }
@@ -134,6 +137,10 @@ public class ReviewsActivity extends AppCompatActivity {
         listViewAdapter.setItems(reviews);
         listViewAdapter.notifyDataSetChanged();
         displaySummary(reviews);
+
+        if (reviews.isEmpty()) {
+            setText(getString(R.string.lookup_number_not_found));
+        }
     }
 
     private void displaySummary(List<CommunityReview> reviews) {

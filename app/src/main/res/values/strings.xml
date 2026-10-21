@@ -43,6 +43,7 @@
     <string name="caller_id_overlay_hidden_number">Hidden number</string>
     <string name="caller_id_overlay_positive">Probably not spam</string>
     <string name="caller_id_overlay_close">Close</string>
+    <string name="caller_id_overlay_switched_off">The caller ID card is switched off in the settings</string>
     <string name="setup_check_overlay_ok">Caller ID card is ready</string>
     <string name="setup_check_overlay_ok_text">The card with the caller info appears over the incoming call screen. It is not shown on the lock screen: there you see the notification.</string>
     <string name="setup_check_overlay_missing">Caller ID card can’t be shown</string>
@@ -472,6 +473,7 @@
     <string name="setup_check_howto_steps">1. Add the number of a second phone to the blacklist (button below).\n2. Make sure that number is not saved in your contacts, or turn off “Use contacts” for the test: numbers from contacts are never blocked.\n3. Call this phone from the second phone.\n4. The call should end right away, and the call log shows it as blocked.\n5. Afterwards remove the test entry from the blacklist.</string>
     <string name="setup_check_howto_add">Add a number to the blacklist</string>
     <string name="setup_check_howto_blacklist">Open the blacklist</string>
+    <string name="setup_check_howto_card">Show the caller ID card</string>
     <string name="setup_check_test_entry_name">Test call</string>
     <string name="setup_check_banner_title">Protection does not work fully</string>
     <plurals name="setup_check_banner_text">

@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">மறைக்கப்பட்ட எண்</string>
     <string name="caller_id_overlay_positive">ஸ்பேம் இல்லாமல் இருக்கலாம்</string>
     <string name="caller_id_overlay_close">மூடு</string>
+    <string name="caller_id_overlay_switched_off">அழைப்பவரின் அட்டை அமைப்புகளில் அணைக்கப்பட்டுள்ளது</string>
     <string name="setup_check_overlay_ok">அழைப்பாளர் அட்டை தயார்</string>
     <string name="setup_check_overlay_ok_text">அழைப்பாளர் தகவலுடன் கூடிய அட்டை உள்வரு அழைப்புத் திரையின் மேல் தோன்றும். பூட்டுத் திரையில் அது காட்டப்படாது: அங்கு அறிவிப்பைக் காண்பீர்கள்.</string>
     <string name="setup_check_overlay_missing">அழைப்பாளர் அட்டையைக் காட்ட முடியாது</string>
@@ -292,6 +293,7 @@
     <string name="setup_check_howto_steps">1. இரண்டாவது தொலைபேசியின் எண்ணைக் கரும்பட்டியலில் சேர்க்கவும் (கீழே உள்ள பொத்தான்).\n2. அந்த எண் உங்கள் தொடர்புகளில் சேமிக்கப்படவில்லை என்பதை உறுதிசெய்யவும், அல்லது சோதனைக்காக “தொடர்புகள் பயன்படுத்து” என்பதை முடக்கவும்: தொடர்புகளின் எண்கள் ஒருபோதும் தடுக்கப்படுவதில்லை.\n3. இரண்டாவது தொலைபேசியிலிருந்து இந்தத் தொலைபேசியை அழைக்கவும்.\n4. அழைப்பு உடனே முடிந்து அழைப்புப் பதிவில் தடுக்கப்பட்டதாகக் காட்டப்பட வேண்டும்.\n5. பின்னர் சோதனைப் பதிவைக் கரும்பட்டியலிலிருந்து நீக்கவும்.</string>
     <string name="setup_check_howto_add">கரும்பட்டியலில் எண்ணைச் சேர்</string>
     <string name="setup_check_howto_blacklist">கரும்பட்டியலைத் திற</string>
+    <string name="setup_check_howto_card">அழைப்பவரின் அட்டையைக் காட்டு</string>
     <string name="setup_check_test_entry_name">சோதனை அழைப்பு</string>
     <string name="setup_check_banner_title">பாதுகாப்பு முழுமையாகச் செயல்படவில்லை</string>
     <plurals name="setup_check_banner_text">

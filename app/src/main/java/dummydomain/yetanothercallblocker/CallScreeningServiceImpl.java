@@ -40,13 +40,10 @@ public class CallScreeningServiceImpl extends CallScreeningService {
 
         try {
             boolean ignore = false;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                if (callDetails.getCallDirection() != Call.Details.DIRECTION_INCOMING) {
-                    ignore = true;
-                }
-            }
-
-            if (!ignore && !App.getSettings().getCallBlockingEnabled()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                    && callDetails.getCallDirection() == Call.Details.DIRECTION_OUTGOING) {
+                // only incoming calls are checked; an unknown direction is treated as incoming
+                // (the direction is not reported by every device)
                 ignore = true;
             }
 
@@ -110,6 +107,14 @@ public class CallScreeningServiceImpl extends CallScreeningService {
         } finally {
             LOG.debug("onScreenCall() blocking call: {}", shouldBlock);
 
+            // The caller info is shown before the call is answered: the card and the
+            // notification must be on the screen when the phone starts ringing.
+            // It doesn't depend on the blocking settings: the caller info is wanted
+            // even when the calls are not blocked at all.
+            if (numberInfo != null && !shouldBlock) {
+                showCallerInfo(numberInfo);
+            }
+
             CallScreeningService.CallResponse.Builder responseBuilder = new CallResponse.Builder();
 
             if (shouldBlock) {
@@ -143,19 +148,31 @@ public class CallScreeningServiceImpl extends CallScreeningService {
                 } catch (Exception e) {
                     LOG.error("onScreenCall() failed after blocking the call", e);
                 }
-            } else if (numberInfo != null) {
-                // the call is about to ring: the phone state listener may not get the
-                // number (no call log permission), so show the caller ID card from here
-                // too; repeated reports of the same call are ignored by the card
-                try {
-                    CallerIdOverlay.show(this, numberInfo, false);
-                } catch (Exception e) {
-                    LOG.error("onScreenCall() failed to show the caller ID card", e);
-                }
             }
         }
 
         LOG.debug("onScreenCall() finished");
+    }
+
+    /**
+     * Shows who is calling: the caller ID card over the incoming call screen and the
+     * incoming call notification (with the "Block" and "Not spam" actions).
+     */
+    private void showCallerInfo(NumberInfo numberInfo) {
+        // the card over the incoming call screen
+        try {
+            CallerIdOverlay.show(this, numberInfo, false);
+        } catch (Exception e) {
+            LOG.error("onScreenCall() failed to show the caller ID card", e);
+        }
+
+        // the notification: without the monitoring service (the default when the call
+        // screening role is used) nothing else would announce the call
+        try {
+            NotificationHelper.showIncomingCallNotification(this, numberInfo);
+        } catch (Exception e) {
+            LOG.error("onScreenCall() failed to show the incoming call notification", e);
+        }
     }
 
     private void extraLogging(Call.Details callDetails) {

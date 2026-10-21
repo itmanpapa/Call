@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Salainen numero</string>
     <string name="caller_id_overlay_positive">Todennäköisesti ei roskapuhelu</string>
     <string name="caller_id_overlay_close">Sulje</string>
+    <string name="caller_id_overlay_switched_off">Soittajan kortti on poissa käytöstä asetuksissa</string>
     <string name="setup_check_overlay_ok">Soittajakortti on valmis</string>
     <string name="setup_check_overlay_ok_text">Soittajan tiedot sisältävä kortti näkyy saapuvan puhelun näkymän päällä. Lukitusnäytöllä sitä ei näytetä: siellä näet ilmoituksen.</string>
     <string name="setup_check_overlay_missing">Soittajakorttia ei voi näyttää</string>
@@ -234,6 +235,7 @@
     <string name="setup_check_howto_steps">1. Lisää toisen puhelimen numero mustalle listalle (painike alla).\n2. Varmista, ettei numeroa ole tallennettu yhteystietoihisi, tai poista ”Käytä yhteystietoja” käytöstä testin ajaksi: yhteystietojen numeroita ei koskaan estetä.\n3. Soita tähän puhelimeen toisesta puhelimesta.\n4. Puhelun pitäisi päättyä heti ja näkyä puheluhistoriassa estettynä.\n5. Poista lopuksi testimerkintä mustalta listalta.</string>
     <string name="setup_check_howto_add">Lisää numero mustalle listalle</string>
     <string name="setup_check_howto_blacklist">Avaa mustalista</string>
+    <string name="setup_check_howto_card">Näytä soittajan kortti</string>
     <string name="setup_check_test_entry_name">Testipuhelu</string>
     <string name="setup_check_banner_title">Suojaus ei toimi täysin</string>
     <plurals name="setup_check_banner_text">

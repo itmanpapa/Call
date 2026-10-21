@@ -30,6 +30,7 @@
     <string name="caller_id_overlay_hidden_number">Прихований номер</string>
     <string name="caller_id_overlay_positive">Імовірно не спам</string>
     <string name="caller_id_overlay_close">Закрити</string>
+    <string name="caller_id_overlay_switched_off">Картку абонента вимкнено в налаштуваннях</string>
     <string name="setup_check_overlay_ok">Картка абонента готова</string>
     <string name="setup_check_overlay_ok_text">Картка з даними абонента з’являється поверх екрана вхідного дзвінка. На екрані блокування вона не показується: там ви бачите сповіщення.</string>
     <string name="setup_check_overlay_missing">Картку абонента неможливо показати</string>
@@ -226,6 +227,7 @@
     <string name="setup_check_howto_steps">1. Додайте номер другого телефону до чорного списку (кнопка нижче).\n2. Переконайтеся, що цього номера немає у ваших контактах, або вимкніть «Відображати імена контактів» на час перевірки: номери з контактів ніколи не блокуються.\n3. Зателефонуйте на цей телефон із другого.\n4. Дзвінок має одразу завершитися, а в журналі дзвінків він буде позначений як заблокований.\n5. Після цього видаліть тестовий запис із чорного списку.</string>
     <string name="setup_check_howto_add">Додати номер до чорного списку</string>
     <string name="setup_check_howto_blacklist">Відкрити чорний список</string>
+    <string name="setup_check_howto_card">Показати картку абонента</string>
     <string name="setup_check_test_entry_name">Тестовий дзвінок</string>
     <string name="setup_check_banner_title">Захист працює не повністю</string>
     <plurals name="setup_check_banner_text">
